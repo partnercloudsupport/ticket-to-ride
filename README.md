@@ -60,3 +60,148 @@ All lower level widgets are able to access and update this information by using 
 ## Running on an iOS device
 
 use woodfieldswarriors@gmail.com as the apple id
+
+# Reference Links
+
+https://flutter.io/testing/
+
+# Code Snippets
+
+Full form example:
+
+```
+  import 'package:flutter/material.dart';
+  import 'colors.dart';
+  import 'global_context_widget.dart';
+  // import api
+
+  class CharacterCreatePage extends StatefulWidget {
+    CharacterCreatePage({Key key}) : super(key: key);
+
+    @override
+    _CharacterCreateState createState() => new _CharacterCreateState();
+  }
+
+  class _CharacterCreateState extends State<CharacterCreatePage> {
+
+    @override
+    Widget build(BuildContext context) {
+
+      return new Scaffold(
+        appBar: new AppBar(
+          title: new Text(
+            'Add Character',
+          ),
+          backgroundColor: Colors.white,
+          iconTheme: new IconThemeData(
+            color: playbackOrange400,
+          ),
+          textTheme: new TextTheme(
+            title: new TextStyle (
+              color: Colors.black.withOpacity(0.8)
+            )
+          ),
+        ),
+        body: Padding(
+          padding: new EdgeInsets.symmetric(horizontal: 30.0),
+          child: CreateCharacterForm(),
+        )
+
+      );
+    }
+  }
+
+  class CreateCharacterForm extends StatefulWidget {
+    @override
+    CreateCharacterFormState createState() {
+      return CreateCharacterFormState();
+    }
+  }
+
+  class CreateCharacterFormState extends State<CreateCharacterForm> {
+
+    final _formKey = GlobalKey<FormState>();
+    var _character = Character();
+
+    _saveProject(form) async {
+      if (form.validate()) {
+        form.save();
+
+        Scaffold
+            .of(context)
+            .showSnackBar(SnackBar(content: Text('Saving Character')));
+
+        // save data here
+
+        Navigator.pop(context);
+      }
+    }
+
+    @override
+    Widget build(BuildContext context) {
+
+      return Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            TextFormField(
+              autofocus: true,
+              decoration: InputDecoration(
+                labelText: 'Character Name',
+              ),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter a character name.';
+                }
+              },
+              onSaved: (String value) {
+                _character.displayName = value;
+              }
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Character Number'
+              ),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter a character number.';
+                }
+              },
+              onSaved: (String value) {
+                _character.number = value;
+              }
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Talent Name'
+              ),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter the talent\'s name.';
+                }
+              },
+              onSaved: (String value) {
+                _character.talentDisplayName = value;
+              }
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: RaisedButton(
+                onPressed: () {_saveProject(_formKey.currentState);},
+                child: Text(
+                  'Save Character',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+
+```
