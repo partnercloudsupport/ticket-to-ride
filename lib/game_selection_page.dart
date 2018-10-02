@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'model/game.dart';
 import 'model/user.dart';
 
-class GameListPage extends StatefulWidget {
-  GameListPage({Key key, this.title}) : super(key: key);
+class GameSelectionPage extends StatefulWidget {
+  GameSelectionPage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -17,10 +17,10 @@ class GameListPage extends StatefulWidget {
   final String title;
 
   @override
-  _GameListPageState createState() => new _GameListPageState();
+  _GameSelectionPageState createState() => new _GameSelectionPageState();
 }
 
-class _GameListPageState extends State<GameListPage> {
+class _GameSelectionPageState extends State<GameSelectionPage> {
   int _counter = 0;
   List<Game> _games;
 
@@ -39,50 +39,68 @@ class _GameListPageState extends State<GameListPage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return new Scaffold(
-      appBar: new AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: new Text(widget.title),
-      ),
-      body: new Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: new Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug paint" (press "p" in the console where you ran
-          // "flutter run", or select "Toggle Debug Paint" from the Flutter tool
-          // window in IntelliJ) to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _build_game_list(),
-          ],
+
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildCreateGame(),
+              _buildGameList()
+            ]
+          )
+        ),
+      )
+    );
+
+  }
+
+
+  Widget _buildCreateGame() {
+    final displayName = TextFormField(
+      initialValue: 'The A Game',
+      decoration: InputDecoration(
+        hintText: 'Game Display Name',
+        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      )
+    );
+
+    final maxPlayers = DropdownButton<int>(
+      items:<int>[2, 3, 4, 5].map((int value) {
+        return DropdownMenuItem<int>(
+          value:value,
+          child: Text("$value"),
+        );
+      }),
+      hint: Text('Max # of Players')
+    );
+
+    final createButton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      child: Material(
+        borderRadius: BorderRadius.circular(30.0),
+        shadowColor: Colors.lightBlueAccent.shade100,
+        elevation: 5.0,
+        child: MaterialButton(
+          minWidth: 200.0,
+          height: 42.0,
+          onPressed: () {
+            // TODO add lobby transition
+            //Navigator.of(context).pushNamed(LobbyPage.tag);
+          },
+          color: Colors.lightBlueAccent,
+          child: Text('Create', style: TextStyle(color: Colors.white)),
         ),
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
-  Widget _build_game_list() {
+  Widget _buildGameList() {
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
       // The itemBuilder callback is called once per suggested word pairing,
