@@ -127,10 +127,6 @@ Full form example:
       if (form.validate()) {
         form.save();
 
-        Scaffold
-            .of(context)
-            .showSnackBar(SnackBar(content: Text('Saving Character')));
-
         // save data here
 
         Navigator.pop(context);

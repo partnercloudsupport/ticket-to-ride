@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'theme/theme.dart';
 import 'account_login_page.dart';
+import 'game_list_page.dart';
+import 'lobby_view_page.dart';
 import 'global_context_widget.dart';
 
 
@@ -17,9 +19,11 @@ class TicketToRideApp extends StatelessWidget {
       child: new MaterialApp(
         title: 'Ticket to Ride',
         theme: ticketToRideTheme,
-        home: new AccountLoginPage(title: 'Ticket to Ride'),
+        home: new LobbyViewPage(title: 'Game Lobby'), //new AccountLoginPage(title: 'Ticket to Ride'),
         routes: <String, WidgetBuilder>{
-         // '/login_page': (BuildContext context) => new ProjectViewPage(title: 'No Project Selected'),
+         '/login_page': (BuildContext context) => new AccountLoginPage(title: 'Login'),
+         '/game_list': (BuildContext context) => new GameListPage(title: 'Current Games'),
+         '/lobby_view': (BuildContext context) => new LobbyViewPage(title: 'Game Lobby'),
         },
       )
     );
