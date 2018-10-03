@@ -50,6 +50,11 @@ class _GameSelectionPageState extends State<GameSelectionPage> {
 
 
   Widget _buildCreateGame() {
+
+    final createTitle = Text(
+      'Create a new Game:',
+    );
+
     final displayName = TextFormField(
       initialValue: 'The A Game',
       decoration: InputDecoration(
@@ -89,10 +94,27 @@ class _GameSelectionPageState extends State<GameSelectionPage> {
         ),
       ),
     );
+
+    return Column(
+      children: <Widget>[
+        createTitle,
+        SizedBox(height:30.0),
+        displayName,
+        SizedBox(height:8.0),
+        createButton
+      ]
+    );
   }
 
+
   Widget _buildGameList() {
-    return ListView.builder(
+    final gameListTitle = Text(
+      'Join a Created Game:',
+    );
+
+    // TODO get current games from server
+
+    final gameList = ListView.builder(
       padding: const EdgeInsets.all(16.0),
       // The itemBuilder callback is called once per suggested word pairing,
       // and places each suggestion into a ListTile row.
@@ -111,6 +133,14 @@ class _GameSelectionPageState extends State<GameSelectionPage> {
         final index = i ~/ 2;
         return _buildRow(_games[index]);
       }
+    );
+
+    return Column (
+      children: <Widget>[
+        gameListTitle,
+        SizedBox(height:8.0),
+        gameList
+      ]
     );
   }
 

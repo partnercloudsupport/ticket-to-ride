@@ -7,6 +7,7 @@ import 'global_context_widget.dart';
 
 void main() async {
   runApp(new TicketToRideApp());
+  //runApp(DerpyTestDriver());
 }
 
 class TicketToRideApp extends StatelessWidget {
@@ -22,6 +23,22 @@ class TicketToRideApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
          // '/login_page': (BuildContext context) => new ProjectViewPage(title: 'No Project Selected'),
         },
+      )
+    );
+  }
+}
+
+class DerpyTestDriver extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return GlobalContext(
+      child: MaterialApp(
+        title: 'Ticket to Ride Derpy Test Driver',
+        theme: ticketToRideTheme,
+        home: GameSelectionPage(title: 'Ticket to Ride Derpy Test Driver'),
+        routes: <String, WidgetBuilder> {
+        }
       )
     );
   }
