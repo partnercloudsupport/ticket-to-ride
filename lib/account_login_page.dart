@@ -18,7 +18,7 @@ class _AccountLoginPageState extends State<AccountLoginPage> {
 
       // save data here
 
-      Navigator.of(context).pushNamed('/game_list');
+      Navigator.of(context).pushNamed('/game_selection');
     }
   }
 
@@ -28,7 +28,7 @@ class _AccountLoginPageState extends State<AccountLoginPage> {
 
       // save data here
 
-      Navigator.of(context).pushNamed('/game_list');
+      Navigator.of(context).pushNamed('/game_selection');
     }
   }
 

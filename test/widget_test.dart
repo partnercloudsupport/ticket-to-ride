@@ -10,16 +10,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ticket_to_ride/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('GameSelection smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(new MyApp());
+    await tester.pumpWidget(new DerpyTestDriver());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
     expect(find.text('1'), findsNothing);
 
     // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    await tester.tap(find.byElementPredicate(
+      (Element element) => element is MaterialButton, description: '$MaterialButton button'
+    ));
     await tester.pump();
 
     // Verify that our counter has incremented.
