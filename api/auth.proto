@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package auth;
+
+option java_package = "com.wwttr.auth";
+option java_outer_classname = "Api";
+option java_generic_services = true;
+
+service AuthService {
+  rpc Login (LoginAccountRequest) returns (LoginResponse);
+  rpc Register (LoginAccountRequest) returns (LoginResponse);
+}
+
+message Account {
+  // A unique identifier for this account.
+  // Server assigned. Required when updating.
+  string id = 1;
+  // The username used to login to this account.
+  // Required. Cannot be updated. Must be unique.
+  string username = 2;
+  // The password used to login to this account.
+  // Input only. Required. Cannot be updated.
+  string password = 3;
+}
+
+message LoginAccountRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string user_id = 1;
+}
+
