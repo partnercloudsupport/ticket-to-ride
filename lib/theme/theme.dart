@@ -6,12 +6,12 @@ final ThemeData ticketToRideTheme = _buildTicketToRideTheme();
 ThemeData _buildTicketToRideTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
-    accentColor: playbackOrange400,
-    primaryColor: playbackOrange400,
-    buttonColor: playbackOrange400,
+    accentColor: ttrGold,
+    primaryColor: ttrGold,
+    buttonColor: ttrGold,
     scaffoldBackgroundColor: playbackBackgroundWhite,
     cardColor: playbackBackgroundWhite,
-    textSelectionColor: playbackOrange400,
+    textSelectionColor: ttrGold,
     errorColor: playbackErrorRed,
     //TODO: Add the text themes (103)
     //TODO: Add the icon themes (103)

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 // const kShrinePink50 = const Color(0xFFFEEAE6);
 // const kShrinePink100 = const Color(0xFFFEDBD0);
 // const kShrinePink300 = const Color(0xFFFBB8AC);
-const playbackOrange400 = const Color(0xFFF44643);
+const ttrBlack400 = const Color(0xFF000000);
+const ttrGold = const Color(0xFFffbf00);
 
 const playbackTurquoise400 = const Color(0xFF1AA6B7);
 
