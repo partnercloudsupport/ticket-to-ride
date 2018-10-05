@@ -13,9 +13,9 @@ export 'auth.pb.dart';
 export 'game.pb.dart';
 export 'health.pb.dart';
 
-final authProxy = AuthServiceApi(ClientProxy("auth", "http://localhost:8080/"));
-final gameProxy = GameServiceApi(ClientProxy("game", "http://localhost:8080/"));
-final healthProxy = HealthServiceApi(ClientProxy("health", "http://localhost:8080/"));
+final authProxy = AuthServiceApi(ClientProxy("auth", "http://35.188.56.148/"));
+final gameProxy = GameServiceApi(ClientProxy("game", "http://35.188.56.148/"));
+final healthProxy = HealthServiceApi(ClientProxy("health", "http://35.188.56.148/"));
 
 class ClientProxy extends RpcClient {
 
