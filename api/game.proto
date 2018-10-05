@@ -7,8 +7,9 @@ option java_outer_classname = "Api";
 option java_generic_services = true;
 
 service GameService {
-  rpc CreateGame (CreateGameRequest) returns (Game);
-  rpc UpdateGame (UpdateGameRequest) returns (Game);
+  rpc CreateGame (CreateGameRequest) returns (CreateResponse);
+  rpc JoinGame (JoinGameRequest) returns (JoinGameResponse);
+  rpc LeaveGame (LeaveGameRequest) returns (Empty);
   rpc DeleteGame (DeleteGameRequest) returns (Empty);
   rpc GetGame (GetGameRequest) returns (Game);
   rpc ListGames (ListGamesRequest) returns (ListGamesResponse);
@@ -17,17 +18,30 @@ service GameService {
 message Game {
   // The unique identifier of the game.
   // Server assigned. Required when updating.
-  int32 id = 1;
+  string game_id = 1;
   // The name displayed to users for the game.
   // Required.
   string display_name = 2;
   // The maximum number of users allowed to join this game.
   // Defaults to 6. Must be in the range [2, 6].
-  int32 max_users = 3;
+  int32 max_players = 3;
   // The game owner
   // Required.
-  int32 host_user_id = 4;
-  
+  string host_user_id = 4;
+  //list of players in games
+  //can be null
+  repeated string player_ids = 5;
+  //current status of the game
+  //when created, it should be PRE
+  //Required
+  enum status{
+    UNKNOWN = 0;
+    PRE = 1;
+    STARTED = 2;
+    FINISHED = 3;
+  }
+
+
 
   //List of players currently in game
   // Required
@@ -37,6 +51,19 @@ message Game {
   //status....
 
 }
+
+message JoinGameRequest {
+
+}
+
+message LeaveGameRequest {
+
+}
+
+message JoinGameResponse {
+
+}
+
 
 message CreateGameRequest {
   // The game to create.
@@ -72,3 +99,27 @@ message ListGamesResponse {
 }
 
 message Empty {}
+
+message CreateResponse {
+	//The display name for the game
+	string game_name =1;
+	//Current number of players in the game
+	int32 total_players = 2;
+
+}
+
+message DeleteResponse {
+	//The display name for the game
+	string game_name =1;
+	//Current number of players in the game
+	repeated int32 orphaned_users = 2;
+
+}
+
+message JoinResponse {
+	//The display name for the game
+	string game_name =1;
+	//Current number of players in the game
+	int32 total_players = 2;
+
+}
