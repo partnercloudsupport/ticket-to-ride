@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_to_ride/api/api.dart' as api;
+import 'package:protobuf/protobuf.dart';
 
 class AccountLoginPage extends StatefulWidget {
   AccountLoginPage({Key key, this.title}) : super(key: key);
@@ -16,9 +18,21 @@ class _AccountLoginPageState extends State<AccountLoginPage> {
     if (form.validate()) {
       form.save();
 
-      // save data here
+      var ctx = ClientContext();
 
-      Navigator.of(context).pushNamed('/game_selection');
+      try {
+        var request = new api.LoginAccountRequest();
+        request.username = _login.username;
+        request.password = _login.password;
+        var response = await api.authProxy.login(ctx, request);
+
+        print(response);
+
+        Navigator.of(context).pushNamed('/game_selection');
+
+      } catch(error) {
+        print(error);
+      }
     }
   }
 
@@ -36,89 +50,98 @@ class _AccountLoginPageState extends State<AccountLoginPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Container(
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage("images/background.jpg"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        padding: new EdgeInsets.all(30.0),
-        child: Container(
+      // resizeToAvoidBottomPadding: false,
+      body: new Stack(
+      children: <Widget>[
+        new Container(
           decoration: new BoxDecoration(
             image: new DecorationImage(
-              image: new AssetImage("images/ticket.png"),
-              fit: BoxFit.contain,
-            ),
-          ),
-          padding: new EdgeInsets.only(top: 350.0, right: 220.0, bottom: 20.0, left: 210.0,),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                TextFormField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: 'Username',
-                  ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please your username.';
-                    }
-                  },
-                  onSaved: (String value) {
-                    _login.username = value;
-                  }
-                ),
-                TextFormField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password'
-                  ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter your password.';
-                    }
-                  },
-                  onSaved: (String value) {
-                    _login.password = value;
-                  }
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: RaisedButton(
-                        onPressed: () {_accountLogin(_formKey.currentState);},
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: RaisedButton(
-                        onPressed: () {_accountRegister(_formKey.currentState);},
-                        child: Text(
-                          'Register',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]
-                )
-              ],
+              image: new AssetImage("images/background.jpg"),
+              fit: BoxFit.cover,
             ),
           ),
         ),
-      ),
+        ListView (
+          // reverse: true,
+          padding: new EdgeInsets.all(50.0),
+          children: [
+            Container(
+            decoration: new BoxDecoration(
+              image: new DecorationImage(
+                image: new AssetImage("images/ticket.png"),
+                fit: BoxFit.contain,
+              ),
+            ),
+            padding: new EdgeInsets.only(top: 240.0, right: 220.0, bottom: 50.0, left: 210.0,),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  TextFormField(
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      labelText: 'Username',
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please your username.';
+                      }
+                    },
+                    onSaved: (String value) {
+                      _login.username = value;
+                    }
+                  ),
+                  TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Password'
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter your password.';
+                      }
+                    },
+                    onSaved: (String value) {
+                      _login.password = value;
+                    }
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: RaisedButton(
+                          onPressed: () {_accountLogin(_formKey.currentState);},
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: RaisedButton(
+                          onPressed: () {_accountRegister(_formKey.currentState);},
+                          child: Text(
+                            'Register',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]
+                  )
+                ],
+              ),
+            ),
+          )]
+        )
+      ]
+      )
     );
   }
 }
