@@ -5,13 +5,8 @@ import 'package:protobuf/protobuf.dart';
 void main() {
   test('successful request', () async {
     var ctx = ClientContext();
-    var health;
-    try {
-      health = await api.healthProxy.getHealth(ctx, api.GetHealthRequest());
-    }
-    catch (e) {
-      print(e.code);
-    }
+    var req = api.GetHealthRequest();
+    var health = await api.healthProxy.getHealth(ctx, req);
     expect(api.Health_Status.READY, health.status);
   });
 }

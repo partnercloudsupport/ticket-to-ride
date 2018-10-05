@@ -36,3 +36,4 @@ abstract class AuthServiceBase extends GeneratedService {
   Map<String, dynamic> get $json => AuthService$json;
   Map<String, Map<String, dynamic>> get $messageJson => AuthService$messageJson;
 }
+
