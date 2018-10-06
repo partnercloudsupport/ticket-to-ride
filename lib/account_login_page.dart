@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:protobuf/protobuf.dart';
+import 'global_context_widget.dart';
 
 class AccountLoginPage extends StatefulWidget {
   AccountLoginPage({Key key, this.title}) : super(key: key);
@@ -26,12 +27,12 @@ class _AccountLoginPageState extends State<AccountLoginPage> {
         request.password = _login.password;
         var response = await api.authProxy.login(ctx, request);
 
-        print(response);
-
+        GlobalContext.of(context).onUserIdChange(response.userId);
         Navigator.of(context).pushNamed('/game_selection');
 
       } catch(error) {
-        print(error);
+        print(error.code);
+        print(error.message);
       }
     }
   }
@@ -40,9 +41,22 @@ class _AccountLoginPageState extends State<AccountLoginPage> {
     if (form.validate()) {
       form.save();
 
-      // save data here
+      var ctx = ClientContext();
 
-      Navigator.of(context).pushNamed('/game_selection');
+      try {
+        var request = new api.LoginAccountRequest();
+        request.username = _login.username;
+        request.password = _login.password;
+        var response = await api.authProxy.register(ctx, request);
+
+        GlobalContext.of(context).onUserIdChange(response.userId);
+        Navigator.of(context).pushNamed('/game_selection');
+
+      } catch(error) {
+        print(error.code);
+        print(error.message);
+      }
+      
     }
   }
 

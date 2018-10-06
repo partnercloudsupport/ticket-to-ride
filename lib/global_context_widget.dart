@@ -15,15 +15,24 @@ class GlobalContext extends StatefulWidget {
 }
 
 class GlobalContextState extends State<GlobalContext> {
-  // Project _currentProject;
+  String _currentGameId;
+  String _userId;
+
   // only expose a getter to prevent bad usage
-  // Project get currentProject => _currentProject;
-  //
-  // void onCurrentProjectChange(Project newValue) {
-  //   setState(() {
-  //     _currentProject = newValue;
-  //   });
-  // }
+  String get currentGameId => _currentGameId;
+  String get userId => _userId;
+
+  void onCurrentGameIdChange(String newValue) {
+    setState(() {
+      _currentGameId = newValue;
+    });
+  }
+
+  void onUserIdChange(String newValue) {
+    setState(() {
+      _userId = newValue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
