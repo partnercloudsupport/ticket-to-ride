@@ -20,6 +20,8 @@ class _GameListFragmentState extends State<GameListFragment> {
 
   final _formKey = GlobalKey<FormState>();
 
+  final TextStyle _lightStyle = TextStyle(color: Colors.white);
+
   @override
   Widget build(BuildContext context) {
 
@@ -46,22 +48,21 @@ class _GameListFragmentState extends State<GameListFragment> {
         //leading: const Icon(),
         title: Text(
           game.displayName,
-          style:TextStyle(
-            color: Colors.white,
-          ),
         ),
         subtitle:  Column(
           children: [
             Text('Host: ' + game.hostPlayerId.toString()),
-            Text(' Waiting for ' + ((game.maxPlayers - game.playerIds.length).toString() + ' players')),
-          ]
+            Text('Waiting for ' + ((game.maxPlayers - game.playerIds.length).toString() + ' players')),
+          ],
+          crossAxisAlignment: CrossAxisAlignment.start,
         ),
         trailing: joinButton,
       );
 
     }
 
-    var gameList = (this.widget.pageState.games.length == 0) ? Text('No active games to show.') : 
+    var gameList = (this.widget.pageState.games.length == 0) ? 
+      Text('No active games to show.') : 
       Flexible(
         child: ListView.builder(
           itemCount: this.widget.pageState.games.length,

@@ -72,34 +72,42 @@ class GameSelectionPageState extends State<GameSelectionPage> {
           var response = await api.gameProxy.createGame(ctx,createGameRequest);
 
           GlobalContext.of(context).onCurrentGameIdChange(response.gameId);
+          print('just created game ' + response.gameId);
           Navigator.of(context).pushNamed('/lobby_view');
 
         } catch(error) {
           print(error.code);
           print(error.message);
         }
+
+
     }
   }
 
   createPlayer(form) async {
-    print('starting createPlayer');
     //if (form.validate()) {
       //form.save();
 
       var ctx = ClientContext();
 
       try {
+        print('querying game ' + createPlayerRequest.gameId);
         var response = await api.gameProxy.createPlayer(ctx, createPlayerRequest);
 
-        GetPlayerRequest getPlayerRequest = GetPlayerRequest();
-        getPlayerRequest.playerId = response.playerId;
+        try {
+          GetPlayerRequest getPlayerRequest = GetPlayerRequest();
+          getPlayerRequest.playerId = response.playerId;
+          var playerResponse = await api.gameProxy.getPlayer(ctx, getPlayerRequest);
 
-        var playerResponse = await api.gameProxy.getPlayer(ctx, getPlayerRequest);
+          print(playerResponse.gameId);
 
-        print(playerResponse.gameId);
+          GlobalContext.of(context).onCurrentGameIdChange(playerResponse.gameId);
+          Navigator.of(context).pushNamed('/lobby_view');
+        } catch(error) {
+            print(error.code);
+            print(error.message);
+        }
 
-        GlobalContext.of(context).onCurrentGameIdChange(playerResponse.gameId);
-        Navigator.of(context).pushNamed('/lobby_view');
       } catch(error) {
           switch(error.code) {
             case api.Code.INVALID_ARGUMENT:
@@ -112,6 +120,7 @@ class GameSelectionPageState extends State<GameSelectionPage> {
               _showErrorToast('UNKNOWN ERROR');
           }
       }
+
     //}
   }
 
@@ -119,21 +128,36 @@ class GameSelectionPageState extends State<GameSelectionPage> {
   @override
   Widget build(BuildContext context) {
 
+    var _background = Container(
+      decoration: new BoxDecoration(
+        image: new DecorationImage(
+          image: new AssetImage("images/background2.jpg"),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+
+
     getGameList();
 
     return Scaffold(
       appBar: new AppBar(
         title: new Text('Game Selection'),
       ),
-      body: Row(
-        children: [
-          Flexible(
-            child: CreateGameFragment(this),
-          ),
-          Flexible(
-            child: GameListFragment(this),
+      body: Stack(
+        children: <Widget> [
+          _background,
+          Row(
+            children: [
+              Flexible(
+                child: CreateGameFragment(this),
+              ),
+              Flexible(
+                child: GameListFragment(this),
+              )
+            ] 
           )
-        ] 
+        ]
       )
     );
   }
