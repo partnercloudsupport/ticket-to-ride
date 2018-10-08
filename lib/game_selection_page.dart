@@ -77,9 +77,12 @@ class GameSelectionPageState extends State<GameSelectionPage> {
       try {
         var response = await api.gameProxy.createPlayer(ctx, createPlayerRequest);
 
-        //GetPlayerRequest getPlayerRequest = GetPlayerRequest(response.playerId);
-        // ??? get player, get gameId from player
-        GlobalContext.of(context).onCurrentGameIdChange(response.playerId);
+        GetPlayerRequest getPlayerRequest = GetPlayerRequest();
+        getPlayerRequest.playerId = response.playerId;
+
+        var playerResponse = await api.gameProxy.getPlayer(ctx, getPlayerRequest);
+
+        GlobalContext.of(context).onCurrentGameIdChange(playerResponse.gameId);
         Navigator.of(context).pushNamed('/lobby_view');
       } catch(error) {
         print(error.code);
