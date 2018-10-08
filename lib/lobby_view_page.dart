@@ -33,7 +33,7 @@ class _LobbyViewPageState extends State<LobbyViewPage> {
       var game = new api.Game();
       game.displayName = 'Woodfields Warriors';
       game.maxPlayers = 5;
-      game.hostUserId = '123';
+      game.hostPlayerId = '123';
 
       return game;
       return response;
