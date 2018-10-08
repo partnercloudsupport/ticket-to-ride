@@ -30,8 +30,7 @@ class GameSelectionPage extends StatefulWidget {
 
 class GameSelectionPageState extends State<GameSelectionPage> {
 
-  // ??? make CreateGameRequest() here for consistency
-  var newGame = api.Game();
+  var createGameRequest = api.CreateGameRequest();
   var createPlayerRequest = api.CreatePlayerRequest();
   
   List<api.Game> games = List<api.Game>();
@@ -56,12 +55,9 @@ class GameSelectionPageState extends State<GameSelectionPage> {
         var ctx = ClientContext();
 
         try {
-          var request = api.CreateGameRequest();
-          request.game = newGame;
-          var response = await api.gameProxy.createGame(ctx,request);
+          var response = await api.gameProxy.createGame(ctx,createGameRequest);
 
-          // ??? should be gameID?
-          GlobalContext.of(context).onCurrentGameIdChange(response.gameName);
+          GlobalContext.of(context).onCurrentGameIdChange(response.gameId);
           Navigator.of(context).pushNamed('/lobby_view');
 
         } catch(error) {
@@ -80,7 +76,9 @@ class GameSelectionPageState extends State<GameSelectionPage> {
       try {
         var response = await api.gameProxy.createPlayer(ctx, createPlayerRequest);
 
-        GlobalContext.of(context).onCurrentGameIdChange(response.gameId);
+
+        // ??? get player, get gameId from player
+        GlobalContext.of(context).onCurrentGameIdChange(response.playerId);
         Navigator.of(context).pushNamed('/lobby_view');
       } catch(error) {
         print(error.code);

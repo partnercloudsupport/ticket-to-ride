@@ -26,18 +26,27 @@ class ClientProxy extends RpcClient {
 
   @override
   Future<T> invoke<T extends GeneratedMessage>(ClientContext ctx, String serviceName, String methodName, GeneratedMessage req, T emptyResponse) async {
+    var request = Request();
+    Response response;
     try {
-      var request = Request();
       request.method = methodName;
       request.service = package + "." + serviceName;
       request.payload = req.writeToBuffer();
-      print(request.service);
       var httpResponse = await http.post(url, body: request.writeToBuffer());
-      var response = Response.fromBuffer(httpResponse.bodyBytes);
-      if (response.code != Code.OK) {
-        throw ApiError(response.code, response.message);
-      }
+      response = Response.fromBuffer(httpResponse.bodyBytes);
+    }
+    catch (err) {
+      throw ApiError(Code.UNAVAILABLE, err.toString());
+    }
 
+    print(response);
+
+    if (response.code != Code.OK) {
+      throw ApiError(response.code, response.message);
+    }
+
+    try {
+      print("HERE");
       emptyResponse.mergeFromBuffer(response.payload);
       return emptyResponse;
     }
