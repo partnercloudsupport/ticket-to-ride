@@ -53,7 +53,7 @@ class Request extends $pb.GeneratedMessage {
 
 class Response extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Response', package: const $pb.PackageName('api'))
-    ..e<Response_Code>(1, 'code', $pb.PbFieldType.OE, Response_Code.UNSPECIFIED, Response_Code.valueOf, Response_Code.values)
+    ..e<Code>(1, 'code', $pb.PbFieldType.OE, Code.UNSPECIFIED, Code.valueOf, Code.values)
     ..a<List<int>>(2, 'payload', $pb.PbFieldType.OY)
     ..aOS(3, 'message')
     ..hasRequiredFields = false
@@ -73,8 +73,8 @@ class Response extends $pb.GeneratedMessage {
     if (v is! Response) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
-  Response_Code get code => $_getN(0);
-  set code(Response_Code v) { setField(1, v); }
+  Code get code => $_getN(0);
+  set code(Code v) { setField(1, v); }
   bool hasCode() => $_has(0);
   void clearCode() => clearField(1);
 
