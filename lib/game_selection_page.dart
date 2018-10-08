@@ -85,9 +85,6 @@ class GameSelectionPageState extends State<GameSelectionPage> {
   }
 
   createPlayer(form) async {
-    //if (form.validate()) {
-      //form.save();
-
       var ctx = ClientContext();
 
       try {
@@ -120,8 +117,6 @@ class GameSelectionPageState extends State<GameSelectionPage> {
               _showErrorToast('UNKNOWN ERROR');
           }
       }
-
-    //}
   }
 
 
@@ -147,18 +142,23 @@ class GameSelectionPageState extends State<GameSelectionPage> {
       body: Stack(
         children: <Widget> [
           _background,
-          Row(
-            children: [
-              Flexible(
-                child: CreateGameFragment(this),
-              ),
-              Flexible(
-                child: GameListFragment(this),
+          ListView(
+            children:<Widget>[
+              Row(
+                children: [
+                  Flexible(
+                    child: CreateGameFragment(this),
+                  ),
+                  Flexible(
+                    child: GameListFragment(this),
+                  )
+                ] 
               )
-            ] 
+            ]
           )
         ]
-      )
+      ),
+      resizeToAvoidBottomPadding: false,
     );
   }
 }
