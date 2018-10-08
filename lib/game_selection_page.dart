@@ -3,10 +3,9 @@ import 'global_context_widget.dart';
 
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:protobuf/protobuf.dart';
-import 'api/game.pb.dart';
 
-import 'fragments/create_game_fragment.dart';
 import 'fragments/game_list_fragment.dart';
+import 'fragments/create_game_fragment.dart';
 
 
 
@@ -93,6 +92,7 @@ class GameSelectionPageState extends State<GameSelectionPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: new AppBar(
         title: new Text('Game Selection'),
