@@ -52,7 +52,7 @@ class _GameListFragmentState extends State<GameListFragment> {
         ),
         subtitle:  Column(
           children: [
-            Text('Host: ' + game.hostUserId.toString()),
+            Text('Host: ' + game.hostPlayerId.toString()),
             Text(' Waiting for ' + ((game.maxPlayers - game.playerIds.length).toString() + ' players')),
           ]
         ),

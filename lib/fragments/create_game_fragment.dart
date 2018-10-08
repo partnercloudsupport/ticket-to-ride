@@ -34,7 +34,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
         }
       },
       onSaved: (String value) {
-        this.widget.pageState.newGame.displayName = value;
+        this.widget.pageState.createGameRequest.displayName = value;
       }         
     );          
 
@@ -49,7 +49,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
       }).toList(),
       onChanged: (int value) { 
         maxPlayersSelected = value;
-        this.widget.pageState.newGame.maxPlayers = maxPlayersSelected;
+        this.widget.pageState.createGameRequest.maxPlayers = maxPlayersSelected;
         setState(() {});
       },
     );
@@ -58,7 +58,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         onPressed: () {
-          this.widget.pageState.newGame.hostUserId = GlobalContext.of(context).userId;
+          this.widget.pageState.createGameRequest.userId = GlobalContext.of(context).userId;
           this.widget.pageState.createGame(_formKey.currentState);
         },
         child: Text(
