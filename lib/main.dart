@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/theme/theme.dart';
-import 'package:ticket_to_ride/account_login_page.dart';
 import 'package:ticket_to_ride/game_selection_page.dart';
 import 'package:ticket_to_ride/lobby_view_page.dart';
 import 'package:ticket_to_ride/global_context_widget.dart';
 
+import 'package:ticket_to_ride/fragments/account_login_fragment.dart';
+
+import 'package:ticket_to_ride/account_login_presenter.dart';
 
 void main() async {
   runApp(new TicketToRideApp());
@@ -19,9 +21,9 @@ class TicketToRideApp extends StatelessWidget {
       child: new MaterialApp(
         title: 'Ticket to Ride',
         theme: ticketToRideTheme,
-        home: new AccountLoginPage(title: 'Ticket to Ride'),//new LobbyViewPage(title: 'Game Lobby'), //
+        home: new AccountLoginFragment(AccountLoginPresenter(), title: 'Login'),
         routes: <String, WidgetBuilder>{
-         '/login_page': (BuildContext context) => new AccountLoginPage(title: 'Login'),
+         '/login_page': (BuildContext context) => new AccountLoginFragment(AccountLoginPresenter(), title: 'Login'),
          '/game_selection': (BuildContext context) => new GameSelectionPage(title: 'Game Selection'),
          '/lobby_view': (BuildContext context) => new LobbyViewPage(title: 'Game Lobby'),
         },
