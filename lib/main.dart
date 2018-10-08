@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'theme/theme.dart';
-import 'account_login_page.dart';
-import 'game_selection_page.dart';
-import 'lobby_view_page.dart';
-import 'global_context_widget.dart';
+import 'package:ticket_to_ride/theme/theme.dart';
+import 'package:ticket_to_ride/account_login_page.dart';
+import 'package:ticket_to_ride/game_selection_page.dart';
+import 'package:ticket_to_ride/lobby_view_page.dart';
+import 'package:ticket_to_ride/global_context_widget.dart';
 
 
 void main() async {
@@ -23,7 +23,7 @@ class TicketToRideApp extends StatelessWidget {
         home: new LobbyViewPage(title: 'Game Lobby'), //new AccountLoginPage(title: 'Ticket to Ride'),//
         routes: <String, WidgetBuilder>{
          '/login_page': (BuildContext context) => new AccountLoginPage(title: 'Login'),
-         '/game_selection': (BuildContext context) => new GameSelectionPage(title: 'Current Games'),
+         '/game_selection': (BuildContext context) => new GameSelectionPage(title: 'Game Selection'),
          '/lobby_view': (BuildContext context) => new LobbyViewPage(title: 'Game Lobby'),
         },
       )
@@ -41,6 +41,7 @@ class DerpyTestDriver extends StatelessWidget {
         theme: ticketToRideTheme,
         home: GameSelectionPage(title: 'Ticket to Ride Derpy Test Driver'),
         routes: <String, WidgetBuilder> {
+          '/lobby_view': (BuildContext context) => new LobbyViewPage(title: 'Game Lobby'),
         }
       )
     );

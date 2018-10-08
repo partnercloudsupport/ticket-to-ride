@@ -50,8 +50,11 @@ class Player extends $pb.GeneratedMessage {
   void clearGameId() => clearField(3);
 }
 
+// allison edited this for temp fix to use in game_selection_page (player.proto not yet finished)
 class CreatePlayerRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('CreatePlayerRequest', package: const $pb.PackageName('auth'))
+    ..aOS(1, 'userId')
+    ..aOS(2, 'gameId')
     ..hasRequiredFields = false
   ;
 
@@ -68,7 +71,17 @@ class CreatePlayerRequest extends $pb.GeneratedMessage {
   static void $checkItem(CreatePlayerRequest v) {
     if (v is! CreatePlayerRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
-}
+
+  String get userId => $_getS(0, '');
+  set userId(String v) { $_setString(0, v); }
+  bool hasUserId() => $_has(0);
+  void clearUserId() => clearField(1);
+
+  String get gameId => $_getS(1, '');
+  set gameId(String v) { $_setString(1, v); }
+  bool hasGameId() => $_has(1);
+  void clearGameId() => clearField(2);
+} 
 
 class UpdatePlayerRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('UpdatePlayerRequest', package: const $pb.PackageName('auth'))
@@ -211,4 +224,3 @@ class PlayerServiceApi {
     return _client.invoke<ListPlayersResponse>(ctx, 'PlayerService', 'ListPlayers', request, emptyResponse);
   }
 }
-
