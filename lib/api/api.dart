@@ -39,14 +39,11 @@ class ClientProxy extends RpcClient {
       throw ApiError(Code.UNAVAILABLE, err.toString());
     }
 
-    print(response);
-
     if (response.code != Code.OK) {
       throw ApiError(response.code, response.message);
     }
 
     try {
-      print("HERE");
       emptyResponse.mergeFromBuffer(response.payload);
       return emptyResponse;
     }
