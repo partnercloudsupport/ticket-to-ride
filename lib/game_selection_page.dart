@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
-import 'model/game.dart';
+import 'global_context_widget.dart';
+
+import 'package:ticket_to_ride/api/api.dart' as api;
+import 'package:protobuf/protobuf.dart';
+import 'api/game.pb.dart';
+
+import 'fragments/create_game_fragment.dart';
+import 'fragments/game_list_fragment.dart';
+
+
 
 class GameSelectionPage extends StatefulWidget {
   GameSelectionPage({Key key, this.title}) : super(key: key);
@@ -15,144 +24,89 @@ class GameSelectionPage extends StatefulWidget {
 
   final String title;
 
+
   @override
-  _GameSelectionPageState createState() => new _GameSelectionPageState();
+  GameSelectionPageState createState() => new GameSelectionPageState();
 }
 
-class _GameSelectionPageState extends State<GameSelectionPage> {
-  List<Game> _games;
-  String _gameDisplayName;
-  int _maxPlayers;
+class GameSelectionPageState extends State<GameSelectionPage> {
 
-  final _biggerFont = const TextStyle(fontSize: 18.0);
+  // ??? make CreateGameRequest() here for consistency
+  var newGame = api.Game();
+  var createPlayerRequest = api.CreatePlayerRequest();
+  
+  List<api.Game> games = List<api.Game>();
+
+  getGameList() async {
+    var ctx = ClientContext();
+    try {
+      var request = api.ListGamesRequest();
+      var response = await api.gameProxy.listGames(ctx, request);
+
+      games = response.games;
+    } catch(error) {
+      print(error.code);
+      print(error.message);
+    }
+  }
+
+  createGame(form) async {
+    if (form.validate()) {
+        form.save();
+
+        var ctx = ClientContext();
+
+        try {
+          var request = api.CreateGameRequest();
+          request.game = newGame;
+          var response = await api.gameProxy.createGame(ctx,request);
+
+          // ??? should be gameID?
+          GlobalContext.of(context).onCurrentGameIdChange(response.gameName);
+          Navigator.of(context).pushNamed('/lobby_view');
+
+        } catch(error) {
+          print(error.code);
+          print(error.message);
+        }
+      }
+  }
+
+  createPlayer(form) async {
+    if (form.validate()) {
+      form.save();
+
+      var ctx = ClientContext();
+
+      try {
+        var response = await api.gameProxy.createPlayer(ctx, createPlayerRequest);
+
+        GlobalContext.of(context).onCurrentGameIdChange(response.gameId);
+        Navigator.of(context).pushNamed('/lobby_view');
+      } catch(error) {
+        print(error.code);
+        print(error.message);
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
-
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildCreateGame(),
-              _buildGameList()
-            ]
+    return Scaffold(
+      appBar: new AppBar(
+        title: new Text('Game Selection'),
+      ),
+      body: Row(
+        children: [
+          Flexible(
+            child: CreateGameFragment(this),
+          ),
+          Flexible(
+            child: GameListFragment(this),
           )
-        ),
+        ] 
       )
-    );
-
-  }
-
-
-  Widget _buildCreateGame() {
-
-    final createTitle = Text(
-      'Create a new Game:',
-    );
-
-    final displayName = TextFormField(
-      initialValue: 'The A Game',
-      decoration: InputDecoration(
-        hintText: 'Game Display Name',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      )
-    );
-
-    final maxPlayers = DropdownButton<int>(
-      items:<int>[2, 3, 4, 5].map((int value) {
-        return DropdownMenuItem<int>(
-          value:value,
-          child: Text("$value"),
-        );
-      }).toList(),
-      onChanged: (int value) { setState((){ _maxPlayers = value;}); },
-      hint: Text('Max # of Players')
-    );
-
-
-    final createButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: Material(
-        borderRadius: BorderRadius.circular(30.0),
-        shadowColor: Colors.lightBlueAccent.shade100,
-        elevation: 5.0,
-        child: MaterialButton(
-          minWidth: 200.0,
-          height: 42.0,
-          onPressed: () {
-            // TODO add lobby transition
-            //Navigator.of(context).pushNamed(LobbyPage.tag);
-          },
-          color: Colors.lightBlueAccent,
-          child: Text('Create', style: TextStyle(color: Colors.white)),
-        ),
-      ),
-    );
-
-    return Column(
-      children: <Widget>[
-        createTitle,
-        SizedBox(height:30.0),
-        displayName,
-        SizedBox(height:8.0),
-        createButton
-      ]
-    );
-  }
-
-
-  Widget _buildGameList() {
-    final gameListTitle = Text(
-      'Join a Created Game:',
-    );
-
-    // TODO get current games from server
-
-    final gameList = ListView.builder(
-      padding: const EdgeInsets.all(16.0),
-      // The itemBuilder callback is called once per suggested word pairing,
-      // and places each suggestion into a ListTile row.
-      // For even rows, the function adds a ListTile row for the word pairing.
-      // For odd rows, the function adds a Divider widget to visually
-      // separate the entries. Note that the divider may be difficult
-      // to see on smaller devices.
-      itemBuilder: (context, i) {
-        // Add a one-pixel-high divider widget before each row in theListView.
-        if (i.isOdd) return Divider();
-
-        // The syntax "i ~/ 2" divides i by 2 and returns an integer result.
-        // For example: 1, 2, 3, 4, 5 becomes 0, 1, 1, 2, 2.
-        // This calculates the actual number of word pairings in the ListView,
-        // minus the divider widgets.
-        final index = i ~/ 2;
-        return _buildRow(_games[index]);
-      }
-    );
-
-    return Column (
-      children: <Widget>[
-        gameListTitle,
-        SizedBox(height:8.0),
-        gameList
-      ]
-    );
-  }
-
-  Widget _buildRow(Game game) {
-    return ListTile(
-      title: Text(
-        game.displayName,
-        style:_biggerFont,
-      ),
-      subtitle:  Text(
-        game.hostUserID.toString(),
-      ),
     );
   }
 }

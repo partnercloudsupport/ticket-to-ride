@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'model/game.dart';
 
 class LobbyViewPage extends StatefulWidget {
   LobbyViewPage({Key key, this.title}) : super(key: key);
