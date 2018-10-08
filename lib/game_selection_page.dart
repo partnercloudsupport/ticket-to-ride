@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'global_context_widget.dart';
 
 import 'package:ticket_to_ride/api/api.dart' as api;
+import 'api/game.pb.dart';
 import 'package:protobuf/protobuf.dart';
 
 import 'fragments/game_list_fragment.dart';
 import 'fragments/create_game_fragment.dart';
 
-
+import 'package:fluttertoast/fluttertoast.dart';
 
 class GameSelectionPage extends StatefulWidget {
   GameSelectionPage({Key key, this.title}) : super(key: key);
@@ -35,6 +36,17 @@ class GameSelectionPageState extends State<GameSelectionPage> {
   
   List<api.Game> games = List<api.Game>();
 
+  void _showErrorToast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        bgcolor: "#e74c3c",
+        textcolor: '#ffffff',
+        timeInSecForIos: 5,
+        gravity: ToastGravity.TOP
+    );
+  }
+
   getGameList() async {
     var ctx = ClientContext();
     try {
@@ -54,6 +66,8 @@ class GameSelectionPageState extends State<GameSelectionPage> {
 
         var ctx = ClientContext();
 
+        print(createGameRequest.displayName);
+
         try {
           var response = await api.gameProxy.createGame(ctx,createGameRequest);
 
@@ -61,10 +75,18 @@ class GameSelectionPageState extends State<GameSelectionPage> {
           Navigator.of(context).pushNamed('/lobby_view');
 
         } catch(error) {
-          print(error.code);
-          print(error.message);
+          switch(error.code) {
+            case api.Code.INVALID_ARGUMENT:
+              _showErrorToast('This game is full');
+              break;
+            case api.Code.NOT_FOUND:
+              _showErrorToast('This game no longer exists');
+              break;
+            default:
+              _showErrorToast('UNKNOWN ERROR');
+          }
         }
-      }
+    }
   }
 
   createPlayer(form) async {
@@ -76,9 +98,12 @@ class GameSelectionPageState extends State<GameSelectionPage> {
       try {
         var response = await api.gameProxy.createPlayer(ctx, createPlayerRequest);
 
+        GetPlayerRequest getPlayerRequest = GetPlayerRequest();
+        getPlayerRequest.playerId = response.playerId;
 
-        // ??? get player, get gameId from player
-        GlobalContext.of(context).onCurrentGameIdChange(response.playerId);
+        var playerResponse = await api.gameProxy.getPlayer(ctx, getPlayerRequest);
+
+        GlobalContext.of(context).onCurrentGameIdChange(playerResponse.gameId);
         Navigator.of(context).pushNamed('/lobby_view');
       } catch(error) {
         print(error.code);
@@ -90,6 +115,8 @@ class GameSelectionPageState extends State<GameSelectionPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    getGameList();
 
     return Scaffold(
       appBar: new AppBar(
