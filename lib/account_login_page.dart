@@ -22,10 +22,10 @@ class _AccountLoginPageState extends State<AccountLoginPage> {
         toastLength: Toast.LENGTH_LONG,
         bgcolor: "#e74c3c",
         textcolor: '#ffffff',
-        timeInSecForIos: 20,
+        timeInSecForIos: 5,
         gravity: ToastGravity.TOP
     );
-  }
+}
 
   _accountLogin(form) async {
     if (form.validate()) {
@@ -43,6 +43,17 @@ class _AccountLoginPageState extends State<AccountLoginPage> {
         Navigator.of(context).pushNamed('/game_selection');
 
       } catch(error) {
+        switch(error.code) {
+          case api.Code.NOT_FOUND:
+            _showErrorToast('Account does not exist');
+            break;
+          case api.Code.ACCESS_DENIED:
+            _showErrorToast('Incorrect password');
+            break;
+          default:
+            _showErrorToast('UNKNOWN ERROR');
+        }
+
         print(error.code);
         print(error.message);
       }
@@ -65,16 +76,16 @@ class _AccountLoginPageState extends State<AccountLoginPage> {
         Navigator.of(context).pushNamed('/game_selection');
 
       } catch(error) {
-        switch(error.code) {
-          case api.Code.NOT_FOUND:
-            _showErrorToast('Account does not exist');
-            break;
-          case api.Code.ACCESS_DENIED:
-            _showErrorToast('Incorrect password');
-            break;
-          default:
-            _showErrorToast('UNKNOWN ERROR');
-        }
+        // switch(error.code) {
+        //   case api.Code.NOT_FOUND:
+        //     _showErrorToast('Account does not exist');
+        //     break;
+        //   case api.Code.ACCESS_DENIED:
+        //     _showErrorToast('Incorrect password');
+        //     break;
+        //   default:
+        //     _showErrorToast('UNKNOWN ERROR');
+        // }
 
         print(error.code);
         print(error.message);
