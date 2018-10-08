@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/global_context_widget.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AccountLoginPage extends StatefulWidget {
   AccountLoginPage({Key key, this.title}) : super(key: key);
@@ -14,6 +15,17 @@ class AccountLoginPage extends StatefulWidget {
 class _AccountLoginPageState extends State<AccountLoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _login = Login();
+
+  void _showErrorToast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        bgcolor: "#e74c3c",
+        textcolor: '#ffffff',
+        timeInSecForIos: 20,
+        gravity: ToastGravity.TOP
+    );
+  }
 
   _accountLogin(form) async {
     if (form.validate()) {
@@ -53,6 +65,17 @@ class _AccountLoginPageState extends State<AccountLoginPage> {
         Navigator.of(context).pushNamed('/game_selection');
 
       } catch(error) {
+        switch(error.code) {
+          case api.Code.NOT_FOUND:
+            _showErrorToast('Account does not exist');
+            break;
+          case api.Code.ACCESS_DENIED:
+            _showErrorToast('Incorrect password');
+            break;
+          default:
+            _showErrorToast('UNKNOWN ERROR');
+        }
+
         print(error.code);
         print(error.message);
       }
