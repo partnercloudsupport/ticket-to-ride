@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:protobuf/protobuf.dart';
-import 'global_context_widget.dart';
+import 'package:ticket_to_ride/global_context_widget.dart';
 
 class AccountLoginPage extends StatefulWidget {
   AccountLoginPage({Key key, this.title}) : super(key: key);
@@ -56,7 +56,7 @@ class _AccountLoginPageState extends State<AccountLoginPage> {
         print(error.code);
         print(error.message);
       }
-      
+
     }
   }
 
