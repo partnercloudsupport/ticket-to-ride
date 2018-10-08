@@ -10,6 +10,8 @@ import 'dart:core' show int, bool, double, String, List, override;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'game.pbenum.dart';
+
 export 'game.pbenum.dart';
 
 class Game extends $pb.GeneratedMessage {
@@ -259,6 +261,76 @@ class CreatePlayerRequest extends $pb.GeneratedMessage {
   void clearGameId() => clearField(2);
 }
 
+class Player extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Player', package: const $pb.PackageName('game'))
+    ..aOS(1, 'id')
+    ..aOS(2, 'accountId')
+    ..aOS(3, 'gameId')
+    ..e<Player_Color>(4, 'color', $pb.PbFieldType.OE, Player_Color.UNKNOWN, Player_Color.valueOf, Player_Color.values)
+    ..hasRequiredFields = false
+  ;
+
+  Player() : super();
+  Player.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  Player.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  Player clone() => new Player()..mergeFromMessage(this);
+  Player copyWith(void Function(Player) updates) => super.copyWith((message) => updates(message as Player));
+  $pb.BuilderInfo get info_ => _i;
+  static Player create() => new Player();
+  static $pb.PbList<Player> createRepeated() => new $pb.PbList<Player>();
+  static Player getDefault() => _defaultInstance ??= create()..freeze();
+  static Player _defaultInstance;
+  static void $checkItem(Player v) {
+    if (v is! Player) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get id => $_getS(0, '');
+  set id(String v) { $_setString(0, v); }
+  bool hasId() => $_has(0);
+  void clearId() => clearField(1);
+
+  String get accountId => $_getS(1, '');
+  set accountId(String v) { $_setString(1, v); }
+  bool hasAccountId() => $_has(1);
+  void clearAccountId() => clearField(2);
+
+  String get gameId => $_getS(2, '');
+  set gameId(String v) { $_setString(2, v); }
+  bool hasGameId() => $_has(2);
+  void clearGameId() => clearField(3);
+
+  Player_Color get color => $_getN(3);
+  set color(Player_Color v) { setField(4, v); }
+  bool hasColor() => $_has(3);
+  void clearColor() => clearField(4);
+}
+
+class GetPlayerRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('GetPlayerRequest', package: const $pb.PackageName('game'))
+    ..aOS(1, 'playerId')
+    ..hasRequiredFields = false
+  ;
+
+  GetPlayerRequest() : super();
+  GetPlayerRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  GetPlayerRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  GetPlayerRequest clone() => new GetPlayerRequest()..mergeFromMessage(this);
+  GetPlayerRequest copyWith(void Function(GetPlayerRequest) updates) => super.copyWith((message) => updates(message as GetPlayerRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static GetPlayerRequest create() => new GetPlayerRequest();
+  static $pb.PbList<GetPlayerRequest> createRepeated() => new $pb.PbList<GetPlayerRequest>();
+  static GetPlayerRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static GetPlayerRequest _defaultInstance;
+  static void $checkItem(GetPlayerRequest v) {
+    if (v is! GetPlayerRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get playerId => $_getS(0, '');
+  set playerId(String v) { $_setString(0, v); }
+  bool hasPlayerId() => $_has(0);
+  void clearPlayerId() => clearField(1);
+}
+
 class Empty extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Empty', package: const $pb.PackageName('game'))
     ..hasRequiredFields = false
@@ -420,6 +492,10 @@ class GameServiceApi {
   Future<CreatePlayerResponse> createPlayer($pb.ClientContext ctx, CreatePlayerRequest request) {
     var emptyResponse = new CreatePlayerResponse();
     return _client.invoke<CreatePlayerResponse>(ctx, 'GameService', 'CreatePlayer', request, emptyResponse);
+  }
+  Future<Player> getPlayer($pb.ClientContext ctx, GetPlayerRequest request) {
+    var emptyResponse = new Player();
+    return _client.invoke<Player>(ctx, 'GameService', 'GetPlayer', request, emptyResponse);
   }
 }
 

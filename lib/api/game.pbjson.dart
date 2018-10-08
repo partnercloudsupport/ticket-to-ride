@@ -76,6 +76,37 @@ const CreatePlayerRequest$json = const {
   ],
 };
 
+const Player$json = const {
+  '1': 'Player',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'account_id', '3': 2, '4': 1, '5': 9, '10': 'accountId'},
+    const {'1': 'game_id', '3': 3, '4': 1, '5': 9, '10': 'gameId'},
+    const {'1': 'color', '3': 4, '4': 1, '5': 14, '6': '.game.Player.Color', '10': 'color'},
+  ],
+  '4': const [Player_Color$json],
+};
+
+const Player_Color$json = const {
+  '1': 'Color',
+  '2': const [
+    const {'1': 'UNKNOWN', '2': 0},
+    const {'1': 'RED', '2': 1},
+    const {'1': 'BLUE', '2': 2},
+    const {'1': 'GREEN', '2': 3},
+    const {'1': 'YELLOW', '2': 4},
+    const {'1': 'PURPLE', '2': 5},
+    const {'1': 'ORANGE', '2': 6},
+  ],
+};
+
+const GetPlayerRequest$json = const {
+  '1': 'GetPlayerRequest',
+  '2': const [
+    const {'1': 'player_id', '3': 1, '4': 1, '5': 9, '10': 'playerId'},
+  ],
+};
+
 const Empty$json = const {
   '1': 'Empty',
 };
@@ -120,6 +151,7 @@ const GameService$json = const {
     const {'1': 'StartGame', '2': '.game.StartGameRequest', '3': '.game.Game'},
     const {'1': 'ListGames', '2': '.game.ListGamesRequest', '3': '.game.ListGamesResponse'},
     const {'1': 'CreatePlayer', '2': '.game.CreatePlayerRequest', '3': '.game.CreatePlayerResponse'},
+    const {'1': 'GetPlayer', '2': '.game.GetPlayerRequest', '3': '.game.Player'},
   ],
 };
 
@@ -136,5 +168,7 @@ const GameService$messageJson = const {
   '.game.ListGamesResponse': ListGamesResponse$json,
   '.game.CreatePlayerRequest': CreatePlayerRequest$json,
   '.game.CreatePlayerResponse': CreatePlayerResponse$json,
+  '.game.GetPlayerRequest': GetPlayerRequest$json,
+  '.game.Player': Player$json,
 };
 
