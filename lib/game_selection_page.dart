@@ -116,7 +116,7 @@ class GameSelectionPageState extends State<GameSelectionPage> {
             default:
               _showErrorToast('UNKNOWN ERROR');
           }
-      }
+    }
   }
 
 
@@ -141,23 +141,19 @@ class GameSelectionPageState extends State<GameSelectionPage> {
       ),
       body: Stack(
         children: <Widget> [
-          _background,
-          ListView(
-            children:<Widget>[
-              Row(
-                children: [
-                  Flexible(
-                    child: CreateGameFragment(this),
-                  ),
-                  Flexible(
-                    child: GameListFragment(this),
-                  )
-                ] 
-              )
-            ]
-          )
-        ]
-      ),
+            _background,
+            Row(
+              children: [
+                 Flexible(
+                   child: CreateGameFragment(this),
+                 ),
+                 Flexible(
+                   child: GameListFragment(this),
+                 )
+               ]
+            ) 
+          ]
+        ),
       resizeToAvoidBottomPadding: false,
     );
   }

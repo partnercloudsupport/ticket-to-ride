@@ -106,6 +106,58 @@ class LoginResponse extends $pb.GeneratedMessage {
   void clearUserId() => clearField(1);
 }
 
+class GetUsernameRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('GetUsernameRequest', package: const $pb.PackageName('auth'))
+    ..aOS(1, 'userId')
+    ..hasRequiredFields = false
+  ;
+
+  GetUsernameRequest() : super();
+  GetUsernameRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  GetUsernameRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  GetUsernameRequest clone() => new GetUsernameRequest()..mergeFromMessage(this);
+  GetUsernameRequest copyWith(void Function(GetUsernameRequest) updates) => super.copyWith((message) => updates(message as GetUsernameRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static GetUsernameRequest create() => new GetUsernameRequest();
+  static $pb.PbList<GetUsernameRequest> createRepeated() => new $pb.PbList<GetUsernameRequest>();
+  static GetUsernameRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static GetUsernameRequest _defaultInstance;
+  static void $checkItem(GetUsernameRequest v) {
+    if (v is! GetUsernameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get userId => $_getS(0, '');
+  set userId(String v) { $_setString(0, v); }
+  bool hasUserId() => $_has(0);
+  void clearUserId() => clearField(1);
+}
+
+class GetUsernameResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('GetUsernameResponse', package: const $pb.PackageName('auth'))
+    ..aOS(1, 'username')
+    ..hasRequiredFields = false
+  ;
+
+  GetUsernameResponse() : super();
+  GetUsernameResponse.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  GetUsernameResponse.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  GetUsernameResponse clone() => new GetUsernameResponse()..mergeFromMessage(this);
+  GetUsernameResponse copyWith(void Function(GetUsernameResponse) updates) => super.copyWith((message) => updates(message as GetUsernameResponse));
+  $pb.BuilderInfo get info_ => _i;
+  static GetUsernameResponse create() => new GetUsernameResponse();
+  static $pb.PbList<GetUsernameResponse> createRepeated() => new $pb.PbList<GetUsernameResponse>();
+  static GetUsernameResponse getDefault() => _defaultInstance ??= create()..freeze();
+  static GetUsernameResponse _defaultInstance;
+  static void $checkItem(GetUsernameResponse v) {
+    if (v is! GetUsernameResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get username => $_getS(0, '');
+  set username(String v) { $_setString(0, v); }
+  bool hasUsername() => $_has(0);
+  void clearUsername() => clearField(1);
+}
+
 class AuthServiceApi {
   $pb.RpcClient _client;
   AuthServiceApi(this._client);
@@ -117,6 +169,10 @@ class AuthServiceApi {
   Future<LoginResponse> register($pb.ClientContext ctx, LoginAccountRequest request) {
     var emptyResponse = new LoginResponse();
     return _client.invoke<LoginResponse>(ctx, 'AuthService', 'Register', request, emptyResponse);
+  }
+  Future<GetUsernameResponse> getUsername($pb.ClientContext ctx, GetUsernameRequest request) {
+    var emptyResponse = new GetUsernameResponse();
+    return _client.invoke<GetUsernameResponse>(ctx, 'AuthService', 'GetUsername', request, emptyResponse);
   }
 }
 

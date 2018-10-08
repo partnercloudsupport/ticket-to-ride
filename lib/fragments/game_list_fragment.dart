@@ -75,6 +75,7 @@ class _GameListFragmentState extends State<GameListFragment> {
     return Padding(
       padding: EdgeInsets.fromLTRB(15.0, 30.0, 30.0, 30.0),
       child: Column (
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text('Join a Game'),
