@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'global_context_widget.dart';
 
 import 'package:ticket_to_ride/api/api.dart' as api;
+import 'api/game.pb.dart';
 import 'package:protobuf/protobuf.dart';
 
 import 'fragments/game_list_fragment.dart';
@@ -76,7 +77,7 @@ class GameSelectionPageState extends State<GameSelectionPage> {
       try {
         var response = await api.gameProxy.createPlayer(ctx, createPlayerRequest);
 
-
+        //GetPlayerRequest getPlayerRequest = GetPlayerRequest(response.playerId);
         // ??? get player, get gameId from player
         GlobalContext.of(context).onCurrentGameIdChange(response.playerId);
         Navigator.of(context).pushNamed('/lobby_view');
