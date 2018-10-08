@@ -17,7 +17,7 @@ class Game extends $pb.GeneratedMessage {
     ..aOS(1, 'gameId')
     ..aOS(2, 'displayName')
     ..a<int>(3, 'maxPlayers', $pb.PbFieldType.O3)
-    ..aOS(4, 'hostUserId')
+    ..aOS(4, 'hostPlayerId')
     ..pPS(5, 'playerIds')
     ..hasRequiredFields = false
   ;
@@ -51,77 +51,19 @@ class Game extends $pb.GeneratedMessage {
   bool hasMaxPlayers() => $_has(2);
   void clearMaxPlayers() => clearField(3);
 
-  String get hostUserId => $_getS(3, '');
-  set hostUserId(String v) { $_setString(3, v); }
-  bool hasHostUserId() => $_has(3);
-  void clearHostUserId() => clearField(4);
+  String get hostPlayerId => $_getS(3, '');
+  set hostPlayerId(String v) { $_setString(3, v); }
+  bool hasHostPlayerId() => $_has(3);
+  void clearHostPlayerId() => clearField(4);
 
   List<String> get playerIds => $_getList(4);
 }
 
-class JoinGameRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('JoinGameRequest', package: const $pb.PackageName('game'))
-    ..hasRequiredFields = false
-  ;
-
-  JoinGameRequest() : super();
-  JoinGameRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  JoinGameRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  JoinGameRequest clone() => new JoinGameRequest()..mergeFromMessage(this);
-  JoinGameRequest copyWith(void Function(JoinGameRequest) updates) => super.copyWith((message) => updates(message as JoinGameRequest));
-  $pb.BuilderInfo get info_ => _i;
-  static JoinGameRequest create() => new JoinGameRequest();
-  static $pb.PbList<JoinGameRequest> createRepeated() => new $pb.PbList<JoinGameRequest>();
-  static JoinGameRequest getDefault() => _defaultInstance ??= create()..freeze();
-  static JoinGameRequest _defaultInstance;
-  static void $checkItem(JoinGameRequest v) {
-    if (v is! JoinGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
-  }
-}
-
-class LeaveGameRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('LeaveGameRequest', package: const $pb.PackageName('game'))
-    ..hasRequiredFields = false
-  ;
-
-  LeaveGameRequest() : super();
-  LeaveGameRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  LeaveGameRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  LeaveGameRequest clone() => new LeaveGameRequest()..mergeFromMessage(this);
-  LeaveGameRequest copyWith(void Function(LeaveGameRequest) updates) => super.copyWith((message) => updates(message as LeaveGameRequest));
-  $pb.BuilderInfo get info_ => _i;
-  static LeaveGameRequest create() => new LeaveGameRequest();
-  static $pb.PbList<LeaveGameRequest> createRepeated() => new $pb.PbList<LeaveGameRequest>();
-  static LeaveGameRequest getDefault() => _defaultInstance ??= create()..freeze();
-  static LeaveGameRequest _defaultInstance;
-  static void $checkItem(LeaveGameRequest v) {
-    if (v is! LeaveGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
-  }
-}
-
-class JoinGameResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('JoinGameResponse', package: const $pb.PackageName('game'))
-    ..hasRequiredFields = false
-  ;
-
-  JoinGameResponse() : super();
-  JoinGameResponse.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  JoinGameResponse.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  JoinGameResponse clone() => new JoinGameResponse()..mergeFromMessage(this);
-  JoinGameResponse copyWith(void Function(JoinGameResponse) updates) => super.copyWith((message) => updates(message as JoinGameResponse));
-  $pb.BuilderInfo get info_ => _i;
-  static JoinGameResponse create() => new JoinGameResponse();
-  static $pb.PbList<JoinGameResponse> createRepeated() => new $pb.PbList<JoinGameResponse>();
-  static JoinGameResponse getDefault() => _defaultInstance ??= create()..freeze();
-  static JoinGameResponse _defaultInstance;
-  static void $checkItem(JoinGameResponse v) {
-    if (v is! JoinGameResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
-  }
-}
-
 class CreateGameRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('CreateGameRequest', package: const $pb.PackageName('game'))
-    ..a<Game>(1, 'game', $pb.PbFieldType.OM, Game.getDefault, Game.create)
+    ..aOS(1, 'userId')
+    ..aOS(2, 'displayName')
+    ..a<int>(3, 'maxPlayers', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -139,62 +81,72 @@ class CreateGameRequest extends $pb.GeneratedMessage {
     if (v is! CreateGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
-  Game get game => $_getN(0);
-  set game(Game v) { setField(1, v); }
-  bool hasGame() => $_has(0);
-  void clearGame() => clearField(1);
+  String get userId => $_getS(0, '');
+  set userId(String v) { $_setString(0, v); }
+  bool hasUserId() => $_has(0);
+  void clearUserId() => clearField(1);
+
+  String get displayName => $_getS(1, '');
+  set displayName(String v) { $_setString(1, v); }
+  bool hasDisplayName() => $_has(1);
+  void clearDisplayName() => clearField(2);
+
+  int get maxPlayers => $_get(2, 0);
+  set maxPlayers(int v) { $_setSignedInt32(2, v); }
+  bool hasMaxPlayers() => $_has(2);
+  void clearMaxPlayers() => clearField(3);
 }
 
-class UpdateGameRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('UpdateGameRequest', package: const $pb.PackageName('game'))
-    ..a<Game>(1, 'game', $pb.PbFieldType.OM, Game.getDefault, Game.create)
+class LeaveGameRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('LeaveGameRequest', package: const $pb.PackageName('game'))
+    ..aOS(1, 'playerId')
+    ..aOS(2, 'gameId')
     ..hasRequiredFields = false
   ;
 
-  UpdateGameRequest() : super();
-  UpdateGameRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  UpdateGameRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  UpdateGameRequest clone() => new UpdateGameRequest()..mergeFromMessage(this);
-  UpdateGameRequest copyWith(void Function(UpdateGameRequest) updates) => super.copyWith((message) => updates(message as UpdateGameRequest));
+  LeaveGameRequest() : super();
+  LeaveGameRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  LeaveGameRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  LeaveGameRequest clone() => new LeaveGameRequest()..mergeFromMessage(this);
+  LeaveGameRequest copyWith(void Function(LeaveGameRequest) updates) => super.copyWith((message) => updates(message as LeaveGameRequest));
   $pb.BuilderInfo get info_ => _i;
-  static UpdateGameRequest create() => new UpdateGameRequest();
-  static $pb.PbList<UpdateGameRequest> createRepeated() => new $pb.PbList<UpdateGameRequest>();
-  static UpdateGameRequest getDefault() => _defaultInstance ??= create()..freeze();
-  static UpdateGameRequest _defaultInstance;
-  static void $checkItem(UpdateGameRequest v) {
-    if (v is! UpdateGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  static LeaveGameRequest create() => new LeaveGameRequest();
+  static $pb.PbList<LeaveGameRequest> createRepeated() => new $pb.PbList<LeaveGameRequest>();
+  static LeaveGameRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static LeaveGameRequest _defaultInstance;
+  static void $checkItem(LeaveGameRequest v) {
+    if (v is! LeaveGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
-  Game get game => $_getN(0);
-  set game(Game v) { setField(1, v); }
-  bool hasGame() => $_has(0);
-  void clearGame() => clearField(1);
+  String get playerId => $_getS(0, '');
+  set playerId(String v) { $_setString(0, v); }
+  bool hasPlayerId() => $_has(0);
+  void clearPlayerId() => clearField(1);
+
+  String get gameId => $_getS(1, '');
+  set gameId(String v) { $_setString(1, v); }
+  bool hasGameId() => $_has(1);
+  void clearGameId() => clearField(2);
 }
 
-class DeleteGameRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('DeleteGameRequest', package: const $pb.PackageName('game'))
-    ..aOS(1, 'gameId')
+class ListGamesRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('ListGamesRequest', package: const $pb.PackageName('game'))
     ..hasRequiredFields = false
   ;
 
-  DeleteGameRequest() : super();
-  DeleteGameRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  DeleteGameRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  DeleteGameRequest clone() => new DeleteGameRequest()..mergeFromMessage(this);
-  DeleteGameRequest copyWith(void Function(DeleteGameRequest) updates) => super.copyWith((message) => updates(message as DeleteGameRequest));
+  ListGamesRequest() : super();
+  ListGamesRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  ListGamesRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  ListGamesRequest clone() => new ListGamesRequest()..mergeFromMessage(this);
+  ListGamesRequest copyWith(void Function(ListGamesRequest) updates) => super.copyWith((message) => updates(message as ListGamesRequest));
   $pb.BuilderInfo get info_ => _i;
-  static DeleteGameRequest create() => new DeleteGameRequest();
-  static $pb.PbList<DeleteGameRequest> createRepeated() => new $pb.PbList<DeleteGameRequest>();
-  static DeleteGameRequest getDefault() => _defaultInstance ??= create()..freeze();
-  static DeleteGameRequest _defaultInstance;
-  static void $checkItem(DeleteGameRequest v) {
-    if (v is! DeleteGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  static ListGamesRequest create() => new ListGamesRequest();
+  static $pb.PbList<ListGamesRequest> createRepeated() => new $pb.PbList<ListGamesRequest>();
+  static ListGamesRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static ListGamesRequest _defaultInstance;
+  static void $checkItem(ListGamesRequest v) {
+    if (v is! ListGamesRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
-
-  String get gameId => $_getS(0, '');
-  set gameId(String v) { $_setString(0, v); }
-  bool hasGameId() => $_has(0);
-  void clearGameId() => clearField(1);
 }
 
 class GetGameRequest extends $pb.GeneratedMessage {
@@ -223,23 +175,107 @@ class GetGameRequest extends $pb.GeneratedMessage {
   void clearGameId() => clearField(1);
 }
 
-class ListGamesRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('ListGamesRequest', package: const $pb.PackageName('game'))
+class StartGameRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('StartGameRequest', package: const $pb.PackageName('game'))
+    ..aOS(1, 'gameId')
     ..hasRequiredFields = false
   ;
 
-  ListGamesRequest() : super();
-  ListGamesRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  ListGamesRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  ListGamesRequest clone() => new ListGamesRequest()..mergeFromMessage(this);
-  ListGamesRequest copyWith(void Function(ListGamesRequest) updates) => super.copyWith((message) => updates(message as ListGamesRequest));
+  StartGameRequest() : super();
+  StartGameRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  StartGameRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  StartGameRequest clone() => new StartGameRequest()..mergeFromMessage(this);
+  StartGameRequest copyWith(void Function(StartGameRequest) updates) => super.copyWith((message) => updates(message as StartGameRequest));
   $pb.BuilderInfo get info_ => _i;
-  static ListGamesRequest create() => new ListGamesRequest();
-  static $pb.PbList<ListGamesRequest> createRepeated() => new $pb.PbList<ListGamesRequest>();
-  static ListGamesRequest getDefault() => _defaultInstance ??= create()..freeze();
-  static ListGamesRequest _defaultInstance;
-  static void $checkItem(ListGamesRequest v) {
-    if (v is! ListGamesRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  static StartGameRequest create() => new StartGameRequest();
+  static $pb.PbList<StartGameRequest> createRepeated() => new $pb.PbList<StartGameRequest>();
+  static StartGameRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static StartGameRequest _defaultInstance;
+  static void $checkItem(StartGameRequest v) {
+    if (v is! StartGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get gameId => $_getS(0, '');
+  set gameId(String v) { $_setString(0, v); }
+  bool hasGameId() => $_has(0);
+  void clearGameId() => clearField(1);
+}
+
+class DeleteGameRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('DeleteGameRequest', package: const $pb.PackageName('game'))
+    ..aOS(1, 'gameId')
+    ..hasRequiredFields = false
+  ;
+
+  DeleteGameRequest() : super();
+  DeleteGameRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  DeleteGameRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  DeleteGameRequest clone() => new DeleteGameRequest()..mergeFromMessage(this);
+  DeleteGameRequest copyWith(void Function(DeleteGameRequest) updates) => super.copyWith((message) => updates(message as DeleteGameRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static DeleteGameRequest create() => new DeleteGameRequest();
+  static $pb.PbList<DeleteGameRequest> createRepeated() => new $pb.PbList<DeleteGameRequest>();
+  static DeleteGameRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static DeleteGameRequest _defaultInstance;
+  static void $checkItem(DeleteGameRequest v) {
+    if (v is! DeleteGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get gameId => $_getS(0, '');
+  set gameId(String v) { $_setString(0, v); }
+  bool hasGameId() => $_has(0);
+  void clearGameId() => clearField(1);
+}
+
+class CreatePlayerRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('CreatePlayerRequest', package: const $pb.PackageName('game'))
+    ..aOS(1, 'userId')
+    ..aOS(2, 'gameId')
+    ..hasRequiredFields = false
+  ;
+
+  CreatePlayerRequest() : super();
+  CreatePlayerRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  CreatePlayerRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  CreatePlayerRequest clone() => new CreatePlayerRequest()..mergeFromMessage(this);
+  CreatePlayerRequest copyWith(void Function(CreatePlayerRequest) updates) => super.copyWith((message) => updates(message as CreatePlayerRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static CreatePlayerRequest create() => new CreatePlayerRequest();
+  static $pb.PbList<CreatePlayerRequest> createRepeated() => new $pb.PbList<CreatePlayerRequest>();
+  static CreatePlayerRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static CreatePlayerRequest _defaultInstance;
+  static void $checkItem(CreatePlayerRequest v) {
+    if (v is! CreatePlayerRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get userId => $_getS(0, '');
+  set userId(String v) { $_setString(0, v); }
+  bool hasUserId() => $_has(0);
+  void clearUserId() => clearField(1);
+
+  String get gameId => $_getS(1, '');
+  set gameId(String v) { $_setString(1, v); }
+  bool hasGameId() => $_has(1);
+  void clearGameId() => clearField(2);
+}
+
+class Empty extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Empty', package: const $pb.PackageName('game'))
+    ..hasRequiredFields = false
+  ;
+
+  Empty() : super();
+  Empty.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  Empty.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  Empty clone() => new Empty()..mergeFromMessage(this);
+  Empty copyWith(void Function(Empty) updates) => super.copyWith((message) => updates(message as Empty));
+  $pb.BuilderInfo get info_ => _i;
+  static Empty create() => new Empty();
+  static $pb.PbList<Empty> createRepeated() => new $pb.PbList<Empty>();
+  static Empty getDefault() => _defaultInstance ??= create()..freeze();
+  static Empty _defaultInstance;
+  static void $checkItem(Empty v) {
+    if (v is! Empty) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 }
 
@@ -266,30 +302,10 @@ class ListGamesResponse extends $pb.GeneratedMessage {
   List<Game> get games => $_getList(0);
 }
 
-class Empty extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Empty', package: const $pb.PackageName('game'))
-    ..hasRequiredFields = false
-  ;
-
-  Empty() : super();
-  Empty.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  Empty.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  Empty clone() => new Empty()..mergeFromMessage(this);
-  Empty copyWith(void Function(Empty) updates) => super.copyWith((message) => updates(message as Empty));
-  $pb.BuilderInfo get info_ => _i;
-  static Empty create() => new Empty();
-  static $pb.PbList<Empty> createRepeated() => new $pb.PbList<Empty>();
-  static Empty getDefault() => _defaultInstance ??= create()..freeze();
-  static Empty _defaultInstance;
-  static void $checkItem(Empty v) {
-    if (v is! Empty) $pb.checkItemFailed(v, _i.qualifiedMessageName);
-  }
-}
-
 class CreateResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('CreateResponse', package: const $pb.PackageName('game'))
-    ..aOS(1, 'gameName')
-    ..a<int>(2, 'totalPlayers', $pb.PbFieldType.O3)
+    ..aOS(1, 'gameId')
+    ..aOS(2, 'playerId')
     ..hasRequiredFields = false
   ;
 
@@ -307,15 +323,15 @@ class CreateResponse extends $pb.GeneratedMessage {
     if (v is! CreateResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
-  String get gameName => $_getS(0, '');
-  set gameName(String v) { $_setString(0, v); }
-  bool hasGameName() => $_has(0);
-  void clearGameName() => clearField(1);
+  String get gameId => $_getS(0, '');
+  set gameId(String v) { $_setString(0, v); }
+  bool hasGameId() => $_has(0);
+  void clearGameId() => clearField(1);
 
-  int get totalPlayers => $_get(1, 0);
-  set totalPlayers(int v) { $_setSignedInt32(1, v); }
-  bool hasTotalPlayers() => $_has(1);
-  void clearTotalPlayers() => clearField(2);
+  String get playerId => $_getS(1, '');
+  set playerId(String v) { $_setString(1, v); }
+  bool hasPlayerId() => $_has(1);
+  void clearPlayerId() => clearField(2);
 }
 
 class DeleteResponse extends $pb.GeneratedMessage {
@@ -347,36 +363,30 @@ class DeleteResponse extends $pb.GeneratedMessage {
   List<int> get orphanedUsers => $_getList(1);
 }
 
-class JoinResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('JoinResponse', package: const $pb.PackageName('game'))
-    ..aOS(1, 'gameName')
-    ..a<int>(2, 'totalPlayers', $pb.PbFieldType.O3)
+class CreatePlayerResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('CreatePlayerResponse', package: const $pb.PackageName('game'))
+    ..aOS(1, 'playerId')
     ..hasRequiredFields = false
   ;
 
-  JoinResponse() : super();
-  JoinResponse.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  JoinResponse.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  JoinResponse clone() => new JoinResponse()..mergeFromMessage(this);
-  JoinResponse copyWith(void Function(JoinResponse) updates) => super.copyWith((message) => updates(message as JoinResponse));
+  CreatePlayerResponse() : super();
+  CreatePlayerResponse.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  CreatePlayerResponse.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  CreatePlayerResponse clone() => new CreatePlayerResponse()..mergeFromMessage(this);
+  CreatePlayerResponse copyWith(void Function(CreatePlayerResponse) updates) => super.copyWith((message) => updates(message as CreatePlayerResponse));
   $pb.BuilderInfo get info_ => _i;
-  static JoinResponse create() => new JoinResponse();
-  static $pb.PbList<JoinResponse> createRepeated() => new $pb.PbList<JoinResponse>();
-  static JoinResponse getDefault() => _defaultInstance ??= create()..freeze();
-  static JoinResponse _defaultInstance;
-  static void $checkItem(JoinResponse v) {
-    if (v is! JoinResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  static CreatePlayerResponse create() => new CreatePlayerResponse();
+  static $pb.PbList<CreatePlayerResponse> createRepeated() => new $pb.PbList<CreatePlayerResponse>();
+  static CreatePlayerResponse getDefault() => _defaultInstance ??= create()..freeze();
+  static CreatePlayerResponse _defaultInstance;
+  static void $checkItem(CreatePlayerResponse v) {
+    if (v is! CreatePlayerResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
-  String get gameName => $_getS(0, '');
-  set gameName(String v) { $_setString(0, v); }
-  bool hasGameName() => $_has(0);
-  void clearGameName() => clearField(1);
-
-  int get totalPlayers => $_get(1, 0);
-  set totalPlayers(int v) { $_setSignedInt32(1, v); }
-  bool hasTotalPlayers() => $_has(1);
-  void clearTotalPlayers() => clearField(2);
+  String get playerId => $_getS(0, '');
+  set playerId(String v) { $_setString(0, v); }
+  bool hasPlayerId() => $_has(0);
+  void clearPlayerId() => clearField(1);
 }
 
 class GameServiceApi {
@@ -386,10 +396,6 @@ class GameServiceApi {
   Future<CreateResponse> createGame($pb.ClientContext ctx, CreateGameRequest request) {
     var emptyResponse = new CreateResponse();
     return _client.invoke<CreateResponse>(ctx, 'GameService', 'CreateGame', request, emptyResponse);
-  }
-  Future<JoinGameResponse> joinGame($pb.ClientContext ctx, JoinGameRequest request) {
-    var emptyResponse = new JoinGameResponse();
-    return _client.invoke<JoinGameResponse>(ctx, 'GameService', 'JoinGame', request, emptyResponse);
   }
   Future<Empty> leaveGame($pb.ClientContext ctx, LeaveGameRequest request) {
     var emptyResponse = new Empty();
@@ -403,9 +409,17 @@ class GameServiceApi {
     var emptyResponse = new Game();
     return _client.invoke<Game>(ctx, 'GameService', 'GetGame', request, emptyResponse);
   }
+  Future<Game> startGame($pb.ClientContext ctx, StartGameRequest request) {
+    var emptyResponse = new Game();
+    return _client.invoke<Game>(ctx, 'GameService', 'StartGame', request, emptyResponse);
+  }
   Future<ListGamesResponse> listGames($pb.ClientContext ctx, ListGamesRequest request) {
     var emptyResponse = new ListGamesResponse();
     return _client.invoke<ListGamesResponse>(ctx, 'GameService', 'ListGames', request, emptyResponse);
+  }
+  Future<CreatePlayerResponse> createPlayer($pb.ClientContext ctx, CreatePlayerRequest request) {
+    var emptyResponse = new CreatePlayerResponse();
+    return _client.invoke<CreatePlayerResponse>(ctx, 'GameService', 'CreatePlayer', request, emptyResponse);
   }
 }
 

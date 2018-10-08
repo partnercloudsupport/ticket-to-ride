@@ -15,20 +15,22 @@ export 'game.pb.dart';
 
 abstract class GameServiceBase extends GeneratedService {
   Future<CreateResponse> createGame(ServerContext ctx, CreateGameRequest request);
-  Future<JoinGameResponse> joinGame(ServerContext ctx, JoinGameRequest request);
   Future<Empty> leaveGame(ServerContext ctx, LeaveGameRequest request);
   Future<Empty> deleteGame(ServerContext ctx, DeleteGameRequest request);
   Future<Game> getGame(ServerContext ctx, GetGameRequest request);
+  Future<Game> startGame(ServerContext ctx, StartGameRequest request);
   Future<ListGamesResponse> listGames(ServerContext ctx, ListGamesRequest request);
+  Future<CreatePlayerResponse> createPlayer(ServerContext ctx, CreatePlayerRequest request);
 
   GeneratedMessage createRequest(String method) {
     switch (method) {
       case 'CreateGame': return new CreateGameRequest();
-      case 'JoinGame': return new JoinGameRequest();
       case 'LeaveGame': return new LeaveGameRequest();
       case 'DeleteGame': return new DeleteGameRequest();
       case 'GetGame': return new GetGameRequest();
+      case 'StartGame': return new StartGameRequest();
       case 'ListGames': return new ListGamesRequest();
+      case 'CreatePlayer': return new CreatePlayerRequest();
       default: throw new ArgumentError('Unknown method: $method');
     }
   }
@@ -36,11 +38,12 @@ abstract class GameServiceBase extends GeneratedService {
   Future<GeneratedMessage> handleCall(ServerContext ctx, String method, GeneratedMessage request) {
     switch (method) {
       case 'CreateGame': return this.createGame(ctx, request);
-      case 'JoinGame': return this.joinGame(ctx, request);
       case 'LeaveGame': return this.leaveGame(ctx, request);
       case 'DeleteGame': return this.deleteGame(ctx, request);
       case 'GetGame': return this.getGame(ctx, request);
+      case 'StartGame': return this.startGame(ctx, request);
       case 'ListGames': return this.listGames(ctx, request);
+      case 'CreatePlayer': return this.createPlayer(ctx, request);
       default: throw new ArgumentError('Unknown method: $method');
     }
   }
