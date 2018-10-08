@@ -28,16 +28,33 @@ const LoginResponse$json = const {
   ],
 };
 
+const GetUsernameRequest$json = const {
+  '1': 'GetUsernameRequest',
+  '2': const [
+    const {'1': 'user_id', '3': 1, '4': 1, '5': 9, '10': 'userId'},
+  ],
+};
+
+const GetUsernameResponse$json = const {
+  '1': 'GetUsernameResponse',
+  '2': const [
+    const {'1': 'username', '3': 1, '4': 1, '5': 9, '10': 'username'},
+  ],
+};
+
 const AuthService$json = const {
   '1': 'AuthService',
   '2': const [
     const {'1': 'Login', '2': '.auth.LoginAccountRequest', '3': '.auth.LoginResponse'},
     const {'1': 'Register', '2': '.auth.LoginAccountRequest', '3': '.auth.LoginResponse'},
+    const {'1': 'GetUsername', '2': '.auth.GetUsernameRequest', '3': '.auth.GetUsernameResponse'},
   ],
 };
 
 const AuthService$messageJson = const {
   '.auth.LoginAccountRequest': LoginAccountRequest$json,
   '.auth.LoginResponse': LoginResponse$json,
+  '.auth.GetUsernameRequest': GetUsernameRequest$json,
+  '.auth.GetUsernameResponse': GetUsernameResponse$json,
 };
 
