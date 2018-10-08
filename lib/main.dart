@@ -8,7 +8,6 @@ import 'package:ticket_to_ride/global_context_widget.dart';
 
 void main() async {
   runApp(new TicketToRideApp());
-  //runApp(DerpyTestDriver());
 }
 
 class TicketToRideApp extends StatelessWidget {
@@ -35,6 +34,8 @@ class DerpyTestDriver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalContext.of(context).onUserIdChange("lolol");
+
     return GlobalContext(
       child: MaterialApp(
         title: 'Ticket to Ride Derpy Test Driver',
