@@ -61,30 +61,20 @@ class _GameListFragmentState extends State<GameListFragment> {
 
     }
 
-    final gameList = (this.widget.pageState.games.length == 0) ? Text('No active games to show.') : 
-      Form(
-        key: _formKey,
-        child: ListView.builder(
-          padding: const EdgeInsets.all(16.0),
-          // The itemBuilder callback is called once per game,
-          // and places each suggestion into a ListTile row.
-          // For even rows, the function adds a ListTile row for the game.
-          // For odd rows, the function adds a Divider widget to visually
-          // separate the entries. Note that the divider may be difficult
-          // to see on smaller devices.
-          itemBuilder: (context, i) {
-            // Add a one-pixel-high divider widget before each row in theListView.
-            if (i.isOdd) return Divider();
-
-            // The syntax "i ~/ 2" divides i by 2 and returns an integer result.
-            // For example: 1, 2, 3, 4, 5 becomes 0, 1, 1, 2, 2.
-            // This calculates the actual number of word pairings in the ListView,
-            // minus the divider widgets.
-            final index = i ~/ 2;
-            return _buildRow(this.widget.pageState.games[index]);
-          }
-        )
-      );
+    var gameList = (this.widget.pageState.games.length == 0) ? Text('No active games to show.') : 
+      ListView.builder(
+        itemCount: this.widget.pageState.games.length,
+        itemBuilder: (BuildContext context, int i) {
+          //return _buildRow(this.widget.pageState.games[i]);
+          print('PRINTING I FOR BUILDER: ' + i.toString());
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text('hello'),
+            ]
+          ) ;
+        }
+      ); 
 
     return Padding(
       padding: EdgeInsets.fromLTRB(15.0, 30.0, 30.0, 30.0),
