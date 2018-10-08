@@ -34,7 +34,7 @@ class ClientProxy extends RpcClient {
       print(request.service);
       var httpResponse = await http.post(url, body: request.writeToBuffer());
       var response = Response.fromBuffer(httpResponse.bodyBytes);
-      if (response.code != Response_Code.OK) {
+      if (response.code != Code.OK) {
         throw ApiError(response.code, response.message);
       }
 
@@ -42,13 +42,13 @@ class ClientProxy extends RpcClient {
       return emptyResponse;
     }
     catch (err) {
-      throw ApiError(Response_Code.UNAVAILABLE, err.toString());
+      throw ApiError(Code.UNAVAILABLE, err.toString());
     }
   }
 }
 
 class ApiError extends Error {
-  Response_Code code;
+  Code code;
   String message;
 
   ApiError(this.code, this.message);

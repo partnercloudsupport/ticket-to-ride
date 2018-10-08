@@ -10,8 +10,6 @@ import 'dart:core' show int, bool, double, String, List, override;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'player.pb.dart';
-
 export 'game.pbenum.dart';
 
 class Game extends $pb.GeneratedMessage {
@@ -60,40 +58,6 @@ class Game extends $pb.GeneratedMessage {
 
   List<String> get playerIds => $_getList(4);
 }
-
-// allison edited this for temp fix to use in game_selection_page (player.proto not yet finished)
-class CreatePlayerRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('CreatePlayerRequest', package: const $pb.PackageName('auth'))
-    ..aOS(1, 'userId')
-    ..aOS(2, 'gameId')
-    ..hasRequiredFields = false
-  ;
-
-  CreatePlayerRequest() : super();
-  CreatePlayerRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  CreatePlayerRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  CreatePlayerRequest clone() => new CreatePlayerRequest()..mergeFromMessage(this);
-  CreatePlayerRequest copyWith(void Function(CreatePlayerRequest) updates) => super.copyWith((message) => updates(message as CreatePlayerRequest));
-  $pb.BuilderInfo get info_ => _i;
-  static CreatePlayerRequest create() => new CreatePlayerRequest();
-  static $pb.PbList<CreatePlayerRequest> createRepeated() => new $pb.PbList<CreatePlayerRequest>();
-  static CreatePlayerRequest getDefault() => _defaultInstance ??= create()..freeze();
-  static CreatePlayerRequest _defaultInstance;
-  static void $checkItem(CreatePlayerRequest v) {
-    if (v is! CreatePlayerRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
-  }
-
-  String get userId => $_getS(0, '');
-  set userId(String v) { $_setString(0, v); }
-  bool hasUserId() => $_has(0);
-  void clearUserId() => clearField(1);
-
-  String get gameId => $_getS(1, '');
-  set gameId(String v) { $_setString(1, v); }
-  bool hasGameId() => $_has(1);
-  void clearGameId() => clearField(2);
-}
-
 
 class JoinGameRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('JoinGameRequest', package: const $pb.PackageName('game'))
@@ -435,12 +399,6 @@ class GameServiceApi {
     var emptyResponse = new Empty();
     return _client.invoke<Empty>(ctx, 'GameService', 'DeleteGame', request, emptyResponse);
   }
-  // allison edited this for temp fix to use in game_selection_page (game.proto not yet finished)
-  Future<Player> createPlayer($pb.ClientContext ctx, CreatePlayerRequest request) {
-    var emptyResponse = new Player();
-    return _client.invoke<Player>(ctx, 'GameService', 'CreateGame', request, emptyResponse);
-
-  }
   Future<Game> getGame($pb.ClientContext ctx, GetGameRequest request) {
     var emptyResponse = new Game();
     return _client.invoke<Game>(ctx, 'GameService', 'GetGame', request, emptyResponse);
@@ -450,3 +408,4 @@ class GameServiceApi {
     return _client.invoke<ListGamesResponse>(ctx, 'GameService', 'ListGames', request, emptyResponse);
   }
 }
+
