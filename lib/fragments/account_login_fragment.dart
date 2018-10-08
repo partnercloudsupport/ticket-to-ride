@@ -88,34 +88,34 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
 
     return Scaffold(
       body: new Stack(
-      children: <Widget>[
-        _background,
-        ListView (
-          padding: new EdgeInsets.all(50.0),
-          children: [
-            Container(
-              decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  image: new AssetImage("images/ticket.png"),
-                  fit: BoxFit.contain,
+        children: <Widget>[
+          _background,
+          ListView (
+            padding: new EdgeInsets.all(50.0),
+            children: [
+              Container(
+                decoration: new BoxDecoration(
+                  image: new DecorationImage(
+                    image: new AssetImage("images/ticket.png"),
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
-              padding: new EdgeInsets.only(top: 240.0, right: 220.0, bottom: 50.0, left: 210.0,),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    _username,
-                    _password,
-                    _buttons
-                  ],
+                padding: new EdgeInsets.only(top: 240.0, right: 220.0, bottom: 50.0, left: 210.0,),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      _username,
+                      _password,
+                      _buttons
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ]
-        )
-      ]
+              )
+            ]
+          )
+        ]
       )
     );
   }
