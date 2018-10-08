@@ -19,7 +19,7 @@ class TicketToRideApp extends StatelessWidget {
       child: new MaterialApp(
         title: 'Ticket to Ride',
         theme: ticketToRideTheme,
-        home: new LobbyViewPage(title: 'Game Lobby'), //new AccountLoginPage(title: 'Ticket to Ride'),//
+        home: new AccountLoginPage(title: 'Ticket to Ride'), //new LobbyViewPage(title: 'Game Lobby')
         routes: <String, WidgetBuilder>{
          '/login_page': (BuildContext context) => new AccountLoginPage(title: 'Login'),
          '/game_selection': (BuildContext context) => new GameSelectionPage(title: 'Game Selection'),

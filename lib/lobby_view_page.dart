@@ -28,12 +28,12 @@ class _LobbyViewPageState extends State<LobbyViewPage> {
 
       Navigator.of(context).pushNamed('/game_selection');
 
-      return _players;
+      //return _players;
 
       var game = new api.Game();
       game.displayName = 'Woodfields Warriors';
       game.maxPlayers = 5;
-      game.hostUserId = '123';
+      game.hostPlayerId = '123';
 
       return game;
       return response;
