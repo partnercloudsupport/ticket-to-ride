@@ -75,23 +75,16 @@ class GameSelectionPageState extends State<GameSelectionPage> {
           Navigator.of(context).pushNamed('/lobby_view');
 
         } catch(error) {
-          switch(error.code) {
-            case api.Code.INVALID_ARGUMENT:
-              _showErrorToast('This game is full');
-              break;
-            case api.Code.NOT_FOUND:
-              _showErrorToast('This game no longer exists');
-              break;
-            default:
-              _showErrorToast('UNKNOWN ERROR');
-          }
+          print(error.code);
+          print(error.message);
         }
     }
   }
 
   createPlayer(form) async {
-    if (form.validate()) {
-      form.save();
+    print('starting createPlayer');
+    //if (form.validate()) {
+      //form.save();
 
       var ctx = ClientContext();
 
@@ -103,13 +96,23 @@ class GameSelectionPageState extends State<GameSelectionPage> {
 
         var playerResponse = await api.gameProxy.getPlayer(ctx, getPlayerRequest);
 
+        print(playerResponse.gameId);
+
         GlobalContext.of(context).onCurrentGameIdChange(playerResponse.gameId);
         Navigator.of(context).pushNamed('/lobby_view');
       } catch(error) {
-        print(error.code);
-        print(error.message);
+          switch(error.code) {
+            case api.Code.INVALID_ARGUMENT:
+              _showErrorToast('This game is full');
+              break;
+            case api.Code.NOT_FOUND:
+              _showErrorToast('This game no longer exists');
+              break;
+            default:
+              _showErrorToast('UNKNOWN ERROR');
+          }
       }
-    }
+    //}
   }
 
 

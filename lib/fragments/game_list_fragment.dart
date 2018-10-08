@@ -62,19 +62,14 @@ class _GameListFragmentState extends State<GameListFragment> {
     }
 
     var gameList = (this.widget.pageState.games.length == 0) ? Text('No active games to show.') : 
-      ListView.builder(
-        itemCount: this.widget.pageState.games.length,
-        itemBuilder: (BuildContext context, int i) {
-          //return _buildRow(this.widget.pageState.games[i]);
-          print('PRINTING I FOR BUILDER: ' + i.toString());
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text('hello'),
-            ]
-          ) ;
-        }
-      ); 
+      Flexible(
+        child: ListView.builder(
+          itemCount: this.widget.pageState.games.length,
+          itemBuilder: (BuildContext context, int i) {
+            return _buildRow(this.widget.pageState.games[i]);
+          }
+        ),
+      );
 
     return Padding(
       padding: EdgeInsets.fromLTRB(15.0, 30.0, 30.0, 30.0),
