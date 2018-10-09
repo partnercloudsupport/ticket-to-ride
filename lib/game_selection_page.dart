@@ -7,7 +7,9 @@ import 'package:protobuf/protobuf.dart';
 
 import 'fragments/game_list_fragment.dart';
 import 'fragments/create_game_fragment.dart';
+import 'poll.dart';
 
+import 'dart:async';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class GameSelectionPage extends StatefulWidget {
@@ -53,6 +55,8 @@ class GameSelectionPageState extends State<GameSelectionPage> {
     var ctx = ClientContext();
     try {
       var request = api.ListGamesRequest();
+
+
       var response = await api.gameProxy.listGames(ctx, request);
 
       games = response.games;
@@ -130,8 +134,6 @@ class GameSelectionPageState extends State<GameSelectionPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    
 
     var _background = Container(
       decoration: new BoxDecoration(
