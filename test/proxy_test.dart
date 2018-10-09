@@ -7,6 +7,6 @@ void main() {
     var ctx = ClientContext();
     var req = api.GetHealthRequest();
     var health = await api.healthProxy.getHealth(ctx, req);
-    expect(api.Health_Status.READY, health.status);
+    expect(api.Health_Status.READY, equals(health.status));
   });
 }
