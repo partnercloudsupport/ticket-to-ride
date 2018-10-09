@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/global_context_widget.dart';
-import 'package:ticket_to_ride/game_selection_page.dart';
+import 'package:ticket_to_ride/game_selection_presenter.dart';
 import 'package:ticket_to_ride/api/game.pb.dart';
 
 
 class GameListFragment extends StatefulWidget {
 
-  GameListFragment(GameSelectionPageState pageState, {Key key, this.title}) : pageState = pageState, super(key: key);
+  GameListFragment(GameSelectionPresenterState presenterState, {Key key, this.title}) : presenterState = presenterState, super(key: key);
 
   final String title;
-  final GameSelectionPageState pageState;
+  final GameSelectionPresenterState presenterState;
 
   @override
   _GameListFragmentState createState() => new _GameListFragmentState();
@@ -31,9 +31,9 @@ class _GameListFragmentState extends State<GameListFragment> {
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: RaisedButton(
           onPressed: () {
-            this.widget.pageState.createPlayerRequest.userId = GlobalContext.of(context).userId;
-            this.widget.pageState.createPlayerRequest.gameId = game.gameId;
-            this.widget.pageState.createPlayer(_formKey.currentState);
+            this.widget.presenterState.createPlayerRequest.userId = GlobalContext.of(context).userId;
+            this.widget.presenterState.createPlayerRequest.gameId = game.gameId;
+            this.widget.presenterState.createPlayer(_formKey.currentState);
           },
           child: Text(
             'Join',
@@ -63,14 +63,14 @@ class _GameListFragmentState extends State<GameListFragment> {
 
   
     
-    var gameList = (!this.widget.pageState.gamesLoaded) ? Text('Loading games...') :
-      ((this.widget.pageState.games.length == 0) ? 
+    var gameList = (!this.widget.presenterState.gamesLoaded) ? Text('Loading games...') :
+      ((this.widget.presenterState.games.length == 0) ? 
         Text('No active games to show.') : 
           Flexible(
             child: ListView.builder(
-              itemCount: this.widget.pageState.games.length,
+              itemCount: this.widget.presenterState.games.length,
               itemBuilder: (BuildContext context, int i) {
-                return _buildRow(this.widget.pageState.games[i]);
+                return _buildRow(this.widget.presenterState.games[i]);
               }
             ),
           )

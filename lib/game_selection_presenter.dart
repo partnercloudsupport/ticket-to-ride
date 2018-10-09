@@ -12,8 +12,8 @@ import 'poll.dart';
 import 'dart:async';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class GameSelectionPage extends StatefulWidget {
-  GameSelectionPage({Key key, this.title}) : super(key: key);
+class GameSelectionPresenter extends StatefulWidget {
+  GameSelectionPresenter({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -28,10 +28,10 @@ class GameSelectionPage extends StatefulWidget {
 
 
   @override
-  GameSelectionPageState createState() => new GameSelectionPageState();
+  GameSelectionPresenterState createState() => new GameSelectionPresenterState();
 }
 
-class GameSelectionPageState extends State<GameSelectionPage> {
+class GameSelectionPresenterState extends State<GameSelectionPresenter> {
 
   var createGameRequest = api.CreateGameRequest();
   var createPlayerRequest = api.CreatePlayerRequest();
@@ -57,6 +57,7 @@ class GameSelectionPageState extends State<GameSelectionPage> {
       var request = api.ListGamesRequest();
 
 
+      //poll(5000, api.gameProxy.listGames);
       var response = await api.gameProxy.listGames(ctx, request);
 
       games = response.games;
