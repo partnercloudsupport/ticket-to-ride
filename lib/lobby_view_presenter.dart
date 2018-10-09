@@ -89,8 +89,9 @@ class LobbyViewPresenter implements LobbyView {
       return _lobbyGame;
 
     } catch(error) {
-      print(error.code);
-      print(error.message);
+      // print(error.code);
+      // print(error.message);
+      print(error);
 
       return _lobbyGame;
     }
