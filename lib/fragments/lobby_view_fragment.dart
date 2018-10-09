@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/lobby_view_presenter.dart';
+import 'package:ticket_to_ride/poll.dart';
 
 class LobbyViewFragment extends StatefulWidget {
   LobbyViewFragment(this.lobbyViewPresenter, {Key key, this.title}) : super(key: key);
 
-  final LobbyViewPresenter lobbyViewPresenter;
+  final LobbyView lobbyViewPresenter;
   final String title;
 
   @override
@@ -13,6 +14,33 @@ class LobbyViewFragment extends StatefulWidget {
 
 class _LobbyViewFragmentState extends State<LobbyViewFragment> {
 
+  var _gameLobby;
+  var _cancelPoll;
+
+  @override
+  initState() {
+    super.initState();
+
+    _getGameLobby();
+  }
+
+  @override
+  void dispose(){
+    _cancelPoll();
+    super.dispose();
+  }
+
+  _getGameLobby() async {
+    _cancelPoll = poll(30, () async {
+      var gameLobby = await widget.lobbyViewPresenter.getGame(context);
+
+      print('poll');
+
+      setState(() {
+        _gameLobby = gameLobby;
+      });
+    });
+  }
 
   Widget _displayPlayer(player) {
 
@@ -50,12 +78,12 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
   _startGameButton(canStart) {
 
     if(!canStart) {
-      // return null;
-      return Text('');
+      return Text('', key: Key('noStart'));
     } else {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
         child: RaisedButton(
+          key: Key('startButton'),
           onPressed: () {widget.lobbyViewPresenter.startGame(context);},
           child: Text(
             'Start Game',
@@ -69,82 +97,80 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
   }
 
   _buildLobby() {
-    return FutureBuilder(
-      future: widget.lobbyViewPresenter.getGame(context),
-      builder: (context, snapshot){
-        if(snapshot.hasData) {
-          return new Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+    if(_gameLobby == null || _gameLobby.name == null) {
+      // By default, show a loading spinner
+      return CircularProgressIndicator();
+    } else {
+      return new Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          Text(
+            _gameLobby.name ?? '',
+            key: Key('gameName'),
+            style: new TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 40.0,
+            ),
+            textAlign: TextAlign.start,
+          ),
+          Text(
+            'Hosted by ${_gameLobby.hostName}',
+            key: Key('hostName')
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: _gameLobby.players.map<Widget>((player){
+              return _displayPlayer(player);
+            }).toList()
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                snapshot.data.name,
-                style: new TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40.0,
-                ),
-                textAlign: TextAlign.start,
-              ),
-              Text('Hosted by ${snapshot.data.hostName}'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: snapshot.data.players.map<Widget>((player){
-                  return _displayPlayer(player);
-                }).toList()
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
-                    child: RaisedButton(
-                      onPressed: () {widget.lobbyViewPresenter.exitGame(context);},
-                      child: Text(
-                        'Exit Game',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
+                child: RaisedButton(
+                  key: Key('exitButton'),
+                  onPressed: () {widget.lobbyViewPresenter.exitGame(context);},
+                  child: Text(
+                    'Exit Game',
+                    style: TextStyle(
+                      color: Colors.white,
                     ),
                   ),
-                  _startGameButton(snapshot.data.canStart)
-                ]
-              )
-            ],
-          );
-        } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
-        }
-
-        // By default, show a loading spinner
-        return CircularProgressIndicator();
-      }
-    );
+                ),
+              ),
+              _startGameButton(_gameLobby.canStart)
+            ]
+          )
+        ],
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       body: new Stack(
-      children: <Widget>[
-        new Container(
-          decoration: new BoxDecoration(
-            image: new DecorationImage(
-              image: new AssetImage("images/background.jpg"),
-              fit: BoxFit.cover,
+        children: <Widget>[
+          new Container(
+            decoration: new BoxDecoration(
+              image: new DecorationImage(
+                image: new AssetImage("images/background.jpg"),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
-        new Container(
-          margin: const EdgeInsets.symmetric(vertical: 150.0, horizontal: 60.0),
-          decoration: new BoxDecoration(
-            image: new DecorationImage(
-              image: new AssetImage("images/background2.jpg"),
-              fit: BoxFit.cover,
+          new Container(
+            margin: const EdgeInsets.symmetric(vertical: 150.0, horizontal: 60.0),
+            decoration: new BoxDecoration(
+              image: new DecorationImage(
+                image: new AssetImage("images/background2.jpg"),
+                fit: BoxFit.cover,
+              ),
             ),
+            child: _buildLobby()
           ),
-          child: _buildLobby()
-        ),
-      ]
+        ]
       ),
     );
   }
