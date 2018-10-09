@@ -21,7 +21,7 @@ class LobbyGame {
   String name;
   String hostName;
   List players = [];
-  var playerCount;
+  bool canStart = false;
 }
 
 class LobbyViewPresenter implements LobbyView {
@@ -84,7 +84,7 @@ class LobbyViewPresenter implements LobbyView {
       _lobbyGame.name = response1.displayName;
       _lobbyGame.hostName = response5.username;
       _lobbyGame.players = players;
-      _lobbyGame.playerCount = response1.playerIds.length;
+      _lobbyGame.canStart = response1.playerIds.length > 1 && GlobalContext.of(context).userId == response4.accountId;
 
       return _lobbyGame;
 
