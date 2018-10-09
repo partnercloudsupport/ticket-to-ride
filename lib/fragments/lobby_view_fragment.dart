@@ -47,11 +47,9 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
     );
   }
 
-  _startGameButton(count) {
+  _startGameButton(canStart) {
 
-    print(count);
-
-    if(count <= 1) {
+    if(!canStart) {
       // return null;
       return Text('');
     } else {
@@ -108,7 +106,7 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
                       ),
                     ),
                   ),
-                  _startGameButton(snapshot.data.playerCount)
+                  _startGameButton(snapshot.data.canStart)
                 ]
               )
             ],
