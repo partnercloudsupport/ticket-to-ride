@@ -51,27 +51,22 @@ class GameSelectionPresenterState extends State<GameSelectionPresenter> {
     );
   }
 
+
   getGameList() async {
     var ctx = ClientContext();
     try {
       var request = api.ListGamesRequest();
-
-
-      //poll(5000, api.gameProxy.listGames);
       var response = await api.gameProxy.listGames(ctx, request);
 
       games = response.games;
 
       gamesLoaded = true;
-      setState(() {
-              
-            });
             
     } catch(error) {
       print(error.code);
       print(error.message);
     }
-  }
+  } 
 
   createGame(form) async {
     if (form.validate()) {

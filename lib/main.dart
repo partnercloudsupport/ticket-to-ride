@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/theme/theme.dart';
-import 'package:ticket_to_ride/game_selection_page.dart';
+import 'package:ticket_to_ride/game_selection_presenter.dart';
 import 'package:ticket_to_ride/global_context_widget.dart';
 
 import 'package:ticket_to_ride/fragments/account_login_fragment.dart';
@@ -25,7 +25,7 @@ class TicketToRideApp extends StatelessWidget {
         home: new AccountLoginFragment(AccountLoginPresenter(), title: 'Login'),
         routes: <String, WidgetBuilder>{
          '/login_page': (BuildContext context) => new AccountLoginFragment(AccountLoginPresenter(), title: 'Login'),
-         '/game_selection': (BuildContext context) => new GameSelectionPage(title: 'Game Selection'),
+         '/game_selection': (BuildContext context) => new GameSelectionPresenter(title: 'Game Selection'),
          '/lobby_view': (BuildContext context) => new LobbyViewFragment(LobbyViewPresenter(), title: 'Login'),
         },
       )
@@ -33,21 +33,3 @@ class TicketToRideApp extends StatelessWidget {
   }
 }
 
-class DerpyTestDriver extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    GlobalContext.of(context).onUserIdChange("lolol");
-
-    return GlobalContext(
-      child: MaterialApp(
-        title: 'Ticket to Ride Derpy Test Driver',
-        theme: ticketToRideTheme,
-        home: GameSelectionPage(title: 'Ticket to Ride Derpy Test Driver'),
-        routes: <String, WidgetBuilder> {
-          '/lobby_view': (BuildContext context) => new LobbyViewFragment(LobbyViewPresenter(), title: 'Login'),
-        }
-      )
-    );
-  }
-}

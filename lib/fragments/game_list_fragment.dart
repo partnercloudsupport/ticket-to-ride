@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/global_context_widget.dart';
 import 'package:ticket_to_ride/game_selection_presenter.dart';
 import 'package:ticket_to_ride/api/game.pb.dart';
+import 'package:ticket_to_ride/poll.dart';
 
 
 class GameListFragment extends StatefulWidget {
@@ -20,7 +21,33 @@ class _GameListFragmentState extends State<GameListFragment> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextStyle _lightStyle = TextStyle(color: Colors.white);
+  var _gameList;
+  var _cancelPoll;
+
+  @override
+  initState() {
+    super.initState();
+    _getGameList();
+  }
+
+  @override
+  void dispose() {
+    _cancelPoll();
+    super.dispose();
+  }
+
+
+  _getGameList() async {
+    _cancelPoll = poll(50, () async {
+      var gameList = await widget.presenterState.getGameList();
+
+      print('poll');
+
+      setState(() {
+              _gameList = gameList;
+            });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
