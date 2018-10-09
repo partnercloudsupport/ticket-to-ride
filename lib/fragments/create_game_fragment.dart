@@ -24,7 +24,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
   Widget build(BuildContext build) {
 
     final displayNameInput = TextFormField(
-      autofocus: true,
+     // autofocus: true,
       decoration: InputDecoration(
         labelText: 'Game Display Name',
       ),

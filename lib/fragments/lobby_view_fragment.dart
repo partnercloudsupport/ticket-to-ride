@@ -1,48 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_to_ride/api/api.dart' as api;
-import 'package:protobuf/protobuf.dart';
-import 'global_context_widget.dart';
+import 'package:ticket_to_ride/lobby_view_presenter.dart';
 
-class LobbyViewPage extends StatefulWidget {
-  LobbyViewPage({Key key, this.title}) : super(key: key);
+class LobbyViewFragment extends StatefulWidget {
+  LobbyViewFragment(this.lobbyViewPresenter, {Key key, this.title}) : super(key: key);
 
+  final LobbyViewPresenter lobbyViewPresenter;
   final String title;
 
   @override
-  _LobbyViewPageState createState() => new _LobbyViewPageState();
+  _LobbyViewFragmentState createState() => new _LobbyViewFragmentState();
 }
 
-class _LobbyViewPageState extends State<LobbyViewPage> {
+class _LobbyViewFragmentState extends State<LobbyViewFragment> {
 
-  _getGame() async {
-    var ctx = ClientContext();
-
-    try {
-
-      var request = new api.GetGameRequest();
-      print(GlobalContext.of(context).currentGameId);
-      request.gameId = GlobalContext.of(context).currentGameId;
-      var response = await api.gameProxy.getGame(ctx, request);
-
-      print(response);
-
-      Navigator.of(context).pushNamed('/game_selection');
-
-      //return _players;
-
-      var game = new api.Game();
-      game.displayName = 'Woodfields Warriors';
-      game.maxPlayers = 5;
-      game.hostPlayerId = '123';
-
-      return game;
-      return response;
-
-    } catch(error) {
-      print(error);
-      return [];
-    }
-  }
 
   Widget _displayPlayer(player) {
 
@@ -77,42 +47,47 @@ class _LobbyViewPageState extends State<LobbyViewPage> {
     );
   }
 
-  var _players = [
-    Player('user1', 'blue'),
-    Player('user2', 'green'),
-    Player('user3', 'yellow'),
-    Player('user4', 'red'),
-    Player('user3', 'orange'),
-    Player('user4', 'purple'),
-    // null,
-    // null
-  ];
+  _startGameButton(canStart) {
 
-  _exitGame() async {
-    Navigator.of(context).pushNamed('/game_list');
+    if(!canStart) {
+      // return null;
+      return Text('');
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
+        child: RaisedButton(
+          onPressed: () {widget.lobbyViewPresenter.startGame(context);},
+          child: Text(
+            'Start Game',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   _buildLobby() {
     return FutureBuilder(
-      future: _getGame(),
+      future: widget.lobbyViewPresenter.getGame(context),
       builder: (context, snapshot){
         if(snapshot.hasData) {
           return new Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Game Name',
+                snapshot.data.name,
                 style: new TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 40.0,
                 ),
                 textAlign: TextAlign.start,
               ),
-              Text('Hosted by ... '),
+              Text('Hosted by ${snapshot.data.hostName}'),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: _players.map((player){
+                children: snapshot.data.players.map<Widget>((player){
                   return _displayPlayer(player);
                 }).toList()
               ),
@@ -122,7 +97,7 @@ class _LobbyViewPageState extends State<LobbyViewPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
                     child: RaisedButton(
-                      onPressed: () {_exitGame();},
+                      onPressed: () {widget.lobbyViewPresenter.exitGame(context);},
                       child: Text(
                         'Exit Game',
                         style: TextStyle(
@@ -131,18 +106,7 @@ class _LobbyViewPageState extends State<LobbyViewPage> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
-                    child: RaisedButton(
-                      onPressed: () {_exitGame();},
-                      child: Text(
-                        'Start Game',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
+                  _startGameButton(snapshot.data.canStart)
                 ]
               )
             ],
@@ -184,11 +148,4 @@ class _LobbyViewPageState extends State<LobbyViewPage> {
       ),
     );
   }
-}
-
-class Player {
-  String name;
-  String color;
-
-  Player(this.name, this.color);
 }
