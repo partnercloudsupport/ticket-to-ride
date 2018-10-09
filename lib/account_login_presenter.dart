@@ -2,11 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/global_context_widget.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-class AccountLogin {
-    void accountLogin(context, formKey) {}
-    void accountRegister(context, formKey) {}
+abstract class AccountLogin {
+  Login login;
+
+  accountLogin(context, formKey) async {}
+  accountRegister(context, formKey) async {}
+}
+
+class AccountLoginApi {
+  login(ctx, request) {
+    return api.authProxy.login(ctx, request);
+  }
+
+  register(ctx, request) {
+    return api.authProxy.register(ctx, request);
+  }
 }
 
 class Login {
@@ -16,18 +27,14 @@ class Login {
 
 class AccountLoginPresenter implements AccountLogin {
 
-  final login = Login();
+  AccountLoginApi _api;
+  var login = Login();
 
-  void _showErrorToast(String message) {
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        bgcolor: "#e74c3c",
-        textcolor: '#ffffff',
-        timeInSecForIos: 5,
-        gravity: ToastGravity.TOP
-    );
+  AccountLoginPresenter() {
+    this._api = new AccountLoginApi();
   }
+
+  AccountLoginPresenter.withApi(this._api);
 
   @override
   accountLogin(context, form) async {
@@ -39,25 +46,27 @@ class AccountLoginPresenter implements AccountLogin {
         var request = new api.LoginAccountRequest();
         request.username = login.username;
         request.password = login.password;
-        var response = await api.authProxy.login(ctx, request);
+        var response = await _api.login(ctx, request);
 
         GlobalContext.of(context).onUserIdChange(response.userId);
         Navigator.of(context).pushNamed('/game_selection');
 
       } catch(error) {
+        String errorMessage;
         switch(error.code) {
           case api.Code.NOT_FOUND:
-            _showErrorToast('Account does not exist');
+            errorMessage = 'Account does not exist';
             break;
           case api.Code.ACCESS_DENIED:
-            _showErrorToast('Incorrect password');
+            errorMessage = 'Incorrect password';
             break;
           default:
-            _showErrorToast('UNKNOWN ERROR');
+            errorMessage = 'UNKNOWN ERROR';
         }
 
         print(error.code);
         print(error.message);
+        throw errorMessage;
       }
     }
   }
@@ -73,22 +82,24 @@ class AccountLoginPresenter implements AccountLogin {
         var request = new api.LoginAccountRequest();
         request.username = login.username;
         request.password = login.password;
-        var response = await api.authProxy.register(ctx, request);
+        var response = await _api.register(ctx, request);
 
         GlobalContext.of(context).onUserIdChange(response.userId);
         Navigator.of(context).pushNamed('/game_selection');
 
       } catch(error) {
+        String errorMessage;
         switch(error.code) {
           case api.Code.INVALID_ARGUMENT:
-            _showErrorToast('Username already exists.');
+            errorMessage = 'Username already exists.';
             break;
           default:
-            _showErrorToast('UNKNOWN ERROR');
+            errorMessage = 'UNKNOWN ERROR';
         }
 
         print(error.code);
         print(error.message);
+        throw errorMessage;
       }
     }
   }

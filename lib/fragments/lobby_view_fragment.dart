@@ -5,7 +5,7 @@ import 'package:ticket_to_ride/poll.dart';
 class LobbyViewFragment extends StatefulWidget {
   LobbyViewFragment(this.lobbyViewPresenter, {Key key, this.title}) : super(key: key);
 
-  final LobbyViewPresenter lobbyViewPresenter;
+  final LobbyView lobbyViewPresenter;
   final String title;
 
   @override
@@ -78,11 +78,12 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
   _startGameButton(canStart) {
 
     if(!canStart) {
-      return Text('');
+      return Text('', key: Key('noStart'));
     } else {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
         child: RaisedButton(
+          key: Key('startButton'),
           onPressed: () {widget.lobbyViewPresenter.startGame(context);},
           child: Text(
             'Start Game',
@@ -105,13 +106,17 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
         children: <Widget>[
           Text(
             _gameLobby.name ?? '',
+            key: Key('gameName'),
             style: new TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 40.0,
             ),
             textAlign: TextAlign.start,
           ),
-          Text('Hosted by ${_gameLobby.hostName}'),
+          Text(
+            'Hosted by ${_gameLobby.hostName}',
+            key: Key('hostName')
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: _gameLobby.players.map<Widget>((player){
@@ -124,6 +129,7 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
                 child: RaisedButton(
+                  key: Key('exitButton'),
                   onPressed: () {widget.lobbyViewPresenter.exitGame(context);},
                   child: Text(
                     'Exit Game',

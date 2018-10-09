@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/account_login_presenter.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AccountLoginFragment extends StatefulWidget {
   AccountLoginFragment(this.accountLoginPresenter, {Key key, this.title}) : super(key: key);
 
-  final AccountLoginPresenter accountLoginPresenter;
+  final AccountLogin accountLoginPresenter;
   final String title;
 
   @override
@@ -17,6 +18,33 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
   @override
   Widget build(BuildContext context) {
 
+    void _showErrorToast(String message) {
+      Fluttertoast.showToast(
+          msg: message,
+          toastLength: Toast.LENGTH_LONG,
+          bgcolor: "#e74c3c",
+          textcolor: '#ffffff',
+          timeInSecForIos: 5,
+          gravity: ToastGravity.TOP
+      );
+    }
+
+    _login() async {
+      try {
+        await widget.accountLoginPresenter.accountLogin(context, _formKey.currentState);
+      } catch(error) {
+        _showErrorToast(error);
+      }
+    }
+
+    _register() async {
+      try {
+        await widget.accountLoginPresenter.accountRegister(context, _formKey.currentState);
+      } catch(error) {
+        _showErrorToast(error);
+      }
+    }
+
     var _background = Container(
       decoration: new BoxDecoration(
         image: new DecorationImage(
@@ -27,6 +55,7 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
     );
 
     var _username = TextFormField(
+      key: Key('username'),
       autofocus: true,
       decoration: InputDecoration(
         labelText: 'Username',
@@ -42,6 +71,7 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
     );
 
     var _password = TextFormField(
+      key: Key('password'),
       obscureText: true,
       decoration: InputDecoration(
         labelText: 'Password'
@@ -62,7 +92,8 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: RaisedButton(
-            onPressed: () {widget.accountLoginPresenter.accountLogin(context, _formKey.currentState);},
+            key: Key('loginButton'),
+            onPressed: _login,
             child: Text(
               'Login',
               style: TextStyle(
@@ -74,7 +105,8 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: RaisedButton(
-            onPressed: () {widget.accountLoginPresenter.accountRegister(context, _formKey.currentState);},
+            key: Key('registerButton'),
+            onPressed: _register,
             child: Text(
               'Register',
               style: TextStyle(
