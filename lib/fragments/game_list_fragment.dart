@@ -61,15 +61,19 @@ class _GameListFragmentState extends State<GameListFragment> {
 
     }
 
-    var gameList = (this.widget.pageState.games.length == 0) ? 
-      Text('No active games to show.') : 
-      Flexible(
-        child: ListView.builder(
-          itemCount: this.widget.pageState.games.length,
-          itemBuilder: (BuildContext context, int i) {
-            return _buildRow(this.widget.pageState.games[i]);
-          }
-        ),
+  
+    
+    var gameList = (!this.widget.pageState.gamesLoaded) ? Text('Loading games...') :
+      ((this.widget.pageState.games.length == 0) ? 
+        Text('No active games to show.') : 
+          Flexible(
+            child: ListView.builder(
+              itemCount: this.widget.pageState.games.length,
+              itemBuilder: (BuildContext context, int i) {
+                return _buildRow(this.widget.pageState.games[i]);
+              }
+            ),
+          )
       );
 
     return Padding(
@@ -78,7 +82,7 @@ class _GameListFragmentState extends State<GameListFragment> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('Join a Game'),
+          Text('Join a Game', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
           SizedBox(height:8.0),
           gameList
         ]

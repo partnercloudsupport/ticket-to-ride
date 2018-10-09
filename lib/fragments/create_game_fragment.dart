@@ -77,7 +77,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Create a New Game'),
+            Text('Create a New Game', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
             displayNameInput,
             maxPlayersInput,
             createButton

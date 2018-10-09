@@ -33,6 +33,8 @@ class GameSelectionPageState extends State<GameSelectionPage> {
 
   var createGameRequest = api.CreateGameRequest();
   var createPlayerRequest = api.CreatePlayerRequest();
+
+  bool gamesLoaded = false;
   
   List<api.Game> games = List<api.Game>();
 
@@ -54,6 +56,12 @@ class GameSelectionPageState extends State<GameSelectionPage> {
       var response = await api.gameProxy.listGames(ctx, request);
 
       games = response.games;
+
+      gamesLoaded = true;
+      setState(() {
+              
+            });
+            
     } catch(error) {
       print(error.code);
       print(error.message);
@@ -123,6 +131,8 @@ class GameSelectionPageState extends State<GameSelectionPage> {
   @override
   Widget build(BuildContext context) {
 
+    
+
     var _background = Container(
       decoration: new BoxDecoration(
         image: new DecorationImage(
@@ -136,8 +146,8 @@ class GameSelectionPageState extends State<GameSelectionPage> {
     getGameList();
 
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text('Game Selection'),
+      appBar: AppBar(
+        title: Text('Game Selection', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: Stack(
         children: <Widget> [
