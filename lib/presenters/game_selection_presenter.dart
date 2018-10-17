@@ -1,17 +1,74 @@
 import 'package:flutter/material.dart';
-import 'global_context_widget.dart';
+import 'package:ticket_to_ride/global_context_widget.dart';
 
 import 'package:ticket_to_ride/api/api.dart' as api;
-import 'api/game.pb.dart';
+import 'package:ticket_to_ride/api/game.pb.dart';
 import 'package:protobuf/protobuf.dart';
 
-import 'fragments/game_list_fragment.dart';
-import 'fragments/create_game_fragment.dart';
-import 'poll.dart';
+import 'package:ticket_to_ride/fragments/game_list_fragment.dart';
+import 'package:ticket_to_ride/fragments/create_game_fragment.dart';
+import 'package:ticket_to_ride/activities/activity.dart';
+//import 'poll.dart';
 
-import 'dart:async';
-import 'package:fluttertoast/fluttertoast.dart';
+//import 'dart:async';
 
+
+class GameSelectionPresenter {
+
+  final String title;
+  var createGameRequest = api.CreateGameRequest();
+  var createPlayerRequest = api.CreatePlayerRequest();
+
+  bool gamesLoaded = false;
+  
+  List<api.Game> games = List<api.Game>();
+
+  ActivityState activityState = Activity().createState();
+
+  GameSelectionPresenter({this.title});
+
+  getGameList() async {
+    var ctx = ClientContext();
+    try {
+      var request = api.ListGamesRequest();
+      var response = await api.gameProxy.listGames(ctx, request);
+
+      games = response.games;
+
+      gamesLoaded = true;
+            
+    } catch(error) {
+      print(error.code);
+      print(error.message);
+    }
+  } 
+
+  createGame(form) async {
+    if (form.validate()) {
+      form.save();
+
+      var ctx = ClientContext();
+
+      print(createGameRequest.displayName);
+
+      try {
+        var response = await api.gameProxy.createGame(ctx,createGameRequest);
+
+        activityState.onCurrentGameIdChange(response.gameId);
+        print('just created game ' + response.gameId);
+        activityState.pushNavigator('/lobby_view');
+
+      } catch(error) {
+        print(error.code);
+        print(error.message);
+      }
+
+    }
+  }
+
+}
+
+/*
 class GameSelectionPresenter extends StatefulWidget {
   GameSelectionPresenter({Key key, this.title}) : super(key: key);
 
@@ -70,24 +127,23 @@ class GameSelectionPresenterState extends State<GameSelectionPresenter> {
 
   createGame(form) async {
     if (form.validate()) {
-        form.save();
+      form.save();
 
-        var ctx = ClientContext();
+      var ctx = ClientContext();
 
-        print(createGameRequest.displayName);
+      print(createGameRequest.displayName);
 
-        try {
-          var response = await api.gameProxy.createGame(ctx,createGameRequest);
+      try {
+        var response = await api.gameProxy.createGame(ctx,createGameRequest);
 
-          GlobalContext.of(context).onCurrentGameIdChange(response.gameId);
-          print('just created game ' + response.gameId);
-          Navigator.of(context).pushNamed('/lobby_view');
+        GlobalContext.of(context).onCurrentGameIdChange(response.gameId);
+        print('just created game ' + response.gameId);
+        Navigator.of(context).pushNamed('/lobby_view');
 
-        } catch(error) {
-          print(error.code);
-          print(error.message);
-        }
-
+      } catch(error) {
+        print(error.code);
+        print(error.message);
+      }
 
     }
   }
@@ -102,6 +158,7 @@ class GameSelectionPresenterState extends State<GameSelectionPresenter> {
         try {
           GetPlayerRequest getPlayerRequest = GetPlayerRequest();
           getPlayerRequest.playerId = response.playerId;
+          print(getPlayerRequest.playerId);
           var playerResponse = await api.gameProxy.getPlayer(ctx, getPlayerRequest);
 
           print(playerResponse.gameId);
@@ -166,3 +223,5 @@ class GameSelectionPresenterState extends State<GameSelectionPresenter> {
     );
   }
 }
+
+*/

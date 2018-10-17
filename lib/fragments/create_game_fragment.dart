@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/global_context_widget.dart';
-import 'package:ticket_to_ride/game_selection_presenter.dart';
+import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
+//import 'package:ticket_to_ride/activities/activity.dart';
 
 class CreateGameFragment extends StatefulWidget {
 
-  CreateGameFragment(GameSelectionPresenterState presenterState, {Key key, this.title}) :
-    presenterState = presenterState, super(key: key); 
+  CreateGameFragment(GameSelectionPresenter presenter, {Key key, this.title}) : 
+    this.presenter = presenter, super(key: key); 
 
   final String title;
-  final GameSelectionPresenterState presenterState;
+  final GameSelectionPresenter presenter;
 
   @override
   _CreateGameFragmentState createState() => new _CreateGameFragmentState();
@@ -35,7 +36,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
         }
       },
       onSaved: (String value) {
-        this.widget.presenterState.createGameRequest.displayName = value;
+        this.widget.presenter.createGameRequest.displayName = value;
       }         
     );          
 
@@ -50,7 +51,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
       }).toList(),
       onChanged: (int value) { 
         maxPlayersSelected = value;
-        this.widget.presenterState.createGameRequest.maxPlayers = maxPlayersSelected;
+        this.widget.presenter.createGameRequest.maxPlayers = maxPlayersSelected;
         setState(() {});
       },
     );
@@ -59,8 +60,8 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         onPressed: () {
-          this.widget.presenterState.createGameRequest.userId = GlobalContext.of(context).userId;
-          this.widget.presenterState.createGame(_formKey.currentState);
+          this.widget.presenter.createGameRequest.userId = GlobalContext.of(context).userId;
+          this.widget.presenter.createGame(_formKey.currentState);
         },
         child: Text(
           'Create',

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/global_context_widget.dart';
-import 'package:ticket_to_ride/game_selection_presenter.dart';
+import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
 import 'package:ticket_to_ride/api/game.pb.dart';
 import 'package:ticket_to_ride/poll.dart';
 
 
 class GameListFragment extends StatefulWidget {
 
-  GameListFragment(GameSelectionPresenterState presenterState, {Key key, this.title}) : presenterState = presenterState, super(key: key);
+  GameListFragment(GameSelectionPresenter presenter, {Key key, this.title}) : presenter = presenter, super(key: key);
 
   final String title;
-  final GameSelectionPresenterState presenterState;
+  final GameSelectionPresenter presenter;
 
   @override
   _GameListFragmentState createState() => new _GameListFragmentState();
@@ -39,7 +39,7 @@ class _GameListFragmentState extends State<GameListFragment> {
 
   _getGameList() async {
     _cancelPoll = poll(50, () async {
-      var gameList = await widget.presenterState.getGameList();
+      var gameList = await widget.presenter.getGameList();
 
       print('poll');
 
@@ -58,9 +58,9 @@ class _GameListFragmentState extends State<GameListFragment> {
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: RaisedButton(
           onPressed: () {
-            this.widget.presenterState.createPlayerRequest.userId = GlobalContext.of(context).userId;
-            this.widget.presenterState.createPlayerRequest.gameId = game.gameId;
-            this.widget.presenterState.createPlayer(_formKey.currentState);
+            this.widget.presenter.createPlayerRequest.userId = GlobalContext.of(context).userId;
+            this.widget.presenter.createPlayerRequest.gameId = game.gameId;
+            //this.widget.presenter.createPlayer(_formKey.currentState);
           },
           child: Text(
             'Join',
@@ -90,14 +90,14 @@ class _GameListFragmentState extends State<GameListFragment> {
 
   
     
-    var gameList = (!this.widget.presenterState.gamesLoaded) ? Text('Loading games...') :
-      ((this.widget.presenterState.games.length == 0) ? 
+    var gameList = (!this.widget.presenter.gamesLoaded) ? Text('Loading games...') :
+      ((this.widget.presenter.games.length == 0) ? 
         Text('No active games to show.') : 
           Flexible(
             child: ListView.builder(
-              itemCount: this.widget.presenterState.games.length,
+              itemCount: this.widget.presenter.games.length,
               itemBuilder: (BuildContext context, int i) {
-                return _buildRow(this.widget.presenterState.games[i]);
+                return _buildRow(this.widget.presenter.games[i]);
               }
             ),
           )

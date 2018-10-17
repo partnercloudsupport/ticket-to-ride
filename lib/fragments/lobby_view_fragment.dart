@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_to_ride/lobby_view_presenter.dart';
+import 'package:ticket_to_ride/presenters/lobby_view_presenter.dart';
 import 'package:ticket_to_ride/poll.dart';
 
 class LobbyViewFragment extends StatefulWidget {
