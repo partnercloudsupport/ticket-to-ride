@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-protoc --dart_out=lib/ api/*.proto
+protoc --plugin=protoc-gen-wwttr=./protoc-gen-wwttr --dart_out=lib/ --wwttr_out=lib/ api/*.proto
