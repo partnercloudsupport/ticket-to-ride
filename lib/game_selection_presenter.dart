@@ -7,11 +7,13 @@ import 'package:protobuf/protobuf.dart';
 
 import 'fragments/game_list_fragment.dart';
 import 'fragments/create_game_fragment.dart';
+import 'poll.dart';
 
+import 'dart:async';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class GameSelectionPage extends StatefulWidget {
-  GameSelectionPage({Key key, this.title}) : super(key: key);
+class GameSelectionPresenter extends StatefulWidget {
+  GameSelectionPresenter({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -26,13 +28,15 @@ class GameSelectionPage extends StatefulWidget {
 
 
   @override
-  GameSelectionPageState createState() => new GameSelectionPageState();
+  GameSelectionPresenterState createState() => new GameSelectionPresenterState();
 }
 
-class GameSelectionPageState extends State<GameSelectionPage> {
+class GameSelectionPresenterState extends State<GameSelectionPresenter> {
 
   var createGameRequest = api.CreateGameRequest();
   var createPlayerRequest = api.CreatePlayerRequest();
+
+  bool gamesLoaded = false;
   
   List<api.Game> games = List<api.Game>();
 
@@ -47,6 +51,7 @@ class GameSelectionPageState extends State<GameSelectionPage> {
     );
   }
 
+
   getGameList() async {
     var ctx = ClientContext();
     try {
@@ -54,11 +59,14 @@ class GameSelectionPageState extends State<GameSelectionPage> {
       var response = await api.gameProxy.listGames(ctx, request);
 
       games = response.games;
+
+      gamesLoaded = true;
+            
     } catch(error) {
       print(error.code);
       print(error.message);
     }
-  }
+  } 
 
   createGame(form) async {
     if (form.validate()) {
@@ -136,8 +144,8 @@ class GameSelectionPageState extends State<GameSelectionPage> {
     getGameList();
 
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text('Game Selection'),
+      appBar: AppBar(
+        title: Text('Game Selection', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: Stack(
         children: <Widget> [

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/global_context_widget.dart';
-import 'package:ticket_to_ride/game_selection_page.dart';
+import 'package:ticket_to_ride/game_selection_presenter.dart';
 
 class CreateGameFragment extends StatefulWidget {
 
-  CreateGameFragment(GameSelectionPageState pageState, {Key key, this.title}) : pageState = pageState, super(key: key); 
+  CreateGameFragment(GameSelectionPresenterState presenterState, {Key key, this.title}) :
+    presenterState = presenterState, super(key: key); 
 
   final String title;
-  final GameSelectionPageState pageState;
+  final GameSelectionPresenterState presenterState;
 
   @override
   _CreateGameFragmentState createState() => new _CreateGameFragmentState();
@@ -34,7 +35,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
         }
       },
       onSaved: (String value) {
-        this.widget.pageState.createGameRequest.displayName = value;
+        this.widget.presenterState.createGameRequest.displayName = value;
       }         
     );          
 
@@ -49,7 +50,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
       }).toList(),
       onChanged: (int value) { 
         maxPlayersSelected = value;
-        this.widget.pageState.createGameRequest.maxPlayers = maxPlayersSelected;
+        this.widget.presenterState.createGameRequest.maxPlayers = maxPlayersSelected;
         setState(() {});
       },
     );
@@ -58,8 +59,8 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         onPressed: () {
-          this.widget.pageState.createGameRequest.userId = GlobalContext.of(context).userId;
-          this.widget.pageState.createGame(_formKey.currentState);
+          this.widget.presenterState.createGameRequest.userId = GlobalContext.of(context).userId;
+          this.widget.presenterState.createGame(_formKey.currentState);
         },
         child: Text(
           'Create',
@@ -77,7 +78,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Create a New Game'),
+            Text('Create a New Game', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
             displayNameInput,
             maxPlayersInput,
             createButton

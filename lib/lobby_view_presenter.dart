@@ -4,10 +4,24 @@ import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/global_context_widget.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class LobbyView {
-    getGame(context) {}
-    exitGame(context) {}
-    startGame(context) {}
+abstract class LobbyView {
+  getGame(context) {}
+  exitGame(context) {}
+  startGame(context) {}
+}
+
+class LobbyViewApi {
+  getGame(ctx, request) {
+    return api.gameProxy.getGame(ctx, request);
+  }
+
+  getPlayer(ctx, request) {
+    return api.gameProxy.getPlayer(ctx, request);
+  }
+
+  getUsername(ctx, request) {
+    return api.authProxy.getUsername(ctx, request);
+  }
 }
 
 class Player {
@@ -26,7 +40,14 @@ class LobbyGame {
 
 class LobbyViewPresenter implements LobbyView {
 
+  LobbyViewApi _api;
   var _lobbyGame = LobbyGame();
+
+  LobbyViewPresenter() {
+    this._api = new LobbyViewApi();
+  }
+
+  LobbyViewPresenter.withApi(this._api);
 
   _getColor(colorCode) {
     switch(colorCode) {
@@ -53,7 +74,7 @@ class LobbyViewPresenter implements LobbyView {
 
       var request1 = new api.GetGameRequest();
       request1.gameId = GlobalContext.of(context).currentGameId;
-      var response1 = await api.gameProxy.getGame(ctx, request1);
+      var response1 = await _api.getGame(ctx, request1);
 
       var players = [];
 
@@ -61,11 +82,11 @@ class LobbyViewPresenter implements LobbyView {
         if(response1.playerIds.length > x) {
           var request2 = new api.GetPlayerRequest();
           request2.playerId = response1.playerIds[x];
-          var response2 = await api.gameProxy.getPlayer(ctx, request2);
+          var response2 = await _api.getPlayer(ctx, request2);
 
           var request3 = new api.GetUsernameRequest();
           request3.userId = response2.accountId;
-          var response3 = await api.authProxy.getUsername(ctx, request3);
+          var response3 = await _api.getUsername(ctx, request3);
 
           players.add(Player(response3.username, _getColor(response2.color)));
         } else {
@@ -75,11 +96,11 @@ class LobbyViewPresenter implements LobbyView {
 
       var request4 = new api.GetPlayerRequest();
       request4.playerId = response1.hostPlayerId;
-      var response4 = await api.gameProxy.getPlayer(ctx, request4);
+      var response4 = await _api.getPlayer(ctx, request4);
 
       var request5 = new api.GetUsernameRequest();
       request5.userId = response4.accountId;
-      var response5 = await api.authProxy.getUsername(ctx, request5);
+      var response5 = await _api.getUsername(ctx, request5);
 
       _lobbyGame.name = response1.displayName;
       _lobbyGame.hostName = response5.username;
@@ -89,8 +110,9 @@ class LobbyViewPresenter implements LobbyView {
       return _lobbyGame;
 
     } catch(error) {
-      print(error.code);
-      print(error.message);
+      // print(error.code);
+      // print(error.message);
+      print(error);
 
       return _lobbyGame;
     }
