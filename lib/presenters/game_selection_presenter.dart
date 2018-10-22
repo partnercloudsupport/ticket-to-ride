@@ -7,15 +7,16 @@ import 'package:protobuf/protobuf.dart';
 
 import 'package:ticket_to_ride/fragments/game_list_fragment.dart';
 import 'package:ticket_to_ride/fragments/create_game_fragment.dart';
-import 'package:ticket_to_ride/activities/activity.dart';
+import 'presenter.dart';
 //import 'poll.dart';
 
 //import 'dart:async';
 
 
-class GameSelectionPresenter {
-
+class GameSelectionPresenter extends Presenter {
+  
   final String title;
+
   var createGameRequest = api.CreateGameRequest();
   var createPlayerRequest = api.CreatePlayerRequest();
 
@@ -23,9 +24,8 @@ class GameSelectionPresenter {
   
   List<api.Game> games = List<api.Game>();
 
-  ActivityState activityState = Activity().createState();
-
   GameSelectionPresenter({this.title});
+  GameSelectionPresenter.fromFragment(CreateGameFragment fragment, {this.title});
 
   getGameList() async {
     var ctx = ClientContext();
@@ -54,9 +54,9 @@ class GameSelectionPresenter {
       try {
         var response = await api.gameProxy.createGame(ctx,createGameRequest);
 
-        activityState.onCurrentGameIdChange(response.gameId);
+        createGameKey.currentState.onCurrentGameIdChange(response.gameId);
         print('just created game ' + response.gameId);
-        activityState.pushNavigator('/lobby_view');
+        createGameKey.currentState.pushNavigator('/lobby_view');
 
       } catch(error) {
         print(error.code);

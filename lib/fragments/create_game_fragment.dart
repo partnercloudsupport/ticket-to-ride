@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/global_context_widget.dart';
 import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
+import 'package:ticket_to_ride/fragments/fragment.dart';
+
+import 'package:ticket_to_ride/api/api.dart' as api;
+
 //import 'package:ticket_to_ride/activities/activity.dart';
 
-class CreateGameFragment extends StatefulWidget {
+class CreateGameFragment extends Fragment {
 
   CreateGameFragment(GameSelectionPresenter presenter, {Key key, this.title}) : 
-    this.presenter = presenter, super(key: key); 
+    this.presenter = presenter, super(presenter, key: key); 
 
   final String title;
   final GameSelectionPresenter presenter;
 
   @override
-  _CreateGameFragmentState createState() => new _CreateGameFragmentState();
+  CreateGameFragmentState createState() => new CreateGameFragmentState();
 
 }
 
 
-class _CreateGameFragmentState extends State<CreateGameFragment> {
+class CreateGameFragmentState extends FragmentState {
 
   final _formKey = GlobalKey<FormState>();
   int maxPlayersSelected;
+  var request = api.CreateGameRequest();
 
   @override
   Widget build(BuildContext build) {
@@ -36,7 +41,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
         }
       },
       onSaved: (String value) {
-        this.widget.presenter.createGameRequest.displayName = value;
+        request.displayName = value;
       }         
     );          
 
@@ -51,7 +56,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
       }).toList(),
       onChanged: (int value) { 
         maxPlayersSelected = value;
-        this.widget.presenter.createGameRequest.maxPlayers = maxPlayersSelected;
+        request.maxPlayers = maxPlayersSelected;
         setState(() {});
       },
     );
@@ -60,7 +65,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         onPressed: () {
-          this.widget.presenter.createGameRequest.userId = GlobalContext.of(context).userId;
+          request.userId = GlobalContext.of(context).userId;
           this.widget.presenter.createGame(_formKey.currentState);
         },
         child: Text(
