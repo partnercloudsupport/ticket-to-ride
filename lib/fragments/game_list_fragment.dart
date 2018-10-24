@@ -58,7 +58,7 @@ class _GameListFragmentState extends State<GameListFragment> {
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: RaisedButton(
           onPressed: () {
-            this.widget.presenter.createPlayerRequest.userId = GlobalContext.of(context).userId;
+            this.widget.presenter.createPlayerRequest.userId = GlobalContextDEPR.of(context).userId;
             this.widget.presenter.createPlayerRequest.gameId = game.gameId;
             //this.widget.presenter.createPlayer(_formKey.currentState);
           },

@@ -24,11 +24,11 @@ class Fragment extends StatefulWidget {
   }
 
   void onCurrentGameIdChange(String newValue) {
-    GlobalContext.of(context).onCurrentGameIdChange(newValue);
+    GlobalContextDEPR.of(context).onCurrentGameIdChange(newValue);
   }
 
   void onUserIdChange(String newValue) {
-    GlobalContext.of(context).onUserIdChange(newValue);
+    GlobalContextDEPR.of(context).onUserIdChange(newValue);
   }
 
   void pushNavigator(String routeName) {
@@ -43,11 +43,11 @@ class Fragment extends StatefulWidget {
 class FragmentState extends State<Fragment> {
 
   void onCurrentGameIdChange(String newValue) {
-    GlobalContext.of(context).onCurrentGameIdChange(newValue);
+    GlobalContextDEPR.of(context).onCurrentGameIdChange(newValue);
   }
 
   void onUserIdChange(String newValue) {
-    GlobalContext.of(context).onUserIdChange(newValue);
+    GlobalContextDEPR.of(context).onUserIdChange(newValue);
   }
 
   void pushNavigator(String routeName) {

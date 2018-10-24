@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:ticket_to_ride/fragments/account_login_fragment.dart';
-import 'package:ticket_to_ride/account_login_presenter.dart';
+import 'package:ticket_to_ride/presenters/account_login_presenter.dart';
 
 class TestAccountLogin implements AccountLogin {
 

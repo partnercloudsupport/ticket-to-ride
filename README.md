@@ -23,7 +23,7 @@ The **action** is the action performed on the object (e.g. login, view, etc.). T
 
 `main.dart` is the topmost file and runs the program. This file does the following:
 * defines navigational routes and their associated view files
-* wraps the entire app in the `GlobalContext` widget, which contains information that the whole app needs to run (e.g. the current logged in user, the current game idea, etc.)
+* wraps the entire app in the `GlobalContextDEPR` widget, which contains information that the whole app needs to run (e.g. the current logged in user, the current game idea, etc.)
 * defines the initial screen ("home")
 
 ### theme folder
@@ -53,9 +53,9 @@ assets:
 
 These are just the basics - you can read about more in depth imports in the [flutter documentation](https://flutter.io/assets-and-images/).
 
-## Using GlobalContext
+## Using GlobalContextDEPR
 
-All lower level widgets are able to access and update this information by using `GlobalContext.of(context)` followed by the corresponding update function defined in `global_context_widget.dart`.
+All lower level widgets are able to access and update this information by using `GlobalContextDEPR.of(context)` followed by the corresponding update function defined in `global_context_widget.dart`.
 
 ## Running on an iOS device
 
