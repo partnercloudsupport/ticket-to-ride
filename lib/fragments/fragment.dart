@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:ticket_to_ride/global_context_widget.dart';
+import 'package:ticket_to_ride/global_context.dart';
 
 import 'package:ticket_to_ride/presenters/presenter.dart';
 
@@ -29,12 +29,14 @@ class Fragment extends StatefulWidget {
 
 class FragmentState extends State<Fragment> {
 
-  void onCurrentGameIdChange(String newValue) {
-    GlobalContextDEPR.of(context).onCurrentGameIdChange(newValue);
+  void onCurrentGameIdChange(String gameId) {
+    //GlobalContextDEPR.of(context).onCurrentGameIdChange(gameId);
+    GlobalContext().setCurrentGameId(gameId);
   }
 
-  void onUserIdChange(String newValue) {
-    GlobalContextDEPR.of(context).onUserIdChange(newValue);
+  void onUserIdChange(String userId) {
+    //GlobalContextDEPR.of(context).onUserIdChange(userId);
+    GlobalContext().setUserId(userId);
   }
 
   void pushNavigator(String routeName) {

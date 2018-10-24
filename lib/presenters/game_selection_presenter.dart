@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_to_ride/global_context_widget.dart';
+import 'package:ticket_to_ride/global_context.dart';
 
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/api/game.pb.dart';
@@ -9,6 +9,29 @@ import 'package:ticket_to_ride/fragments/game_list_fragment.dart';
 import 'package:ticket_to_ride/fragments/create_game_fragment.dart';
 import 'presenter.dart';
 
+class CreatePlayer {
+  String userId;
+  String gameId;
+}
+
+class CreateGame {
+  String displayName;
+  int maxPlayers;
+  String userId;
+}
+
+class GameSelectionApi {
+  CreatePlayer createPlayerData = CreatePlayer();
+  CreateGame createGameData = CreateGame();
+
+  createPlayer(ctx, request) {
+    return api.gameProxy.createGame(ctx,request);
+  }
+
+  createGame(ctx, request) {
+    return api.gameProxy.createGame(ctx,request);
+  }
+}
 
 class GameSelectionPresenter extends Presenter {
   
@@ -60,6 +83,7 @@ class GameSelectionPresenter extends Presenter {
       try {
         var response = await api.gameProxy.createGame(ctx,request);
 
+
         createGameKey.currentState.onCurrentGameIdChange(response.gameId);
         print('just created game ' + response.gameId);
         createGameKey.currentState.pushNavigator('/lobby_view');
@@ -88,7 +112,10 @@ class GameSelectionPresenter extends Presenter {
 
           print(playerResponse.gameId);
 
+          GlobalContext().currentGameId = playerResponse.gameId;
           //createPlayerKey.currentState.onCurrentGameIdChange(playerResponse.gameId);
+
+          // TODO replace with wrapper Navigator implementation
           //Navigator.of(context).pushNamed('/lobby_view');
         } catch(error) {
             print(error.code);
