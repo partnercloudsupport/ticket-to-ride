@@ -48,7 +48,7 @@ class AccountLoginPresenter implements AccountLogin {
         request.password = login.password;
         var response = await _api.login(ctx, request);
 
-        GlobalContext.of(context).onUserIdChange(response.userId);
+        GlobalContextDEPR.of(context).onUserIdChange(response.userId);
         Navigator.of(context).pushNamed('/game_selection');
 
       } catch(error) {
@@ -84,7 +84,7 @@ class AccountLoginPresenter implements AccountLogin {
         request.password = login.password;
         var response = await _api.register(ctx, request);
 
-        GlobalContext.of(context).onUserIdChange(response.userId);
+        GlobalContextDEPR.of(context).onUserIdChange(response.userId);
         Navigator.of(context).pushNamed('/game_selection');
 
       } catch(error) {

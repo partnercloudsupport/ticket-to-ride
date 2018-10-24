@@ -55,9 +55,15 @@ class GameListFragmentState extends State<GameListFragment> {
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: RaisedButton(
           onPressed: () {
+<<<<<<< HEAD
             request.userId = GlobalContext.of(context).userId;
             request.gameId = game.gameId;
             this.widget.presenter.createPlayer(request);
+=======
+            this.widget.presenter.createPlayerRequest.userId = GlobalContextDEPR.of(context).userId;
+            this.widget.presenter.createPlayerRequest.gameId = game.gameId;
+            //this.widget.presenter.createPlayer(_formKey.currentState);
+>>>>>>> 57282e509e608e1cdfe449d96de37238bee9b7f3
           },
           child: Text(
             'Join',

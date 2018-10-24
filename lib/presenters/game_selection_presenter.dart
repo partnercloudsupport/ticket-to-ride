@@ -168,7 +168,7 @@ class GameSelectionPresenterState extends State<GameSelectionPresenter> {
       try {
         var response = await api.gameProxy.createGame(ctx,createGameRequest);
 
-        GlobalContext.of(context).onCurrentGameIdChange(response.gameId);
+        GlobalContextDEPR.of(context).onCurrentGameIdChange(response.gameId);
         print('just created game ' + response.gameId);
         Navigator.of(context).pushNamed('/lobby_view');
 
@@ -195,7 +195,7 @@ class GameSelectionPresenterState extends State<GameSelectionPresenter> {
 
           print(playerResponse.gameId);
 
-          GlobalContext.of(context).onCurrentGameIdChange(playerResponse.gameId);
+          GlobalContextDEPR.of(context).onCurrentGameIdChange(playerResponse.gameId);
           Navigator.of(context).pushNamed('/lobby_view');
         } catch(error) {
             print(error.code);

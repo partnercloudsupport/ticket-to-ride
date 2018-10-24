@@ -18,7 +18,7 @@ class TicketToRideApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GlobalContext(
+    return GlobalContextDEPR(
       child: new MaterialApp(
         title: 'Ticket to Ride',
         theme: ticketToRideTheme,
@@ -32,4 +32,3 @@ class TicketToRideApp extends StatelessWidget {
     );
   }
 }
-

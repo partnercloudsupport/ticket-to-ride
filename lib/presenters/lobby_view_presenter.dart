@@ -73,7 +73,7 @@ class LobbyViewPresenter implements LobbyView {
     try {
 
       var request1 = new api.GetGameRequest();
-      request1.gameId = GlobalContext.of(context).currentGameId;
+      request1.gameId = GlobalContextDEPR.of(context).currentGameId;
       var response1 = await _api.getGame(ctx, request1);
 
       var players = [];
@@ -105,7 +105,7 @@ class LobbyViewPresenter implements LobbyView {
       _lobbyGame.name = response1.displayName;
       _lobbyGame.hostName = response5.username;
       _lobbyGame.players = players;
-      _lobbyGame.canStart = response1.playerIds.length > 1 && GlobalContext.of(context).userId == response4.accountId;
+      _lobbyGame.canStart = response1.playerIds.length > 1 && GlobalContextDEPR.of(context).userId == response4.accountId;
 
       return _lobbyGame;
 

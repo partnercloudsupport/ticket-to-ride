@@ -63,7 +63,7 @@ class CreateGameFragmentState extends FragmentState {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         onPressed: () {
-          request.userId = GlobalContext.of(context).userId;
+          request.userId = GlobalContextDEPR.of(context).userId;
           this.widget.presenter.createGame(request);
         },
         child: Text(

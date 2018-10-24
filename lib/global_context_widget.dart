@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 // import 'package:playback/api/api.dart';
 
-class GlobalContext extends StatefulWidget {
+class GlobalContextDEPR extends StatefulWidget {
   final Widget child;
 
-  GlobalContext({this.child});
+  GlobalContextDEPR({this.child});
 
   @override
-  GlobalContextState createState() => new GlobalContextState();
+  GlobalContextDEPRState createState() => new GlobalContextDEPRState();
 
-  static GlobalContextState of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(_GlobalContext) as _GlobalContext).data;
+  static GlobalContextDEPRState of(BuildContext context) {
+    return (context.inheritFromWidgetOfExactType(_GlobalContextDEPR) as _GlobalContextDEPR).data;
   }
 }
 
-class GlobalContextState extends State<GlobalContext> {
+class GlobalContextDEPRState extends State<GlobalContextDEPR> {
   String _currentGameId;
   String _userId;
 
@@ -36,21 +36,21 @@ class GlobalContextState extends State<GlobalContext> {
 
   @override
   Widget build(BuildContext context) {
-    return new _GlobalContext(
+    return new _GlobalContextDEPR(
       data: this,
       child: widget.child,
     );
   }
 }
 
-/// Only has GlobalContextState as field.
-class _GlobalContext extends InheritedWidget {
-  final GlobalContextState data;
+/// Only has GlobalContextDEPRState as field.
+class _GlobalContextDEPR extends InheritedWidget {
+  final GlobalContextDEPRState data;
 
-  _GlobalContext({Key key, this.data, Widget child}) : super(key: key, child: child);
+  _GlobalContextDEPR({Key key, this.data, Widget child}) : super(key: key, child: child);
 
   @override
-  bool updateShouldNotify(_GlobalContext old) {
+  bool updateShouldNotify(_GlobalContextDEPR old) {
     return true;
   }
 }
