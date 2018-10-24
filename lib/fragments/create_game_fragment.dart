@@ -5,8 +5,6 @@ import 'package:ticket_to_ride/fragments/fragment.dart';
 
 import 'package:ticket_to_ride/api/api.dart' as api;
 
-//import 'package:ticket_to_ride/activities/activity.dart';
-
 class CreateGameFragment extends Fragment {
 
   CreateGameFragment(GameSelectionPresenter presenter, {Key key, this.title}) : 
@@ -23,7 +21,7 @@ class CreateGameFragment extends Fragment {
 
 class CreateGameFragmentState extends FragmentState {
 
-  final _formKey = GlobalKey<FormState>();
+  //final _formKey = GlobalKey<FormState>();
   int maxPlayersSelected;
   var request = api.CreateGameRequest();
 
@@ -66,7 +64,7 @@ class CreateGameFragmentState extends FragmentState {
       child: RaisedButton(
         onPressed: () {
           request.userId = GlobalContext.of(context).userId;
-          this.widget.presenter.createGame(_formKey.currentState);
+          this.widget.presenter.createGame(request);
         },
         child: Text(
           'Create',
@@ -80,7 +78,7 @@ class CreateGameFragmentState extends FragmentState {
     return Padding(
       padding: EdgeInsets.fromLTRB(30.0, 30.0, 15.0, 30.0),
       child: Form(
-        key: _formKey,
+        //key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

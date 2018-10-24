@@ -3,25 +3,27 @@ import 'package:ticket_to_ride/global_context_widget.dart';
 import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
 import 'package:ticket_to_ride/api/game.pb.dart';
 import 'package:ticket_to_ride/poll.dart';
+import 'fragment.dart';
 
+import 'package:ticket_to_ride/api/api.dart' as api;
 
-class GameListFragment extends StatefulWidget {
+class GameListFragment extends Fragment {
 
-  GameListFragment(GameSelectionPresenter presenter, {Key key, this.title}) : presenter = presenter, super(key: key);
+  GameListFragment(GameSelectionPresenter presenter, {Key key, this.title}) : presenter = presenter, 
+    super(presenter, key: key);
 
   final String title;
   final GameSelectionPresenter presenter;
 
   @override
-  _GameListFragmentState createState() => new _GameListFragmentState();
+  GameListFragmentState createState() => new GameListFragmentState();
 
 }
 
-class _GameListFragmentState extends State<GameListFragment> {
+class GameListFragmentState extends State<GameListFragment> {
+  
+  var request = api.CreatePlayerRequest();
 
-  final _formKey = GlobalKey<FormState>();
-
-  var _gameList;
   var _cancelPoll;
 
   @override
@@ -39,13 +41,8 @@ class _GameListFragmentState extends State<GameListFragment> {
 
   _getGameList() async {
     _cancelPoll = poll(50, () async {
-      var gameList = await widget.presenter.getGameList();
-
+      await widget.presenter.getGameList();
       print('poll');
-
-      setState(() {
-              _gameList = gameList;
-            });
     });
   }
 
@@ -58,9 +55,9 @@ class _GameListFragmentState extends State<GameListFragment> {
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: RaisedButton(
           onPressed: () {
-            this.widget.presenter.createPlayerRequest.userId = GlobalContext.of(context).userId;
-            this.widget.presenter.createPlayerRequest.gameId = game.gameId;
-            //this.widget.presenter.createPlayer(_formKey.currentState);
+            request.userId = GlobalContext.of(context).userId;
+            request.gameId = game.gameId;
+            this.widget.presenter.createPlayer(request);
           },
           child: Text(
             'Join',

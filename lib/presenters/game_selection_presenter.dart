@@ -8,17 +8,11 @@ import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/fragments/game_list_fragment.dart';
 import 'package:ticket_to_ride/fragments/create_game_fragment.dart';
 import 'presenter.dart';
-//import 'poll.dart';
-
-//import 'dart:async';
 
 
 class GameSelectionPresenter extends Presenter {
   
   final String title;
-
-  var createGameRequest = api.CreateGameRequest();
-  var createPlayerRequest = api.CreatePlayerRequest();
 
   bool gamesLoaded = false;
   
@@ -43,16 +37,17 @@ class GameSelectionPresenter extends Presenter {
     }
   } 
 
-  createGame(form) async {
-    if (form.validate()) {
-      form.save();
+  @override
+  createGame(request) async {
+    if (request.validate()) {
+      request.save();
 
       var ctx = ClientContext();
 
-      print(createGameRequest.displayName);
+      print(request.displayName);
 
       try {
-        var response = await api.gameProxy.createGame(ctx,createGameRequest);
+        var response = await api.gameProxy.createGame(ctx,request);
 
         createGameKey.currentState.onCurrentGameIdChange(response.gameId);
         print('just created game ' + response.gameId);
@@ -65,6 +60,43 @@ class GameSelectionPresenter extends Presenter {
 
     }
   }
+
+  @override
+  createPlayer(request) async {
+      var ctx = ClientContext();
+
+      try {
+        print('querying game ' + request.gameId);
+        var response = await api.gameProxy.createPlayer(ctx, request);
+
+        try {
+          GetPlayerRequest getPlayerRequest = GetPlayerRequest();
+          getPlayerRequest.playerId = response.playerId;
+          print(getPlayerRequest.playerId);
+          var playerResponse = await api.gameProxy.getPlayer(ctx, getPlayerRequest);
+
+          print(playerResponse.gameId);
+
+          //createPlayerKey.currentState.onCurrentGameIdChange(playerResponse.gameId);
+          //Navigator.of(context).pushNamed('/lobby_view');
+        } catch(error) {
+            print(error.code);
+            print(error.message);
+        }
+
+      } catch(error) {
+          switch(error.code) {
+            case api.Code.INVALID_ARGUMENT:
+              createPlayerKey.currentWidget.showErrorToast('This game is full');
+              break;
+            case api.Code.NOT_FOUND:
+              _showErrorToast('This game no longer exists');
+              break;
+            default:
+              _showErrorToast('UNKNOWN ERROR');
+          }
+    }
+  }  
 
 }
 
