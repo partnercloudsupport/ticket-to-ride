@@ -13,13 +13,24 @@ import 'presenter.dart';
 class GameSelectionPresenter extends Presenter {
   
   final String title;
-
   bool gamesLoaded = false;
-  
   List<api.Game> games = List<api.Game>();
 
-  GameSelectionPresenter({this.title});
-  GameSelectionPresenter.fromFragment(CreateGameFragment fragment, {this.title});
+  CreateGameFragment createGameFragment;
+  GameListFragment gameListFragment;
+
+  // default constructor
+  GameSelectionPresenter({this.title}) {
+    createGameFragment = CreateGameFragment(this);
+    gameListFragment = GameListFragment(this);
+  }
+
+  // another constructor with fragments passed in
+  GameSelectionPresenter.fromFragments(CreateGameFragment createGameFragment, GameListFragment gameListFragment,
+     {this.title}) {
+       this.createGameFragment = createGameFragment;
+       this.gameListFragment = gameListFragment;
+  }
 
   getGameList() async {
     var ctx = ClientContext();
@@ -87,13 +98,13 @@ class GameSelectionPresenter extends Presenter {
       } catch(error) {
           switch(error.code) {
             case api.Code.INVALID_ARGUMENT:
-              createPlayerKey.currentWidget.showErrorToast('This game is full');
+              gameListFragment.showErrorToast('This game is full');
               break;
             case api.Code.NOT_FOUND:
-              _showErrorToast('This game no longer exists');
+              gameListFragment.showErrorToast('This game no longer exists');
               break;
             default:
-              _showErrorToast('UNKNOWN ERROR');
+              gameListFragment.showErrorToast('UNKNOWN ERROR');
           }
     }
   }  

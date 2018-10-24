@@ -24,7 +24,7 @@ class Fragment extends StatefulWidget {
   }
 
   @override
-  FragmentState createState() => new FragmentState();
+  State<Fragment> createState() => new FragmentState();
 }
 
 class FragmentState extends State<Fragment> {
