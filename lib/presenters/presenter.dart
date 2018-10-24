@@ -11,7 +11,18 @@ final createPlayerKey = GlobalKey<CreateGameFragmentState>();
 
 class Presenter {
 
+<<<<<<< HEAD
   createGame(request) async {}
   createPlayer(request) async {}
   
 }
+=======
+  createGame(form) async {}
+  getApi() {}
+
+}
+
+// abstract class Api {
+//   // dynamic getApi();
+// }
+>>>>>>> e4b38887490879ffb82e4a2a34cd3ae91bd8d53c

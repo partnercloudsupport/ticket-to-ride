@@ -18,13 +18,23 @@ class TicketToRideApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    var loginPresenter = new AccountLoginPresenter();
+    // var loginView = new AccountLoginFragment();
+
     return GlobalContextDEPR(
       child: new MaterialApp(
         title: 'Ticket to Ride',
         theme: ticketToRideTheme,
-        home: new AccountLoginFragment(AccountLoginPresenter(), title: 'Login'),
+        home: new AccountLoginFragment(loginPresenter.getApi(), title: 'Login'),
         routes: <String, WidgetBuilder>{
-         '/login_page': (BuildContext context) => new AccountLoginFragment(AccountLoginPresenter(), title: 'Login'),
+         '/login_page': (BuildContext context) {
+            var fragment = new AccountLoginFragment(loginPresenter.getApi(), title: 'Login');
+
+            loginPresenter.setFragment(fragment);
+
+            return fragment;
+          },
          //'/game_selection': (BuildContext context) => ,
          '/lobby_view': (BuildContext context) => new LobbyViewFragment(LobbyViewPresenter(), title: 'Login'),
         },

@@ -2,15 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/global_context_widget.dart';
+import 'package:ticket_to_ride/presenters/presenter.dart';
 
 abstract class AccountLogin {
-  Login login;
+  // Login login;
 
   accountLogin(context, formKey) async {}
   accountRegister(context, formKey) async {}
 }
 
+class Login {
+  String username;
+  String password;
+}
+
 class AccountLoginApi {
+  Login data = Login();
+
   login(ctx, request) {
     return api.authProxy.login(ctx, request);
   }
@@ -20,21 +28,20 @@ class AccountLoginApi {
   }
 }
 
-class Login {
-  String username;
-  String password;
-}
-
 class AccountLoginPresenter implements AccountLogin {
 
   AccountLoginApi _api;
-  var login = Login();
+  // var login = Login();
 
   AccountLoginPresenter() {
     this._api = new AccountLoginApi();
   }
 
   AccountLoginPresenter.withApi(this._api);
+
+  getApi() {
+    return _api;
+  }
 
   @override
   accountLogin(context, form) async {
@@ -44,8 +51,8 @@ class AccountLoginPresenter implements AccountLogin {
 
       try {
         var request = new api.LoginAccountRequest();
-        request.username = login.username;
-        request.password = login.password;
+        request.username = _api.data.username;
+        request.password = _api.data.password;
         var response = await _api.login(ctx, request);
 
         GlobalContextDEPR.of(context).onUserIdChange(response.userId);
@@ -80,8 +87,8 @@ class AccountLoginPresenter implements AccountLogin {
 
       try {
         var request = new api.LoginAccountRequest();
-        request.username = login.username;
-        request.password = login.password;
+        request.username = _api.data.username;
+        request.password = _api.data.password;
         var response = await _api.register(ctx, request);
 
         GlobalContextDEPR.of(context).onUserIdChange(response.userId);

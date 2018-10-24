@@ -7,12 +7,12 @@ import 'package:ticket_to_ride/presenters/presenter.dart';
 class Fragment extends StatefulWidget {
 
   Fragment(Presenter presenter, {Key key, this.title}) :
-    this.presenter = presenter, super(key: key); 
+    this.presenter = presenter, super(key: key);
 
   final String title;
   final Presenter presenter;
-  
-  void _showErrorToast(String message) {
+
+  void showErrorToast(String message) {
     Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_LONG,
@@ -23,21 +23,8 @@ class Fragment extends StatefulWidget {
       );
   }
 
-  void onCurrentGameIdChange(String newValue) {
-    GlobalContextDEPR.of(context).onCurrentGameIdChange(newValue);
-  }
-
-  void onUserIdChange(String newValue) {
-    GlobalContextDEPR.of(context).onUserIdChange(newValue);
-  }
-
-  void pushNavigator(String routeName) {
-    Navigator.of(context).pushNamed(routeName);
-  }
-
   @override
   FragmentState createState() => new FragmentState();
-
 }
 
 class FragmentState extends State<Fragment> {
