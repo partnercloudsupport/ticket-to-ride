@@ -3,9 +3,9 @@ import 'package:ticket_to_ride/presenters/account_login_presenter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AccountLoginFragment extends StatefulWidget {
-  AccountLoginFragment(this.accountLoginPresenter, {Key key, this.title}) : super(key: key);
+  AccountLoginFragment(this.presenterApi, {Key key, this.title}) : super(key: key);
 
-  final AccountLogin accountLoginPresenter;
+  final AccountLoginApi presenterApi;
   final String title;
 
   @override
@@ -31,7 +31,8 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
 
     _login() async {
       try {
-        await widget.accountLoginPresenter.accountLogin(context, _formKey.currentState);
+
+        await widget.presenterApi.login(context, _formKey.currentState);
       } catch(error) {
         _showErrorToast(error);
       }
@@ -39,7 +40,7 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
 
     _register() async {
       try {
-        await widget.accountLoginPresenter.accountRegister(context, _formKey.currentState);
+        await widget.presenterApi.register(context, _formKey.currentState);
       } catch(error) {
         _showErrorToast(error);
       }
@@ -66,7 +67,7 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
         }
       },
       onSaved: (String value) {
-        widget.accountLoginPresenter.login.username = value;
+        widget.presenterApi.data.username = value;
       }
     );
 
@@ -82,7 +83,7 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
         }
       },
       onSaved: (String value) {
-        widget.accountLoginPresenter.login.password = value;
+        widget.presenterApi.data.password = value;
       }
     );
 

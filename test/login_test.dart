@@ -21,15 +21,18 @@ class TestAccountLogin implements AccountLogin {
   }
 }
 
-// class TestAccountLoginApi implements AccountLoginApi {
-//   login(ctx, request) {
-//
-//   }
-//
-//   register(ctx, request) {
-//
-//   }
-// }
+class TestAccountLoginApi implements AccountLoginApi {
+
+  var data = Login();
+
+  login(ctx, request) {
+
+  }
+
+  register(ctx, request) {
+
+  }
+}
 
 void main() {
   testWidgets('test: AccountLogin', (WidgetTester tester) async {
