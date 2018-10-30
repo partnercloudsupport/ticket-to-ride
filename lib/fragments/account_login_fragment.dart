@@ -9,8 +9,8 @@ class Login {
 abstract class AccountLoginObserver {
   Login data;
 
-  accountLogin(formKey) async {}
-  accountRegister(formKey) async {}
+  accountLogin() async {}
+  accountRegister() async {}
 }
 
 class AccountLoginFragment extends StatefulWidget {
@@ -47,14 +47,22 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
   Widget build(BuildContext context) {
 
     _login() async {
-      for (var o in widget.observers) {
-        await o.accountLogin(_formKey.currentState);
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+
+        for (var o in widget.observers) {
+          await o.accountLogin();
+        }
       }
     }
 
     _register() async {
-      for (var o in widget.observers) {
-        await o.accountRegister(_formKey.currentState);
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+
+        for (var o in widget.observers) {
+          await o.accountRegister();
+        }
       }
     }
 
