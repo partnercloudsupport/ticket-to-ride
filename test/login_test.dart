@@ -4,9 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ticket_to_ride/fragments/account_login_fragment.dart';
 import 'package:ticket_to_ride/presenters/account_login_presenter.dart';
 
-class TestAccountLogin implements AccountLogin {
+class TestAccountLogin implements AccountLoginObserver {
 
-  var login = Login();
+  var data = Login();
   var accountRegisterCalled = false;
   var accountLoginCalled = false;
 
@@ -22,9 +22,6 @@ class TestAccountLogin implements AccountLogin {
 }
 
 class TestAccountLoginApi implements AccountLoginApi {
-
-  var data = Login();
-
   login(ctx, request) {
 
   }
@@ -38,7 +35,7 @@ void main() {
   testWidgets('test: AccountLogin', (WidgetTester tester) async {
 
     var loginTester = TestAccountLogin();
-    await tester.pumpWidget(MaterialApp(home: AccountLoginFragment(loginTester, title: 'Testing login')));
+    await tester.pumpWidget(MaterialApp(home: AccountLoginFragment(title: 'Testing login')));
 
     // test login button
     expect(loginTester.accountLoginCalled, isFalse);

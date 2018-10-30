@@ -1,24 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:protobuf/protobuf.dart';
-import 'package:ticket_to_ride/global_context_widget.dart';
-import 'package:ticket_to_ride/presenters/presenter.dart';
-
-abstract class AccountLogin {
-  // Login login;
-
-  accountLogin(context, formKey) async {}
-  accountRegister(context, formKey) async {}
-}
-
-class Login {
-  String username;
-  String password;
-}
+import 'package:ticket_to_ride/global_context.dart';
+import 'package:ticket_to_ride/fragments/account_login_fragment.dart';
+import 'package:ticket_to_ride/fragments/fragment_library.dart';
 
 class AccountLoginApi {
-  Login data = Login();
-
   login(ctx, request) {
     return api.authProxy.login(ctx, request);
   }
@@ -28,58 +14,51 @@ class AccountLoginApi {
   }
 }
 
-class AccountLoginPresenter implements AccountLogin {
+class AccountLoginPresenter implements AccountLoginObserver {
 
   AccountLoginApi _api;
-  // var login = Login();
+  AccountLoginFragment _fragment;
+  Login data;
 
-  AccountLoginPresenter() {
+  AccountLoginPresenter(this._fragment) {
     this._api = new AccountLoginApi();
+    data = Login();
   }
 
   AccountLoginPresenter.withApi(this._api);
 
-  getApi() {
-    return _api;
-  }
-
   @override
-  accountLogin(context, form) async {
+  accountLogin(form) async {
     if (form.validate()) {
       form.save();
       var ctx = ClientContext();
 
       try {
         var request = new api.LoginAccountRequest();
-        request.username = _api.data.username;
-        request.password = _api.data.password;
+        request.username = data.username;
+        request.password = data.password;
         var response = await _api.login(ctx, request);
 
-        GlobalContextDEPR.of(context).onUserIdChange(response.userId);
-        Navigator.of(context).pushNamed('/game_selection');
+        GlobalContext().userId = response.userId;
+        _fragment.navigatePush('/lobby_view');
 
       } catch(error) {
-        String errorMessage;
-        switch(error.code) {
-          case api.Code.NOT_FOUND:
-            errorMessage = 'Account does not exist';
-            break;
-          case api.Code.ACCESS_DENIED:
-            errorMessage = 'Incorrect password';
-            break;
-          default:
-            errorMessage = 'UNKNOWN ERROR';
-        }
-
         print(error.code);
         print(error.message);
-        throw errorMessage;
+
+        switch(error.code) {
+          case api.Code.INVALID_ARGUMENT:
+            showErrorToast('Username already exists.');
+            break;
+          default:
+            showErrorToast('UNKNOWN ERROR');
+        }
       }
     }
   }
 
   @override
-  accountRegister(context, form) async {
+  accountRegister(form) async {
     if (form.validate()) {
       form.save();
 
@@ -87,26 +66,24 @@ class AccountLoginPresenter implements AccountLogin {
 
       try {
         var request = new api.LoginAccountRequest();
-        request.username = _api.data.username;
-        request.password = _api.data.password;
+        request.username = data.username;
+        request.password = data.password;
         var response = await _api.register(ctx, request);
 
-        GlobalContextDEPR.of(context).onUserIdChange(response.userId);
-        Navigator.of(context).pushNamed('/game_selection');
+        GlobalContext().userId = response.userId;
+        _fragment.navigatePush('/lobby_view');
 
       } catch(error) {
-        String errorMessage;
-        switch(error.code) {
-          case api.Code.INVALID_ARGUMENT:
-            errorMessage = 'Username already exists.';
-            break;
-          default:
-            errorMessage = 'UNKNOWN ERROR';
-        }
-
         print(error.code);
         print(error.message);
-        throw errorMessage;
+
+        switch(error.code) {
+          case api.Code.INVALID_ARGUMENT:
+            showErrorToast('Username already exists.');
+            break;
+          default:
+            showErrorToast('UNKNOWN ERROR');
+        }
       }
     }
   }
