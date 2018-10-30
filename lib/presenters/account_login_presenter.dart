@@ -40,19 +40,24 @@ class AccountLoginPresenter implements AccountLoginObserver {
         var response = await _api.login(ctx, request);
 
         GlobalContext().userId = response.userId;
-        _fragment.navigatePush('/lobby_view');
+        _fragment.navigatePush('/game_selection');
 
       } catch(error) {
+        print(error);
         print(error.code);
         print(error.message);
 
         switch(error.code) {
-          case api.Code.INVALID_ARGUMENT:
-            showErrorToast('Username already exists.');
+          case api.Code.NOT_FOUND:
+            showErrorToast('Account does not exist');
+            break;
+          case api.Code.ACCESS_DENIED:
+            showErrorToast('Incorrect password');
             break;
           default:
             showErrorToast('UNKNOWN ERROR');
         }
+
       }
     }
   }
@@ -71,7 +76,7 @@ class AccountLoginPresenter implements AccountLoginObserver {
         var response = await _api.register(ctx, request);
 
         GlobalContext().userId = response.userId;
-        _fragment.navigatePush('/lobby_view');
+        _fragment.navigatePush('/game_selection');
 
       } catch(error) {
         print(error.code);
