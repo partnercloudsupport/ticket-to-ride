@@ -60,7 +60,7 @@ class _GameMenuFragmentState extends State<GameMenuFragment> {
             }
           },
           child: Text(
-            'Game History',
+            'History',
             style: TextStyle(
               color: Colors.white,
               fontSize: 10.0
