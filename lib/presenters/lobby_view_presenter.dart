@@ -109,16 +109,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
 
   @override
   startGame() async {
-    Fluttertoast.showToast(
-        msg: 'Game Started!',
-        toastLength: Toast.LENGTH_LONG,
-        bgcolor: "#e74c3c",
-        textcolor: '#ffffff',
-        timeInSecForIos: 5,
-        gravity: ToastGravity.TOP
-    );
-
-    // Navigator.of(context).pushNamed('/game_board');
+    FragmentLibrary.navigatePush('/game_view');
   }
 
   build() {
