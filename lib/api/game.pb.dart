@@ -4,7 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async';
+import 'dart:async' as $async;
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
@@ -465,35 +465,35 @@ class GameServiceApi {
   $pb.RpcClient _client;
   GameServiceApi(this._client);
 
-  Future<CreateResponse> createGame($pb.ClientContext ctx, CreateGameRequest request) {
+  $async.Future<CreateResponse> createGame($pb.ClientContext ctx, CreateGameRequest request) {
     var emptyResponse = new CreateResponse();
     return _client.invoke<CreateResponse>(ctx, 'GameService', 'CreateGame', request, emptyResponse);
   }
-  Future<Empty> leaveGame($pb.ClientContext ctx, LeaveGameRequest request) {
+  $async.Future<Empty> leaveGame($pb.ClientContext ctx, LeaveGameRequest request) {
     var emptyResponse = new Empty();
     return _client.invoke<Empty>(ctx, 'GameService', 'LeaveGame', request, emptyResponse);
   }
-  Future<Empty> deleteGame($pb.ClientContext ctx, DeleteGameRequest request) {
+  $async.Future<Empty> deleteGame($pb.ClientContext ctx, DeleteGameRequest request) {
     var emptyResponse = new Empty();
     return _client.invoke<Empty>(ctx, 'GameService', 'DeleteGame', request, emptyResponse);
   }
-  Future<Game> getGame($pb.ClientContext ctx, GetGameRequest request) {
+  $async.Future<Game> getGame($pb.ClientContext ctx, GetGameRequest request) {
     var emptyResponse = new Game();
     return _client.invoke<Game>(ctx, 'GameService', 'GetGame', request, emptyResponse);
   }
-  Future<Game> startGame($pb.ClientContext ctx, StartGameRequest request) {
+  $async.Future<Game> startGame($pb.ClientContext ctx, StartGameRequest request) {
     var emptyResponse = new Game();
     return _client.invoke<Game>(ctx, 'GameService', 'StartGame', request, emptyResponse);
   }
-  Future<ListGamesResponse> listGames($pb.ClientContext ctx, ListGamesRequest request) {
+  $async.Future<ListGamesResponse> listGames($pb.ClientContext ctx, ListGamesRequest request) {
     var emptyResponse = new ListGamesResponse();
     return _client.invoke<ListGamesResponse>(ctx, 'GameService', 'ListGames', request, emptyResponse);
   }
-  Future<CreatePlayerResponse> createPlayer($pb.ClientContext ctx, CreatePlayerRequest request) {
+  $async.Future<CreatePlayerResponse> createPlayer($pb.ClientContext ctx, CreatePlayerRequest request) {
     var emptyResponse = new CreatePlayerResponse();
     return _client.invoke<CreatePlayerResponse>(ctx, 'GameService', 'CreatePlayer', request, emptyResponse);
   }
-  Future<Player> getPlayer($pb.ClientContext ctx, GetPlayerRequest request) {
+  $async.Future<Player> getPlayer($pb.ClientContext ctx, GetPlayerRequest request) {
     var emptyResponse = new Player();
     return _client.invoke<Player>(ctx, 'GameService', 'GetPlayer', request, emptyResponse);
   }
