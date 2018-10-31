@@ -31,17 +31,14 @@ class GameViewFragment extends StatefulWidget {
 class _GameViewFragmentState extends State<GameViewFragment> {
 
   _buildGameView() {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    double width65 = width * 0.65;
-
     return new Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Row(
           children: [
-            widget.menuFragment
+            widget.menuFragment,
+            widget.playerFragment
           ]
         ),
         widget.boardFragment
