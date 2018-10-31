@@ -82,15 +82,34 @@ class GameMapPresenter implements GameMapObserver  {
     int white = 0xFFfa2D41;
 
     return [
-      Route(.005, .45, .04, .17, 5, "1", 0xFF022D41, "user1"), // san francisco - portland
-      Route(.005, .45, .22, .40, 6, "2", 0xFFfa2D41, "user1"), // san francisco - salt lake city
+      Route( .07, .05, .08, .115, 5, "1", grey, "user1"), // vancouver - Seattle
+      Route( .07, .05, .08, .115, 5, "1", grey, "user1"), // vancouver - Seattle
+
+      Route(.07, .05, .2, .04, 5, "1", grey, "user1"), // Vancouver - Calgary
+
+      Route( .005, .45, .07, .6, 5, "1", pink, "user1"), // SanFrancisco - Los Angeles
+      Route( .005, .45, .07, .6, 5, "1", yellow, "user1"), // SanFrancisco - Los Angeles
+      
+
+
+
+
+      Route(.005, .45, .04, .17, 5, "1", pink, "user1"), // san francisco - portland
+      Route(.005, .45, .04, .17, 5, "1", green, "user1"), // san francisco - portland
+      Route(.005, .45, .22, .40, 6, "2", orange, "user1"), // san francisco - salt lake city
+      Route(.005, .45, .22, .40, 6, "2", white, "user1"), // san francisco - salt lake city
       Route(.08, .115, .04, .17, 1, "1", 0xFF022D41, "user1"), // seattle - portland
+      Route(.08, .115, .04, .17, 1, "1", 0xFF022D41, "user1"), // seattle - portland
+
       Route(.47, .69, .315, .69, 6, "2", 0xFFfa2D41, "user1"), // dallas - el paso
       Route(.22, .40, .3, .22, 3, "1", 0xFF022D41, "user1"), // salt lake city - helena
-      Route(.33, .44, .22, .40, 3, "2", 0xFFfa2D41, "user1"), // denver - salt lake city
+      Route(.33, .44, .22, .40, 3, "2", red, "user1"), // denver - salt lake city
+      Route(.33, .44, .22, .40, 3, "2", yellow, "user1"), // denver - salt lake city
       Route(.04, .17, .22, .40, 6, "1", 0xFF022D41, "user1"), // portland - salt lake city
       Route(.08, .115, .3, .22, 6, "2", 0xFFfa2D41, "user1"), // seattle - helena
-      Route(.52, .45, .6, .47, 2, "2", 0xFFfa2D41, "user1"), // kansas city - saint louis
+      Route(.52, .45, .6, .47, 2, "2", pink, "user1"), // kansas city - saint louis
+      Route(.52, .45, .6, .47, 2, "2", blue, "user1"), // kansas city - saint louis
+
     ];
   }
 
