@@ -42,6 +42,7 @@ flutter:
   assets:
     - images/background.jpg
     - images/background2.jpg
+    - images/map.png
     - images/player-yellow.jpg
     - images/player-blue.jpg
     - images/player-green.jpg

@@ -1,12 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_to_ride/presenters/lobby_view_presenter.dart';
 import 'package:ticket_to_ride/poll.dart';
 
-class LobbyViewFragment extends StatefulWidget {
-  LobbyViewFragment(this.lobbyViewPresenter, {Key key, this.title}) : super(key: key);
+class Player {
+  String name;
+  String color;
 
-  final LobbyView lobbyViewPresenter;
+  Player(this.name, this.color);
+}
+
+class LobbyGame {
+  String name;
+  String hostName;
+  List players = [];
+  bool canStart = false;
+}
+
+abstract class LobbyViewObserver {
+  getGame() {}
+  exitGame() {}
+  startGame() {}
+}
+
+class LobbyViewFragment extends StatefulWidget {
+  LobbyViewFragment({Key key, this.title}) : super(key: key);
+
+  final observers = List<LobbyViewObserver>();
   final String title;
+
+  void addObserver(LobbyViewObserver o) {
+    observers.add(o);
+  }
+
+  void removeObserver(LobbyViewObserver o) {
+    observers.remove(o);
+  }
 
   @override
   _LobbyViewFragmentState createState() => new _LobbyViewFragmentState();
@@ -32,7 +59,10 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
 
   _getGameLobby() async {
     _cancelPoll = poll(30, () async {
-      var gameLobby = await widget.lobbyViewPresenter.getGame(context);
+      var gameLobby; //= await widget.lobbyViewPresenter.getGame();
+      for (var o in widget.observers) {
+        gameLobby = await o.getGame();
+      }
 
       print('poll');
 
@@ -84,7 +114,11 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
         child: RaisedButton(
           key: Key('startButton'),
-          onPressed: () {widget.lobbyViewPresenter.startGame(context);},
+          onPressed: () {
+            for (var o in widget.observers) {
+              o.startGame();
+            }
+          },
           child: Text(
             'Start Game',
             style: TextStyle(
@@ -130,7 +164,11 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
                 padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
                 child: RaisedButton(
                   key: Key('exitButton'),
-                  onPressed: () {widget.lobbyViewPresenter.exitGame(context);},
+                  onPressed: () {
+                    for (var o in widget.observers) {
+                      o.exitGame();
+                    }
+                  },
                   child: Text(
                     'Exit Game',
                     style: TextStyle(

@@ -28,6 +28,6 @@ void main() {
     await tester.pump();
     //expect(loginTester.accountLoginCalled, isTrue);
 
-    expect(find.byKey(Key('gameName')), 'Test Game Name 1'); 
+    expect(find.byKey(Key('gameName')), 'Test Game Name 1');
    });
 }

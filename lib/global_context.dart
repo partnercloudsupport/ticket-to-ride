@@ -1,6 +1,4 @@
 class GlobalContext {
-  String currentGameId;
-  String userId;
 
   // singleton _globalContext
   static final GlobalContext _globalContext = GlobalContext._internal();
@@ -11,13 +9,6 @@ class GlobalContext {
 
   GlobalContext._internal();
 
-
-  setCurrentGameId(String gameId) {
-    _globalContext.currentGameId = gameId;
-  }
-
-  setCurrentUserId(String userId) {
-    _globalContext.userId = userId;
-  }
-
+  String currentGameId;
+  String userId;
 }

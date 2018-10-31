@@ -1,14 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:protobuf/protobuf.dart';
-import 'package:ticket_to_ride/global_context_widget.dart';
+import 'package:ticket_to_ride/global_context.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-abstract class LobbyView {
-  getGame(context) {}
-  exitGame(context) {}
-  startGame(context) {}
-}
+import 'package:ticket_to_ride/fragments/lobby_view_fragment.dart';
+import 'package:ticket_to_ride/fragments/fragment_library.dart';
 
 class LobbyViewApi {
   getGame(ctx, request) {
@@ -24,27 +19,16 @@ class LobbyViewApi {
   }
 }
 
-class Player {
-  String name;
-  String color;
+class LobbyViewPresenter implements LobbyViewObserver {
 
-  Player(this.name, this.color);
-}
-
-class LobbyGame {
-  String name;
-  String hostName;
-  List players = [];
-  bool canStart = false;
-}
-
-class LobbyViewPresenter implements LobbyView {
 
   LobbyViewApi _api;
-  var _lobbyGame = LobbyGame();
+  LobbyViewFragment _fragment;
+  LobbyGame _game;
 
   LobbyViewPresenter() {
     this._api = new LobbyViewApi();
+    _game = LobbyGame();
   }
 
   LobbyViewPresenter.withApi(this._api);
@@ -67,13 +51,13 @@ class LobbyViewPresenter implements LobbyView {
   }
 
   @override
-  getGame(context) async {
+  getGame() async {
     var ctx = ClientContext();
 
     try {
 
       var request1 = new api.GetGameRequest();
-      request1.gameId = GlobalContextDEPR.of(context).currentGameId;
+      request1.gameId = GlobalContext().currentGameId;
       var response1 = await _api.getGame(ctx, request1);
 
       var players = [];
@@ -102,29 +86,29 @@ class LobbyViewPresenter implements LobbyView {
       request5.userId = response4.accountId;
       var response5 = await _api.getUsername(ctx, request5);
 
-      _lobbyGame.name = response1.displayName;
-      _lobbyGame.hostName = response5.username;
-      _lobbyGame.players = players;
-      _lobbyGame.canStart = response1.playerIds.length > 1 && GlobalContextDEPR.of(context).userId == response4.accountId;
+      _game.name = response1.displayName;
+      _game.hostName = response5.username;
+      _game.players = players;
+      _game.canStart = response1.playerIds.length > 1 && GlobalContext().userId == response4.accountId;
 
-      return _lobbyGame;
+      return _game;
 
     } catch(error) {
       // print(error.code);
       // print(error.message);
       print(error);
 
-      return _lobbyGame;
+      return _game;
     }
   }
 
   @override
-  exitGame(context) async {
-    Navigator.pop(context);
+  exitGame() async {
+    FragmentLibrary.navigatePop();
   }
 
   @override
-  startGame(context) async {
+  startGame() async {
     Fluttertoast.showToast(
         msg: 'Game Started!',
         toastLength: Toast.LENGTH_LONG,
@@ -135,5 +119,10 @@ class LobbyViewPresenter implements LobbyView {
     );
 
     // Navigator.of(context).pushNamed('/game_board');
+  }
+
+  build() {
+    _fragment = new LobbyViewFragment(title: 'Lobby');
+    return _fragment;
   }
 }

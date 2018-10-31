@@ -1,113 +1,97 @@
-import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:protobuf/protobuf.dart';
-import 'package:ticket_to_ride/global_context_widget.dart';
-import 'package:ticket_to_ride/presenters/presenter.dart';
-
-abstract class AccountLogin {
-  // Login login;
-
-  accountLogin(context, formKey) async {}
-  accountRegister(context, formKey) async {}
-}
-
-class Login {
-  String username;
-  String password;
-}
+import 'dart:async';
+import 'package:ticket_to_ride/global_context.dart';
+import 'package:ticket_to_ride/fragments/account_login_fragment.dart';
+import 'package:ticket_to_ride/fragments/fragment_library.dart';
 
 class AccountLoginApi {
-  Login data = Login();
-
-  login(ctx, request) {
+  Future<api.LoginResponse> login(ctx, request) {
     return api.authProxy.login(ctx, request);
   }
 
-  register(ctx, request) {
+  Future<api.LoginResponse> register(ctx, request) {
     return api.authProxy.register(ctx, request);
   }
 }
 
-class AccountLoginPresenter implements AccountLogin {
+class AccountLoginPresenter implements AccountLoginObserver  {
 
   AccountLoginApi _api;
-  // var login = Login();
+  AccountLoginFragment _fragment;
+  Login data;
 
   AccountLoginPresenter() {
     this._api = new AccountLoginApi();
+    data = Login();
   }
 
-  AccountLoginPresenter.withApi(this._api);
-
-  getApi() {
-    return _api;
+  AccountLoginPresenter.withApi(this._api) {
+    data = Login();
   }
 
   @override
-  accountLogin(context, form) async {
-    if (form.validate()) {
-      form.save();
-      var ctx = ClientContext();
+  accountLogin() async {
 
-      try {
-        var request = new api.LoginAccountRequest();
-        request.username = _api.data.username;
-        request.password = _api.data.password;
-        var response = await _api.login(ctx, request);
+    var ctx = ClientContext();
 
-        GlobalContextDEPR.of(context).onUserIdChange(response.userId);
-        Navigator.of(context).pushNamed('/game_selection');
+    try {
+      var request = new api.LoginAccountRequest();
+      request.username = data.username;
+      request.password = data.password;
+      var response = await _api.login(ctx, request);
 
-      } catch(error) {
-        String errorMessage;
-        switch(error.code) {
-          case api.Code.NOT_FOUND:
-            errorMessage = 'Account does not exist';
-            break;
-          case api.Code.ACCESS_DENIED:
-            errorMessage = 'Incorrect password';
-            break;
-          default:
-            errorMessage = 'UNKNOWN ERROR';
-        }
+      GlobalContext().userId = response.userId;
+      FragmentLibrary.navigatePush('/game_selection');
 
-        print(error.code);
-        print(error.message);
-        throw errorMessage;
+    } catch(error) {
+      print(error);
+      print(error.code);
+      print(error.message);
+
+      switch(error.code) {
+        case api.Code.NOT_FOUND:
+          FragmentLibrary.showErrorToast('Account does not exist');
+          break;
+        case api.Code.ACCESS_DENIED:
+          FragmentLibrary.showErrorToast('Incorrect password');
+          break;
+        default:
+          FragmentLibrary.showErrorToast('UNKNOWN ERROR');
       }
     }
   }
 
   @override
-  accountRegister(context, form) async {
-    if (form.validate()) {
-      form.save();
+  accountRegister() async {
 
-      var ctx = ClientContext();
+    var ctx = ClientContext();
 
-      try {
-        var request = new api.LoginAccountRequest();
-        request.username = _api.data.username;
-        request.password = _api.data.password;
-        var response = await _api.register(ctx, request);
+    try {
+      var request = new api.LoginAccountRequest();
+      request.username = data.username;
+      request.password = data.password;
+      var response = await _api.register(ctx, request);
 
-        GlobalContextDEPR.of(context).onUserIdChange(response.userId);
-        Navigator.of(context).pushNamed('/game_selection');
+      GlobalContext().userId = response.userId;
+      FragmentLibrary.navigatePush('/game_selection');
 
-      } catch(error) {
-        String errorMessage;
-        switch(error.code) {
-          case api.Code.INVALID_ARGUMENT:
-            errorMessage = 'Username already exists.';
-            break;
-          default:
-            errorMessage = 'UNKNOWN ERROR';
-        }
+    } catch(error) {
+      print(error.code);
+      print(error.message);
 
-        print(error.code);
-        print(error.message);
-        throw errorMessage;
+      switch(error.code) {
+        case api.Code.INVALID_ARGUMENT:
+          FragmentLibrary.showErrorToast('Username already exists.');
+          break;
+        default:
+          FragmentLibrary.showErrorToast('UNKNOWN ERROR');
       }
     }
+  }
+
+  build() {
+    _fragment = new AccountLoginFragment(title: 'Login');
+    return _fragment;
   }
 }
