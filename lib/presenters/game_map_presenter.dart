@@ -82,14 +82,14 @@ class GameMapPresenter implements GameMapObserver  {
     int white = 0xFFfa2D41;
 
     return [
-      Route( .07, .05, .08, .115, 5, "1", grey, "user1"), // vancouver - Seattle
-      Route( .07, .05, .08, .115, 5, "1", grey, "user1"), // vancouver - Seattle
+      Route( .07, .05, .08, .115, 1, "1", grey, "user1"), // vancouver - Seattle
+      Route( .07, .05, .08, .115, 1, "1", grey, "user1"), // vancouver - Seattle
 
       Route(.07, .05, .2, .04, 5, "1", grey, "user1"), // Vancouver - Calgary
 
       Route( .005, .45, .07, .6, 5, "1", pink, "user1"), // SanFrancisco - Los Angeles
       Route( .005, .45, .07, .6, 5, "1", yellow, "user1"), // SanFrancisco - Los Angeles
-      
+
 
 
 
