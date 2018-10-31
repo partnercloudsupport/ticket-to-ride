@@ -16,7 +16,7 @@ class GlobalContext {
     _globalContext.currentGameId = gameId;
   }
 
-  setUserId(String userId) {
+  setCurrentUserId(String userId) {
     _globalContext.userId = userId;
   }
 

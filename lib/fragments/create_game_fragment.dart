@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_to_ride/global_context_widget.dart';
+import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
 import 'package:ticket_to_ride/fragments/fragment.dart';
 
@@ -13,6 +13,10 @@ class CreateGameFragment extends Fragment {
   final String title;
   final GameSelectionPresenter presenter;
 
+  void pushNavigator(String routeName) {
+    createGameKey.currentState.pushNavigator(routeName);
+  }
+
   @override
   CreateGameFragmentState createState() => new CreateGameFragmentState();
 
@@ -21,15 +25,16 @@ class CreateGameFragment extends Fragment {
 
 class CreateGameFragmentState extends FragmentState {
 
-  //final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   int maxPlayersSelected;
   var request = api.CreateGameRequest();
 
   @override
   Widget build(BuildContext build) {
 
-    final displayNameInput = TextFormField(
+    var _displayNameInput = TextFormField(
      // autofocus: true,
+      key: Key("display_name"),
       decoration: InputDecoration(
         labelText: 'Game Display Name',
       ),
@@ -40,10 +45,11 @@ class CreateGameFragmentState extends FragmentState {
       },
       onSaved: (String value) {
         request.displayName = value;
+        print('building request with display name ' + request.displayName);
       }         
     );          
 
-    final maxPlayersInput = DropdownButton<int>(
+    var _maxPlayersInput = DropdownButton<int>(
       value: maxPlayersSelected,
       hint: Text('Max # of Players'),
       items:<int>[2, 3, 4, 5].map((int value) {
@@ -63,8 +69,11 @@ class CreateGameFragmentState extends FragmentState {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         onPressed: () {
-          request.userId = GlobalContextDEPR.of(context).userId;
-          this.widget.presenter.createGame(request);
+          if (_formKey.currentState.validate()) {
+            _formKey.currentState.save();
+            request.userId = GlobalContext().userId;
+            this.widget.presenter.createGame(request);
+          }
         },
         child: Text(
           'Create',
@@ -78,13 +87,13 @@ class CreateGameFragmentState extends FragmentState {
     return Padding(
       padding: EdgeInsets.fromLTRB(30.0, 30.0, 15.0, 30.0),
       child: Form(
-        //key: _formKey,
+        key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text('Create a New Game', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
-            displayNameInput,
-            maxPlayersInput,
+            _displayNameInput,
+            _maxPlayersInput,
             createButton
           ]
         )

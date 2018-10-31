@@ -11,6 +11,7 @@ class Fragment extends StatefulWidget {
 
   final String title;
   final Presenter presenter;
+  final fragmentKey = GlobalKey<FragmentState>();
 
   void showErrorToast(String message) {
     Fluttertoast.showToast(
@@ -23,21 +24,19 @@ class Fragment extends StatefulWidget {
       );
   }
 
+  void onCurrentGameIdChange(String gameId) {
+    GlobalContext().setCurrentGameId(gameId);
+  }
+
+  void onCurrentUserIdChange(String userId) {
+    GlobalContext().setCurrentUserId(userId);
+  }
+
   @override
   State<Fragment> createState() => new FragmentState();
 }
 
 class FragmentState extends State<Fragment> {
-
-  void onCurrentGameIdChange(String gameId) {
-    //GlobalContextDEPR.of(context).onCurrentGameIdChange(gameId);
-    GlobalContext().setCurrentGameId(gameId);
-  }
-
-  void onUserIdChange(String userId) {
-    //GlobalContextDEPR.of(context).onUserIdChange(userId);
-    GlobalContext().setUserId(userId);
-  }
 
   void pushNavigator(String routeName) {
     Navigator.of(context).pushNamed(routeName);

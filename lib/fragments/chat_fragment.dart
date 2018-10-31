@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+
+import 'package:ticket_to_ride/presenters/chat_presenter.dart';
+import 'fragment.dart';
+
 import 'dart:io';
 
-class ChatScreen extends StatefulWidget {
+class ChatFragment extends Fragment {
+  ChatFragment(ChatPresenter presenter, {Key key, this.title}) : 
+    this.presenter = presenter, super(presenter, key: key); 
+
+  final String title;
+  final ChatPresenter presenter;
+
   @override
-  ChatScreenState createState() {
-    return new ChatScreenState();
-  }
+  ChatFragmentState createState() => new ChatFragmentState();
 }
 
-class ChatScreenState extends State<ChatScreen> {
+class ChatFragmentState extends FragmentState {
+
   final TextEditingController _textEditingController =
       new TextEditingController();
   bool _isComposingMessage = false;
@@ -75,16 +84,16 @@ class ChatScreenState extends State<ChatScreen> {
                     ),
                     onPressed: () async {
                       int timestamp = new DateTime.now().millisecondsSinceEpoch;
-                      _sendMessage(
-                          messageText: null);
-                    }),
+                      _sendMessage(null);
+                    }
+                )
               ),
               new Flexible(
                 child: new TextField(
                   controller: _textEditingController,
-                  onChanged: (String messageText) {
+                  onChanged: (String content) {
                     setState(() {
-                      _isComposingMessage = messageText.length > 0;
+                      _isComposingMessage = content.length > 0;
                     });
                   },
                   onSubmitted: _textMessageSubmitted,
@@ -104,9 +113,9 @@ class ChatScreenState extends State<ChatScreen> {
       _isComposingMessage = false;
     });
 
-    _sendMessage(messageText: text, imageUrl: null);
+    _sendMessage(text);
   }
 
-  void _sendMessage({String messageText, String imageUrl}) {
+  void _sendMessage(String content) {
   }
 }
