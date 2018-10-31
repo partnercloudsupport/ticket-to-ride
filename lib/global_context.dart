@@ -1,6 +1,8 @@
 import 'package:ticket_to_ride/api/api.dart' as api;
-import 'package:ticket_to_ride/api/game.pb.dart';
 import 'package:protobuf/protobuf.dart';
+import 'api/player_wrapper.dart';
+
+
 
 class GlobalContext {
 
@@ -21,7 +23,7 @@ class GlobalContext {
   Map<String, Player> playerMap;
 
   addPlayerToMap(Player player) {
-    playerMap.putIfAbsent(player.id, () => player);
+    playerMap.putIfAbsent(player.playerId, () => player);
   }
 
 }

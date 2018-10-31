@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ticket_to_ride/fragments/lobby_view_fragment.dart';
 import 'package:ticket_to_ride/fragments/fragment_library.dart';
 import 'package:ticket_to_ride/api/game.pb.dart' as gameApi;
+import 'package:ticket_to_ride/api/player_wrapper.dart' as playerWrapper;
 
 class LobbyViewApi {
   getGame(ctx, request) {
@@ -27,7 +28,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
   LobbyViewFragment _fragment;
   LobbyGame _game;
 
-  List<gameApi.Player> playerObjects;
+  List<playerWrapper.Player> playerObjects = [];
 
   LobbyViewPresenter() {
     this._api = new LobbyViewApi();
@@ -71,11 +72,15 @@ class LobbyViewPresenter implements LobbyViewObserver {
           request2.playerId = response1.playerIds[x];
           var response2 = await _api.getPlayer(ctx, request2);
 
-          playerObjects.add(response2);
-
           var request3 = new api.GetUsernameRequest();
           request3.userId = response2.accountId;
           var response3 = await _api.getUsername(ctx, request3);
+
+          // evil disgusting code to save wrapped player object in list
+          gameApi.Player p = response2;
+          playerWrapper.Player player = playerWrapper.Player(null, p.id, p.accountId, p.gameId, p.color);
+          player.username = response3.username;
+          playerObjects.add(player);
 
           players.add(Player(response3.username, _getColor(response2.color)));
         } else {
@@ -114,8 +119,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
 
   @override
   startGame() async {
-    
-    for (gameApi.Player p in playerObjects) {
+    for (playerWrapper.Player p in playerObjects) {
       GlobalContext().addPlayerToMap(p);
     }
 

@@ -19,7 +19,7 @@ class ChatPresenter {
 
   // default constructor
   ChatPresenter({this.title}) {
-    fragment = ChatFragment(this);
+    fragment = ChatFragment(this, key: chatFragmentKey);
   }
 
   // another constructor with fragment passed in
@@ -46,7 +46,9 @@ class ChatPresenter {
     var ctx = ClientContext();
 
     await for (Message msg in api.chatProxy.streamMessages(ctx, request)) {
-      
+      var player = GlobalContext().playerMap[msg.playerId];
+
+      fragment.handleReceipt(msg, player);
     }
 
   }
