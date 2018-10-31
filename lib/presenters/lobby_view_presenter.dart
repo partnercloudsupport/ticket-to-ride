@@ -4,6 +4,7 @@ import 'package:ticket_to_ride/global_context.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ticket_to_ride/fragments/lobby_view_fragment.dart';
 import 'package:ticket_to_ride/fragments/fragment_library.dart';
+import 'package:ticket_to_ride/api/game.pb.dart' as gameApi;
 
 class LobbyViewApi {
   getGame(ctx, request) {
@@ -25,6 +26,8 @@ class LobbyViewPresenter implements LobbyViewObserver {
   LobbyViewApi _api;
   LobbyViewFragment _fragment;
   LobbyGame _game;
+
+  List<gameApi.Player> playerObjects;
 
   LobbyViewPresenter() {
     this._api = new LobbyViewApi();
@@ -68,6 +71,8 @@ class LobbyViewPresenter implements LobbyViewObserver {
           request2.playerId = response1.playerIds[x];
           var response2 = await _api.getPlayer(ctx, request2);
 
+          playerObjects.add(response2);
+
           var request3 = new api.GetUsernameRequest();
           request3.userId = response2.accountId;
           var response3 = await _api.getUsername(ctx, request3);
@@ -109,6 +114,11 @@ class LobbyViewPresenter implements LobbyViewObserver {
 
   @override
   startGame() async {
+    
+    for (gameApi.Player p in playerObjects) {
+      GlobalContext().addPlayerToMap(p);
+    }
+
     FragmentLibrary.navigatePush('/game_view');
   }
 
