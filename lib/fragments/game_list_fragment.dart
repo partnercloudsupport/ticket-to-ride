@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_to_ride/global_context_widget.dart';
-import 'package:ticket_to_ride/game_selection_presenter.dart';
+import 'package:ticket_to_ride/global_context.dart';
+import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
 import 'package:ticket_to_ride/api/game.pb.dart';
 import 'package:ticket_to_ride/poll.dart';
 
+import 'package:ticket_to_ride/api/api.dart' as api;
 
 class GameListFragment extends StatefulWidget {
 
-  GameListFragment(GameSelectionPresenterState presenterState, {Key key, this.title}) : presenterState = presenterState, super(key: key);
+  GameListFragment(GameSelectionPresenter presenter, {Key key, this.title}) : presenter = presenter;
 
   final String title;
-  final GameSelectionPresenterState presenterState;
+  final GameSelectionPresenter presenter;
 
   @override
-  _GameListFragmentState createState() => new _GameListFragmentState();
+  GameListFragmentState createState() => new GameListFragmentState();
 
 }
 
-class _GameListFragmentState extends State<GameListFragment> {
-
-  final _formKey = GlobalKey<FormState>();
-
-  var _gameList;
+class GameListFragmentState extends State<GameListFragment> {
+  
+  var request = api.CreatePlayerRequest();
   var _cancelPoll;
+
+  List<api.Game> games;
+  bool gamesLoaded = false;
 
   @override
   initState() {
@@ -39,13 +41,9 @@ class _GameListFragmentState extends State<GameListFragment> {
 
   _getGameList() async {
     _cancelPoll = poll(50, () async {
-      var gameList = await widget.presenterState.getGameList();
-
+      games = await widget.presenter.getGameList();
+      gamesLoaded = true;
       print('poll');
-
-      setState(() {
-              _gameList = gameList;
-            });
     });
   }
 
@@ -58,9 +56,9 @@ class _GameListFragmentState extends State<GameListFragment> {
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: RaisedButton(
           onPressed: () {
-            this.widget.presenterState.createPlayerRequest.userId = GlobalContext.of(context).userId;
-            this.widget.presenterState.createPlayerRequest.gameId = game.gameId;
-            this.widget.presenterState.createPlayer(_formKey.currentState);
+            request.userId = GlobalContext().currentUserId;
+            request.gameId = game.gameId;
+            this.widget.presenter.createPlayer(request);
           },
           child: Text(
             'Join',
@@ -87,17 +85,15 @@ class _GameListFragmentState extends State<GameListFragment> {
       );
 
     }
-
-  
     
-    var gameList = (!this.widget.presenterState.gamesLoaded) ? Text('Loading games...') :
-      ((this.widget.presenterState.games.length == 0) ? 
+    var gameList = (!gamesLoaded) ? Text('Loading games...') :
+      ((games.length == 0) ? 
         Text('No active games to show.') : 
           Flexible(
             child: ListView.builder(
-              itemCount: this.widget.presenterState.games.length,
+              itemCount: games.length,
               itemBuilder: (BuildContext context, int i) {
-                return _buildRow(this.widget.presenterState.games[i]);
+                return _buildRow(games[i]);
               }
             ),
           )

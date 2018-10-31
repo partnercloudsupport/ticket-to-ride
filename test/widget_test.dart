@@ -12,7 +12,7 @@ import 'package:ticket_to_ride/main.dart';
 void main() {
   testWidgets('GameSelection smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(new DerpyTestDriver());
+    await tester.pumpWidget(new TicketToRideApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

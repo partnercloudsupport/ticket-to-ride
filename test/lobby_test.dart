@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:ticket_to_ride/fragments/lobby_view_fragment.dart';
-import 'package:ticket_to_ride/lobby_view_presenter.dart';
+import 'package:ticket_to_ride/presenters/lobby_view_presenter.dart';
 
 class TestLobbyView implements LobbyView {
 

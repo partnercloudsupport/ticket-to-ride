@@ -1,49 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:ticket_to_ride/api/api.dart' as api;
 
 import 'package:ticket_to_ride/fragments/account_login_fragment.dart';
-import 'package:ticket_to_ride/account_login_presenter.dart';
+import 'package:ticket_to_ride/presenters/account_login_presenter.dart';
 
-class TestAccountLogin implements AccountLogin {
+class TestAccountLoginObserver implements AccountLoginObserver {
 
-  var login = Login();
+  var data = Login();
   var accountRegisterCalled = false;
   var accountLoginCalled = false;
 
   @override
-  accountRegister(context, form) {
+  accountRegister() {
     accountRegisterCalled = true;
   }
 
   @override
-  accountLogin(context, form) {
+  accountLogin() {
     accountLoginCalled = true;
   }
 }
 
-// class TestAccountLoginApi implements AccountLoginApi {
-//   login(ctx, request) {
-//
-//   }
-//
-//   register(ctx, request) {
-//
-//   }
-// }
+class TestAccountLoginApi implements AccountLoginApi {
+
+  var loginValid = false;
+
+  login(ctx, request) async {
+    // if(request.username == 'test1' && request.password == 'test1') {
+    //   // return 'valid';
+    //
+    // }
+    loginValid = true;
+
+    return api.LoginResponse();
+  }
+
+  register(ctx, request) async {
+    return api.LoginResponse();
+  }
+}
 
 void main() {
   testWidgets('test: AccountLogin', (WidgetTester tester) async {
 
-    var loginTester = TestAccountLogin();
-    await tester.pumpWidget(MaterialApp(home: AccountLoginFragment(loginTester, title: 'Testing login')));
+    final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+    var loginTester = TestAccountLoginObserver();
 
-    // test login button
+    var fragment = new AccountLoginFragment(navigatorKey, title: 'Login');
+    fragment.addObserver(loginTester);
+
+    await tester.pumpWidget(MaterialApp(home: fragment));
+    await tester.enterText(find.byKey(Key('username')), 'user1');
+    await tester.enterText(find.byKey(Key('password')), 'user1');
+
+    print('test login button');
     expect(loginTester.accountLoginCalled, isFalse);
     await tester.tap(find.byKey(Key('loginButton')));
     await tester.pump();
     expect(loginTester.accountLoginCalled, isTrue);
 
-    // test register button
+    print('test register button');
     expect(loginTester.accountRegisterCalled, isFalse);
     await tester.tap(find.byKey(Key('registerButton')));
     await tester.pump();
@@ -51,26 +68,33 @@ void main() {
 
   });
 
-  // testWidgets('test: AccountLoginApi', (WidgetTester tester) async {
-  //   var loginApiTester = TestAccountLoginApi();
-  //   var loginFields = Login();
-  //   loginFields.username = 'test1';
-  //   loginFields.password = 'test1';
-  //
-  //   var presenter = AccountLoginPresenter.withApi(loginApiTester);
-  //   presenter.login = loginFields;
-  //
-  //   // BuildContext context = BuildContext();
-  //
-  //   presenter.accountLogin(BuildContext, loginFields);
-  //   // var request = new api.LoginAccountRequest();
-  //   // request.username = 'test1';
-  //   // request.password = 'test1';
-  //   // var response = await loginApiTester.login('context', request);
-  //
-  //   // test login api
-  //
-  //
-  //   // test register api
-  // });
+  testWidgets('test: AccountLoginApi', (WidgetTester tester) async {
+
+    var loginApiTester = TestAccountLoginApi();
+
+    final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+
+    var fragment = new AccountLoginFragment(navigatorKey, title: 'Login');
+    var presenter = AccountLoginPresenter.withApi(fragment, loginApiTester);
+
+    await tester.pumpWidget(MaterialApp(
+      home: fragment,
+      navigatorKey: navigatorKey,
+      routes: <String, WidgetBuilder>{
+        '/game_selection': (BuildContext context) {
+          return new Scaffold(
+            appBar: new AppBar(
+              title: const Text('Welcome to Flutter'),
+            ),
+          );
+        }},
+    ));
+
+    expect(loginApiTester.loginValid, isFalse);
+    presenter.data.username = 'test1';
+    presenter.data.password = 'test1';
+    presenter.accountLogin();
+    expect(loginApiTester.loginValid, isTrue);
+
+  });
 }
