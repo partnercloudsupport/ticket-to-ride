@@ -9,6 +9,6 @@ export 'game.pb.dart';
 export 'health.pb.dart';
 export 'api_error.dart';
 
-final authProxy = AuthServiceProxy("http://104.198.214.161/");//"http://172.20.10.12/"));//
-final gameProxy = GameServiceProxy("http://104.198.214.161/");//"http://172.20.10.12/"));//
-final healthProxy = HealthServiceProxy("http://104.198.214.161/");//"http://172.20.10.12/"));//
+final authProxy = AuthServiceProxy("http://master.wwttr.umkhandi.com/");
+final gameProxy = GameServiceProxy("http://master.wwttr.umkhandi.com/");
+final healthProxy = HealthServiceProxy("http://master.wwttr.umkhandi.com/");
