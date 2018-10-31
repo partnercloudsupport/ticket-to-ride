@@ -71,24 +71,24 @@ class GameMapPresenter implements GameMapObserver  {
   @override
   getRoutes() async {
 
-    int orange = 0xFF022D41;
-    int pink = 0xFFfa2D41;
-    int green = 0xFFfa2D41;
-    int blue = 0xFFfa2D41;
-    int black = 0xFFfa2D41;
-    int grey = 0xFFfa2D41;
-    int yellow = 0xFFfa2D41;
-    int red = 0xFFfa2D41;
-    int white = 0xFFfa2D41;
+    int orange = 0xFFDB9759;
+    int pink = 0xFFD950C6;
+    int green = 0xFF84B72A;
+    int blue = 0xFF5FDCDA;
+    int black = 0xFF212121;
+    int grey = 0xFFC3C3C3;
+    int yellow = 0xFFD9B755;
+    int red = 0xFFD74141;
+    int white = 0xFFECECEC;
 
     return [
       Route( .07, .05, .08, .115, 1, "1", grey, "user1"), // vancouver - Seattle
       Route( .07, .05, .08, .115, 1, "1", grey, "user1"), // vancouver - Seattle
 
-      Route(.07, .05, .2, .04, 5, "1", grey, "user1"), // Vancouver - Calgary
+      Route(.07, .05, .2, .04, 3, "1", grey, "user1"), // Vancouver - Calgary
 
-      Route( .005, .45, .07, .6, 5, "1", pink, "user1"), // SanFrancisco - Los Angeles
-      Route( .005, .45, .07, .6, 5, "1", yellow, "user1"), // SanFrancisco - Los Angeles
+      Route( .005, .45, .07, .6, 3, "1", pink, "user1"), // SanFrancisco - Los Angeles
+      Route( .005, .45, .07, .6, 3, "1", yellow, "user1"), // SanFrancisco - Los Angeles
 
 
 
@@ -98,15 +98,15 @@ class GameMapPresenter implements GameMapObserver  {
       Route(.005, .45, .04, .17, 5, "1", green, "user1"), // san francisco - portland
       Route(.005, .45, .22, .40, 6, "2", orange, "user1"), // san francisco - salt lake city
       Route(.005, .45, .22, .40, 6, "2", white, "user1"), // san francisco - salt lake city
-      Route(.08, .115, .04, .17, 1, "1", 0xFF022D41, "user1"), // seattle - portland
-      Route(.08, .115, .04, .17, 1, "1", 0xFF022D41, "user1"), // seattle - portland
+      Route(.08, .115, .04, .17, 1, "1", grey, "user1"), // seattle - portland
+      Route(.08, .115, .04, .17, 1, "1", grey, "user1"), // seattle - portland
 
-      Route(.47, .69, .315, .69, 6, "2", 0xFFfa2D41, "user1"), // dallas - el paso
-      Route(.22, .40, .3, .22, 3, "1", 0xFF022D41, "user1"), // salt lake city - helena
+      Route(.47, .69, .315, .69, 4, "2", red, "user1"), // dallas - el paso
+      Route(.22, .40, .3, .22, 3, "1", pink, "user1"), // salt lake city - helena
       Route(.33, .44, .22, .40, 3, "2", red, "user1"), // denver - salt lake city
       Route(.33, .44, .22, .40, 3, "2", yellow, "user1"), // denver - salt lake city
-      Route(.04, .17, .22, .40, 6, "1", 0xFF022D41, "user1"), // portland - salt lake city
-      Route(.08, .115, .3, .22, 6, "2", 0xFFfa2D41, "user1"), // seattle - helena
+      Route(.04, .17, .22, .40, 6, "1", blue, "user1"), // portland - salt lake city
+      Route(.08, .115, .3, .22, 6, "2", yellow, "user1"), // seattle - helena
       Route(.52, .45, .6, .47, 2, "2", pink, "user1"), // kansas city - saint louis
       Route(.52, .45, .6, .47, 2, "2", blue, "user1"), // kansas city - saint louis
 
