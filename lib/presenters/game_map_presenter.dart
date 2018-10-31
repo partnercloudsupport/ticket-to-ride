@@ -71,15 +71,15 @@ class GameMapPresenter implements GameMapObserver  {
   @override
   getRoutes() async {
 
-    int orange = 0xFF022D41;
-    int pink = 0xFFfa2D41;
-    int green = 0xFFfa2D41;
-    int blue = 0xFFfa2D41;
-    int black = 0xFFfa2D41;
-    int grey = 0xFFfa2D41;
-    int yellow = 0xFFfa2D41;
-    int red = 0xFFfa2D41;
-    int white = 0xFFfa2D41;
+    int orange = 0xFFDB9759;
+    int pink = 0xFFD950C6;
+    int green = 0xFF84B72A;
+    int blue = 0xFF5FDCDA;
+    int black = 0xFF212121;
+    int grey = 0xFFC3C3C3;
+    int yellow = 0xFFD9B755;
+    int red = 0xFFD74141;
+    int white = 0xFFECECEC;
 
     return [
       Route(.07, .05, .08,.115, 1, "1", grey, "user1"), // vancouver - Seattle
