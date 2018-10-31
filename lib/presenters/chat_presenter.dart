@@ -29,6 +29,17 @@ class ChatPresenter {
   var _channel;
 
   sendMessage(String content) {
+    if (content == null) {
+      throw("empty message");
+    }
+
+    msg.state = MessageState.Sending;
+
+    await _channel.invokeMethod("sendmessage");
+    msg.date = new DateTime.now();
+
+    return msg;
+
 
   }
 
