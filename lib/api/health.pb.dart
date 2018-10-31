@@ -68,5 +68,9 @@ class HealthServiceApi {
     var emptyResponse = new Health();
     return _client.invoke<Health>(ctx, 'HealthService', 'GetHealth', request, emptyResponse);
   }
+  $async.Future<Health> streamHealth($pb.ClientContext ctx, GetHealthRequest request) {
+    var emptyResponse = new Health();
+    return _client.invoke<Health>(ctx, 'HealthService', 'StreamHealth', request, emptyResponse);
+  }
 }
 
