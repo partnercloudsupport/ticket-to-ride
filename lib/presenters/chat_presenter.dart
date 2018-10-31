@@ -33,7 +33,7 @@ class ChatPresenter {
   }
 
   // Create a stream that collects received messages
-  Stream<Message> get onSmsReceived {
+  Stream<Message> get onMessageReceived {
     if (_onMessageReceived == null) {
       print("Creating message receiver");
       _onMessageReceived = _channel.receiveBroadcastStream().map((dynamic event) {
@@ -42,7 +42,7 @@ class ChatPresenter {
         return msg;
       });
     }
-    return _onSmsReceived;
+    return _onMessageReceived;
   }
 
   */
