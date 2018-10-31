@@ -37,8 +37,8 @@ class ChatPresenter {
     if (_onMessageReceived == null) {
       print("Creating message receiver");
       _onMessageReceived = _channel.receiveBroadcastStream().map((dynamic event) {
-        SmsMessage msg = new SmsMessage.fromJson(event);
-        msg.kind = SmsMessageKind.Received;
+        Message msg = new Message.fromJson(event);
+        msg.kind = MessageKind.Received;
         return msg;
       });
     }
