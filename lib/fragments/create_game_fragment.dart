@@ -1,31 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_to_ride/global_context_widget.dart';
-import 'package:ticket_to_ride/game_selection_presenter.dart';
+import 'package:ticket_to_ride/global_context.dart';
+import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
+
+import 'package:ticket_to_ride/api/api.dart' as api;
 
 class CreateGameFragment extends StatefulWidget {
 
-  CreateGameFragment(GameSelectionPresenterState presenterState, {Key key, this.title}) :
-    presenterState = presenterState, super(key: key); 
+  CreateGameFragment(GameSelectionPresenter presenter, {Key key, this.title}) : 
+    this.presenter = presenter;
 
   final String title;
-  final GameSelectionPresenterState presenterState;
+  final GameSelectionPresenter presenter;
 
   @override
-  _CreateGameFragmentState createState() => new _CreateGameFragmentState();
+  CreateGameFragmentState createState() => new CreateGameFragmentState();
 
 }
 
 
-class _CreateGameFragmentState extends State<CreateGameFragment> {
+class CreateGameFragmentState extends State<CreateGameFragment> {
 
   final _formKey = GlobalKey<FormState>();
   int maxPlayersSelected;
+  var request = api.CreateGameRequest();
 
   @override
   Widget build(BuildContext build) {
 
-    final displayNameInput = TextFormField(
+    var _displayNameInput = TextFormField(
      // autofocus: true,
+      key: Key("display_name"),
       decoration: InputDecoration(
         labelText: 'Game Display Name',
       ),
@@ -35,11 +39,12 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
         }
       },
       onSaved: (String value) {
-        this.widget.presenterState.createGameRequest.displayName = value;
+        request.displayName = value;
+        print('building request with display name ' + request.displayName);
       }         
     );          
 
-    final maxPlayersInput = DropdownButton<int>(
+    var _maxPlayersInput = DropdownButton<int>(
       value: maxPlayersSelected,
       hint: Text('Max # of Players'),
       items:<int>[2, 3, 4, 5].map((int value) {
@@ -50,7 +55,7 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
       }).toList(),
       onChanged: (int value) { 
         maxPlayersSelected = value;
-        this.widget.presenterState.createGameRequest.maxPlayers = maxPlayersSelected;
+        request.maxPlayers = maxPlayersSelected;
         setState(() {});
       },
     );
@@ -59,8 +64,11 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         onPressed: () {
-          this.widget.presenterState.createGameRequest.userId = GlobalContext.of(context).userId;
-          this.widget.presenterState.createGame(_formKey.currentState);
+          if (_formKey.currentState.validate()) {
+            _formKey.currentState.save();
+            request.userId = GlobalContext().currentUserId;
+            this.widget.presenter.createGame(request);
+          }
         },
         child: Text(
           'Create',
@@ -79,8 +87,8 @@ class _CreateGameFragmentState extends State<CreateGameFragment> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text('Create a New Game', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
-            displayNameInput,
-            maxPlayersInput,
+            _displayNameInput,
+            _maxPlayersInput,
             createButton
           ]
         )

@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_to_ride/account_login_presenter.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
+class Login {
+  String username;
+  String password;
+}
+
+// abstract class for presenter to implement
+abstract class AccountLoginObserver {
+  Login data;
+
+  accountLogin() async {}
+  accountRegister() async {}
+}
 
 class AccountLoginFragment extends StatefulWidget {
-  AccountLoginFragment(this.accountLoginPresenter, {Key key, this.title}) : super(key: key);
+  AccountLoginFragment({Key key, this.title}) : super(key: key);
 
-  final AccountLogin accountLoginPresenter;
+  final observers = List<AccountLoginObserver>();
   final String title;
+
+  void addObserver(AccountLoginObserver o) {
+    observers.add(o);
+  }
+
+  void removeObserver(AccountLoginObserver o) {
+    observers.remove(o);
+  }
 
   @override
   _AccountLoginFragmentState createState() => new _AccountLoginFragmentState();
@@ -18,30 +37,23 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
   @override
   Widget build(BuildContext context) {
 
-    void _showErrorToast(String message) {
-      Fluttertoast.showToast(
-          msg: message,
-          toastLength: Toast.LENGTH_LONG,
-          bgcolor: "#e74c3c",
-          textcolor: '#ffffff',
-          timeInSecForIos: 5,
-          gravity: ToastGravity.TOP
-      );
-    }
-
     _login() async {
-      try {
-        await widget.accountLoginPresenter.accountLogin(context, _formKey.currentState);
-      } catch(error) {
-        _showErrorToast(error);
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+
+        for (var o in widget.observers) {
+          await o.accountLogin();
+        }
       }
     }
 
     _register() async {
-      try {
-        await widget.accountLoginPresenter.accountRegister(context, _formKey.currentState);
-      } catch(error) {
-        _showErrorToast(error);
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+
+        for (var o in widget.observers) {
+          await o.accountRegister();
+        }
       }
     }
 
@@ -66,7 +78,9 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
         }
       },
       onSaved: (String value) {
-        widget.accountLoginPresenter.login.username = value;
+        for (var o in widget.observers) {
+          o.data.username = value;
+        }
       }
     );
 
@@ -82,7 +96,9 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
         }
       },
       onSaved: (String value) {
-        widget.accountLoginPresenter.login.password = value;
+        for (var o in widget.observers) {
+          o.data.password = value;
+        }
       }
     );
 
