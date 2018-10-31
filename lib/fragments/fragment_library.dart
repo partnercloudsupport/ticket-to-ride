@@ -20,6 +20,16 @@ class FragmentLibrary {
     );
   }
 
+  static void showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_LONG,
+      textcolor: '#ffffff',
+      timeInSecForIos: 5,
+      gravity: ToastGravity.TOP
+    );
+  }
+
   static void navigatePush(String routeName) {
     _navKey.currentState.pushNamed(routeName);
   }

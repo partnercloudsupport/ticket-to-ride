@@ -6,12 +6,8 @@ import 'package:ticket_to_ride/fragments/game_map_fragment.dart';
 import 'package:ticket_to_ride/fragments/fragment_library.dart';
 
 class GameMapApi {
-  Future<api.LoginResponse> login(ctx, request) {
-    return api.authProxy.login(ctx, request);
-  }
-
-  Future<api.LoginResponse> register(ctx, request) {
-    return api.authProxy.register(ctx, request);
+  claimRoute(playerId, routeId) {
+    FragmentLibrary.showToast("$playerId is claiming $routeId");
   }
 }
 
@@ -82,15 +78,15 @@ class GameMapPresenter implements GameMapObserver  {
     int white = 0xFFECECEC;
 
     return [
-      Route(.07, .05, .08,.115, 1, "1", grey, "user1"), // vancouver - Seattle
-      Route(.07, .05, .08,.115, 1, "1", grey, "user1"), // vancouver - Seattle
-      Route(.07, .05, .2,.04,   3, "1", grey, "user1"), // Vancouver - Calgary
-      Route(.005, .45, .07,.6,  3, "1", pink, "user1"), // SanFrancisco - Los Angeles
-      Route(.005, .45, .07,.6,  3, "1", yellow, "user1"), // SanFrancisco - Los Angeles
-      Route(.005, .45, .04,.17, 5, "1", pink, "user1"), // san francisco - portland
-      Route(.005, .45, .04,.17, 5, "1", green, "user1"), // san francisco - portland
-      Route(.005, .45, .22,.40, 5, "2", orange, "user1"), // san francisco - salt lake city
-      Route(.005, .45, .22,.40, 5, "2", white, "user1"), // san francisco - salt lake city
+      Route(.07, .05, .08,.115, 1, "vancouver-seattle", grey, "user1"),
+      Route(.07, .05, .08,.115, 1, "vancouver-seattle", grey, "user1"),
+      Route(.07, .05, .2,.04,   3, "vancouver-calgary", grey, "user1"),
+      Route(.005, .45, .07,.6,  3, "sanFrancisco-losAngeles", pink, "user1"),
+      Route(.005, .45, .07,.6,  3, "sanFrancisco-losAngeles", yellow, "user1"),
+      Route(.005, .45, .04,.17, 5, "sanFrancisco-portland", pink, "user1"),
+      Route(.005, .45, .04,.17, 5, "sanFrancisco-portland", green, "user1"),
+      Route(.005, .45, .22,.40, 5, "sanFrancisco-saltLakeCity", orange, "user1"),
+      Route(.005, .45, .22,.40, 5, "sanFrancisco-saltLakeCity", white, "user1"),
       Route(.04, .17, .22, .40, 6, "1", blue, "user1"), // portland - salt lake city
       Route(.08, .115, .2, .04, 4, "1", grey, "user1"), // Seattle - Calgary
       Route(.07, .6, .13, .52,  2, "1", grey, "user1"), //  Los Angeles - Las Vegas
@@ -184,8 +180,8 @@ class GameMapPresenter implements GameMapObserver  {
   }
 
   @override
-  claimRoute() {
-
+  claimRoute(routeId) {
+    _api.claimRoute(GlobalContext().currentPlayerId, routeId);
   }
 
   build() {

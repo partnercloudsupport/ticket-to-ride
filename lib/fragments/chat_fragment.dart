@@ -50,7 +50,7 @@ class ChatMessage extends StatelessWidget {
                 width: 30.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("images/player-${player.color}.jpg"), 
+                    image: AssetImage("images/player-${player.color}.jpg"),
                   )
                 )
               )
@@ -59,7 +59,7 @@ class ChatMessage extends StatelessWidget {
            Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-               Text(player.name, style: Theme.of(context).textTheme.subhead), 
+               Text(player.name, style: Theme.of(context).textTheme.subhead),
                Container(
                 margin: const EdgeInsets.only(top: 5.0),
                 child:  Text(content),
@@ -75,7 +75,7 @@ class ChatMessage extends StatelessWidget {
 
 
 class ChatFragment extends StatefulWidget {
-  ChatFragment(ChatPresenter presenter, {Key key, this.title}) : 
+  ChatFragment(ChatPresenter presenter, {Key key, this.title}) :
     this.presenter = presenter;
 
   final String title;
@@ -94,8 +94,8 @@ class ChatFragmentState extends State<ChatFragment> {
 
   void _handleSubmit(String content) {
     _chatController.clear();
-    request.playerId = GlobalContext().currentUserId
-     
+    request.playerId = GlobalContext().currentUserId;
+
   }
 
   void _handleReceipt(Message msg, Player player) {
@@ -122,9 +122,9 @@ class ChatFragmentState extends State<ChatFragment> {
               margin: const EdgeInsets.symmetric(horizontal: 4.0),
               child:  IconButton(
                 icon:  Icon(Icons.send),
-                
+
                 onPressed: ()=> _handleSubmit(_chatController.text),
-                 
+
               ),
             )
           ],

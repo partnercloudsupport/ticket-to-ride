@@ -15,6 +15,7 @@ class GlobalContext {
 
   String currentGameId;
   String currentUserId;
+  String currentPlayerId;
 
   // maps playerId to Player object
   Map<String, Player> playerMap;
