@@ -3,6 +3,7 @@ import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/global_context.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ticket_to_ride/fragments/lobby_view_fragment.dart';
+import 'package:ticket_to_ride/fragments/fragment_library.dart';
 
 class LobbyViewApi {
   getGame(ctx, request) {
@@ -25,7 +26,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
   LobbyViewFragment _fragment;
   LobbyGame _game;
 
-  LobbyViewPresenter(this._fragment) {
+  LobbyViewPresenter() {
     this._api = new LobbyViewApi();
     _game = LobbyGame();
   }
@@ -103,7 +104,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
 
   @override
   exitGame() async {
-    _fragment.navigatePop();
+    FragmentLibrary.navigatePop();
   }
 
   @override
@@ -118,5 +119,10 @@ class LobbyViewPresenter implements LobbyViewObserver {
     );
 
     // Navigator.of(context).pushNamed('/game_board');
+  }
+
+  build() {
+    _fragment = new LobbyViewFragment(title: 'Lobby');
+    return _fragment;
   }
 }

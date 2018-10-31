@@ -7,7 +7,6 @@ import 'package:ticket_to_ride/fragments/game_hand_fragment.dart';
 
 class GameViewFragment extends StatefulWidget {
   GameViewFragment(
-    this.navKey,
     {
       Key key,
       this.title,
@@ -18,21 +17,12 @@ class GameViewFragment extends StatefulWidget {
       this.handFragment,
     }) : super(key: key);
 
-  final GlobalKey<NavigatorState> navKey;
   final String title;
   final GameBoardFragment boardFragment;
   final GamePlayerFragment playerFragment;
   final GameMenuFragment menuFragment;
   final GameBankFragment bankFragment;
   final GameHandFragment handFragment;
-
-  void navigatePush(String routeName) {
-    navKey.currentState.pushNamed(routeName);
-  }
-
-  void navigatePop() {
-    navKey.currentState.pop();
-  }
 
   @override
   _GameViewFragmentState createState() => new _GameViewFragmentState();

@@ -19,9 +19,8 @@ abstract class GameBankObserver {
 }
 
 class GameBankFragment extends StatefulWidget {
-  GameBankFragment(this.navKey, {Key key, this.title}) : super(key: key);
+  GameBankFragment({Key key, this.title}) : super(key: key);
 
-  final GlobalKey<NavigatorState> navKey;
   final observers = List<GameBankObserver>();
   final String title;
 
@@ -31,14 +30,6 @@ class GameBankFragment extends StatefulWidget {
 
   void removeObserver(GameBankObserver o) {
     observers.remove(o);
-  }
-
-  void navigatePush(String routeName) {
-    navKey.currentState.pushNamed(routeName);
-  }
-
-  void navigatePop() {
-    navKey.currentState.pop();
   }
 
   @override

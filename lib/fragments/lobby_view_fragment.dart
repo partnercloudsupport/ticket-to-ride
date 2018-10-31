@@ -22,9 +22,8 @@ abstract class LobbyViewObserver {
 }
 
 class LobbyViewFragment extends StatefulWidget {
-  LobbyViewFragment(this.navKey, {Key key, this.title}) : super(key: key);
+  LobbyViewFragment({Key key, this.title}) : super(key: key);
 
-  final GlobalKey<NavigatorState> navKey;
   final observers = List<LobbyViewObserver>();
   final String title;
 
@@ -34,14 +33,6 @@ class LobbyViewFragment extends StatefulWidget {
 
   void removeObserver(LobbyViewObserver o) {
     observers.remove(o);
-  }
-
-  void navigatePush(String routeName) {
-    navKey.currentState.pushNamed(routeName);
-  }
-
-  void navigatePop() {
-    navKey.currentState.pop();
   }
 
   @override

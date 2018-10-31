@@ -15,18 +15,18 @@ class AccountLoginApi {
   }
 }
 
-class AccountLoginPresenter implements AccountLoginObserver {
+class AccountLoginPresenter implements AccountLoginObserver  {
 
   AccountLoginApi _api;
   AccountLoginFragment _fragment;
   Login data;
 
-  AccountLoginPresenter(this._fragment) {
+  AccountLoginPresenter() {
     this._api = new AccountLoginApi();
     data = Login();
   }
 
-  AccountLoginPresenter.withApi(this._fragment, this._api) {
+  AccountLoginPresenter.withApi(this._api) {
     data = Login();
   }
 
@@ -42,7 +42,7 @@ class AccountLoginPresenter implements AccountLoginObserver {
       var response = await _api.login(ctx, request);
 
       GlobalContext().userId = response.userId;
-      _fragment.navigatePush('/game_selection');
+      FragmentLibrary.navigatePush('/game_selection');
 
     } catch(error) {
       print(error);
@@ -51,13 +51,13 @@ class AccountLoginPresenter implements AccountLoginObserver {
 
       switch(error.code) {
         case api.Code.NOT_FOUND:
-          showErrorToast('Account does not exist');
+          FragmentLibrary.showErrorToast('Account does not exist');
           break;
         case api.Code.ACCESS_DENIED:
-          showErrorToast('Incorrect password');
+          FragmentLibrary.showErrorToast('Incorrect password');
           break;
         default:
-          showErrorToast('UNKNOWN ERROR');
+          FragmentLibrary.showErrorToast('UNKNOWN ERROR');
       }
     }
   }
@@ -74,7 +74,7 @@ class AccountLoginPresenter implements AccountLoginObserver {
       var response = await _api.register(ctx, request);
 
       GlobalContext().userId = response.userId;
-      _fragment.navigatePush('/game_selection');
+      FragmentLibrary.navigatePush('/game_selection');
 
     } catch(error) {
       print(error.code);
@@ -82,11 +82,16 @@ class AccountLoginPresenter implements AccountLoginObserver {
 
       switch(error.code) {
         case api.Code.INVALID_ARGUMENT:
-          showErrorToast('Username already exists.');
+          FragmentLibrary.showErrorToast('Username already exists.');
           break;
         default:
-          showErrorToast('UNKNOWN ERROR');
+          FragmentLibrary.showErrorToast('UNKNOWN ERROR');
       }
     }
+  }
+
+  build() {
+    _fragment = new AccountLoginFragment(title: 'Login');
+    return _fragment;
   }
 }

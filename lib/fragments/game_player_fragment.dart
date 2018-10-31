@@ -19,9 +19,8 @@ abstract class GamePlayerObserver {
 }
 
 class GamePlayerFragment extends StatefulWidget {
-  GamePlayerFragment(this.navKey, {Key key, this.title}) : super(key: key);
+  GamePlayerFragment({Key key, this.title}) : super(key: key);
 
-  final GlobalKey<NavigatorState> navKey;
   final observers = List<GamePlayerObserver>();
   final String title;
 
@@ -32,15 +31,7 @@ class GamePlayerFragment extends StatefulWidget {
   void removeObserver(GamePlayerObserver o) {
     observers.remove(o);
   }
-
-  void navigatePush(String routeName) {
-    navKey.currentState.pushNamed(routeName);
-  }
-
-  void navigatePop() {
-    navKey.currentState.pop();
-  }
-
+  
   @override
   _GamePlayerFragmentState createState() => new _GamePlayerFragmentState();
 }

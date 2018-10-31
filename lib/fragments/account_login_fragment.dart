@@ -14,9 +14,8 @@ abstract class AccountLoginObserver {
 }
 
 class AccountLoginFragment extends StatefulWidget {
-  AccountLoginFragment(this.navKey, {Key key, this.title}) : super(key: key);
+  AccountLoginFragment({Key key, this.title}) : super(key: key);
 
-  final GlobalKey<NavigatorState> navKey;
   final observers = List<AccountLoginObserver>();
   final String title;
 
@@ -26,14 +25,6 @@ class AccountLoginFragment extends StatefulWidget {
 
   void removeObserver(AccountLoginObserver o) {
     observers.remove(o);
-  }
-
-  void navigatePush(String routeName) {
-    navKey.currentState.pushNamed(routeName);
-  }
-
-  void navigatePop() {
-    navKey.currentState.pop();
   }
 
   @override

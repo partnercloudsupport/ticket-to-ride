@@ -19,9 +19,8 @@ abstract class GameHandObserver {
 }
 
 class GameHandFragment extends StatefulWidget {
-  GameHandFragment(this.navKey, {Key key, this.title}) : super(key: key);
+  GameHandFragment({Key key, this.title}) : super(key: key);
 
-  final GlobalKey<NavigatorState> navKey;
   final observers = List<GameHandObserver>();
   final String title;
 
@@ -31,14 +30,6 @@ class GameHandFragment extends StatefulWidget {
 
   void removeObserver(GameHandObserver o) {
     observers.remove(o);
-  }
-
-  void navigatePush(String routeName) {
-    navKey.currentState.pushNamed(routeName);
-  }
-
-  void navigatePop() {
-    navKey.currentState.pop();
   }
 
   @override
