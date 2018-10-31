@@ -41,7 +41,12 @@ class _GameViewFragmentState extends State<GameViewFragment> {
             widget.playerFragment
           ]
         ),
-        widget.boardFragment
+        Row(
+          children: [
+            widget.boardFragment
+          ]
+        ),
+        widget.handFragment
       ],
     );
   }

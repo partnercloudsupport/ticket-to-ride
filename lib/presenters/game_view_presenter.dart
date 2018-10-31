@@ -3,7 +3,7 @@ import 'package:ticket_to_ride/presenters/game_map_presenter.dart';
 import 'package:ticket_to_ride/presenters/game_player_presenter.dart';
 import 'package:ticket_to_ride/presenters/game_menu_presenter.dart';
 import 'package:ticket_to_ride/fragments/game_bank_fragment.dart';
-import 'package:ticket_to_ride/fragments/game_hand_fragment.dart';
+import 'package:ticket_to_ride/presenters/game_hand_presenter.dart';
 
 class GameViewPresenter {
   build() {
@@ -11,7 +11,7 @@ class GameViewPresenter {
     var playerFragment = new GamePlayerPresenter().build();
     var menuFragment = new GameMenuPresenter().build();
     var bankFragment = new GameBankFragment();
-    var handFragment = new GameHandFragment();
+    var handFragment = new GameHandPresenter().build();
 
     var fragment = new GameViewFragment(
       boardFragment: boardFragment,
