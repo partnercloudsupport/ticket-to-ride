@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:ticket_to_ride/presenters/chat_presenter.dart';
-import 'fragment.dart';
 
 import 'dart:io';
 
-class ChatFragment extends Fragment {
+class ChatFragment extends StatefulWidget {
   ChatFragment(ChatPresenter presenter, {Key key, this.title}) : 
-    this.presenter = presenter, super(presenter, key: key); 
+    this.presenter = presenter;
 
   final String title;
   final ChatPresenter presenter;
@@ -16,7 +15,7 @@ class ChatFragment extends Fragment {
   ChatFragmentState createState() => new ChatFragmentState();
 }
 
-class ChatFragmentState extends FragmentState {
+class ChatFragmentState extends State<ChatFragment> {
 
   final TextEditingController _textEditingController =
       new TextEditingController();

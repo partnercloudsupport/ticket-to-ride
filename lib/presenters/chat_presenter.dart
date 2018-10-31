@@ -6,10 +6,9 @@ import 'package:ticket_to_ride/api/game.pb.dart';
 import 'package:protobuf/protobuf.dart';
 
 import 'package:ticket_to_ride/fragments/chat_fragment.dart';
-import 'presenter.dart';
 
 
-class ChatPresenter extends Presenter {
+class ChatPresenter {
 
   final String title;
   ChatFragment fragment;

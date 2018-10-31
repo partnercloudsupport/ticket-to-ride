@@ -3,28 +3,22 @@ import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
 import 'package:ticket_to_ride/api/game.pb.dart';
 import 'package:ticket_to_ride/poll.dart';
-import 'fragment.dart';
 
 import 'package:ticket_to_ride/api/api.dart' as api;
 
-class GameListFragment extends Fragment {
+class GameListFragment extends StatefulWidget {
 
-  GameListFragment(GameSelectionPresenter presenter, {Key key, this.title}) : presenter = presenter, 
-    super(presenter, key: key);
+  GameListFragment(GameSelectionPresenter presenter, {Key key, this.title}) : presenter = presenter;
 
   final String title;
   final GameSelectionPresenter presenter;
-
-  void pushNavigator(String routeName) {
-    gameListKey.currentState.pushNavigator(routeName);
-  }
 
   @override
   GameListFragmentState createState() => new GameListFragmentState();
 
 }
 
-class GameListFragmentState extends FragmentState {
+class GameListFragmentState extends State<GameListFragment> {
   
   var request = api.CreatePlayerRequest();
   var _cancelPoll;
@@ -62,7 +56,7 @@ class GameListFragmentState extends FragmentState {
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: RaisedButton(
           onPressed: () {
-            request.userId = GlobalContext().userId;
+            request.userId = GlobalContext().currentUserId;
             request.gameId = game.gameId;
             this.widget.presenter.createPlayer(request);
           },

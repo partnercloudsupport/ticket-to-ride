@@ -9,10 +9,6 @@ import 'package:ticket_to_ride/fragments/fragment_library.dart';
 import 'package:ticket_to_ride/fragments/game_list_fragment.dart';
 import 'package:ticket_to_ride/fragments/create_game_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_selection_view.dart';
-import 'presenter.dart';
-
-final gameListKey = GlobalKey<GameListFragmentState>();
-final createGameKey = GlobalKey<CreateGameFragmentState>();
 
 class CreatePlayer {
   String userId;
@@ -38,7 +34,7 @@ class GameSelectionApi {
   }
 }
 
-class GameSelectionPresenter extends Presenter {
+class GameSelectionPresenter {
   
   final String title;
 
@@ -79,7 +75,6 @@ class GameSelectionPresenter extends Presenter {
     }
   } 
 
-  @override
   createGame(request) async {
     //if (request.validate()) {
       //request.save();
@@ -94,7 +89,7 @@ class GameSelectionPresenter extends Presenter {
 
 
         //createGameFragment.onCurrentGameIdChange(response.gameId);
-        GlobalContext().setCurrentGameId(response.gameId);
+        GlobalContext().currentGameId = response.gameId;
 
         
         // TODO replace with wrapper Navigator implementation
@@ -112,7 +107,6 @@ class GameSelectionPresenter extends Presenter {
     //}
   }
 
-  @override
   createPlayer(request) async {
       var ctx = ClientContext();
 
@@ -129,7 +123,7 @@ class GameSelectionPresenter extends Presenter {
           print(playerResponse.gameId);
 
           //gameListFragment.onCurrentGameIdChange(playerResponse.gameId);
-          GlobalContext().setCurrentGameId(playerResponse.gameId);
+          GlobalContext().currentGameId = playerResponse.gameId;
 
           // TODO replace with wrapper Navigator implementation
           //gameListFragment.pushNavigator('/lobby_view');
@@ -157,7 +151,6 @@ class GameSelectionPresenter extends Presenter {
       }
   } 
 
-  @override
   Widget build() {
 
     getGameList();

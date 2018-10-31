@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
-import 'package:ticket_to_ride/fragments/fragment.dart';
 
 import 'package:ticket_to_ride/api/api.dart' as api;
 
-class CreateGameFragment extends Fragment {
+class CreateGameFragment extends StatefulWidget {
 
   CreateGameFragment(GameSelectionPresenter presenter, {Key key, this.title}) : 
-    this.presenter = presenter, super(presenter, key: key); 
+    this.presenter = presenter;
 
   final String title;
   final GameSelectionPresenter presenter;
-
-  void pushNavigator(String routeName) {
-    createGameKey.currentState.pushNavigator(routeName);
-  }
 
   @override
   CreateGameFragmentState createState() => new CreateGameFragmentState();
@@ -23,7 +18,7 @@ class CreateGameFragment extends Fragment {
 }
 
 
-class CreateGameFragmentState extends FragmentState {
+class CreateGameFragmentState extends State<CreateGameFragment> {
 
   final _formKey = GlobalKey<FormState>();
   int maxPlayersSelected;
@@ -71,7 +66,7 @@ class CreateGameFragmentState extends FragmentState {
         onPressed: () {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
-            request.userId = GlobalContext().userId;
+            request.userId = GlobalContext().currentUserId;
             this.widget.presenter.createGame(request);
           }
         },
