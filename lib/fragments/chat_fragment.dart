@@ -1,8 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_to_ride/api/api.dart' as api;
+import 'package:ticket_to_ride/api/chat.pb.dart';
 
 import 'package:ticket_to_ride/presenters/chat_presenter.dart';
 
 import 'dart:io';
+
+class ChatPresenterApi {
+  sendMessage(request) async {}
+  streamMessages(request) async {}
+}
+
+class ChatMessage extends StatelessWidget {
+  final String text;
+
+// constructor to get text from textfield
+  ChatMessage({
+    this.text
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return  Container(
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
+      child:  Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+           Container(
+            margin: const EdgeInsets.only(right: 16.0),
+            child:  CircleAvatar(
+              child: null,  // TODO add icon 
+              ),
+          ),
+           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+               null, //Text(_name, style: Theme.of(context).textTheme.subhead)  // TODO add name
+               Container(
+                margin: const EdgeInsets.only(top: 5.0),
+                child:  Text(text),
+
+              )
+            ],
+          )
+        ],
+      )
+    );
+  }
+}
+
 
 class ChatFragment extends StatefulWidget {
   ChatFragment(ChatPresenter presenter, {Key key, this.title}) : 
@@ -17,104 +63,72 @@ class ChatFragment extends StatefulWidget {
 
 class ChatFragmentState extends State<ChatFragment> {
 
-  final TextEditingController _textEditingController =
-      new TextEditingController();
-  bool _isComposingMessage = false;
+  var request = api.CreateGameRequest();
 
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-          title: new Text("Chat"),
-          elevation:
-              Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
-        ),
-        body: new Container(
-          child: new Column(
-            children: <Widget>[
-              new Divider(height: 1.0),
-              new Container(
-                decoration:
-                    new BoxDecoration(color: Theme.of(context).cardColor),
-                child: _buildTextComposer(),
+  final TextEditingController _chatController =  TextEditingController();
+  final List<ChatMessage> _messages = <ChatMessage>[];
+
+  void _handleSubmit(String text) {
+    _chatController.clear();
+      ChatMessage message =  ChatMessage(
+        text: text
+    );      
+    setState(() {
+       _messages.insert(0, message);
+    });
+
+}
+
+  Widget _chatEnvironment (){
+    return IconTheme(
+      data:  IconThemeData(color: Colors.blue),
+          child:  Container(
+        margin: const EdgeInsets.symmetric(horizontal:8.0),
+        child:  Row(
+          children: <Widget>[
+             Flexible(
+              child:  TextField(
+                decoration:  InputDecoration.collapsed(hintText: "Type a message ..."),
+                controller: _chatController,
+                onSubmitted: _handleSubmit,
               ),
-              new Builder(builder: (BuildContext context) {
-                return new Container(width: 0.0, height: 0.0);
-              })
-            ],
-          ),
-          decoration: Theme.of(context).platform == TargetPlatform.iOS
-              ? new BoxDecoration(
-                  border: new Border(
-                      top: new BorderSide(
-                  color: Colors.grey[200],
-                )))
-              : null,
-        ));
-  }
+            ),
+             Container(
+              margin: const EdgeInsets.symmetric(horizontal: 4.0),
+              child:  IconButton(
+                icon:  Icon(Icons.send),
+                
+                onPressed: ()=> _handleSubmit(_chatController.text),
+                 
+              ),
+            )
+          ],
+        ),
 
-
-  IconButton getDefaultSendButton() {
-    return new IconButton(
-      icon: new Icon(Icons.send),
-      onPressed: _isComposingMessage
-          ? () => _textMessageSubmitted(_textEditingController.text)
-          : null,
+      ),
     );
   }
 
-  Widget _buildTextComposer() {
-    return new IconTheme(
-        data: new IconThemeData(
-          color: _isComposingMessage
-              ? Theme.of(context).accentColor
-              : Theme.of(context).disabledColor,
-        ),
-        child: new Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: new Row(
-            children: <Widget>[
-              new Container(
-                margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                child: new IconButton(
-                    icon: new Icon(
-                      Icons.photo_camera,
-                      color: Theme.of(context).accentColor,
-                    ),
-                    onPressed: () async {
-                      int timestamp = new DateTime.now().millisecondsSinceEpoch;
-                      _sendMessage(null);
-                    }
-                )
-              ),
-              new Flexible(
-                child: new TextField(
-                  controller: _textEditingController,
-                  onChanged: (String content) {
-                    setState(() {
-                      _isComposingMessage = content.length > 0;
-                    });
-                  },
-                  onSubmitted: _textMessageSubmitted,
-                  decoration:
-                      new InputDecoration.collapsed(hintText: "Send a message"),
-                ),
-              ),
-            ],
+  @override
+  Widget build(BuildContext context) {
+    return  Column(
+        children: <Widget>[
+           Flexible(
+            child: ListView.builder(
+              padding:  EdgeInsets.all(8.0),
+              reverse: true,
+              itemBuilder: (_, int index) => _messages[index],
+              itemCount: _messages.length,
+            ),
           ),
-        ));
-  }
-
-  Future<Null> _textMessageSubmitted(String text) async {
-    _textEditingController.clear();
-
-    setState(() {
-      _isComposingMessage = false;
-    });
-
-    _sendMessage(text);
-  }
-
-  void _sendMessage(String content) {
+           Divider(
+            height: 1.0,
+          ),
+           Container(decoration:  BoxDecoration(
+            color: Theme.of(context).cardColor,
+          ),
+          child: _chatEnvironment(),)
+        ],
+      );
   }
 }
