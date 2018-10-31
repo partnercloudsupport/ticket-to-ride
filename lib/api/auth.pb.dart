@@ -4,7 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async';
+import 'dart:async' as $async;
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
@@ -162,15 +162,15 @@ class AuthServiceApi {
   $pb.RpcClient _client;
   AuthServiceApi(this._client);
 
-  Future<LoginResponse> login($pb.ClientContext ctx, LoginAccountRequest request) {
+  $async.Future<LoginResponse> login($pb.ClientContext ctx, LoginAccountRequest request) {
     var emptyResponse = new LoginResponse();
     return _client.invoke<LoginResponse>(ctx, 'AuthService', 'Login', request, emptyResponse);
   }
-  Future<LoginResponse> register($pb.ClientContext ctx, LoginAccountRequest request) {
+  $async.Future<LoginResponse> register($pb.ClientContext ctx, LoginAccountRequest request) {
     var emptyResponse = new LoginResponse();
     return _client.invoke<LoginResponse>(ctx, 'AuthService', 'Register', request, emptyResponse);
   }
-  Future<GetUsernameResponse> getUsername($pb.ClientContext ctx, GetUsernameRequest request) {
+  $async.Future<GetUsernameResponse> getUsername($pb.ClientContext ctx, GetUsernameRequest request) {
     var emptyResponse = new GetUsernameResponse();
     return _client.invoke<GetUsernameResponse>(ctx, 'AuthService', 'GetUsername', request, emptyResponse);
   }
