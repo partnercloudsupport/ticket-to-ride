@@ -70,6 +70,17 @@ class GameMapPresenter implements GameMapObserver  {
 
   @override
   getRoutes() async {
+
+    int orange = 0xFF022D41;
+    int pink = 0xFFfa2D41;
+    int green = 0xFFfa2D41;
+    int blue = 0xFFfa2D41;
+    int black = 0xFFfa2D41;
+    int grey = 0xFFfa2D41;
+    int yellow = 0xFFfa2D41;
+    int red = 0xFFfa2D41;
+    int white = 0xFFfa2D41;
+
     return [
       Route(.005, .45, .04, .17, 5, "1", 0xFF022D41, "user1"), // san francisco - portland
       Route(.005, .45, .22, .40, 6, "2", 0xFFfa2D41, "user1"), // san francisco - salt lake city
