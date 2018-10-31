@@ -95,6 +95,8 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
 
           print(playerResponse.gameId);
 
+          GlobalContext().addPlayerToMap(playerResponse);
+
           //gameListFragment.onCurrentGameIdChange(playerResponse.gameId);
           GlobalContext().currentGameId = playerResponse.gameId;
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/api/chat.pb.dart';
+import 'package:ticket_to_ride/api/player.pb.dart';
 
 import 'package:ticket_to_ride/presenters/chat_presenter.dart';
 
@@ -11,13 +13,27 @@ class ChatPresenterApi {
   streamMessages(request) async {}
 }
 
-class ChatMessage extends StatelessWidget {
-  final String text;
+class Player {
+  String name;
+  String color;
+  int colorInt;
 
-// constructor to get text from textfield
-  ChatMessage({
-    this.text
-  });
+  Player(this.name, this.color, this.colorInt);
+}
+
+class ChatMessage extends StatelessWidget {
+  String messageId;
+  String content;
+  int timestamp;
+  Player player;
+
+  // default constructor from Message and Player
+  ChatMessage(Message msg, Player player) {
+    messageId = msg.messageId;
+    content = msg.content;
+    timestamp = msg.timestamp;
+    player = player;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +45,24 @@ class ChatMessage extends StatelessWidget {
            Container(
             margin: const EdgeInsets.only(right: 16.0),
             child:  CircleAvatar(
-              child: null,  // TODO add icon 
-              ),
+              child: Container(
+                height: 30.0,
+                width: 30.0,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("images/player-${player.color}.jpg"), 
+                  )
+                )
+              )
+            ),
           ),
            Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-               null, //Text(_name, style: Theme.of(context).textTheme.subhead)  // TODO add name
+               Text(player.name, style: Theme.of(context).textTheme.subhead), 
                Container(
                 margin: const EdgeInsets.only(top: 5.0),
-                child:  Text(text),
+                child:  Text(content),
 
               )
             ],
@@ -63,21 +87,22 @@ class ChatFragment extends StatefulWidget {
 
 class ChatFragmentState extends State<ChatFragment> {
 
-  var request = api.CreateGameRequest();
+  CreateMessageRequest request;
 
   final TextEditingController _chatController =  TextEditingController();
   final List<ChatMessage> _messages = <ChatMessage>[];
 
-  void _handleSubmit(String text) {
+  void _handleSubmit(String content) {
     _chatController.clear();
-      ChatMessage message =  ChatMessage(
-        text: text
-    );      
-    setState(() {
-       _messages.insert(0, message);
-    });
+    request.playerId = GlobalContext().currentUserId
+     
+  }
 
-}
+  void _handleReceipt(Message msg, Player player) {
+    setState(() {
+      _messages.insert(0, ChatMessage(msg, player));
+    });
+  }
 
   Widget _chatEnvironment (){
     return IconTheme(
