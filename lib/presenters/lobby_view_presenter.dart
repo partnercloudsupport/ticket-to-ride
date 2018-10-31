@@ -89,7 +89,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
       _game.name = response1.displayName;
       _game.hostName = response5.username;
       _game.players = players;
-      _game.canStart = response1.playerIds.length > 1 && GlobalContext().userId == response4.accountId;
+      _game.canStart = response1.playerIds.length > 1 && GlobalContext().currentUserId == response4.accountId;
 
       return _game;
 

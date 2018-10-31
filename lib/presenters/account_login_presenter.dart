@@ -41,7 +41,7 @@ class AccountLoginPresenter implements AccountLoginObserver  {
       request.password = data.password;
       var response = await _api.login(ctx, request);
 
-      GlobalContext().userId = response.userId;
+      GlobalContext().currentUserId = response.userId;
       FragmentLibrary.navigatePush('/game_selection');
 
     } catch(error) {
@@ -73,7 +73,7 @@ class AccountLoginPresenter implements AccountLoginObserver  {
       request.password = data.password;
       var response = await _api.register(ctx, request);
 
-      GlobalContext().userId = response.userId;
+      GlobalContext().currentUserId = response.userId;
       FragmentLibrary.navigatePush('/game_selection');
 
     } catch(error) {

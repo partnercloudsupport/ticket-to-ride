@@ -10,5 +10,5 @@ class GlobalContext {
   GlobalContext._internal();
 
   String currentGameId;
-  String userId;
+  String currentUserId;
 }
