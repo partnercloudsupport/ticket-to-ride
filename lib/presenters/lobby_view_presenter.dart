@@ -123,6 +123,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
 
   build() {
     _fragment = new LobbyViewFragment(title: 'Lobby');
+    _fragment.addObserver(this);
     return _fragment;
   }
 }

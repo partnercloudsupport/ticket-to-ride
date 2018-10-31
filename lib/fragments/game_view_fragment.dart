@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_to_ride/fragments/game_board_fragment.dart';
+import 'package:ticket_to_ride/fragments/game_map_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_player_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_menu_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_bank_fragment.dart';
@@ -18,7 +18,7 @@ class GameViewFragment extends StatefulWidget {
     }) : super(key: key);
 
   final String title;
-  final GameBoardFragment boardFragment;
+  final GameMapFragment boardFragment;
   final GamePlayerFragment playerFragment;
   final GameMenuFragment menuFragment;
   final GameBankFragment bankFragment;
