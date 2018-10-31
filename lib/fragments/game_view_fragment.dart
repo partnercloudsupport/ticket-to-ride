@@ -34,66 +34,19 @@ class _GameViewFragmentState extends State<GameViewFragment> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     double width65 = width * 0.65;
-    // if(_gameBoard == null || _gameBoard.name == null) {
-    //   // By default, show a loading spinner
-    //   return CircularProgressIndicator();
-    // } else {
-      return new Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          widget.boardFragment
 
-          // Container(
-          //   width: width65,
-          //   height: height * .25,
-          //   child: Text(
-          //     // _gameBoard.name ?? '',
-          //     'This is the game name',
-          //     key: Key('gameName'),
-          //     style: new TextStyle(
-          //       fontWeight: FontWeight.bold,
-          //       fontSize: 40.0,
-          //     ),
-          //     textAlign: TextAlign.start,
-          //   ),
-          // ),
-
-          // Text(
-          //   'Hosted by ${_gameLobby.hostName}',
-          //   key: Key('hostName')
-          // ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: _gameLobby.players.map<Widget>((player){
-          //     return _displayPlayer(player);
-          //   }).toList()
-          // ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: <Widget>[
-          //     Padding(
-          //       padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
-          //       child: RaisedButton(
-          //         key: Key('exitButton'),
-          //         onPressed: () {
-          //           for (var o in widget.observers) {
-          //             o.exitGame();
-          //           }
-          //         },
-          //         child: Text(
-          //           'Exit Game',
-          //           style: TextStyle(
-          //             color: Colors.white,
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //     _startGameButton(_gameLobby.canStart)
-          //   ]
-          // )
-        ],
-      );
-    // }
+    return new Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          children: [
+            widget.menuFragment
+          ]
+        ),
+        widget.boardFragment
+      ],
+    );
   }
 
   @override

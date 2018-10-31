@@ -59,7 +59,7 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
 
   _getGameLobby() async {
     _cancelPoll = poll(30, () async {
-      var gameLobby; //= await widget.lobbyViewPresenter.getGame();
+      var gameLobby;
       for (var o in widget.observers) {
         gameLobby = await o.getGame();
       }

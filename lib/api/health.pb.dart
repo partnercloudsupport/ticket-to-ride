@@ -4,7 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async';
+import 'dart:async' as $async;
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
@@ -64,7 +64,7 @@ class HealthServiceApi {
   $pb.RpcClient _client;
   HealthServiceApi(this._client);
 
-  Future<Health> getHealth($pb.ClientContext ctx, GetHealthRequest request) {
+  $async.Future<Health> getHealth($pb.ClientContext ctx, GetHealthRequest request) {
     var emptyResponse = new Health();
     return _client.invoke<Health>(ctx, 'HealthService', 'GetHealth', request, emptyResponse);
   }
