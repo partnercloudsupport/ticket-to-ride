@@ -92,6 +92,7 @@ class AccountLoginPresenter implements AccountLoginObserver  {
 
   build() {
     _fragment = new AccountLoginFragment(title: 'Login');
+    _fragment.addObserver(this);
     return _fragment;
   }
 }
