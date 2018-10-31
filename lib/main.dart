@@ -5,7 +5,7 @@ import 'package:ticket_to_ride/fragments/fragment_library.dart';
 import 'package:ticket_to_ride/presenters/account_login_presenter.dart';
 import 'package:ticket_to_ride/presenters/lobby_view_presenter.dart';
 import 'package:ticket_to_ride/presenters/game_view_presenter.dart';
-// import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
+import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
 
 void main() async {
   runApp(new TicketToRideApp());
@@ -26,7 +26,7 @@ class TicketToRideApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       routes: <String, WidgetBuilder>{
        '/': (BuildContext context) => AccountLoginPresenter().build(),
-       //'/game_selection': (BuildContext context) => ,
+       '/game_selection': (BuildContext context) => GameSelectionPresenter().build(),
        '/lobby_view': (BuildContext context) => LobbyViewPresenter().build(),
         '/game_view': (BuildContext context) => GameViewPresenter().build(),
       },

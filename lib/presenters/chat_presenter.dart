@@ -23,8 +23,28 @@ class ChatPresenter {
     fragment = fragment;
   }
 
+  /*
+
+  Stream<Message> _onMessageReceived;
+  var _channel;
+
   sendMessage(String content) {
-    
+
   }
+
+  // Create a stream that collects received messages
+  Stream<Message> get onSmsReceived {
+    if (_onMessageReceived == null) {
+      print("Creating message receiver");
+      _onMessageReceived = _channel.receiveBroadcastStream().map((dynamic event) {
+        SmsMessage msg = new SmsMessage.fromJson(event);
+        msg.kind = SmsMessageKind.Received;
+        return msg;
+      });
+    }
+    return _onSmsReceived;
+  }
+
+  */
 
 }
