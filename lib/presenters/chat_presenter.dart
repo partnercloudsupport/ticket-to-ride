@@ -4,7 +4,6 @@ import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/api/chat.pb.dart';
 import 'package:ticket_to_ride/api/chat.pb.wwttr.dart';
-import 'package:ticket_to_ride/api/game.pb.dart';
 import 'package:protobuf/protobuf.dart';
 
 import 'package:ticket_to_ride/fragments/chat_fragment.dart';
@@ -48,9 +47,13 @@ class ChatPresenter {
     await for (Message msg in api.chatProxy.streamMessages(ctx, request)) {
       var player = GlobalContext().playerMap[msg.playerId];
 
-      fragment.handleReceipt(msg, player);
+      chatFragmentKey.currentState.handleReceipt(msg, player);
     }
 
+  }
+
+  Widget build() {
+    return fragment;
   }
 
 

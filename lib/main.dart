@@ -31,7 +31,7 @@ class TicketToRideApp extends StatelessWidget {
         '/game_selection': (BuildContext context) => GameSelectionPresenter().build(),
         '/lobby_view': (BuildContext context) => LobbyViewPresenter().build(),
         '/game_view': (BuildContext context) => GameViewPresenter().build(),
-        // '/chat' : (BuildContext context) => ChatPresenter().build(),
+        '/chat' : (BuildContext context) => ChatPresenter().build(),
         // '/game_history' : (BuildContext context) => ChatPresenter().build(),
       },
     );

@@ -132,7 +132,11 @@ class ChatFragmentState extends State<ChatFragment> {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Chat"),
+      ),
+      body: Column(
         children: <Widget>[
            Flexible(
             child: ListView.builder(
@@ -150,6 +154,7 @@ class ChatFragmentState extends State<ChatFragment> {
           ),
           child: _chatEnvironment(),)
         ],
-      );
+      )
+    );
   }
 }
