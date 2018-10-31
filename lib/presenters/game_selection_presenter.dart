@@ -10,35 +10,11 @@ import 'package:ticket_to_ride/fragments/game_list_fragment.dart';
 import 'package:ticket_to_ride/fragments/create_game_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_selection_view.dart';
 
-class CreatePlayer {
-  String userId;
-  String gameId;
-}
 
-class CreateGame {
-  String displayName;
-  int maxPlayers;
-  String userId;
-}
-
-class GameSelectionApi {
-  CreatePlayer createPlayerData = CreatePlayer();
-  CreateGame createGameData = CreateGame();
-
-  createPlayer(ctx, request) {
-    return api.gameProxy.createGame(ctx,request);
-  }
-
-  createGame(ctx, request) {
-    return api.gameProxy.createGame(ctx,request);
-  }
-}
-
-class GameSelectionPresenter {
+class GameSelectionPresenter implements GameSelectionPresenterApi {
   
   final String title;
 
-  GameSelectionApi _api;
   CreateGameFragment createGameFragment;
   GameListFragment gameListFragment;
 
@@ -46,7 +22,6 @@ class GameSelectionPresenter {
   GameSelectionPresenter({this.title}) {
     createGameFragment = CreateGameFragment(this);
     gameListFragment = GameListFragment(this);
-    this._api = GameSelectionApi();
   }
 
   // another constructor with fragments passed in
@@ -54,12 +29,8 @@ class GameSelectionPresenter {
   {this.title}) {
     this.createGameFragment = createGameFragment;
     this.gameListFragment = gameListFragment;
-    this._api = GameSelectionApi();
   }
 
-  getApi() {
-    return _api;
-  }
 
   getGameList() async {
     var ctx = ClientContext();
@@ -75,6 +46,7 @@ class GameSelectionPresenter {
     }
   } 
 
+  @override
   createGame(request) async {
     //if (request.validate()) {
       //request.save();
@@ -107,6 +79,7 @@ class GameSelectionPresenter {
     //}
   }
 
+  @override
   createPlayer(request) async {
       var ctx = ClientContext();
 

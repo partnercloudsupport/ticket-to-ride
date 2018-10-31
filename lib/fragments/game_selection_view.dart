@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'create_game_fragment.dart';
 import 'game_list_fragment.dart';
 
+class GameSelectionPresenterApi {
+  createPlayer(request) async {}
+  createGame(request) async {}
+}
+
 class GameSelectionView {
   GameSelectionView();
 

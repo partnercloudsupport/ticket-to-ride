@@ -18,4 +18,13 @@ class ChatPresenter {
     fragment = ChatFragment(this);
   }
 
+  // another constructor with fragment passed in
+  ChatPresenter.fromFragment(ChatFragment fragment, {this.title}) {
+    fragment = fragment;
+  }
+
+  sendMessage(String content) {
+    
+  }
+
 }
