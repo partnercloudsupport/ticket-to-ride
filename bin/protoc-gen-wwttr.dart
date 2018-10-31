@@ -57,13 +57,13 @@ import 'dart:typed_data';
       req.payload = request.writeToBuffer();
 
       var client = http.Client();
-      var streamedReq = http.StreamedRequest('POST', Uri.parse(_url));
-      streamedReq.sink.add(req.writeToBuffer());
+      var httpRequest = http.Request('POST', Uri.parse(_url));
+      httpRequest.bodyBytes = req.writeToBuffer();
 
-      var httpResponse = client.send(streamedReq);
+      var httpResponse = client.send(httpRequest);
 
       int length = 0;
-      var dataBuffer = Uint8List(0);
+      var dataBuffer = List<int>();
       var lengthBuffer = ByteData(4);
       var lengthOffset = 0;
 
@@ -71,12 +71,13 @@ import 'dart:typed_data';
         .asStream()
         .asyncExpand((el) => el.stream)
         .expand((el) => el)
-        .transform(StreamTransformer.fromHandlers<int, $returnType>(
+        .transform(StreamTransformer.fromHandlers(
         handleData: (byte, sink) {
           if (length == 0) {
             lengthBuffer.setInt8(lengthOffset, byte);
             lengthOffset++;
             if (lengthOffset == 4) {
+              lengthOffset = 0;
               length = ByteData.view(lengthBuffer.buffer).getUint32(0, Endian.little);
             }
             return;

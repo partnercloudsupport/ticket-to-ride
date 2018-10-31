@@ -29,6 +29,7 @@ const HealthService$json = const {
   '1': 'HealthService',
   '2': const [
     const {'1': 'GetHealth', '2': '.health.GetHealthRequest', '3': '.health.Health'},
+    const {'1': 'StreamHealth', '2': '.health.GetHealthRequest', '3': '.health.Health', '6': true},
   ],
 };
 

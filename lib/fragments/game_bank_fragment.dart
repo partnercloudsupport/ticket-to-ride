@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 
-// class Player {
-//   String name;
-//   String color;
-//
-//   Player(this.name, this.color);
-// }
-//
-// class LobbyGame {
-//   String name;
-//   String hostName;
-//   List players = [];
-//   bool canStart = false;
-// }
+class FaceUpTrainCard {
+  bool canSelect;
+  int color;
+
+  FaceUpTrainCard(this.canSelect, this.color);
+}
 
 abstract class GameBankObserver {
-  claimRoute() {}
+  getFaceUpTrainCards();
+  selectDestinationCard();
+  selectTrainCard();
+  selectTrainCardFromDeck();
 }
 
 class GameBankFragment extends StatefulWidget {
@@ -38,23 +34,35 @@ class GameBankFragment extends StatefulWidget {
 
 class _GameBankFragmentState extends State<GameBankFragment> {
 
-  _buildCities() {
-    double width = MediaQuery.of(context).size.width * .75;
-    double height = MediaQuery.of(context).size.height * .70;
+  List<FaceUpTrainCard> _trainCards = [];
 
-    var cities = [[.10, .3], [.5, .5], [.75, .05]];
+  @override
+  initState() {
+    super.initState();
 
-    return cities.map((point) {
-      return Positioned(
-        left: width * point[0],
-        top: height * point[1],
-        child: Container(
-          width: 20.0,
-          height: 20.0,
-          decoration: BoxDecoration(
-            color: const Color(0xff000000),
-            borderRadius: new BorderRadius.circular(25.0),
-          ),
+    _getCards();
+  }
+
+  _getCards() async {
+    List<FaceUpTrainCard> trainCards = [];
+
+    for (var o in widget.observers) {
+      trainCards = await o.getFaceUpTrainCards();
+    }
+
+    setState(() {
+      _trainCards = trainCards;
+    });
+  }
+
+  _buildFaceUpTrainCards() {
+    return _trainCards.map((trainCard) {
+      return Container(
+        width: trainCard.canSelect ? 80.0 : 50.0,
+        height: 60.0,
+        margin: const EdgeInsets.symmetric(vertical: 5.0),
+        decoration: new BoxDecoration(
+          color: Color(trainCard.color),
         ),
       );
     }).toList();
@@ -62,22 +70,40 @@ class _GameBankFragmentState extends State<GameBankFragment> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width * .75;
-    double height = MediaQuery.of(context).size.height * .70;
-
-    return new Stack(
-        children: List.from([
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: List.from([
+        Container(
+          width: 140.0,
+          height: 90.0,
+          margin: const EdgeInsets.symmetric(vertical: 5.0),
+          decoration: new BoxDecoration(
+            color: Colors.white,
+            // image: new DecorationImage(
+            //   image: new AssetImage("images/map.png"),
+            //   fit: BoxFit.cover,
+            // ),
+          ),
+          child: Text('Destinations')
+        )]
+        ..addAll(_buildFaceUpTrainCards())
+        ..addAll([
           Container(
-            width: width,
-            height: height,
+            width: 140.0,
+            height: 90.0,
+            margin: const EdgeInsets.symmetric(vertical: 5.0),
             decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: new AssetImage("images/map.png"),
-                fit: BoxFit.cover,
-              ),
+              color: Colors.white,
+              // image: new DecorationImage(
+              //   image: new AssetImage("images/map.png"),
+              //   fit: BoxFit.cover,
+              // ),
             ),
+            child: Text('Trains')
           )
-        ])..addAll(_buildCities())
+        ])
+      )
     );
   }
 }
