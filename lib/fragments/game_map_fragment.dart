@@ -9,9 +9,9 @@ class Route {
   int length;
   String id;
   int color;
-  String playerId;
+  int playerColor;
 
-  Route(this.city1x, this.city1y, this.city2x, this.city2y, this.length, this.id, this.color, this.playerId);
+  Route(this.city1x, this.city1y, this.city2x, this.city2y, this.length, this.id, this.color, this.playerColor);
 }
 
 class City {
@@ -50,7 +50,7 @@ class GameMapFragment extends StatefulWidget {
 class _GameMapFragmentState extends State<GameMapFragment> {
 
   List<City> _cities = [];
-  List<Route> _routes = [];
+  List<dynamic> _routes = [];
   double _width;
   double _height;
 
@@ -63,16 +63,27 @@ class _GameMapFragmentState extends State<GameMapFragment> {
 
   _getRoutesAndCities() async {
     var cities = [];
-    var routes = [];
+    // var routes = [];
+
     for (var o in widget.observers) {
       cities = await o.getCities();
-      routes = await o.getRoutes();
-    }
 
-    setState(() {
-      _cities = cities;
-      _routes = routes;
-    });
+      await for(var response in o.getRoutes()) {
+        setState(() {
+          _cities = cities;
+          _routes = response;
+        });
+      }
+    }
+    // for (var o in widget.observers) {
+    //   cities = await o.getCities();
+    //   routes = await o.getRoutes();
+    // }
+    //
+    // setState(() {
+    //   _cities = cities;
+    //   _routes = routes;
+    // });
   }
 
   _buildCities() {
@@ -103,6 +114,59 @@ class _GameMapFragmentState extends State<GameMapFragment> {
     }).toList();
   }
 
+  _buildRoute(route, length) {
+    if(route.playerColor == -1) {
+      return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          for (var o in widget.observers) {
+            o.claimRoute(route.id);
+          }
+        },
+        child: Container(
+          width: length - 12,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: new List.generate(route.length, (index) =>
+              _buildRouteSection(route)
+            ),
+          )
+        )
+      );
+    } else {
+      return Container(
+        width: length - 12,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: new List.generate(route.length, (index) =>
+            _buildRouteSection(route)
+          ),
+        )
+      );
+    }
+  }
+
+  _buildRouteSection(route) {
+    if(route.playerColor == -1) {
+      return Container(
+        width: 20.0,
+        height: 12.0,
+        decoration: BoxDecoration(
+          color: Color(route.color),
+        ),
+      );
+    } else {
+      return Container(
+        width: 20.0,
+        height: 12.0,
+        decoration: BoxDecoration(
+          color: Color(route.playerColor),
+          borderRadius: new BorderRadius.circular(25.0),
+        ),
+      );
+    }
+  }
+
   _buildRoutes() {
 
     return _routes.map((route) {
@@ -120,30 +184,7 @@ class _GameMapFragmentState extends State<GameMapFragment> {
           child: Transform(
             alignment: Alignment.topLeft,
             transform:  Matrix4.translationValues(7.5, 3.5 ,0.0) * Matrix4.rotationZ(rotation),
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () {
-                for (var o in widget.observers) {
-                  o.claimRoute(route.id);
-                }
-              },
-              child: Container(
-                width: length - 12,
-                // color: Colors.white,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: new List.generate(route.length, (index) =>
-                    Container(
-                      width: 20.0,
-                      height: 12.0,
-                      decoration: BoxDecoration(
-                        color: Color(route.color),
-                      ),
-                    )
-                  ),
-                )
-              )
-            )
+            child: _buildRoute(route, length)
           )
         )
       );

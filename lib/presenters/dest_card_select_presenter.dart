@@ -33,13 +33,24 @@ class DestCardSelectPresenter implements DestCardSelectObserver  {
       request.gameId = GlobalContext().currentGameId;
       var response = await _api.getDestinationCards(ctx, request);
 
-      print(response);
+      // print(response);
 
-      return [
-        DestinationCard("losAngeles-newYorkCity", "losAngeles-newYorkCity", 21),
-        DestinationCard("duluth-houston", "duluth-houston", 8),
-        DestinationCard("toronto-miami", "toronto-miami", 10)
-      ];
+      // destinationCards: {
+      //   id: destCard-2124713
+      //   firstCityId: Duluth
+      //   secondCityId: Houston
+      //   pointValue: 8
+      //   playerId: sent
+      // }
+
+      var cards = [];
+
+      response.destinationCards.forEach((card) {
+        cards.add(DestinationCard(card.id, "${card.firstCityId}-${card.secondCityId}", card.pointValue));
+      });
+
+      return cards;
+
     } catch(error) {
       print(error);
       print(error.code);
@@ -59,7 +70,7 @@ class DestCardSelectPresenter implements DestCardSelectObserver  {
       request.destinationCardIds.addAll(cardIds);
       await _api.claimDestinationCards(ctx, request);
 
-      print(cardIds);
+      // print(cardIds);
       FragmentLibrary.navigatePop();
     } catch(error) {
       print(error);

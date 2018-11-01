@@ -12,12 +12,13 @@ const Game$json = const {
     const {'1': 'max_players', '3': 3, '4': 1, '5': 5, '10': 'maxPlayers'},
     const {'1': 'host_player_id', '3': 4, '4': 1, '5': 9, '10': 'hostPlayerId'},
     const {'1': 'player_ids', '3': 5, '4': 3, '5': 9, '10': 'playerIds'},
+    const {'1': 'status', '3': 6, '4': 1, '5': 14, '6': '.game.Game.Status', '10': 'status'},
   ],
-  '4': const [Game_status$json],
+  '4': const [Game_Status$json],
 };
 
-const Game_status$json = const {
-  '1': 'status',
+const Game_Status$json = const {
+  '1': 'Status',
   '2': const [
     const {'1': 'UNKNOWN', '2': 0},
     const {'1': 'PRE', '2': 1},
@@ -167,7 +168,7 @@ const GameService$json = const {
     const {'1': 'ListGames', '2': '.game.ListGamesRequest', '3': '.game.ListGamesResponse'},
     const {'1': 'CreatePlayer', '2': '.game.CreatePlayerRequest', '3': '.game.CreatePlayerResponse'},
     const {'1': 'GetPlayer', '2': '.game.GetPlayerRequest', '3': '.game.Player'},
-    const {'1': 'StreamPlayerStats', '2': '.game.StreamPlayerStatsRequest', '3': '.game.PlayerStats'},
+    const {'1': 'StreamPlayerStats', '2': '.game.StreamPlayerStatsRequest', '3': '.game.PlayerStats', '6': true},
     const {'1': 'TogglePlayerStats', '2': '.game.Empty', '3': '.game.Empty'},
   ],
 };

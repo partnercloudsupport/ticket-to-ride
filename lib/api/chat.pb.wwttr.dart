@@ -123,8 +123,12 @@ class ChatServiceProxy {
               sink.addError(ApiError(resp.code, resp.message));
               return;
             }
+<<<<<<< HEAD
             
             sink.add(Message.fromBuffer(dataBuffer));
+=======
+            sink.add(Message.fromBuffer(resp.payload));
+>>>>>>> 88581cb13e3bc0406d04cb6c296646e1e720d145
             dataBuffer.clear();
           }
         },

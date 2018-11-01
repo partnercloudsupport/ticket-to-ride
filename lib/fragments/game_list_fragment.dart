@@ -25,13 +25,19 @@ class GameListFragmentState extends State<GameListFragment> {
   var request = api.CreatePlayerRequest();
   var cancelPoll;
 
-  List<api.Game> games;
+  List<dynamic> games;
   bool gamesLoaded = false;
 
   @override
   initState() {
     super.initState();
     _getGameList();
+  }
+
+  @override
+  void deactivate(){
+    cancelPoll();
+    super.deactivate();
   }
 
   @override
@@ -47,7 +53,6 @@ class GameListFragmentState extends State<GameListFragment> {
       setState(() {
         gamesLoaded = true;
       });
-      // print('poll');
     });
   }
 

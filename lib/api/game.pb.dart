@@ -21,6 +21,7 @@ class Game extends $pb.GeneratedMessage {
     ..a<int>(3, 'maxPlayers', $pb.PbFieldType.O3)
     ..aOS(4, 'hostPlayerId')
     ..pPS(5, 'playerIds')
+    ..e<Game_Status>(6, 'status', $pb.PbFieldType.OE, Game_Status.UNKNOWN, Game_Status.valueOf, Game_Status.values)
     ..hasRequiredFields = false
   ;
 
@@ -59,6 +60,11 @@ class Game extends $pb.GeneratedMessage {
   void clearHostPlayerId() => clearField(4);
 
   List<String> get playerIds => $_getList(4);
+
+  Game_Status get status => $_getN(5);
+  set status(Game_Status v) { setField(6, v); }
+  bool hasStatus() => $_has(5);
+  void clearStatus() => clearField(6);
 }
 
 class CreateGameRequest extends $pb.GeneratedMessage {

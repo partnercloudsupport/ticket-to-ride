@@ -5,8 +5,6 @@ import 'package:ticket_to_ride/fragments/game_menu_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_bank_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_hand_fragment.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
-import 'package:ticket_to_ride/api/game.pb.dart';
-import 'package:ticket_to_ride/api/card.pb.dart';
 import 'package:protobuf/protobuf.dart';
 
 class GameViewFragment extends StatefulWidget {

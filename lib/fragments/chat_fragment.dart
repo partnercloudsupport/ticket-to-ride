@@ -4,13 +4,11 @@ import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/api/chat.pb.dart';
 import 'package:ticket_to_ride/api/player_wrapper.dart';
 
-import 'package:protobuf/protobuf.dart';
-
 import 'package:ticket_to_ride/theme/theme.dart';
 
 import 'package:ticket_to_ride/presenters/chat_presenter.dart';
 
-import 'dart:io';
+import 'dart:async';
 
 final chatFragmentKey = GlobalKey<ChatFragmentState>();
 
@@ -87,11 +85,12 @@ class ChatMessage extends StatelessWidget {
 
 
 class ChatFragment extends StatefulWidget {
-  ChatFragment(ChatPresenter presenter, {Key key, this.title}) :
+  ChatFragment(ChatPresenter presenter, {Key key, this.title, this.messages}) :
     this.presenter = presenter;
 
   final String title;
   final ChatPresenter presenter;
+  final Stream<Message> messages;
 
   @override
   ChatFragmentState createState() => ChatFragmentState();
@@ -99,9 +98,11 @@ class ChatFragment extends StatefulWidget {
 
 class ChatFragmentState extends State<ChatFragment> {
 
-  ChatFragmentState() {
-    print('creating chatfragmentstate');
-    //streamMessages(true);
+  @override
+  initState() {
+    super.initState();
+
+    streamMessages(true);
   }
 
 
@@ -130,8 +131,6 @@ class ChatFragmentState extends State<ChatFragment> {
         print(error.code);
         print(error.message);
     }
-
-    //streamMessages(true);
   }
 
   void handleReceipt(Message msg, Player player) {
@@ -168,12 +167,7 @@ class ChatFragmentState extends State<ChatFragment> {
 
     print('streaming messages');
 
-    var request = StreamMessagesRequest();
-    request.gameId = GlobalContext().currentGameId;
-
-    var ctx = ClientContext();
-
-    await for (Message msg in api.chatProxy.streamMessages(ctx, request)) {
+    await for (Message msg in widget.messages) {
       if (!open) {
         break;
       }
@@ -187,7 +181,7 @@ class ChatFragmentState extends State<ChatFragment> {
         } else print('player is null');
       } else print('msg is null');
     }
-    
+
   }
 
 
@@ -221,12 +215,12 @@ class ChatFragmentState extends State<ChatFragment> {
     );
   }
 
-  @override
+  /*@override
   initState() {
     super.initState();
 
     _getMessages();
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {

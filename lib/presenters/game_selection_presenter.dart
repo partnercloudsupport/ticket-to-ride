@@ -12,7 +12,7 @@ import 'package:ticket_to_ride/fragments/game_selection_view.dart';
 
 
 class GameSelectionPresenter implements GameSelectionPresenterApi {
-  
+
   final String title;
 
   CreateGameFragment createGameFragment;
@@ -38,13 +38,22 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
       var request = api.ListGamesRequest();
       var response = await api.gameProxy.listGames(ctx, request);
 
-      return response.games;
-            
+      var games = [];
+
+      response.games.forEach((game) {
+        print(game);
+        if(game.status != api.Game_Status.STARTED) {
+          games.add(game);
+        }
+      });
+
+      return games;
+
     } catch(error) {
       print(error.code);
       print(error.message);
     }
-  } 
+  }
 
   @override
   createGame(request) async {
@@ -127,7 +136,7 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
               FragmentLibrary.showErrorToast('UNKNOWN ERROR');
           }
       }
-  } 
+  }
 
   Widget build() {
 
@@ -138,4 +147,3 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
   }
 
 }
-

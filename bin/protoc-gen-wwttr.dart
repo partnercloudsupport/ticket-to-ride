@@ -92,7 +92,7 @@ import 'dart:typed_data';
               sink.addError(ApiError(resp.code, resp.message));
               return;
             }
-            sink.add($returnType.fromBuffer(dataBuffer));
+            sink.add($returnType.fromBuffer(resp.payload));
             dataBuffer.clear();
           }
         },

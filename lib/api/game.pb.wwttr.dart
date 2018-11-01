@@ -237,27 +237,57 @@ class GameServiceProxy {
     }
   }
 
-  Future<PlayerStats> streamPlayerStats(ClientContext ctx, StreamPlayerStatsRequest request) async {
-
+  Stream<PlayerStats> streamPlayerStats(ClientContext ctx, StreamPlayerStatsRequest request) {
     var req = Request();
-    Response response;
     try {
       req.method = 'StreamPlayerStats';
       req.service = 'game.GameService';
       req.payload = request.writeToBuffer();
-      var httpResponse = await http.post(_url, body: req.writeToBuffer());
-      response = Response.fromBuffer(httpResponse.bodyBytes);
-    }
-    catch (err) {
-      throw ApiError(Code.UNAVAILABLE, err.toString());
-    }
 
-    if (response.code != Code.OK) {
-      throw ApiError(response.code, response.message);
-    }
+      var client = http.Client();
+      var httpRequest = http.Request('POST', Uri.parse(_url));
+      httpRequest.bodyBytes = req.writeToBuffer();
 
-    try {
-      return PlayerStats.fromBuffer(response.payload);
+      var httpResponse = client.send(httpRequest);
+
+      int length = 0;
+      var dataBuffer = List<int>();
+      var lengthBuffer = ByteData(4);
+      var lengthOffset = 0;
+
+      return httpResponse
+        .asStream()
+        .asyncExpand((el) => el.stream)
+        .expand((el) => el)
+        .transform(StreamTransformer.fromHandlers(
+        handleData: (byte, sink) {
+          if (length == 0) {
+            lengthBuffer.setInt8(lengthOffset, byte);
+            lengthOffset++;
+            if (lengthOffset == 4) {
+              lengthOffset = 0;
+              length = ByteData.view(lengthBuffer.buffer).getUint32(0, Endian.little);
+            }
+            return;
+          }
+
+          dataBuffer.add(byte);
+
+          length--;
+          if (length == 0) {
+            var resp = Response.fromBuffer(dataBuffer);
+            if (resp.code != Code.OK) {
+              sink.addError(ApiError(resp.code, resp.message));
+              return;
+            }
+            sink.add(PlayerStats.fromBuffer(resp.payload));
+            dataBuffer.clear();
+          }
+        },
+        handleError: (err, stackTrace, sink) {
+          sink.addError(ApiError(Code.UNAVAILABLE, err.toString()));
+        }
+      ));
     }
     catch (err) {
       throw ApiError(Code.UNAVAILABLE, err.toString());

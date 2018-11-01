@@ -6,20 +6,25 @@ void main() {
   test('poller works', () async {
     var expected = DateTime.now();
     var i = 0;
-    var cancel, cancelled;
+    var cancel, canceled = false;
     cancel = poll(30, () async {
       expect(DateTime.now().isAfter(expected), isTrue);
       expected = DateTime.now().add(Duration(milliseconds: 50));
+      expect(i, lessThan(3));
 
       if (i == 2) {
         // Verify we stop triggering after cancel is called.
-        expect(cancelled, isFalse);
         cancel();
-        cancelled = true;
+        canceled = true;
       }
 
       await Future.delayed(Duration(milliseconds: 20));
       i++;
     });
+
+    await Future.delayed(Duration(milliseconds: 300));
+
+    expect(i, equals(3));
+    expect(canceled, isTrue);
   });
 }

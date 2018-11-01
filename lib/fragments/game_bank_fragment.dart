@@ -10,6 +10,9 @@ class FaceUpTrainCard {
 
 abstract class GameBankObserver {
   getFaceUpTrainCards();
+  getDestCardCount();
+  getTrainCardCount();
+
   selectDestinationCards();
   selectTrainCard(String traincCardId);
   selectTrainCardFromDeck();
@@ -36,20 +39,43 @@ class GameBankFragment extends StatefulWidget {
 class _GameBankFragmentState extends State<GameBankFragment> {
 
   List<dynamic> _trainCards = [];
+  int _destinationCount = 0;
+  int _trainCount = 0;
 
   @override
   initState() {
     super.initState();
 
     _getCards();
+    _getDestCardCount();
+    _getTrainCardCount();
   }
 
   _getCards() async {
-
     for (var o in widget.observers) {
       await for(var response in o.getFaceUpTrainCards()) {
         setState(() {
           _trainCards = response;
+        });
+      }
+    }
+  }
+
+  _getDestCardCount() async {
+    for (var o in widget.observers) {
+      await for(var response in o.getDestCardCount()) {
+        setState(() {
+          _destinationCount = response;
+        });
+      }
+    }
+  }
+
+  _getTrainCardCount() async {
+    for (var o in widget.observers) {
+      await for(var response in o.getTrainCardCount()) {
+        setState(() {
+          _trainCount = response;
         });
       }
     }
@@ -74,7 +100,7 @@ class _GameBankFragmentState extends State<GameBankFragment> {
           //   fit: BoxFit.cover,
           // ),
         ),
-        child: Text('Destinations')
+        child: Text('$_destinationCount destinations left')
       )
     );
   }
@@ -130,7 +156,7 @@ class _GameBankFragmentState extends State<GameBankFragment> {
           //   fit: BoxFit.cover,
           // ),
         ),
-        child: Text('Trains')
+        child: Text('$_trainCount trains left')
       )
     );
   }
