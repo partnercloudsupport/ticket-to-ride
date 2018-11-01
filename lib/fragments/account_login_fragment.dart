@@ -148,7 +148,8 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
                     fit: BoxFit.contain,
                   ),
                 ),
-                padding: new EdgeInsets.only(top: 240.0, right: 220.0, bottom: 50.0, left: 210.0,),
+                padding: Theme.of(context).platform == TargetPlatform.iOS ?
+                  EdgeInsets.only(top: 240.0, right: 220.0, bottom: 50.0, left: 210.0,) : null,
                 child: Form(
                   key: _formKey,
                   child: Column(

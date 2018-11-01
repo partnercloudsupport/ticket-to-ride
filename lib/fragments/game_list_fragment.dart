@@ -6,6 +6,8 @@ import 'package:ticket_to_ride/poll.dart';
 
 import 'package:ticket_to_ride/api/api.dart' as api;
 
+final gameListKey = GlobalKey<GameListFragmentState>();
+
 class GameListFragment extends StatefulWidget {
 
   GameListFragment(GameSelectionPresenter presenter, {Key key, this.title}) : presenter = presenter;
@@ -21,7 +23,7 @@ class GameListFragment extends StatefulWidget {
 class GameListFragmentState extends State<GameListFragment> {
   
   var request = api.CreatePlayerRequest();
-  var _cancelPoll;
+  var cancelPoll;
 
   List<api.Game> games;
   bool gamesLoaded = false;
@@ -34,15 +36,17 @@ class GameListFragmentState extends State<GameListFragment> {
 
   @override
   void dispose() {
-    _cancelPoll();
+    cancelPoll();
     super.dispose();
   }
 
 
   _getGameList() async {
-    _cancelPoll = poll(50, () async {
+    cancelPoll = poll(100, () async {
       games = await widget.presenter.getGameList();
-      gamesLoaded = true;
+      setState(() {
+        gamesLoaded = true;
+      });
       print('poll');
     });
   }

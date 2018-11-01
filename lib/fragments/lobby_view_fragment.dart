@@ -111,7 +111,9 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
       return Text('', key: Key('noStart'));
     } else {
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
+        padding: Theme.of(context).platform == TargetPlatform.iOS ?
+          const EdgeInsets.symmetric(vertical:16.0, horizontal: 16.0) :
+          const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0), 
         child: RaisedButton(
           key: Key('startButton'),
           onPressed: () {
@@ -161,7 +163,9 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
+                padding: Theme.of(context).platform == TargetPlatform.iOS ?
+                          const EdgeInsets.symmetric(vertical:16.0, horizontal: 16.0) :
+                          const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0), 
                 child: RaisedButton(
                   key: Key('exitButton'),
                   onPressed: () {
@@ -199,7 +203,9 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
             ),
           ),
           new Container(
-            margin: const EdgeInsets.symmetric(vertical: 150.0, horizontal: 60.0),
+            margin: Theme.of(context).platform == TargetPlatform.iOS ?
+                      const EdgeInsets.symmetric(vertical:16.0, horizontal: 16.0) :
+                      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0), 
             decoration: new BoxDecoration(
               image: new DecorationImage(
                 image: new AssetImage("images/background2.jpg"),

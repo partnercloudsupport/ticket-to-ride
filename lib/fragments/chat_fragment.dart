@@ -29,6 +29,23 @@ class ChatMessage extends StatelessWidget {
     player = player;
   }
 
+  _getColor(colorCode) {
+    switch(colorCode) {
+      case api.Player_Color.RED:
+        return 'red';
+      case api.Player_Color.BLUE:
+        return 'blue';
+      case api.Player_Color.GREEN:
+        return 'green';
+      case api.Player_Color.PURPLE:
+        return 'purple';
+      case api.Player_Color.ORANGE:
+        return 'orange';
+      case api.Player_Color.YELLOW:
+        return 'yellow';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Container(
@@ -44,7 +61,7 @@ class ChatMessage extends StatelessWidget {
                 width: 30.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("images/player-${player.color}.jpg"), 
+                    image: AssetImage("images/player-${_getColor(player.color)}.jpg"), 
                   )
                 )
               )
@@ -81,7 +98,7 @@ class ChatFragment extends StatefulWidget {
 
 class ChatFragmentState extends State<ChatFragment> {
 
-  CreateMessageRequest request;
+  CreateMessageRequest request = CreateMessageRequest();
 
   final TextEditingController _chatController =  TextEditingController();
   final List<ChatMessage> _messages = <ChatMessage>[];

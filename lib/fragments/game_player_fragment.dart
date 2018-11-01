@@ -63,7 +63,9 @@ class _GamePlayerFragmentState extends State<GamePlayerFragment> {
         color: Colors.white,//Color(player.colorInt),
         margin: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
+          padding: Theme.of(context).platform == TargetPlatform.iOS ?
+            const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0) :
+            const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
           child: Row(
             children: [
               Container(
