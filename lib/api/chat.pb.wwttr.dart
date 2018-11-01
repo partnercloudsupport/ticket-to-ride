@@ -118,7 +118,7 @@ class ChatServiceProxy {
               sink.addError(ApiError(resp.code, resp.message));
               return;
             }
-            sink.add(Message.fromBuffer(dataBuffer));
+            sink.add(Message.fromBuffer(resp.payload));
             dataBuffer.clear();
           }
         },

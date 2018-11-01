@@ -91,7 +91,7 @@ class HealthServiceProxy {
               sink.addError(ApiError(resp.code, resp.message));
               return;
             }
-            sink.add(Health.fromBuffer(dataBuffer));
+            sink.add(Health.fromBuffer(resp.payload));
             dataBuffer.clear();
           }
         },

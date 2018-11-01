@@ -145,7 +145,7 @@ class CardServiceProxy {
               sink.addError(ApiError(resp.code, resp.message));
               return;
             }
-            sink.add(DestinationCard.fromBuffer(dataBuffer));
+            sink.add(DestinationCard.fromBuffer(resp.payload));
             dataBuffer.clear();
           }
         },
@@ -229,7 +229,7 @@ class CardServiceProxy {
               sink.addError(ApiError(resp.code, resp.message));
               return;
             }
-            sink.add(TrainCard.fromBuffer(dataBuffer));
+            sink.add(TrainCard.fromBuffer(resp.payload));
             dataBuffer.clear();
           }
         },
@@ -286,7 +286,7 @@ class CardServiceProxy {
               sink.addError(ApiError(resp.code, resp.message));
               return;
             }
-            sink.add(DeckStats.fromBuffer(dataBuffer));
+            sink.add(DeckStats.fromBuffer(resp.payload));
             dataBuffer.clear();
           }
         },
@@ -370,7 +370,7 @@ class CardServiceProxy {
               sink.addError(ApiError(resp.code, resp.message));
               return;
             }
-            sink.add(Route.fromBuffer(dataBuffer));
+            sink.add(Route.fromBuffer(resp.payload));
             dataBuffer.clear();
           }
         },
