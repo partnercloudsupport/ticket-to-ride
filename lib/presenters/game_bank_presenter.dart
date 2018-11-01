@@ -1,5 +1,5 @@
 import 'package:ticket_to_ride/api/api.dart' as api;
-import 'dart:async';
+import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/fragments/game_bank_fragment.dart';
 import 'package:ticket_to_ride/fragments/fragment_library.dart';
@@ -11,6 +11,10 @@ class GameBankApi {
 
   selectTrainCardFromDeck(playerId) {
     FragmentLibrary.showToast("$playerId is claiming a train card");
+  }
+
+  streamTrainCards(ctx, request) {
+    return api.cardProxy.streamTrainCards(ctx, request);
   }
 }
 
@@ -25,25 +29,52 @@ class GameBankPresenter implements GameBankObserver  {
 
   GameBankPresenter.withApi(this._api);
 
+  _getCardColor(color) {
+    switch(color) {
+    case api.TrainColor.ORANGE:
+      return 0xFFDB9759;
+    case api.TrainColor.PINK:
+      return 0xFFD950C6;
+    case api.TrainColor.GREEN:
+      return 0xFF84B72A;
+    case api.TrainColor.BLUE:
+      return 0xFF5FDCDA;
+    case api.TrainColor.BLACK:
+      return 0xFF212121;
+    case api.TrainColor.GREY:
+      return 0xFFC3C3C3;
+    case api.TrainColor.YELLOW:
+      return 0xFFD9B755;
+    case api.TrainColor.RED:
+      return 0xFFD74141;
+    case api.TrainColor.WHITE:
+      return 0xFFECECEC;
+    }
+  }
+
   @override
   getFaceUpTrainCards() {
-    int orange = 0xFFDB9759;
-    int pink = 0xFFD950C6;
-    int green = 0xFF84B72A;
-    int blue = 0xFF5FDCDA;
-    int black = 0xFF212121;
-    int grey = 0xFFC3C3C3;
-    int yellow = 0xFFD9B755;
-    int red = 0xFFD74141;
-    int white = 0xFFECECEC;
 
-    return [
-      FaceUpTrainCard('1', true, blue),
-      FaceUpTrainCard('2', false, blue),
-      FaceUpTrainCard('3', true, green),
-      FaceUpTrainCard('4', false, white),
-      FaceUpTrainCard('5', true, red),
-    ];
+    var ctx = ClientContext();
+
+    var request = new api.StreamTrainCardsRequest();
+    request.playerId = GlobalContext().currentPlayerId;
+
+    var trainCards = [];
+
+
+    return _api.streamTrainCards(ctx, request).map((response) {
+
+      var index = trainCards.indexWhere((train) => train.id == response.id);
+
+      if(response.state == api.TrainCard_State.VISIBLE && index <= -1) {
+        trainCards.add(FaceUpTrainCard(response.id, true,_getCardColor(response.color)));
+      } else if(index > -1) {
+        trainCards.removeAt(index);
+      }
+
+      return trainCards;
+    });
   }
 
   @override
