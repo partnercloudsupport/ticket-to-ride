@@ -21,7 +21,7 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
   // default constructor
   GameSelectionPresenter({this.title}) {
     createGameFragment = CreateGameFragment(this);
-    gameListFragment = GameListFragment(this);
+    gameListFragment = GameListFragment(this, key: gameListKey);
   }
 
   // another constructor with fragments passed in
@@ -66,6 +66,7 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
         
         // TODO replace with wrapper Navigator implementation
         //createGameFragment.pushNavigator('/lobby_view');
+        gameListKey.currentState.cancelPoll();
         FragmentLibrary.navigatePush('/lobby_view');
 
         print('just created game ' + response.gameId);
@@ -97,6 +98,7 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
 
           //gameListFragment.onCurrentGameIdChange(playerResponse.gameId);
           GlobalContext().currentGameId = playerResponse.gameId;
+          GlobalContext().currentPlayerId = playerResponse.id;
 
           // TODO replace with wrapper Navigator implementation
           //gameListFragment.pushNavigator('/lobby_view');

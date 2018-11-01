@@ -1,3 +1,5 @@
+import 'package:ticket_to_ride/global_context.dart';
+import 'package:ticket_to_ride/api/player_wrapper.dart' as playerWrapper;
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'dart:async';
 import 'package:ticket_to_ride/fragments/game_player_fragment.dart';
@@ -60,13 +62,21 @@ class GamePlayerPresenter implements GamePlayerObserver  {
 
   @override
   getPlayers() async {
-    return [
+    /*return [
       Player('user1', _getColor(api.Player_Color.RED), _getColorInt(api.Player_Color.RED), 23, 45, 8, 2),
       Player('user2', _getColor(api.Player_Color.BLUE), _getColorInt(api.Player_Color.BLUE), 23, 45, 8, 2),
       Player('user3', _getColor(api.Player_Color.GREEN), _getColorInt(api.Player_Color.GREEN), 23, 45, 8, 2),
       Player('user4', _getColor(api.Player_Color.PURPLE), _getColorInt(api.Player_Color.PURPLE), 23, 45, 8, 2),
       Player('user5', _getColor(api.Player_Color.ORANGE), _getColorInt(api.Player_Color.ORANGE), 23, 45, 8, 2)
-    ];
+    ]; */
+
+    var playerList = [];
+
+    for (var p in GlobalContext().playerMap.values) {
+      playerList.add(Player(p.username,_getColor(p.color), _getColorInt(p.color), 23, 45, 8, 2));
+    }
+
+    return playerList;
   }
 
   build() {

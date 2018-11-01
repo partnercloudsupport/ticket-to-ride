@@ -26,17 +26,25 @@ class ChatPresenter {
     fragment = fragment;
   }
 
-  Stream<Message>_receivedMessages;
-
   sendMessage(request) async {
-    if (request.content == null) {
-      throw("empty message");
+    try {
+      if (request.content == null) {
+        throw("empty message");
+      }
+
+      var ctx = ClientContext();
+      print('sending message with content: ' + request.content);
+      print('message is for playerId: ' + request.playerId);
+      var msg = await api.chatProxy.createMessage(ctx, request);
+
+      return msg;
+
+    } catch(error) {
+        print(error);
+        print(error.code);
+        print(error.message);
     }
 
-    var ctx = ClientContext();
-    var msg = await api.chatProxy.createMessage(ctx, request);
-
-    return msg;
   }
 
   // Create a stream that collects received messages
