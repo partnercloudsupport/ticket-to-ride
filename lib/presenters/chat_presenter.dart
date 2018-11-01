@@ -35,9 +35,22 @@ class ChatPresenter {
       var ctx = ClientContext();
       print('sending message with content: ' + request.content);
       print('message is for playerId: ' + request.playerId);
-      var msg = await api.chatProxy.createMessage(ctx, request);
 
-      return msg;
+      try{
+        var msg = await api.chatProxy.createMessage(ctx, request);
+        print('sendMessage return id is ' + msg.messageId);
+        print('sendMessage return content is ' + msg.content);
+        print('sendMessage return playerId is ' + msg.playerId);
+        return msg;
+
+      } catch(error) {
+        print(error.code);
+        print(error.message);
+      }
+
+
+
+      
 
     } catch(error) {
         print(error);

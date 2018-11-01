@@ -128,7 +128,9 @@ class LobbyViewPresenter implements LobbyViewObserver {
     var request = api.StartGameRequest();
     request.gameId = GlobalContext().currentGameId;
 
-    api.gameProxy.startGame(ctx, request);
+    var response = await api.gameProxy.startGame(ctx, request);
+    
+    print(response.gameId);
 
     FragmentLibrary.navigatePush('/game_view');
     FragmentLibrary.navigatePush('/dest_card_select');

@@ -77,8 +77,7 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
 
 
       } catch(error) {
-        print(error.code);
-        print(error.message);
+        print(error.toString());
       }
 
     //}

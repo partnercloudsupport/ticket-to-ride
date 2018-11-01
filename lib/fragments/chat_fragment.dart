@@ -94,14 +94,16 @@ class ChatFragment extends StatefulWidget {
   final ChatPresenter presenter;
 
   @override
-  ChatFragmentState createState() => new ChatFragmentState();
+  ChatFragmentState createState() => ChatFragmentState();
 }
 
 class ChatFragmentState extends State<ChatFragment> {
 
   ChatFragmentState() {
+    print('creating chatfragmentstate');
     streamMessages(true);
   }
+
 
   CreateMessageRequest request = CreateMessageRequest();
 
