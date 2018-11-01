@@ -42,25 +42,25 @@ class TrainColor extends $pb.ProtobufEnum {
   const TrainColor._(int v, String n) : super(v, n);
 }
 
-class TrainCard_Status extends $pb.ProtobufEnum {
-  static const TrainCard_Status UNSPECIFIED = const TrainCard_Status._(0, 'UNSPECIFIED');
-  static const TrainCard_Status HIDDEN = const TrainCard_Status._(1, 'HIDDEN');
-  static const TrainCard_Status VISIBLE = const TrainCard_Status._(2, 'VISIBLE');
-  static const TrainCard_Status OWNED = const TrainCard_Status._(3, 'OWNED');
+class TrainCard_State extends $pb.ProtobufEnum {
+  static const TrainCard_State UNSPECIFIED = const TrainCard_State._(0, 'UNSPECIFIED');
+  static const TrainCard_State HIDDEN = const TrainCard_State._(1, 'HIDDEN');
+  static const TrainCard_State VISIBLE = const TrainCard_State._(2, 'VISIBLE');
+  static const TrainCard_State OWNED = const TrainCard_State._(3, 'OWNED');
 
-  static const List<TrainCard_Status> values = const <TrainCard_Status> [
+  static const List<TrainCard_State> values = const <TrainCard_State> [
     UNSPECIFIED,
     HIDDEN,
     VISIBLE,
     OWNED,
   ];
 
-  static final Map<int, TrainCard_Status> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static TrainCard_Status valueOf(int value) => _byValue[value];
-  static void $checkItem(TrainCard_Status v) {
-    if (v is! TrainCard_Status) $pb.checkItemFailed(v, 'TrainCard_Status');
+  static final Map<int, TrainCard_State> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static TrainCard_State valueOf(int value) => _byValue[value];
+  static void $checkItem(TrainCard_State v) {
+    if (v is! TrainCard_State) $pb.checkItemFailed(v, 'TrainCard_State');
   }
 
-  const TrainCard_Status._(int v, String n) : super(v, n);
+  const TrainCard_State._(int v, String n) : super(v, n);
 }
 

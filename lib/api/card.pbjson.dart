@@ -76,13 +76,13 @@ const TrainCard$json = const {
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     const {'1': 'color', '3': 2, '4': 1, '5': 14, '6': '.card.TrainColor', '10': 'color'},
-    const {'1': 'status', '3': 4, '4': 1, '5': 14, '6': '.card.TrainCard.Status', '10': 'status'},
+    const {'1': 'state', '3': 4, '4': 1, '5': 14, '6': '.card.TrainCard.State', '10': 'state'},
   ],
-  '4': const [TrainCard_Status$json],
+  '4': const [TrainCard_State$json],
 };
 
-const TrainCard_Status$json = const {
-  '1': 'Status',
+const TrainCard_State$json = const {
+  '1': 'State',
   '2': const [
     const {'1': 'UNSPECIFIED', '2': 0},
     const {'1': 'HIDDEN', '2': 1},

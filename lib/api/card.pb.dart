@@ -218,7 +218,7 @@ class TrainCard extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('TrainCard', package: const $pb.PackageName('card'))
     ..aOS(1, 'id')
     ..e<TrainColor>(2, 'color', $pb.PbFieldType.OE, TrainColor.UNSPECIFIED, TrainColor.valueOf, TrainColor.values)
-    ..e<TrainCard_Status>(4, 'status', $pb.PbFieldType.OE, TrainCard_Status.UNSPECIFIED, TrainCard_Status.valueOf, TrainCard_Status.values)
+    ..e<TrainCard_State>(4, 'state', $pb.PbFieldType.OE, TrainCard_State.UNSPECIFIED, TrainCard_State.valueOf, TrainCard_State.values)
     ..hasRequiredFields = false
   ;
 
@@ -246,10 +246,10 @@ class TrainCard extends $pb.GeneratedMessage {
   bool hasColor() => $_has(1);
   void clearColor() => clearField(2);
 
-  TrainCard_Status get status => $_getN(2);
-  set status(TrainCard_Status v) { setField(4, v); }
-  bool hasStatus() => $_has(2);
-  void clearStatus() => clearField(4);
+  TrainCard_State get state => $_getN(2);
+  set state(TrainCard_State v) { setField(4, v); }
+  bool hasState() => $_has(2);
+  void clearState() => clearField(4);
 }
 
 class StreamTrainCardsRequest extends $pb.GeneratedMessage {

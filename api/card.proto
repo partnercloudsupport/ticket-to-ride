@@ -50,7 +50,7 @@ message ClaimDestinationCardsRequest {
 }
 
 message ClaimDestinationCardsResponse {
-  
+
 }
 
 message StreamDestinationCardsRequest {
@@ -60,9 +60,9 @@ message StreamDestinationCardsRequest {
 message TrainCard {
   string id = 1;
   TrainColor color = 2;
-  Status status = 4;
+  State state = 4;
 
-  enum Status {
+  enum State {
     UNSPECIFIED = 0;
     HIDDEN = 1;
     VISIBLE = 2;
