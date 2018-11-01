@@ -1,8 +1,4 @@
-import 'package:ticket_to_ride/api/api.dart' as api;
-import 'package:protobuf/protobuf.dart';
 import 'api/player_wrapper.dart';
-
-
 
 class GlobalContext {
 

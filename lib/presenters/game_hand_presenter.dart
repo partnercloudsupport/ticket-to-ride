@@ -1,16 +1,21 @@
 import 'package:ticket_to_ride/api/api.dart' as api;
+import 'package:ticket_to_ride/global_context.dart';
+import 'package:protobuf/protobuf.dart';
 import 'dart:async';
+import 'dart:collection';
 import 'package:ticket_to_ride/fragments/game_hand_fragment.dart';
 import 'package:ticket_to_ride/fragments/fragment_library.dart';
 
 class GameHandApi {
-  Future<api.LoginResponse> login(ctx, request) {
-    return api.authProxy.login(ctx, request);
+
+  streamTrainCards(ctx, request) {
+    return api.cardProxy.streamTrainCards(ctx, request);
   }
 
-  Future<api.LoginResponse> register(ctx, request) {
-    return api.authProxy.register(ctx, request);
+  Future<api.LoginResponse> getDestinationCards(ctx, request) {
+    // return api.authProxy.login(ctx, request);
   }
+
 }
 
 class GameHandPresenter implements GameHandObserver  {
@@ -32,29 +37,72 @@ class GameHandPresenter implements GameHandObserver  {
     ];
   }
 
+  _getCardColor(color) {
+    switch(color) {
+    case api.TrainColor.ORANGE:
+      return 0xFFDB9759;
+    case api.TrainColor.PINK:
+      return 0xFFD950C6;
+    case api.TrainColor.GREEN:
+      return 0xFF84B72A;
+    case api.TrainColor.BLUE:
+      return 0xFF5FDCDA;
+    case api.TrainColor.BLACK:
+      return 0xFF212121;
+    case api.TrainColor.GREY:
+      return 0xFFC3C3C3;
+    case api.TrainColor.YELLOW:
+      return 0xFFD9B755;
+    case api.TrainColor.RED:
+      return 0xFFD74141;
+    case api.TrainColor.WHITE:
+      return 0xFFECECEC;
+    }
+  }
+
   @override
   getTrainCards() {
-    int orange = 0xFFDB9759;
-    int pink = 0xFFD950C6;
-    int green = 0xFF84B72A;
-    int blue = 0xFF5FDCDA;
-    int black = 0xFF212121;
-    int grey = 0xFFC3C3C3;
-    int yellow = 0xFFD9B755;
-    int red = 0xFFD74141;
-    int white = 0xFFECECEC;
 
-    return [
-      TrainCards(orange, 2),
-      TrainCards(pink, 2),
-      TrainCards(green, 2),
-      TrainCards(blue, 2),
-      TrainCards(black, 2),
-      TrainCards(grey, 2),
-      TrainCards(yellow, 2),
-      TrainCards(red, 2),
-      TrainCards(white, 2)
-    ];
+    var ctx = ClientContext();
+
+    var request = new api.StreamTrainCardsRequest();
+    request.playerId = GlobalContext().currentPlayerId;
+
+    Map trainCards = Map();
+
+    return _api.streamTrainCards(ctx, request).map((response) {
+
+      if(response.state == api.TrainCard_State.OWNED) {
+        trainCards.putIfAbsent(response.id, () => response);
+      } else if(trainCards.containsKey(response.id)) {
+        trainCards.removeWhere((k,v) => k == response.id);
+      }
+
+      var finalTrainCards = [];
+
+
+
+      var groupedTrainCards = Map();//groupBy(trainCards)
+
+
+      trainCards.forEach((key, trainCard) {
+        if(groupedTrainCards.containsKey(trainCard.color)) {
+          groupedTrainCards[trainCard.color] += groupedTrainCards[trainCard.color];
+        } else {
+          groupedTrainCards[trainCard.color] = 1;
+        }
+      });
+
+      groupedTrainCards.forEach((key, count) {
+        finalTrainCards.add(TrainCards(_getCardColor(key), count));
+      });
+
+      print(" ");
+      print(trainCards);
+      print(finalTrainCards);
+
+      return finalTrainCards;
+    });
   }
 
 

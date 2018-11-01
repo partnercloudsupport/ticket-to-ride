@@ -21,7 +21,7 @@ class GameListFragment extends StatefulWidget {
 }
 
 class GameListFragmentState extends State<GameListFragment> {
-  
+
   var request = api.CreatePlayerRequest();
   var cancelPoll;
 
@@ -47,7 +47,7 @@ class GameListFragmentState extends State<GameListFragment> {
       setState(() {
         gamesLoaded = true;
       });
-      print('poll');
+      // print('poll');
     });
   }
 
@@ -55,7 +55,7 @@ class GameListFragmentState extends State<GameListFragment> {
   Widget build(BuildContext context) {
 
     Widget _buildRow(Game game) {
-    
+
       final joinButton = Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: RaisedButton(
@@ -70,7 +70,7 @@ class GameListFragmentState extends State<GameListFragment> {
               color: Colors.white,
             ),
           ),
-        ),            
+        ),
       );
 
       return ListTile(
@@ -89,10 +89,10 @@ class GameListFragmentState extends State<GameListFragment> {
       );
 
     }
-    
+
     var gameList = (!gamesLoaded) ? Text('Loading games...') :
-      ((games.length == 0) ? 
-        Text('No active games to show.') : 
+      ((games.length == 0) ?
+        Text('No active games to show.') :
           Flexible(
             child: ListView.builder(
               itemCount: games.length,

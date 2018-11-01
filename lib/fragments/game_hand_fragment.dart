@@ -41,7 +41,7 @@ class GameHandFragment extends StatefulWidget {
 class _GameHandFragmentState extends State<GameHandFragment> {
 
   List<DestinationCard> _destinationCards = [];
-  List<TrainCards> _trainCards = [];
+  List<dynamic> _trainCards = [];
 
   @override
   initState() {
@@ -52,17 +52,17 @@ class _GameHandFragmentState extends State<GameHandFragment> {
 
   _getCards() async {
     List<DestinationCard> destinationCards = [];
-    List<TrainCards> trainCards = [];
 
     for (var o in widget.observers) {
       destinationCards = await o.getDestinationCards();
-      trainCards = await o.getTrainCards();
-    }
 
-    setState(() {
-      _destinationCards = destinationCards;
-      _trainCards = trainCards;
-    });
+      await for(var response in o.getTrainCards()) {
+        setState(() {
+          _trainCards = response;
+          _destinationCards = destinationCards;
+        });
+      }
+    }
   }
 
   _buildDestinationHand() {

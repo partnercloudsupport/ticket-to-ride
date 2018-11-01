@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class FaceUpTrainCard {
-  bool canSelect;
   String id;
+  bool canSelect;
   int color;
 
   FaceUpTrainCard(this.id, this.canSelect, this.color);
@@ -35,7 +35,7 @@ class GameBankFragment extends StatefulWidget {
 
 class _GameBankFragmentState extends State<GameBankFragment> {
 
-  List<FaceUpTrainCard> _trainCards = [];
+  List<dynamic> _trainCards = [];
 
   @override
   initState() {
@@ -45,15 +45,14 @@ class _GameBankFragmentState extends State<GameBankFragment> {
   }
 
   _getCards() async {
-    List<FaceUpTrainCard> trainCards = [];
 
     for (var o in widget.observers) {
-      trainCards = await o.getFaceUpTrainCards();
+      await for(var response in o.getFaceUpTrainCards()) {
+        setState(() {
+          _trainCards = response;
+        });
+      }
     }
-
-    setState(() {
-      _trainCards = trainCards;
-    });
   }
 
   _buildDestinationDeck() {
