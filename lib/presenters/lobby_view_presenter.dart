@@ -123,6 +123,12 @@ class LobbyViewPresenter implements LobbyViewObserver {
       GlobalContext().addPlayerToMap(p);
     }
 
+    var ctx = ClientContext();
+    var request = api.StartGameRequest();
+    request.gameId = GlobalContext().currentGameId;
+
+    api.gameProxy.startGame(ctx, request);
+
     FragmentLibrary.navigatePush('/game_view');
     // FragmentLibrary.navigatePush('/dest_card_select');
   }

@@ -108,8 +108,6 @@ class ChatFragmentState extends State<ChatFragment> {
   final TextEditingController _chatController =  TextEditingController();
   final List<ChatMessage> _messages = List<ChatMessage>();
 
-  //Stream<Message> stream;
-
   var _background = Container(
     decoration: new BoxDecoration(
       image: new DecorationImage(
@@ -130,6 +128,8 @@ class ChatFragmentState extends State<ChatFragment> {
         print(error.code);
         print(error.message);
     }
+
+    streamMessages(true);
   }
 
   void handleReceipt(Message msg, Player player) {
@@ -143,6 +143,7 @@ class ChatFragmentState extends State<ChatFragment> {
 
   // Create a stream that collects received messages
   void streamMessages(bool open) async {
+
     print('streaming messages');
 
     var request = StreamMessagesRequest();
@@ -151,13 +152,18 @@ class ChatFragmentState extends State<ChatFragment> {
     var ctx = ClientContext();
 
     await for (Message msg in api.chatProxy.streamMessages(ctx, request)) {
+      if (!open) {
+        break;
+      }
       if (msg != null) {
+        print('msg: ' + msg.content);
+        print('pre-map player id: ' + msg.playerId);
         var player = GlobalContext().playerMap[msg.playerId];
         if (player != null) {
           print('stream finds player ' + player.playerId);
           handleReceipt(msg, player);
-        }
-      }
+        } else print('player is null');
+      } else print('msg is null');
     }
     
   }
