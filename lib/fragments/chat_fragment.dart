@@ -101,14 +101,14 @@ class ChatFragmentState extends State<ChatFragment> {
 
   ChatFragmentState() {
     print('creating chatfragmentstate');
-    streamMessages(true);
+    //streamMessages(true);
   }
 
 
   CreateMessageRequest request = CreateMessageRequest();
 
   final TextEditingController _chatController =  TextEditingController();
-  final List<ChatMessage> _messages = List<ChatMessage>();
+  List<ChatMessage> _messages = List<ChatMessage>();
 
   var _background = Container(
     decoration: new BoxDecoration(
@@ -131,7 +131,7 @@ class ChatFragmentState extends State<ChatFragment> {
         print(error.message);
     }
 
-    streamMessages(true);
+    //streamMessages(true);
   }
 
   void handleReceipt(Message msg, Player player) {
@@ -140,6 +140,26 @@ class ChatFragmentState extends State<ChatFragment> {
     print('player: ' + player.playerId);
     setState(() {
       _messages.insert(0, ChatMessage(msg, player));
+    });
+  }
+
+  _getMessages() async {
+    List<dynamic> messages;
+
+    await for (Message msg in this.widget.presenter.getMessages()) {
+      if (msg != null) {
+        print('msg: ' + msg.content);
+        print('pre-map player id: ' + msg.playerId);
+        var player = GlobalContext().playerMap[msg.playerId];
+        if (player != null) {
+          print('stream finds player ' + player.playerId);
+          messages.insert(0, ChatMessage(msg, player));
+        } else print('player is null');
+      } else print('msg is null');
+    }
+
+    setState(() {
+          _messages = messages;
     });
   }
 
@@ -199,6 +219,13 @@ class ChatFragmentState extends State<ChatFragment> {
 
       ),
     );
+  }
+
+  @override
+  initState() {
+    super.initState();
+
+    _getMessages();
   }
 
   @override

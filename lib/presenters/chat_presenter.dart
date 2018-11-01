@@ -26,6 +26,16 @@ class ChatPresenter {
     fragment = fragment;
   }
 
+
+  getMessages() {
+    var ctx = ClientContext();
+
+    var request = new api.StreamMessagesRequest();
+    request.gameId = GlobalContext().currentGameId;
+
+    return api.chatProxy.streamMessages(ctx, request);
+  }
+
   sendMessage(request) async {
     try {
       if (request.content == null) {
