@@ -59,9 +59,15 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
       try {
         var response = await api.gameProxy.createGame(ctx,request);
 
+        GetPlayerRequest getPlayerRequest = GetPlayerRequest();
+        getPlayerRequest.playerId = response.playerId;
+        print(getPlayerRequest.playerId);
+        var playerResponse = await api.gameProxy.getPlayer(ctx, getPlayerRequest);
+
 
         //createGameFragment.onCurrentGameIdChange(response.gameId);
         GlobalContext().currentGameId = response.gameId;
+        GlobalContext().currentPlayerId = playerResponse.id;
 
         //createGameFragment.pushNavigator('/lobby_view');
         gameListKey.currentState.cancelPoll();
