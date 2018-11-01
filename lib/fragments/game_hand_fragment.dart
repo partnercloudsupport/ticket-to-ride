@@ -67,13 +67,18 @@ class _GameHandFragmentState extends State<GameHandFragment> {
 
   _buildDestinationHand() {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: _destinationCards.map((destination) {
         return Container(
-          height: 20.0,
+          margin: const EdgeInsets.only(right: 10.0),
           decoration: new BoxDecoration(
             color: Colors.white,
           ),
-          child: Text("${destination.city1name} - ${destination.city2name} -- ${destination.points.toString()}")
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child: Text("${destination.city1name} - ${destination.city2name} -- ${destination.points.toString()}")
+          )
         );
       }).toList()
     );

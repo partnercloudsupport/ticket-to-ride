@@ -34,7 +34,7 @@ class DestCardSelectFragment extends StatefulWidget {
 class _DestCardSelectFragmentState extends State<DestCardSelectFragment> {
 
   List<String> _selectedDestinationCards = [];
-  List<DestinationCard> _destinationCards = [];
+  var _destinationCards = [];
 
   @override
   initState() {
@@ -44,7 +44,7 @@ class _DestCardSelectFragmentState extends State<DestCardSelectFragment> {
   }
 
   _getCards() async {
-    List<DestinationCard> destinationCards = [];
+    var destinationCards = [];
 
     for (var o in widget.observers) {
       destinationCards = await o.getDestinationCards();
