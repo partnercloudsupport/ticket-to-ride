@@ -4,13 +4,11 @@ import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/api/chat.pb.dart';
 import 'package:ticket_to_ride/api/player_wrapper.dart';
 
-import 'package:protobuf/protobuf.dart';
-
 import 'package:ticket_to_ride/theme/theme.dart';
 
 import 'package:ticket_to_ride/presenters/chat_presenter.dart';
 
-import 'dart:io';
+import 'dart:async';
 
 final chatFragmentKey = GlobalKey<ChatFragmentState>();
 
