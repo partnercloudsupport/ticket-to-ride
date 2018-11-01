@@ -12,12 +12,13 @@ const Game$json = const {
     const {'1': 'max_players', '3': 3, '4': 1, '5': 5, '10': 'maxPlayers'},
     const {'1': 'host_player_id', '3': 4, '4': 1, '5': 9, '10': 'hostPlayerId'},
     const {'1': 'player_ids', '3': 5, '4': 3, '5': 9, '10': 'playerIds'},
+    const {'1': 'status', '3': 6, '4': 1, '5': 14, '6': '.game.Game.Status', '10': 'status'},
   ],
-  '4': const [Game_status$json],
+  '4': const [Game_Status$json],
 };
 
-const Game_status$json = const {
-  '1': 'status',
+const Game_Status$json = const {
+  '1': 'Status',
   '2': const [
     const {'1': 'UNKNOWN', '2': 0},
     const {'1': 'PRE', '2': 1},

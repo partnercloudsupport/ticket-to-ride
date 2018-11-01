@@ -4,7 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async';
+import 'dart:async' as $async;
 
 import 'package:protobuf/protobuf.dart';
 
@@ -14,8 +14,8 @@ import 'health.pbjson.dart';
 export 'health.pb.dart';
 
 abstract class HealthServiceBase extends GeneratedService {
-  Future<Health> getHealth(ServerContext ctx, GetHealthRequest request);
-  Future<Health> streamHealth(ServerContext ctx, GetHealthRequest request);
+  $async.Future<Health> getHealth(ServerContext ctx, GetHealthRequest request);
+  $async.Future<Health> streamHealth(ServerContext ctx, GetHealthRequest request);
 
   GeneratedMessage createRequest(String method) {
     switch (method) {
@@ -25,7 +25,7 @@ abstract class HealthServiceBase extends GeneratedService {
     }
   }
 
-  Future<GeneratedMessage> handleCall(ServerContext ctx, String method, GeneratedMessage request) {
+  $async.Future<GeneratedMessage> handleCall(ServerContext ctx, String method, GeneratedMessage request) {
     switch (method) {
       case 'GetHealth': return this.getHealth(ctx, request);
       case 'StreamHealth': return this.streamHealth(ctx, request);

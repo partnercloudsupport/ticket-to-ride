@@ -32,7 +32,7 @@ class Request extends $pb.GeneratedMessage {
   static Request getDefault() => _defaultInstance ??= create()..freeze();
   static Request _defaultInstance;
   static void $checkItem(Request v) {
-    if (v is! Request) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! Request) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get service => $_getS(0, '');
@@ -70,7 +70,7 @@ class Response extends $pb.GeneratedMessage {
   static Response getDefault() => _defaultInstance ??= create()..freeze();
   static Response _defaultInstance;
   static void $checkItem(Response v) {
-    if (v is! Response) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! Response) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   Code get code => $_getN(0);

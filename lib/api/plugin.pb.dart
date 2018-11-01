@@ -31,7 +31,7 @@ class Version extends $pb.GeneratedMessage {
   static Version getDefault() => _defaultInstance ??= create()..freeze();
   static Version _defaultInstance;
   static void $checkItem(Version v) {
-    if (v is! Version) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! Version) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   int get major => $_get(0, 0);
@@ -74,7 +74,7 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
   static CodeGeneratorRequest getDefault() => _defaultInstance ??= create()..freeze();
   static CodeGeneratorRequest _defaultInstance;
   static void $checkItem(CodeGeneratorRequest v) {
-    if (v is! CodeGeneratorRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CodeGeneratorRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   List<String> get fileToGenerate => $_getList(0);
@@ -111,7 +111,7 @@ class CodeGeneratorResponse_File extends $pb.GeneratedMessage {
   static CodeGeneratorResponse_File getDefault() => _defaultInstance ??= create()..freeze();
   static CodeGeneratorResponse_File _defaultInstance;
   static void $checkItem(CodeGeneratorResponse_File v) {
-    if (v is! CodeGeneratorResponse_File) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CodeGeneratorResponse_File) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get name => $_getS(0, '');
@@ -148,7 +148,7 @@ class CodeGeneratorResponse extends $pb.GeneratedMessage {
   static CodeGeneratorResponse getDefault() => _defaultInstance ??= create()..freeze();
   static CodeGeneratorResponse _defaultInstance;
   static void $checkItem(CodeGeneratorResponse v) {
-    if (v is! CodeGeneratorResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CodeGeneratorResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get error => $_getS(0, '');

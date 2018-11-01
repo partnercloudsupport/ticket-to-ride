@@ -280,7 +280,7 @@ class GameServiceProxy {
               sink.addError(ApiError(resp.code, resp.message));
               return;
             }
-            sink.add(PlayerStats.fromBuffer(dataBuffer));
+            sink.add(PlayerStats.fromBuffer(resp.payload));
             dataBuffer.clear();
           }
         },

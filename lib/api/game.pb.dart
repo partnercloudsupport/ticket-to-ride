@@ -4,7 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async';
+import 'dart:async' as $async;
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
@@ -21,6 +21,7 @@ class Game extends $pb.GeneratedMessage {
     ..a<int>(3, 'maxPlayers', $pb.PbFieldType.O3)
     ..aOS(4, 'hostPlayerId')
     ..pPS(5, 'playerIds')
+    ..e<Game_Status>(6, 'status', $pb.PbFieldType.OE, Game_Status.UNKNOWN, Game_Status.valueOf, Game_Status.values)
     ..hasRequiredFields = false
   ;
 
@@ -35,7 +36,7 @@ class Game extends $pb.GeneratedMessage {
   static Game getDefault() => _defaultInstance ??= create()..freeze();
   static Game _defaultInstance;
   static void $checkItem(Game v) {
-    if (v is! Game) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! Game) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -59,6 +60,11 @@ class Game extends $pb.GeneratedMessage {
   void clearHostPlayerId() => clearField(4);
 
   List<String> get playerIds => $_getList(4);
+
+  Game_Status get status => $_getN(5);
+  set status(Game_Status v) { setField(6, v); }
+  bool hasStatus() => $_has(5);
+  void clearStatus() => clearField(6);
 }
 
 class CreateGameRequest extends $pb.GeneratedMessage {
@@ -80,7 +86,7 @@ class CreateGameRequest extends $pb.GeneratedMessage {
   static CreateGameRequest getDefault() => _defaultInstance ??= create()..freeze();
   static CreateGameRequest _defaultInstance;
   static void $checkItem(CreateGameRequest v) {
-    if (v is! CreateGameRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CreateGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get userId => $_getS(0, '');
@@ -117,7 +123,7 @@ class LeaveGameRequest extends $pb.GeneratedMessage {
   static LeaveGameRequest getDefault() => _defaultInstance ??= create()..freeze();
   static LeaveGameRequest _defaultInstance;
   static void $checkItem(LeaveGameRequest v) {
-    if (v is! LeaveGameRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! LeaveGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get playerId => $_getS(0, '');
@@ -147,7 +153,7 @@ class ListGamesRequest extends $pb.GeneratedMessage {
   static ListGamesRequest getDefault() => _defaultInstance ??= create()..freeze();
   static ListGamesRequest _defaultInstance;
   static void $checkItem(ListGamesRequest v) {
-    if (v is! ListGamesRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! ListGamesRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 }
 
@@ -168,7 +174,7 @@ class GetGameRequest extends $pb.GeneratedMessage {
   static GetGameRequest getDefault() => _defaultInstance ??= create()..freeze();
   static GetGameRequest _defaultInstance;
   static void $checkItem(GetGameRequest v) {
-    if (v is! GetGameRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! GetGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -194,7 +200,7 @@ class StartGameRequest extends $pb.GeneratedMessage {
   static StartGameRequest getDefault() => _defaultInstance ??= create()..freeze();
   static StartGameRequest _defaultInstance;
   static void $checkItem(StartGameRequest v) {
-    if (v is! StartGameRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! StartGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -220,7 +226,7 @@ class DeleteGameRequest extends $pb.GeneratedMessage {
   static DeleteGameRequest getDefault() => _defaultInstance ??= create()..freeze();
   static DeleteGameRequest _defaultInstance;
   static void $checkItem(DeleteGameRequest v) {
-    if (v is! DeleteGameRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! DeleteGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -247,7 +253,7 @@ class CreatePlayerRequest extends $pb.GeneratedMessage {
   static CreatePlayerRequest getDefault() => _defaultInstance ??= create()..freeze();
   static CreatePlayerRequest _defaultInstance;
   static void $checkItem(CreatePlayerRequest v) {
-    if (v is! CreatePlayerRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CreatePlayerRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get userId => $_getS(0, '');
@@ -281,7 +287,7 @@ class Player extends $pb.GeneratedMessage {
   static Player getDefault() => _defaultInstance ??= create()..freeze();
   static Player _defaultInstance;
   static void $checkItem(Player v) {
-    if (v is! Player) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! Player) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get id => $_getS(0, '');
@@ -322,7 +328,7 @@ class GetPlayerRequest extends $pb.GeneratedMessage {
   static GetPlayerRequest getDefault() => _defaultInstance ??= create()..freeze();
   static GetPlayerRequest _defaultInstance;
   static void $checkItem(GetPlayerRequest v) {
-    if (v is! GetPlayerRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! GetPlayerRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get playerId => $_getS(0, '');
@@ -347,7 +353,7 @@ class Empty extends $pb.GeneratedMessage {
   static Empty getDefault() => _defaultInstance ??= create()..freeze();
   static Empty _defaultInstance;
   static void $checkItem(Empty v) {
-    if (v is! Empty) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! Empty) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 }
 
@@ -368,7 +374,7 @@ class ListGamesResponse extends $pb.GeneratedMessage {
   static ListGamesResponse getDefault() => _defaultInstance ??= create()..freeze();
   static ListGamesResponse _defaultInstance;
   static void $checkItem(ListGamesResponse v) {
-    if (v is! ListGamesResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! ListGamesResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   List<Game> get games => $_getList(0);
@@ -392,7 +398,7 @@ class CreateResponse extends $pb.GeneratedMessage {
   static CreateResponse getDefault() => _defaultInstance ??= create()..freeze();
   static CreateResponse _defaultInstance;
   static void $checkItem(CreateResponse v) {
-    if (v is! CreateResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CreateResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -424,7 +430,7 @@ class DeleteResponse extends $pb.GeneratedMessage {
   static DeleteResponse getDefault() => _defaultInstance ??= create()..freeze();
   static DeleteResponse _defaultInstance;
   static void $checkItem(DeleteResponse v) {
-    if (v is! DeleteResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! DeleteResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameName => $_getS(0, '');
@@ -452,7 +458,7 @@ class CreatePlayerResponse extends $pb.GeneratedMessage {
   static CreatePlayerResponse getDefault() => _defaultInstance ??= create()..freeze();
   static CreatePlayerResponse _defaultInstance;
   static void $checkItem(CreatePlayerResponse v) {
-    if (v is! CreatePlayerResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CreatePlayerResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get playerId => $_getS(0, '');
@@ -477,7 +483,7 @@ class StreamPlayerStatsRequest extends $pb.GeneratedMessage {
   static StreamPlayerStatsRequest getDefault() => _defaultInstance ??= create()..freeze();
   static StreamPlayerStatsRequest _defaultInstance;
   static void $checkItem(StreamPlayerStatsRequest v) {
-    if (v is! StreamPlayerStatsRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! StreamPlayerStatsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 }
 
@@ -502,7 +508,7 @@ class PlayerStats extends $pb.GeneratedMessage {
   static PlayerStats getDefault() => _defaultInstance ??= create()..freeze();
   static PlayerStats _defaultInstance;
   static void $checkItem(PlayerStats v) {
-    if (v is! PlayerStats) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! PlayerStats) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get playerId => $_getS(0, '');
@@ -535,43 +541,43 @@ class GameServiceApi {
   $pb.RpcClient _client;
   GameServiceApi(this._client);
 
-  Future<CreateResponse> createGame($pb.ClientContext ctx, CreateGameRequest request) {
+  $async.Future<CreateResponse> createGame($pb.ClientContext ctx, CreateGameRequest request) {
     var emptyResponse = new CreateResponse();
     return _client.invoke<CreateResponse>(ctx, 'GameService', 'CreateGame', request, emptyResponse);
   }
-  Future<Empty> leaveGame($pb.ClientContext ctx, LeaveGameRequest request) {
+  $async.Future<Empty> leaveGame($pb.ClientContext ctx, LeaveGameRequest request) {
     var emptyResponse = new Empty();
     return _client.invoke<Empty>(ctx, 'GameService', 'LeaveGame', request, emptyResponse);
   }
-  Future<Empty> deleteGame($pb.ClientContext ctx, DeleteGameRequest request) {
+  $async.Future<Empty> deleteGame($pb.ClientContext ctx, DeleteGameRequest request) {
     var emptyResponse = new Empty();
     return _client.invoke<Empty>(ctx, 'GameService', 'DeleteGame', request, emptyResponse);
   }
-  Future<Game> getGame($pb.ClientContext ctx, GetGameRequest request) {
+  $async.Future<Game> getGame($pb.ClientContext ctx, GetGameRequest request) {
     var emptyResponse = new Game();
     return _client.invoke<Game>(ctx, 'GameService', 'GetGame', request, emptyResponse);
   }
-  Future<Game> startGame($pb.ClientContext ctx, StartGameRequest request) {
+  $async.Future<Game> startGame($pb.ClientContext ctx, StartGameRequest request) {
     var emptyResponse = new Game();
     return _client.invoke<Game>(ctx, 'GameService', 'StartGame', request, emptyResponse);
   }
-  Future<ListGamesResponse> listGames($pb.ClientContext ctx, ListGamesRequest request) {
+  $async.Future<ListGamesResponse> listGames($pb.ClientContext ctx, ListGamesRequest request) {
     var emptyResponse = new ListGamesResponse();
     return _client.invoke<ListGamesResponse>(ctx, 'GameService', 'ListGames', request, emptyResponse);
   }
-  Future<CreatePlayerResponse> createPlayer($pb.ClientContext ctx, CreatePlayerRequest request) {
+  $async.Future<CreatePlayerResponse> createPlayer($pb.ClientContext ctx, CreatePlayerRequest request) {
     var emptyResponse = new CreatePlayerResponse();
     return _client.invoke<CreatePlayerResponse>(ctx, 'GameService', 'CreatePlayer', request, emptyResponse);
   }
-  Future<Player> getPlayer($pb.ClientContext ctx, GetPlayerRequest request) {
+  $async.Future<Player> getPlayer($pb.ClientContext ctx, GetPlayerRequest request) {
     var emptyResponse = new Player();
     return _client.invoke<Player>(ctx, 'GameService', 'GetPlayer', request, emptyResponse);
   }
-  Future<PlayerStats> streamPlayerStats($pb.ClientContext ctx, StreamPlayerStatsRequest request) {
+  $async.Future<PlayerStats> streamPlayerStats($pb.ClientContext ctx, StreamPlayerStatsRequest request) {
     var emptyResponse = new PlayerStats();
     return _client.invoke<PlayerStats>(ctx, 'GameService', 'StreamPlayerStats', request, emptyResponse);
   }
-  Future<Empty> togglePlayerStats($pb.ClientContext ctx, Empty request) {
+  $async.Future<Empty> togglePlayerStats($pb.ClientContext ctx, Empty request) {
     var emptyResponse = new Empty();
     return _client.invoke<Empty>(ctx, 'GameService', 'TogglePlayerStats', request, emptyResponse);
   }

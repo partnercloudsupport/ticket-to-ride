@@ -4,7 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async';
+import 'dart:async' as $async;
 
 import 'package:protobuf/protobuf.dart';
 
@@ -14,9 +14,9 @@ import 'auth.pbjson.dart';
 export 'auth.pb.dart';
 
 abstract class AuthServiceBase extends GeneratedService {
-  Future<LoginResponse> login(ServerContext ctx, LoginAccountRequest request);
-  Future<LoginResponse> register(ServerContext ctx, LoginAccountRequest request);
-  Future<GetUsernameResponse> getUsername(ServerContext ctx, GetUsernameRequest request);
+  $async.Future<LoginResponse> login(ServerContext ctx, LoginAccountRequest request);
+  $async.Future<LoginResponse> register(ServerContext ctx, LoginAccountRequest request);
+  $async.Future<GetUsernameResponse> getUsername(ServerContext ctx, GetUsernameRequest request);
 
   GeneratedMessage createRequest(String method) {
     switch (method) {
@@ -27,7 +27,7 @@ abstract class AuthServiceBase extends GeneratedService {
     }
   }
 
-  Future<GeneratedMessage> handleCall(ServerContext ctx, String method, GeneratedMessage request) {
+  $async.Future<GeneratedMessage> handleCall(ServerContext ctx, String method, GeneratedMessage request) {
     switch (method) {
       case 'Login': return this.login(ctx, request);
       case 'Register': return this.register(ctx, request);
