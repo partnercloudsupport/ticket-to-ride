@@ -120,6 +120,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
   @override
   startGame() async {
     for (playerWrapper.Player p in playerObjects) {
+      print(p.username);
       GlobalContext().addPlayerToMap(p);
     }
 

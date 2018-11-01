@@ -24,7 +24,7 @@ class TicketToRideApp extends StatelessWidget {
     return MaterialApp(
       title: 'Ticket to Ride',
       theme: ticketToRideTheme,
-      initialRoute: '/game_view',
+      initialRoute: '/',
       navigatorKey: navigatorKey,
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => AccountLoginPresenter().build(),

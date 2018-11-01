@@ -20,7 +20,7 @@ class GlobalContext {
   String currentPlayerId;
 
   // maps playerId to Player object
-  Map<String, Player> playerMap;
+  Map<String, Player> playerMap = Map<String,Player>();
 
   addPlayerToMap(Player player) {
     playerMap.putIfAbsent(player.playerId, () => player);
