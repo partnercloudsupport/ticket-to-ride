@@ -237,6 +237,60 @@ class GameServiceProxy {
     }
   }
 
+  Future<PlayerStats> streamPlayerStats(ClientContext ctx, StreamPlayerStatsRequest request) async {
+
+    var req = Request();
+    Response response;
+    try {
+      req.method = 'StreamPlayerStats';
+      req.service = 'game.GameService';
+      req.payload = request.writeToBuffer();
+      var httpResponse = await http.post(_url, body: req.writeToBuffer());
+      response = Response.fromBuffer(httpResponse.bodyBytes);
+    }
+    catch (err) {
+      throw ApiError(Code.UNAVAILABLE, err.toString());
+    }
+
+    if (response.code != Code.OK) {
+      throw ApiError(response.code, response.message);
+    }
+
+    try {
+      return PlayerStats.fromBuffer(response.payload);
+    }
+    catch (err) {
+      throw ApiError(Code.UNAVAILABLE, err.toString());
+    }
+  }
+
+  Future<Empty> togglePlayerStats(ClientContext ctx, Empty request) async {
+
+    var req = Request();
+    Response response;
+    try {
+      req.method = 'TogglePlayerStats';
+      req.service = 'game.GameService';
+      req.payload = request.writeToBuffer();
+      var httpResponse = await http.post(_url, body: req.writeToBuffer());
+      response = Response.fromBuffer(httpResponse.bodyBytes);
+    }
+    catch (err) {
+      throw ApiError(Code.UNAVAILABLE, err.toString());
+    }
+
+    if (response.code != Code.OK) {
+      throw ApiError(response.code, response.message);
+    }
+
+    try {
+      return Empty.fromBuffer(response.payload);
+    }
+    catch (err) {
+      throw ApiError(Code.UNAVAILABLE, err.toString());
+    }
+  }
+
 
 }
 

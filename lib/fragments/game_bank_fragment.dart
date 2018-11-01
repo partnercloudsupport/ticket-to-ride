@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 
 class FaceUpTrainCard {
   bool canSelect;
+  String id;
   int color;
 
-  FaceUpTrainCard(this.canSelect, this.color);
+  FaceUpTrainCard(this.id, this.canSelect, this.color);
 }
 
 abstract class GameBankObserver {
   getFaceUpTrainCards();
-  selectDestinationCard();
-  selectTrainCard();
+  selectDestinationCards();
+  selectTrainCard(String traincCardId);
   selectTrainCardFromDeck();
 }
 
@@ -55,17 +56,84 @@ class _GameBankFragmentState extends State<GameBankFragment> {
     });
   }
 
-  _buildFaceUpTrainCards() {
-    return _trainCards.map((trainCard) {
-      return Container(
-        width: trainCard.canSelect ? 80.0 : 50.0,
-        height: 60.0,
+  _buildDestinationDeck() {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        for (var o in widget.observers) {
+          o.selectDestinationCards();
+        }
+      },
+      child: Container(
+        width: 140.0,
+        height: 90.0,
         margin: const EdgeInsets.symmetric(vertical: 5.0),
         decoration: new BoxDecoration(
-          color: Color(trainCard.color),
+          color: Colors.white,
+          // image: new DecorationImage(
+          //   image: new AssetImage("images/map.png"),
+          //   fit: BoxFit.cover,
+          // ),
         ),
-      );
+        child: Text('Destinations')
+      )
+    );
+  }
+
+  _buildFaceUpTrainCards() {
+    return _trainCards.map((trainCard) {
+      if(trainCard.canSelect) {
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            for (var o in widget.observers) {
+              o.selectTrainCard(trainCard.id);
+            }
+          },
+          child: Container(
+            width: 80.0,
+            height: 60.0,
+            margin: const EdgeInsets.symmetric(vertical: 5.0),
+            decoration: new BoxDecoration(
+              color: Color(trainCard.color),
+            ),
+          )
+        );
+      } else {
+        return Container(
+          width: 40.0,
+          height: 60.0,
+          margin: const EdgeInsets.symmetric(vertical: 5.0),
+          decoration: new BoxDecoration(
+            color: Color(trainCard.color),
+          )
+        );
+      }
     }).toList();
+  }
+
+  _buildTrainDeck() {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        for (var o in widget.observers) {
+          o.selectTrainCardFromDeck();
+        }
+      },
+      child: Container(
+        width: 140.0,
+        height: 90.0,
+        margin: const EdgeInsets.symmetric(vertical: 5.0),
+        decoration: new BoxDecoration(
+          color: Colors.white,
+          // image: new DecorationImage(
+          //   image: new AssetImage("images/map.png"),
+          //   fit: BoxFit.cover,
+          // ),
+        ),
+        child: Text('Trains')
+      )
+    );
   }
 
   @override
@@ -73,36 +141,10 @@ class _GameBankFragmentState extends State<GameBankFragment> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.end,
-      children: List.from([
-        Container(
-          width: 140.0,
-          height: 90.0,
-          margin: const EdgeInsets.symmetric(vertical: 5.0),
-          decoration: new BoxDecoration(
-            color: Colors.white,
-            // image: new DecorationImage(
-            //   image: new AssetImage("images/map.png"),
-            //   fit: BoxFit.cover,
-            // ),
-          ),
-          child: Text('Destinations')
-        )]
+      children: List.from(
+        [_buildDestinationDeck()]
         ..addAll(_buildFaceUpTrainCards())
-        ..addAll([
-          Container(
-            width: 140.0,
-            height: 90.0,
-            margin: const EdgeInsets.symmetric(vertical: 5.0),
-            decoration: new BoxDecoration(
-              color: Colors.white,
-              // image: new DecorationImage(
-              //   image: new AssetImage("images/map.png"),
-              //   fit: BoxFit.cover,
-              // ),
-            ),
-            child: Text('Trains')
-          )
-        ])
+        ..addAll([_buildTrainDeck()])
       )
     );
   }

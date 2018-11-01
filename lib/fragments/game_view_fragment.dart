@@ -48,8 +48,34 @@ class _GameViewFragmentState extends State<GameViewFragment> {
             widget.bankFragment
           ]
         ),
-        widget.handFragment
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            widget.handFragment,
+            _dummyButton()
+          ]
+        )
       ],
+    );
+  }
+
+  _dummyButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: RaisedButton(
+        key: Key('dummyButton'),
+        onPressed: () {
+          print('state change');
+
+        },
+        child: Text(
+          'Change State',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 10.0
+          ),
+        ),
+      ),
     );
   }
 

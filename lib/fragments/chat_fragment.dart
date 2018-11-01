@@ -62,7 +62,7 @@ class ChatMessage extends StatelessWidget {
                 width: 30.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("images/player-${_getColor(player.color)}.jpg"), 
+                    image: AssetImage("images/player-${_getColor(player.color)}.jpg"),
                   )
                 )
               )
@@ -71,7 +71,7 @@ class ChatMessage extends StatelessWidget {
            Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-               Text(player.username, style: Theme.of(context).textTheme.subhead), 
+               Text(player.username, style: Theme.of(context).textTheme.subhead),
                Container(
                 margin: const EdgeInsets.only(top: 5.0),
                 child:  Text(content),
@@ -87,7 +87,7 @@ class ChatMessage extends StatelessWidget {
 
 
 class ChatFragment extends StatefulWidget {
-  ChatFragment(ChatPresenter presenter, {Key key, this.title}) : 
+  ChatFragment(ChatPresenter presenter, {Key key, this.title}) :
     this.presenter = presenter;
 
   final String title;
@@ -183,7 +183,7 @@ class ChatFragmentState extends State<ChatFragment> {
                 icon:  Icon(Icons.send),
                 color: ticketToRideTheme.buttonColor,
                 onPressed: ()=> handleSubmit(_chatController.text),
-                 
+
               ),
             )
           ],

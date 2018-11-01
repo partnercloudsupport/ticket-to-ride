@@ -26,7 +26,7 @@ class City {
 abstract class GameMapObserver {
   getCities() {}
   getRoutes() {}
-  claimRoute() {}
+  claimRoute(String id) {}
 }
 
 class GameMapFragment extends StatefulWidget {
@@ -120,20 +120,28 @@ class _GameMapFragmentState extends State<GameMapFragment> {
           child: Transform(
             alignment: Alignment.topLeft,
             transform:  Matrix4.translationValues(7.5, 3.5 ,0.0) * Matrix4.rotationZ(rotation),
-            child: Container(
-              width: length - 12,
-              // color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: new List.generate(route.length, (index) =>
-                  Container(
-                    width: 15.0,
-                    height: 8.0,
-                    decoration: BoxDecoration(
-                      color: Color(route.color),
-                    ),
-                  )
-                ),
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                for (var o in widget.observers) {
+                  o.claimRoute(route.id);
+                }
+              },
+              child: Container(
+                width: length - 12,
+                // color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: new List.generate(route.length, (index) =>
+                    Container(
+                      width: 20.0,
+                      height: 12.0,
+                      decoration: BoxDecoration(
+                        color: Color(route.color),
+                      ),
+                    )
+                  ),
+                )
               )
             )
           )

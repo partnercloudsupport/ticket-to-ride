@@ -22,6 +22,8 @@ abstract class GameServiceBase extends GeneratedService {
   $async.Future<ListGamesResponse> listGames(ServerContext ctx, ListGamesRequest request);
   $async.Future<CreatePlayerResponse> createPlayer(ServerContext ctx, CreatePlayerRequest request);
   $async.Future<Player> getPlayer(ServerContext ctx, GetPlayerRequest request);
+  $async.Future<PlayerStats> streamPlayerStats(ServerContext ctx, StreamPlayerStatsRequest request);
+  $async.Future<Empty> togglePlayerStats(ServerContext ctx, Empty request);
 
   GeneratedMessage createRequest(String method) {
     switch (method) {
@@ -33,6 +35,8 @@ abstract class GameServiceBase extends GeneratedService {
       case 'ListGames': return new ListGamesRequest();
       case 'CreatePlayer': return new CreatePlayerRequest();
       case 'GetPlayer': return new GetPlayerRequest();
+      case 'StreamPlayerStats': return new StreamPlayerStatsRequest();
+      case 'TogglePlayerStats': return new Empty();
       default: throw new ArgumentError('Unknown method: $method');
     }
   }
@@ -47,6 +51,8 @@ abstract class GameServiceBase extends GeneratedService {
       case 'ListGames': return this.listGames(ctx, request);
       case 'CreatePlayer': return this.createPlayer(ctx, request);
       case 'GetPlayer': return this.getPlayer(ctx, request);
+      case 'StreamPlayerStats': return this.streamPlayerStats(ctx, request);
+      case 'TogglePlayerStats': return this.togglePlayerStats(ctx, request);
       default: throw new ArgumentError('Unknown method: $method');
     }
   }

@@ -141,6 +141,21 @@ const CreatePlayerResponse$json = const {
   ],
 };
 
+const StreamPlayerStatsRequest$json = const {
+  '1': 'StreamPlayerStatsRequest',
+};
+
+const PlayerStats$json = const {
+  '1': 'PlayerStats',
+  '2': const [
+    const {'1': 'player_id', '3': 1, '4': 1, '5': 9, '10': 'playerId'},
+    const {'1': 'points', '3': 2, '4': 1, '5': 5, '10': 'points'},
+    const {'1': 'train_count', '3': 3, '4': 1, '5': 5, '10': 'trainCount'},
+    const {'1': 'train_card_count', '3': 4, '4': 1, '5': 5, '10': 'trainCardCount'},
+    const {'1': 'destination_card_count', '3': 5, '4': 1, '5': 5, '10': 'destinationCardCount'},
+  ],
+};
+
 const GameService$json = const {
   '1': 'GameService',
   '2': const [
@@ -152,6 +167,8 @@ const GameService$json = const {
     const {'1': 'ListGames', '2': '.game.ListGamesRequest', '3': '.game.ListGamesResponse'},
     const {'1': 'CreatePlayer', '2': '.game.CreatePlayerRequest', '3': '.game.CreatePlayerResponse'},
     const {'1': 'GetPlayer', '2': '.game.GetPlayerRequest', '3': '.game.Player'},
+    const {'1': 'StreamPlayerStats', '2': '.game.StreamPlayerStatsRequest', '3': '.game.PlayerStats'},
+    const {'1': 'TogglePlayerStats', '2': '.game.Empty', '3': '.game.Empty'},
   ],
 };
 
@@ -170,5 +187,7 @@ const GameService$messageJson = const {
   '.game.CreatePlayerResponse': CreatePlayerResponse$json,
   '.game.GetPlayerRequest': GetPlayerRequest$json,
   '.game.Player': Player$json,
+  '.game.StreamPlayerStatsRequest': StreamPlayerStatsRequest$json,
+  '.game.PlayerStats': PlayerStats$json,
 };
 
