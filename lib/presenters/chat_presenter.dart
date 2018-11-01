@@ -18,7 +18,12 @@ class ChatPresenter {
 
   // default constructor
   ChatPresenter({this.title}) {
-    fragment = ChatFragment(this, key: chatFragmentKey);
+    var request = StreamMessagesRequest();
+    var ctx = ClientContext();
+    request.gameId = GlobalContext().currentGameId;
+    var stream = api.chatProxy.streamMessages(ctx, request);
+    
+    fragment = ChatFragment(this, key: chatFragmentKey, messages: stream);
   }
 
   // another constructor with fragment passed in

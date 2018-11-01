@@ -87,11 +87,12 @@ class ChatMessage extends StatelessWidget {
 
 
 class ChatFragment extends StatefulWidget {
-  ChatFragment(ChatPresenter presenter, {Key key, this.title}) :
+  ChatFragment(ChatPresenter presenter, {Key key, this.title, this.messages}) :
     this.presenter = presenter;
 
   final String title;
   final ChatPresenter presenter;
+  final Stream<Message> messages;
 
   @override
   ChatFragmentState createState() => new ChatFragmentState();
@@ -128,8 +129,6 @@ class ChatFragmentState extends State<ChatFragment> {
         print(error.code);
         print(error.message);
     }
-
-    streamMessages(true);
   }
 
   void handleReceipt(Message msg, Player player) {
@@ -146,12 +145,7 @@ class ChatFragmentState extends State<ChatFragment> {
 
     print('streaming messages');
 
-    var request = StreamMessagesRequest();
-    request.gameId = GlobalContext().currentGameId;
-
-    var ctx = ClientContext();
-
-    await for (Message msg in api.chatProxy.streamMessages(ctx, request)) {
+    await for (Message msg in widget.messages) {
       if (!open) {
         break;
       }
@@ -165,7 +159,7 @@ class ChatFragmentState extends State<ChatFragment> {
         } else print('player is null');
       } else print('msg is null');
     }
-    
+
   }
 
 
