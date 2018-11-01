@@ -130,7 +130,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
     api.gameProxy.startGame(ctx, request);
 
     FragmentLibrary.navigatePush('/game_view');
-    // FragmentLibrary.navigatePush('/dest_card_select');
+    FragmentLibrary.navigatePush('/dest_card_select');
   }
 
   build() {

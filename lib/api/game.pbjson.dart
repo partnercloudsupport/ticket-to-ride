@@ -167,7 +167,7 @@ const GameService$json = const {
     const {'1': 'ListGames', '2': '.game.ListGamesRequest', '3': '.game.ListGamesResponse'},
     const {'1': 'CreatePlayer', '2': '.game.CreatePlayerRequest', '3': '.game.CreatePlayerResponse'},
     const {'1': 'GetPlayer', '2': '.game.GetPlayerRequest', '3': '.game.Player'},
-    const {'1': 'StreamPlayerStats', '2': '.game.StreamPlayerStatsRequest', '3': '.game.PlayerStats'},
+    const {'1': 'StreamPlayerStats', '2': '.game.StreamPlayerStatsRequest', '3': '.game.PlayerStats', '6': true},
     const {'1': 'TogglePlayerStats', '2': '.game.Empty', '3': '.game.Empty'},
   ],
 };

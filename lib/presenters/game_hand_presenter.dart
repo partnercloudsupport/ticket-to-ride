@@ -1,21 +1,16 @@
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/global_context.dart';
 import 'package:protobuf/protobuf.dart';
-import 'dart:async';
-import 'dart:collection';
 import 'package:ticket_to_ride/fragments/game_hand_fragment.dart';
-import 'package:ticket_to_ride/fragments/fragment_library.dart';
 
 class GameHandApi {
-
   streamTrainCards(ctx, request) {
     return api.cardProxy.streamTrainCards(ctx, request);
   }
 
-  Future<api.LoginResponse> getDestinationCards(ctx, request) {
-    // return api.authProxy.login(ctx, request);
+  streamDestinationCards(ctx, request) {
+    return api.cardProxy.streamDestinationCards(ctx, request);
   }
-
 }
 
 class GameHandPresenter implements GameHandObserver  {
@@ -31,10 +26,44 @@ class GameHandPresenter implements GameHandObserver  {
 
   @override
   getDestinationCards() {
-    return [
-      DestinationCard('Los Angeles', 'New York', 21),
-      DestinationCard('Duluth', 'Houston', 8)
-    ];
+
+    var ctx = ClientContext();
+
+    var request = new api.StreamDestinationCardsRequest();
+    request.playerId = GlobalContext().currentPlayerId;
+
+    Map destCards = Map();
+
+    return _api.streamDestinationCards(ctx, request).map((response) {
+
+      print("here");
+      print(response);
+
+      destCards.putIfAbsent(response.id, () => response);
+
+      // var groupedDestCards = Map();
+      //
+      // destCards.forEach((key, trainCard) {
+      //   if(groupedDestCards.containsKey(trainCard.color)) {
+      //     groupedDestCards[trainCard.color] += groupedDestCards[trainCard.color];
+      //   } else {
+      //     groupedDestCards[trainCard.color] = 1;
+      //   }
+      // });
+
+      var finalDestCards = [];
+
+      destCards.forEach((key, card) {
+        finalDestCards.add(DestinationCard(card.firstCityId, card.secondCityId, card.pointValue));
+      });
+
+      return finalDestCards;
+    });
+
+    // return [
+    //   DestinationCard('Los Angeles', 'New York', 21),
+    //   DestinationCard('Duluth', 'Houston', 8)
+    // ];
   }
 
   _getCardColor(color) {
@@ -78,12 +107,7 @@ class GameHandPresenter implements GameHandObserver  {
         trainCards.removeWhere((k,v) => k == response.id);
       }
 
-      var finalTrainCards = [];
-
-
-
-      var groupedTrainCards = Map();//groupBy(trainCards)
-
+      var groupedTrainCards = Map();
 
       trainCards.forEach((key, trainCard) {
         if(groupedTrainCards.containsKey(trainCard.color)) {
@@ -93,13 +117,11 @@ class GameHandPresenter implements GameHandObserver  {
         }
       });
 
+      var finalTrainCards = [];
+
       groupedTrainCards.forEach((key, count) {
         finalTrainCards.add(TrainCards(_getCardColor(key), count));
       });
-
-      print(" ");
-      print(trainCards);
-      print(finalTrainCards);
 
       return finalTrainCards;
     });

@@ -1,18 +1,13 @@
 import 'package:ticket_to_ride/global_context.dart';
-import 'package:ticket_to_ride/api/player_wrapper.dart' as playerWrapper;
+// import 'package:ticket_to_ride/api/player_wrapper.dart' as playerWrapper;
 import 'package:ticket_to_ride/api/api.dart' as api;
-import 'dart:async';
+import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/fragments/game_player_fragment.dart';
-import 'package:ticket_to_ride/fragments/fragment_library.dart';
 
 class GamePlayerApi {
-  // Future<api.LoginResponse> login(ctx, request) {
-  //   return api.authProxy.login(ctx, request);
-  // }
-  //
-  // Future<api.LoginResponse> register(ctx, request) {
-  //   return api.authProxy.register(ctx, request);
-  // }
+  streamPlayerStats(ctx, request) {
+    return api.gameProxy.streamPlayerStats(ctx, request);
+  }
 }
 
 class GamePlayerPresenter implements GamePlayerObserver  {
@@ -61,22 +56,37 @@ class GamePlayerPresenter implements GamePlayerObserver  {
   }
 
   @override
-  getPlayers() async {
-    /*return [
-      Player('user1', _getColor(api.Player_Color.RED), _getColorInt(api.Player_Color.RED), 23, 45, 8, 2),
-      Player('user2', _getColor(api.Player_Color.BLUE), _getColorInt(api.Player_Color.BLUE), 23, 45, 8, 2),
-      Player('user3', _getColor(api.Player_Color.GREEN), _getColorInt(api.Player_Color.GREEN), 23, 45, 8, 2),
-      Player('user4', _getColor(api.Player_Color.PURPLE), _getColorInt(api.Player_Color.PURPLE), 23, 45, 8, 2),
-      Player('user5', _getColor(api.Player_Color.ORANGE), _getColorInt(api.Player_Color.ORANGE), 23, 45, 8, 2)
-    ]; */
+  getPlayers() {
+    var ctx = ClientContext();
+    var request = new api.StreamPlayerStatsRequest();
 
-    var playerList = [];
+    var playerList = Map();
 
-    for (var p in GlobalContext().playerMap.values) {
-      playerList.add(Player(p.username,_getColor(p.color), _getColorInt(p.color), 23, 45, 8, 2));
-    }
+    return _api.streamPlayerStats(ctx, request).map((response) {
 
-    return playerList;
+      // update old player data
+      if(playerList.containsKey(response.playerId)) {
+        playerList.removeWhere((k,v) => k == response.playerId);
+      }
+      playerList.putIfAbsent(response.playerId, () => response);
+
+      var finalPlayerList = [];
+
+      playerList.forEach((playerId, player) {
+        finalPlayerList.add(Player(
+          GlobalContext().dummyPlayerMap[playerId].username,
+          _getColor(GlobalContext().dummyPlayerMap[playerId].color),
+          _getColorInt(GlobalContext().dummyPlayerMap[playerId].color),
+          player.points,
+          player.trainCount,
+          player.trainCardCount,
+          player.destinationCardCount,
+          playerId == "player1" && player.points == 11 ? true : playerId == "player2" && player.points == 30 ? true : false
+        ));
+      });
+
+      return finalPlayerList;
+    });
   }
 
   build() {

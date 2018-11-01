@@ -33,7 +33,7 @@ class DestCardSelectPresenter implements DestCardSelectObserver  {
       request.gameId = GlobalContext().currentGameId;
       var response = await _api.getDestinationCards(ctx, request);
 
-      print(response);
+      // print(response);
 
       // destinationCards: {
       //   id: destCard-2124713
@@ -70,7 +70,7 @@ class DestCardSelectPresenter implements DestCardSelectObserver  {
       request.destinationCardIds.addAll(cardIds);
       await _api.claimDestinationCards(ctx, request);
 
-      print(cardIds);
+      // print(cardIds);
       FragmentLibrary.navigatePop();
     } catch(error) {
       print(error);

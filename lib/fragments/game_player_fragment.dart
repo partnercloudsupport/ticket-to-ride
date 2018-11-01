@@ -8,8 +8,9 @@ class Player {
   int cars;
   int trainCards;
   int destinationCards;
+  bool active;
 
-  Player(this.name, this.color, this.colorInt, this.points, this.cars, this.trainCards, this.destinationCards);
+  Player(this.name, this.color, this.colorInt, this.points, this.cars, this.trainCards, this.destinationCards, this.active);
 }
 
 abstract class GamePlayerObserver {
@@ -46,21 +47,26 @@ class _GamePlayerFragmentState extends State<GamePlayerFragment> {
   }
 
   _getPlayers() async {
-    var players = [];
     for (var o in widget.observers) {
-      players = await o.getPlayers();
+      await for(var response in o.getPlayers()) {
+        setState(() {
+          _players = response;
+        });
+      }
     }
-
-    setState(() {
-      _players = players;
-    });
   }
 
   _buildPlayers() {
-
     return _players.map((player) {
       return Container(
-        color: Colors.white,//Color(player.colorInt),
+        decoration: new BoxDecoration(
+          color: Colors.white,//Color(player.colorInt),
+          border: new Border.all(
+            color: player.active ? Colors.green : Colors.black,
+            width: 5.0,
+            style: BorderStyle.solid
+          ),
+        ),
         margin: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Padding(
           padding: Theme.of(context).platform == TargetPlatform.iOS ?
@@ -69,7 +75,6 @@ class _GamePlayerFragmentState extends State<GamePlayerFragment> {
           child: Row(
             children: [
               Container(
-                // color: ColRor(player.colorInt),
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10.0),
                   child: Column(
