@@ -168,6 +168,26 @@ class ClaimDestinationCardsRequest extends $pb.GeneratedMessage {
   void clearPlayerId() => clearField(2);
 }
 
+class ClaimDestinationCardsResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('ClaimDestinationCardsResponse', package: const $pb.PackageName('card'))
+    ..hasRequiredFields = false
+  ;
+
+  ClaimDestinationCardsResponse() : super();
+  ClaimDestinationCardsResponse.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  ClaimDestinationCardsResponse.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  ClaimDestinationCardsResponse clone() => new ClaimDestinationCardsResponse()..mergeFromMessage(this);
+  ClaimDestinationCardsResponse copyWith(void Function(ClaimDestinationCardsResponse) updates) => super.copyWith((message) => updates(message as ClaimDestinationCardsResponse));
+  $pb.BuilderInfo get info_ => _i;
+  static ClaimDestinationCardsResponse create() => new ClaimDestinationCardsResponse();
+  static $pb.PbList<ClaimDestinationCardsResponse> createRepeated() => new $pb.PbList<ClaimDestinationCardsResponse>();
+  static ClaimDestinationCardsResponse getDefault() => _defaultInstance ??= create()..freeze();
+  static ClaimDestinationCardsResponse _defaultInstance;
+  static void $checkItem(ClaimDestinationCardsResponse v) {
+    if (v is! ClaimDestinationCardsResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+}
+
 class StreamDestinationCardsRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('StreamDestinationCardsRequest', package: const $pb.PackageName('card'))
     ..aOS(1, 'playerId')
@@ -192,26 +212,6 @@ class StreamDestinationCardsRequest extends $pb.GeneratedMessage {
   set playerId(String v) { $_setString(0, v); }
   bool hasPlayerId() => $_has(0);
   void clearPlayerId() => clearField(1);
-}
-
-class Empty extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Empty', package: const $pb.PackageName('card'))
-    ..hasRequiredFields = false
-  ;
-
-  Empty() : super();
-  Empty.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  Empty.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  Empty clone() => new Empty()..mergeFromMessage(this);
-  Empty copyWith(void Function(Empty) updates) => super.copyWith((message) => updates(message as Empty));
-  $pb.BuilderInfo get info_ => _i;
-  static Empty create() => new Empty();
-  static $pb.PbList<Empty> createRepeated() => new $pb.PbList<Empty>();
-  static Empty getDefault() => _defaultInstance ??= create()..freeze();
-  static Empty _defaultInstance;
-  static void $checkItem(Empty v) {
-    if (v is! Empty) $pb.checkItemFailed(v, _i.qualifiedMessageName);
-  }
 }
 
 class TrainCard extends $pb.GeneratedMessage {
@@ -420,6 +420,26 @@ class ClaimTrainCardRequest extends $pb.GeneratedMessage {
   }
 }
 
+class ClaimTrainCardResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('ClaimTrainCardResponse', package: const $pb.PackageName('card'))
+    ..hasRequiredFields = false
+  ;
+
+  ClaimTrainCardResponse() : super();
+  ClaimTrainCardResponse.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  ClaimTrainCardResponse.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  ClaimTrainCardResponse clone() => new ClaimTrainCardResponse()..mergeFromMessage(this);
+  ClaimTrainCardResponse copyWith(void Function(ClaimTrainCardResponse) updates) => super.copyWith((message) => updates(message as ClaimTrainCardResponse));
+  $pb.BuilderInfo get info_ => _i;
+  static ClaimTrainCardResponse create() => new ClaimTrainCardResponse();
+  static $pb.PbList<ClaimTrainCardResponse> createRepeated() => new $pb.PbList<ClaimTrainCardResponse>();
+  static ClaimTrainCardResponse getDefault() => _defaultInstance ??= create()..freeze();
+  static ClaimTrainCardResponse _defaultInstance;
+  static void $checkItem(ClaimTrainCardResponse v) {
+    if (v is! ClaimTrainCardResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+}
+
 class ClaimRouteRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('ClaimRouteRequest', package: const $pb.PackageName('card'))
     ..hasRequiredFields = false
@@ -440,6 +460,26 @@ class ClaimRouteRequest extends $pb.GeneratedMessage {
   }
 }
 
+class ClaimRouteResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('ClaimRouteResponse', package: const $pb.PackageName('card'))
+    ..hasRequiredFields = false
+  ;
+
+  ClaimRouteResponse() : super();
+  ClaimRouteResponse.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  ClaimRouteResponse.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  ClaimRouteResponse clone() => new ClaimRouteResponse()..mergeFromMessage(this);
+  ClaimRouteResponse copyWith(void Function(ClaimRouteResponse) updates) => super.copyWith((message) => updates(message as ClaimRouteResponse));
+  $pb.BuilderInfo get info_ => _i;
+  static ClaimRouteResponse create() => new ClaimRouteResponse();
+  static $pb.PbList<ClaimRouteResponse> createRepeated() => new $pb.PbList<ClaimRouteResponse>();
+  static ClaimRouteResponse getDefault() => _defaultInstance ??= create()..freeze();
+  static ClaimRouteResponse _defaultInstance;
+  static void $checkItem(ClaimRouteResponse v) {
+    if (v is! ClaimRouteResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+}
+
 class CardServiceApi {
   $pb.RpcClient _client;
   CardServiceApi(this._client);
@@ -452,17 +492,17 @@ class CardServiceApi {
     var emptyResponse = new PeekDestinationCardsResponse();
     return _client.invoke<PeekDestinationCardsResponse>(ctx, 'CardService', 'PeekDestinationCards', request, emptyResponse);
   }
-  $async.Future<Empty> claimDestinationCards($pb.ClientContext ctx, ClaimDestinationCardsRequest request) {
-    var emptyResponse = new Empty();
-    return _client.invoke<Empty>(ctx, 'CardService', 'ClaimDestinationCards', request, emptyResponse);
+  $async.Future<ClaimDestinationCardsResponse> claimDestinationCards($pb.ClientContext ctx, ClaimDestinationCardsRequest request) {
+    var emptyResponse = new ClaimDestinationCardsResponse();
+    return _client.invoke<ClaimDestinationCardsResponse>(ctx, 'CardService', 'ClaimDestinationCards', request, emptyResponse);
   }
   $async.Future<DestinationCard> streamDestinationCards($pb.ClientContext ctx, StreamDestinationCardsRequest request) {
     var emptyResponse = new DestinationCard();
     return _client.invoke<DestinationCard>(ctx, 'CardService', 'StreamDestinationCards', request, emptyResponse);
   }
-  $async.Future<Empty> claimTrainCard($pb.ClientContext ctx, ClaimTrainCardRequest request) {
-    var emptyResponse = new Empty();
-    return _client.invoke<Empty>(ctx, 'CardService', 'ClaimTrainCard', request, emptyResponse);
+  $async.Future<ClaimTrainCardResponse> claimTrainCard($pb.ClientContext ctx, ClaimTrainCardRequest request) {
+    var emptyResponse = new ClaimTrainCardResponse();
+    return _client.invoke<ClaimTrainCardResponse>(ctx, 'CardService', 'ClaimTrainCard', request, emptyResponse);
   }
   $async.Future<TrainCard> streamTrainCards($pb.ClientContext ctx, StreamTrainCardsRequest request) {
     var emptyResponse = new TrainCard();
@@ -472,9 +512,9 @@ class CardServiceApi {
     var emptyResponse = new DeckStats();
     return _client.invoke<DeckStats>(ctx, 'CardService', 'StreamDeckStats', request, emptyResponse);
   }
-  $async.Future<Empty> claimRoute($pb.ClientContext ctx, ClaimRouteRequest request) {
-    var emptyResponse = new Empty();
-    return _client.invoke<Empty>(ctx, 'CardService', 'ClaimRoute', request, emptyResponse);
+  $async.Future<ClaimRouteResponse> claimRoute($pb.ClientContext ctx, ClaimRouteRequest request) {
+    var emptyResponse = new ClaimRouteResponse();
+    return _client.invoke<ClaimRouteResponse>(ctx, 'CardService', 'ClaimRoute', request, emptyResponse);
   }
   $async.Future<Route> streamRoutes($pb.ClientContext ctx, StreamRoutesRequest request) {
     var emptyResponse = new Route();

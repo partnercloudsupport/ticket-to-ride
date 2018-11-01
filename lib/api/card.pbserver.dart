@@ -16,12 +16,12 @@ export 'card.pb.dart';
 abstract class CardServiceBase extends GeneratedService {
   $async.Future<DestinationCard> getDestinationCard(ServerContext ctx, GetDestinationCardRequest request);
   $async.Future<PeekDestinationCardsResponse> peekDestinationCards(ServerContext ctx, PeekDestinationCardsRequest request);
-  $async.Future<Empty> claimDestinationCards(ServerContext ctx, ClaimDestinationCardsRequest request);
+  $async.Future<ClaimDestinationCardsResponse> claimDestinationCards(ServerContext ctx, ClaimDestinationCardsRequest request);
   $async.Future<DestinationCard> streamDestinationCards(ServerContext ctx, StreamDestinationCardsRequest request);
-  $async.Future<Empty> claimTrainCard(ServerContext ctx, ClaimTrainCardRequest request);
+  $async.Future<ClaimTrainCardResponse> claimTrainCard(ServerContext ctx, ClaimTrainCardRequest request);
   $async.Future<TrainCard> streamTrainCards(ServerContext ctx, StreamTrainCardsRequest request);
   $async.Future<DeckStats> streamDeckStats(ServerContext ctx, StreamDeckStatsRequest request);
-  $async.Future<Empty> claimRoute(ServerContext ctx, ClaimRouteRequest request);
+  $async.Future<ClaimRouteResponse> claimRoute(ServerContext ctx, ClaimRouteRequest request);
   $async.Future<Route> streamRoutes(ServerContext ctx, StreamRoutesRequest request);
 
   GeneratedMessage createRequest(String method) {

@@ -1,15 +1,16 @@
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'dart:async';
+import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/fragments/game_bank_fragment.dart';
 import 'package:ticket_to_ride/fragments/fragment_library.dart';
 
 class GameBankApi {
-  Future<api.LoginResponse> login(ctx, request) {
-    return api.authProxy.login(ctx, request);
+  selectTrainCard(playerId, trainCardId) {
+    FragmentLibrary.showToast("$playerId is claiming $trainCardId");
   }
 
-  Future<api.LoginResponse> register(ctx, request) {
-    return api.authProxy.register(ctx, request);
+  selectTrainCardFromDeck(playerId) {
+    FragmentLibrary.showToast("$playerId is claiming a train card");
   }
 }
 
@@ -37,24 +38,28 @@ class GameBankPresenter implements GameBankObserver  {
     int white = 0xFFECECEC;
 
     return [
-      FaceUpTrainCard(true, blue),
-      FaceUpTrainCard(false, blue),
-      FaceUpTrainCard(true, green),
-      FaceUpTrainCard(false, white),
-      FaceUpTrainCard(true, red),
+      FaceUpTrainCard('1', true, blue),
+      FaceUpTrainCard('2', false, blue),
+      FaceUpTrainCard('3', true, green),
+      FaceUpTrainCard('4', false, white),
+      FaceUpTrainCard('5', true, red),
     ];
   }
 
   @override
-  selectDestinationCard(){
+  selectDestinationCards(){
+    FragmentLibrary.showToast('Selecting destination card');
+    FragmentLibrary.navigatePush('/dest_card_select');
   }
 
   @override
-  selectTrainCard(){
+  selectTrainCard(String trainCardId){
+    _api.selectTrainCard(GlobalContext().currentPlayerId, trainCardId);
   }
 
   @override
   selectTrainCardFromDeck(){
+    _api.selectTrainCardFromDeck(GlobalContext().currentPlayerId);
   }
 
 

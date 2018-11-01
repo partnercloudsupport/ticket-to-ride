@@ -6,6 +6,7 @@ import 'package:ticket_to_ride/presenters/account_login_presenter.dart';
 import 'package:ticket_to_ride/presenters/lobby_view_presenter.dart';
 import 'package:ticket_to_ride/presenters/game_view_presenter.dart';
 import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
+import 'package:ticket_to_ride/presenters/dest_card_select_presenter.dart';
 import 'package:ticket_to_ride/presenters/chat_presenter.dart';
 // import game history
 
@@ -33,6 +34,7 @@ class TicketToRideApp extends StatelessWidget {
         '/game_view': (BuildContext context) => GameViewPresenter().build(),
         '/chat' : (BuildContext context) => ChatPresenter().build(),
         // '/game_history' : (BuildContext context) => ChatPresenter().build(),
+        '/dest_card_select' : (BuildContext context) => DestCardSelectPresenter().build(),
       },
     );
   }

@@ -75,7 +75,7 @@ class CardServiceProxy {
     }
   }
 
-  Future<Empty> claimDestinationCards(ClientContext ctx, ClaimDestinationCardsRequest request) async {
+  Future<ClaimDestinationCardsResponse> claimDestinationCards(ClientContext ctx, ClaimDestinationCardsRequest request) async {
 
     var req = Request();
     Response response;
@@ -95,7 +95,7 @@ class CardServiceProxy {
     }
 
     try {
-      return Empty.fromBuffer(response.payload);
+      return ClaimDestinationCardsResponse.fromBuffer(response.payload);
     }
     catch (err) {
       throw ApiError(Code.UNAVAILABLE, err.toString());
@@ -159,7 +159,7 @@ class CardServiceProxy {
     }
   }
 
-  Future<Empty> claimTrainCard(ClientContext ctx, ClaimTrainCardRequest request) async {
+  Future<ClaimTrainCardResponse> claimTrainCard(ClientContext ctx, ClaimTrainCardRequest request) async {
 
     var req = Request();
     Response response;
@@ -179,7 +179,7 @@ class CardServiceProxy {
     }
 
     try {
-      return Empty.fromBuffer(response.payload);
+      return ClaimTrainCardResponse.fromBuffer(response.payload);
     }
     catch (err) {
       throw ApiError(Code.UNAVAILABLE, err.toString());
@@ -300,7 +300,7 @@ class CardServiceProxy {
     }
   }
 
-  Future<Empty> claimRoute(ClientContext ctx, ClaimRouteRequest request) async {
+  Future<ClaimRouteResponse> claimRoute(ClientContext ctx, ClaimRouteRequest request) async {
 
     var req = Request();
     Response response;
@@ -320,7 +320,7 @@ class CardServiceProxy {
     }
 
     try {
-      return Empty.fromBuffer(response.payload);
+      return ClaimRouteResponse.fromBuffer(response.payload);
     }
     catch (err) {
       throw ApiError(Code.UNAVAILABLE, err.toString());

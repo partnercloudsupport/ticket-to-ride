@@ -60,15 +60,15 @@ const ClaimDestinationCardsRequest$json = const {
   ],
 };
 
+const ClaimDestinationCardsResponse$json = const {
+  '1': 'ClaimDestinationCardsResponse',
+};
+
 const StreamDestinationCardsRequest$json = const {
   '1': 'StreamDestinationCardsRequest',
   '2': const [
     const {'1': 'player_id', '3': 1, '4': 1, '5': 9, '10': 'playerId'},
   ],
-};
-
-const Empty$json = const {
-  '1': 'Empty',
 };
 
 const TrainCard$json = const {
@@ -129,8 +129,16 @@ const ClaimTrainCardRequest$json = const {
   '1': 'ClaimTrainCardRequest',
 };
 
+const ClaimTrainCardResponse$json = const {
+  '1': 'ClaimTrainCardResponse',
+};
+
 const ClaimRouteRequest$json = const {
   '1': 'ClaimRouteRequest',
+};
+
+const ClaimRouteResponse$json = const {
+  '1': 'ClaimRouteResponse',
 };
 
 const CardService$json = const {
@@ -138,12 +146,12 @@ const CardService$json = const {
   '2': const [
     const {'1': 'GetDestinationCard', '2': '.card.GetDestinationCardRequest', '3': '.card.DestinationCard'},
     const {'1': 'PeekDestinationCards', '2': '.card.PeekDestinationCardsRequest', '3': '.card.PeekDestinationCardsResponse'},
-    const {'1': 'ClaimDestinationCards', '2': '.card.ClaimDestinationCardsRequest', '3': '.card.Empty'},
+    const {'1': 'ClaimDestinationCards', '2': '.card.ClaimDestinationCardsRequest', '3': '.card.ClaimDestinationCardsResponse'},
     const {'1': 'StreamDestinationCards', '2': '.card.StreamDestinationCardsRequest', '3': '.card.DestinationCard', '6': true},
-    const {'1': 'ClaimTrainCard', '2': '.card.ClaimTrainCardRequest', '3': '.card.Empty'},
+    const {'1': 'ClaimTrainCard', '2': '.card.ClaimTrainCardRequest', '3': '.card.ClaimTrainCardResponse'},
     const {'1': 'StreamTrainCards', '2': '.card.StreamTrainCardsRequest', '3': '.card.TrainCard', '6': true},
     const {'1': 'StreamDeckStats', '2': '.card.StreamDeckStatsRequest', '3': '.card.DeckStats', '6': true},
-    const {'1': 'ClaimRoute', '2': '.card.ClaimRouteRequest', '3': '.card.Empty'},
+    const {'1': 'ClaimRoute', '2': '.card.ClaimRouteRequest', '3': '.card.ClaimRouteResponse'},
     const {'1': 'StreamRoutes', '2': '.card.StreamRoutesRequest', '3': '.card.Route', '6': true},
   ],
 };
@@ -154,14 +162,16 @@ const CardService$messageJson = const {
   '.card.PeekDestinationCardsRequest': PeekDestinationCardsRequest$json,
   '.card.PeekDestinationCardsResponse': PeekDestinationCardsResponse$json,
   '.card.ClaimDestinationCardsRequest': ClaimDestinationCardsRequest$json,
-  '.card.Empty': Empty$json,
+  '.card.ClaimDestinationCardsResponse': ClaimDestinationCardsResponse$json,
   '.card.StreamDestinationCardsRequest': StreamDestinationCardsRequest$json,
   '.card.ClaimTrainCardRequest': ClaimTrainCardRequest$json,
+  '.card.ClaimTrainCardResponse': ClaimTrainCardResponse$json,
   '.card.StreamTrainCardsRequest': StreamTrainCardsRequest$json,
   '.card.TrainCard': TrainCard$json,
   '.card.StreamDeckStatsRequest': StreamDeckStatsRequest$json,
   '.card.DeckStats': DeckStats$json,
   '.card.ClaimRouteRequest': ClaimRouteRequest$json,
+  '.card.ClaimRouteResponse': ClaimRouteResponse$json,
   '.card.StreamRoutesRequest': StreamRoutesRequest$json,
   '.card.Route': Route$json,
 };

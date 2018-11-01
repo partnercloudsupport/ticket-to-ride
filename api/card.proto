@@ -9,16 +9,16 @@ option java_generic_services = true;
 service CardService {
   rpc GetDestinationCard (GetDestinationCardRequest) returns (DestinationCard);
   rpc PeekDestinationCards (PeekDestinationCardsRequest) returns (PeekDestinationCardsResponse);
-  rpc ClaimDestinationCards (ClaimDestinationCardsRequest) returns (Empty);
+  rpc ClaimDestinationCards (ClaimDestinationCardsRequest) returns (ClaimDestinationCardsResponse);
   rpc StreamDestinationCards (StreamDestinationCardsRequest) returns (stream DestinationCard);
 
   // rpc GetTrainCard (GetTrainCardRequest) returns (TrainCard);
-  rpc ClaimTrainCard (ClaimTrainCardRequest) returns (Empty);
+  rpc ClaimTrainCard (ClaimTrainCardRequest) returns (ClaimTrainCardResponse);
   rpc StreamTrainCards (StreamTrainCardsRequest) returns (stream TrainCard);
   rpc StreamDeckStats (StreamDeckStatsRequest) returns (stream DeckStats);
 
   // rpc GetRoute (GetRouteRequest) returns (Route);
-  rpc ClaimRoute (ClaimRouteRequest) returns (Empty);
+  rpc ClaimRoute (ClaimRouteRequest) returns (ClaimRouteResponse);
   rpc StreamRoutes (StreamRoutesRequest) returns (stream Route);
 }
 
@@ -49,12 +49,12 @@ message ClaimDestinationCardsRequest {
   string player_id = 2;
 }
 
-message StreamDestinationCardsRequest {
-  string player_id = 1;
+message ClaimDestinationCardsResponse {
+  
 }
 
-message Empty {
-
+message StreamDestinationCardsRequest {
+  string player_id = 1;
 }
 
 message TrainCard {
@@ -112,6 +112,14 @@ message ClaimTrainCardRequest {
 
 }
 
+message ClaimTrainCardResponse {
+
+}
+
 message ClaimRouteRequest {
+
+}
+
+message ClaimRouteResponse {
 
 }
