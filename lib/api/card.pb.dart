@@ -4,7 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async' as $async;
+import 'dart:async';
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
@@ -27,7 +27,7 @@ class GetDestinationCardRequest extends $pb.GeneratedMessage {
   static GetDestinationCardRequest getDefault() => _defaultInstance ??= create()..freeze();
   static GetDestinationCardRequest _defaultInstance;
   static void $checkItem(GetDestinationCardRequest v) {
-    if (v is! GetDestinationCardRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! GetDestinationCardRequest) $pb.checkItemFailed(v, _i.messageName);
   }
 
   String get destinationCardId => $_getS(0, '');
@@ -57,7 +57,7 @@ class DestinationCard extends $pb.GeneratedMessage {
   static DestinationCard getDefault() => _defaultInstance ??= create()..freeze();
   static DestinationCard _defaultInstance;
   static void $checkItem(DestinationCard v) {
-    if (v is! DestinationCard) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! DestinationCard) $pb.checkItemFailed(v, _i.messageName);
   }
 
   String get id => $_getS(0, '');
@@ -103,7 +103,7 @@ class PeekDestinationCardsRequest extends $pb.GeneratedMessage {
   static PeekDestinationCardsRequest getDefault() => _defaultInstance ??= create()..freeze();
   static PeekDestinationCardsRequest _defaultInstance;
   static void $checkItem(PeekDestinationCardsRequest v) {
-    if (v is! PeekDestinationCardsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! PeekDestinationCardsRequest) $pb.checkItemFailed(v, _i.messageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -129,7 +129,7 @@ class PeekDestinationCardsResponse extends $pb.GeneratedMessage {
   static PeekDestinationCardsResponse getDefault() => _defaultInstance ??= create()..freeze();
   static PeekDestinationCardsResponse _defaultInstance;
   static void $checkItem(PeekDestinationCardsResponse v) {
-    if (v is! PeekDestinationCardsResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! PeekDestinationCardsResponse) $pb.checkItemFailed(v, _i.messageName);
   }
 
   List<DestinationCard> get destinationCards => $_getList(0);
@@ -153,7 +153,7 @@ class ClaimDestinationCardsRequest extends $pb.GeneratedMessage {
   static ClaimDestinationCardsRequest getDefault() => _defaultInstance ??= create()..freeze();
   static ClaimDestinationCardsRequest _defaultInstance;
   static void $checkItem(ClaimDestinationCardsRequest v) {
-    if (v is! ClaimDestinationCardsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! ClaimDestinationCardsRequest) $pb.checkItemFailed(v, _i.messageName);
   }
 
   List<String> get destinationCardIds => $_getList(0);
@@ -164,23 +164,23 @@ class ClaimDestinationCardsRequest extends $pb.GeneratedMessage {
   void clearPlayerId() => clearField(2);
 }
 
-class Empty extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Empty', package: const $pb.PackageName('card'))
+class Empty1 extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Empty1', package: const $pb.PackageName('card'))
     ..hasRequiredFields = false
   ;
 
-  Empty() : super();
-  Empty.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  Empty.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  Empty clone() => new Empty()..mergeFromMessage(this);
-  Empty copyWith(void Function(Empty) updates) => super.copyWith((message) => updates(message as Empty));
+  Empty1() : super();
+  Empty1.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  Empty1.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  Empty1 clone() => new Empty1()..mergeFromMessage(this);
+  Empty1 copyWith(void Function(Empty1) updates) => super.copyWith((message) => updates(message as Empty1));
   $pb.BuilderInfo get info_ => _i;
-  static Empty create() => new Empty();
-  static $pb.PbList<Empty> createRepeated() => new $pb.PbList<Empty>();
-  static Empty getDefault() => _defaultInstance ??= create()..freeze();
-  static Empty _defaultInstance;
-  static void $checkItem(Empty v) {
-    if (v is! Empty) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  static Empty1 create() => new Empty1();
+  static $pb.PbList<Empty1> createRepeated() => new $pb.PbList<Empty1>();
+  static Empty1 getDefault() => _defaultInstance ??= create()..freeze();
+  static Empty1 _defaultInstance;
+  static void $checkItem(Empty1 v) {
+    if (v is! Empty1) $pb.checkItemFailed(v, _i.messageName);
   }
 }
 
@@ -188,17 +188,17 @@ class CardServiceApi {
   $pb.RpcClient _client;
   CardServiceApi(this._client);
 
-  $async.Future<DestinationCard> getDestinationCard($pb.ClientContext ctx, GetDestinationCardRequest request) {
+  Future<DestinationCard> getDestinationCard($pb.ClientContext ctx, GetDestinationCardRequest request) {
     var emptyResponse = new DestinationCard();
     return _client.invoke<DestinationCard>(ctx, 'CardService', 'GetDestinationCard', request, emptyResponse);
   }
-  $async.Future<PeekDestinationCardsResponse> peekDestinationCards($pb.ClientContext ctx, PeekDestinationCardsRequest request) {
+  Future<PeekDestinationCardsResponse> peekDestinationCards($pb.ClientContext ctx, PeekDestinationCardsRequest request) {
     var emptyResponse = new PeekDestinationCardsResponse();
     return _client.invoke<PeekDestinationCardsResponse>(ctx, 'CardService', 'PeekDestinationCards', request, emptyResponse);
   }
-  $async.Future<Empty> claimDestinationCards($pb.ClientContext ctx, ClaimDestinationCardsRequest request) {
-    var emptyResponse = new Empty();
-    return _client.invoke<Empty>(ctx, 'CardService', 'ClaimDestinationCards', request, emptyResponse);
+  Future<Empty1> claimDestinationCards($pb.ClientContext ctx, ClaimDestinationCardsRequest request) {
+    var emptyResponse = new Empty1();
+    return _client.invoke<Empty1>(ctx, 'CardService', 'ClaimDestinationCards', request, emptyResponse);
   }
 }
 

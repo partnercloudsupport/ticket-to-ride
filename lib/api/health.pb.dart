@@ -4,7 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async' as $async;
+import 'dart:async';
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
@@ -31,7 +31,7 @@ class Health extends $pb.GeneratedMessage {
   static Health getDefault() => _defaultInstance ??= create()..freeze();
   static Health _defaultInstance;
   static void $checkItem(Health v) {
-    if (v is! Health) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! Health) $pb.checkItemFailed(v, _i.messageName);
   }
 
   Health_Status get status => $_getN(0);
@@ -56,7 +56,7 @@ class GetHealthRequest extends $pb.GeneratedMessage {
   static GetHealthRequest getDefault() => _defaultInstance ??= create()..freeze();
   static GetHealthRequest _defaultInstance;
   static void $checkItem(GetHealthRequest v) {
-    if (v is! GetHealthRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! GetHealthRequest) $pb.checkItemFailed(v, _i.messageName);
   }
 }
 
@@ -64,11 +64,11 @@ class HealthServiceApi {
   $pb.RpcClient _client;
   HealthServiceApi(this._client);
 
-  $async.Future<Health> getHealth($pb.ClientContext ctx, GetHealthRequest request) {
+  Future<Health> getHealth($pb.ClientContext ctx, GetHealthRequest request) {
     var emptyResponse = new Health();
     return _client.invoke<Health>(ctx, 'HealthService', 'GetHealth', request, emptyResponse);
   }
-  $async.Future<Health> streamHealth($pb.ClientContext ctx, GetHealthRequest request) {
+  Future<Health> streamHealth($pb.ClientContext ctx, GetHealthRequest request) {
     var emptyResponse = new Health();
     return _client.invoke<Health>(ctx, 'HealthService', 'StreamHealth', request, emptyResponse);
   }

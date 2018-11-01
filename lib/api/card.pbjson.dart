@@ -44,8 +44,8 @@ const ClaimDestinationCardsRequest$json = const {
   ],
 };
 
-const Empty$json = const {
-  '1': 'Empty',
+const Empty1$json = const {
+  '1': 'Empty1',
 };
 
 const CardService$json = const {
@@ -53,7 +53,7 @@ const CardService$json = const {
   '2': const [
     const {'1': 'GetDestinationCard', '2': '.card.GetDestinationCardRequest', '3': '.card.DestinationCard'},
     const {'1': 'PeekDestinationCards', '2': '.card.PeekDestinationCardsRequest', '3': '.card.PeekDestinationCardsResponse'},
-    const {'1': 'ClaimDestinationCards', '2': '.card.ClaimDestinationCardsRequest', '3': '.card.Empty'},
+    const {'1': 'ClaimDestinationCards', '2': '.card.ClaimDestinationCardsRequest', '3': '.card.Empty1'},
   ],
 };
 
@@ -63,6 +63,6 @@ const CardService$messageJson = const {
   '.card.PeekDestinationCardsRequest': PeekDestinationCardsRequest$json,
   '.card.PeekDestinationCardsResponse': PeekDestinationCardsResponse$json,
   '.card.ClaimDestinationCardsRequest': ClaimDestinationCardsRequest$json,
-  '.card.Empty': Empty$json,
+  '.card.Empty1': Empty1$json,
 };
 

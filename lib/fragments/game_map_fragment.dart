@@ -123,7 +123,6 @@ class _GameMapFragmentState extends State<GameMapFragment> {
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
-                print(route.id);
                 for (var o in widget.observers) {
                   o.claimRoute(route.id);
                 }

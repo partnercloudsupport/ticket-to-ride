@@ -75,7 +75,7 @@ class CardServiceProxy {
     }
   }
 
-  Future<Empty> claimDestinationCards(ClientContext ctx, ClaimDestinationCardsRequest request) async {
+  Future<Empty1> claimDestinationCards(ClientContext ctx, ClaimDestinationCardsRequest request) async {
 
     var req = Request();
     Response response;
@@ -95,7 +95,7 @@ class CardServiceProxy {
     }
 
     try {
-      return Empty.fromBuffer(response.payload);
+      return Empty1.fromBuffer(response.payload);
     }
     catch (err) {
       throw ApiError(Code.UNAVAILABLE, err.toString());
