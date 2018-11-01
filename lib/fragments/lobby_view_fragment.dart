@@ -64,7 +64,7 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
         gameLobby = await o.getGame();
       }
 
-      print('poll');
+      // print('poll');
 
       setState(() {
         _gameLobby = gameLobby;
@@ -113,7 +113,7 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
       return Padding(
         padding: Theme.of(context).platform == TargetPlatform.iOS ?
           const EdgeInsets.symmetric(vertical:16.0, horizontal: 16.0) :
-          const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0), 
+          const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
         child: RaisedButton(
           key: Key('startButton'),
           onPressed: () {
@@ -165,7 +165,7 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
               Padding(
                 padding: Theme.of(context).platform == TargetPlatform.iOS ?
                           const EdgeInsets.symmetric(vertical:16.0, horizontal: 16.0) :
-                          const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0), 
+                          const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
                 child: RaisedButton(
                   key: Key('exitButton'),
                   onPressed: () {
@@ -205,7 +205,7 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
           new Container(
             margin: Theme.of(context).platform == TargetPlatform.iOS ?
                       const EdgeInsets.symmetric(vertical:16.0, horizontal: 16.0) :
-                      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0), 
+                      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
             decoration: new BoxDecoration(
               image: new DecorationImage(
                 image: new AssetImage("images/background2.jpg"),
