@@ -52,6 +52,12 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
   }
 
   @override
+  void deactivate(){
+    _cancelPoll();
+    super.deactivate();
+  }
+
+  @override
   void dispose(){
     _cancelPoll();
     super.dispose();

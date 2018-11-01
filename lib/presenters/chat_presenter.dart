@@ -3,12 +3,10 @@ import 'package:ticket_to_ride/global_context.dart';
 
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/api/chat.pb.dart';
-import 'package:ticket_to_ride/api/chat.pb.wwttr.dart';
 import 'package:protobuf/protobuf.dart';
 
 import 'package:ticket_to_ride/fragments/chat_fragment.dart';
 
-import 'dart:async';
 
 
 class ChatPresenter {
@@ -22,7 +20,7 @@ class ChatPresenter {
     var ctx = ClientContext();
     request.gameId = GlobalContext().currentGameId;
     var stream = api.chatProxy.streamMessages(ctx, request);
-    
+
     fragment = ChatFragment(this, key: chatFragmentKey, messages: stream);
   }
 

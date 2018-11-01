@@ -1,5 +1,4 @@
 import 'api/player_wrapper.dart';
-import 'api/game.pb.dart' as player;
 import 'api/game.pbenum.dart';
 
 class GlobalContext {
