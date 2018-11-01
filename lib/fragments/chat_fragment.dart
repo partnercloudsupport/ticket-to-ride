@@ -4,6 +4,10 @@ import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/api/chat.pb.dart';
 import 'package:ticket_to_ride/api/player_wrapper.dart';
 
+import 'package:protobuf/protobuf.dart';
+
+import 'package:ticket_to_ride/theme/theme.dart';
+
 import 'package:ticket_to_ride/presenters/chat_presenter.dart';
 
 import 'dart:io';
@@ -16,18 +20,15 @@ class ChatPresenterApi {
 }
 
 class ChatMessage extends StatelessWidget {
-  String messageId;
-  String content;
-  int timestamp;
-  Player player;
+  final String messageId;
+  final String content;
+  final int timestamp;
+  final Player player;
 
   // default constructor from Message and Player
-  ChatMessage(Message msg, Player player) {
-    messageId = msg.messageId;
-    content = msg.content;
-    timestamp = msg.timestamp;
-    player = player;
-  }
+  ChatMessage(Message msg, Player player) : messageId = msg.messageId,
+    content = msg.content, timestamp = msg.timestamp, player = player;
+
 
   _getColor(colorCode) {
     switch(colorCode) {
@@ -98,24 +99,69 @@ class ChatFragment extends StatefulWidget {
 
 class ChatFragmentState extends State<ChatFragment> {
 
+  ChatFragmentState() {
+    streamMessages(true);
+  }
+
   CreateMessageRequest request = CreateMessageRequest();
 
   final TextEditingController _chatController =  TextEditingController();
-  final List<ChatMessage> _messages = <ChatMessage>[];
+  final List<ChatMessage> _messages = List<ChatMessage>();
+
+  //Stream<Message> stream;
+
+  var _background = Container(
+    decoration: new BoxDecoration(
+      image: new DecorationImage(
+        image: new AssetImage("images/background2.jpg"),
+        fit: BoxFit.cover,
+      ),
+    ),
+  );
 
   void handleSubmit(String content) {
     _chatController.clear();
     request.playerId = GlobalContext().currentPlayerId;
     request.content = content;
 
-    this.widget.presenter.sendMessage(request); 
+    try {
+      this.widget.presenter.sendMessage(request);
+    } catch(error) {
+        print(error.code);
+        print(error.message);
+    }
   }
 
   void handleReceipt(Message msg, Player player) {
+    print('handling receipt of message');
+    print('message: ' + msg.content);
+    print('player: ' + player.playerId);
     setState(() {
       _messages.insert(0, ChatMessage(msg, player));
     });
   }
+
+  // Create a stream that collects received messages
+  void streamMessages(bool open) async {
+    print('streaming messages');
+
+    var request = StreamMessagesRequest();
+    request.gameId = GlobalContext().currentGameId;
+
+    var ctx = ClientContext();
+
+    await for (Message msg in api.chatProxy.streamMessages(ctx, request)) {
+      if (msg != null) {
+        var player = GlobalContext().playerMap[msg.playerId];
+        if (player != null) {
+          print('stream finds player ' + player.playerId);
+          handleReceipt(msg, player);
+        }
+      }
+    }
+    
+  }
+
 
   Widget _chatEnvironment (){
     return IconTheme(
@@ -135,7 +181,7 @@ class ChatFragmentState extends State<ChatFragment> {
               margin: const EdgeInsets.symmetric(horizontal: 4.0),
               child:  IconButton(
                 icon:  Icon(Icons.send),
-                
+                color: ticketToRideTheme.buttonColor,
                 onPressed: ()=> handleSubmit(_chatController.text),
                  
               ),
@@ -155,11 +201,12 @@ class ChatFragmentState extends State<ChatFragment> {
       ),
       body: Column(
         children: <Widget>[
+          _background,
            Flexible(
             child: ListView.builder(
               padding:  EdgeInsets.all(8.0),
               reverse: true,
-              itemBuilder: (_, int index) => _messages[index],
+              itemBuilder: (_, int index) =>_messages[index],
               itemCount: _messages.length,
             ),
           ),

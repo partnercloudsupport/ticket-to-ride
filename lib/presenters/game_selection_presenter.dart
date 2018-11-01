@@ -63,8 +63,6 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
         //createGameFragment.onCurrentGameIdChange(response.gameId);
         GlobalContext().currentGameId = response.gameId;
 
-        
-        // TODO replace with wrapper Navigator implementation
         //createGameFragment.pushNavigator('/lobby_view');
         gameListKey.currentState.cancelPoll();
         FragmentLibrary.navigatePush('/lobby_view');

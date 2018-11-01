@@ -36,7 +36,7 @@ class GamePlayerFragment extends StatefulWidget {
 
 class _GamePlayerFragmentState extends State<GamePlayerFragment> {
 
-  List<Player> _players = [];
+  var _players = [];
 
   @override
   initState() {
@@ -46,7 +46,7 @@ class _GamePlayerFragmentState extends State<GamePlayerFragment> {
   }
 
   _getPlayers() async {
-    List<Player> players = [];
+    var players = [];
     for (var o in widget.observers) {
       players = await o.getPlayers();
     }

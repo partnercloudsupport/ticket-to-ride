@@ -47,19 +47,6 @@ class ChatPresenter {
 
   }
 
-  // Create a stream that collects received messages
-  Stream<Message> streamMessages(request) async* {
-
-    var ctx = ClientContext();
-
-    await for (Message msg in api.chatProxy.streamMessages(ctx, request)) {
-      var player = GlobalContext().playerMap[msg.playerId];
-
-      chatFragmentKey.currentState.handleReceipt(msg, player);
-    }
-
-  }
-
   Widget build() {
     return fragment;
   }
