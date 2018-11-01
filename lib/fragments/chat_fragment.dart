@@ -100,7 +100,10 @@ class ChatFragment extends StatefulWidget {
 
 class ChatFragmentState extends State<ChatFragment> {
 
-  ChatFragmentState() {
+  @override
+  initState() {
+    super.initState();
+
     streamMessages(true);
   }
 
