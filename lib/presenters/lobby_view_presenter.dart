@@ -1,7 +1,6 @@
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/global_context.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ticket_to_ride/fragments/lobby_view_fragment.dart';
 import 'package:ticket_to_ride/fragments/fragment_library.dart';
 import 'package:ticket_to_ride/api/game.pb.dart' as gameApi;
@@ -120,7 +119,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
   @override
   startGame() async {
     for (playerWrapper.Player p in playerObjects) {
-      print(p.username);
+      // print(p.username);
       GlobalContext().addPlayerToMap(p);
     }
 
@@ -131,7 +130,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
     api.gameProxy.startGame(ctx, request);
 
     FragmentLibrary.navigatePush('/game_view');
-    FragmentLibrary.navigatePush('/dest_card_select');
+    // FragmentLibrary.navigatePush('/dest_card_select');
   }
 
   build() {

@@ -4,6 +4,10 @@ import 'package:ticket_to_ride/fragments/game_player_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_menu_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_bank_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_hand_fragment.dart';
+import 'package:ticket_to_ride/api/api.dart' as api;
+import 'package:ticket_to_ride/api/game.pb.dart';
+import 'package:ticket_to_ride/api/card.pb.dart';
+import 'package:protobuf/protobuf.dart';
 
 class GameViewFragment extends StatefulWidget {
   GameViewFragment(
@@ -65,8 +69,11 @@ class _GameViewFragmentState extends State<GameViewFragment> {
       child: RaisedButton(
         key: Key('dummyButton'),
         onPressed: () {
+          var ctx = ClientContext();
+          api.cardProxy.claimTrainCard(ctx, new api.ClaimTrainCardRequest());
+          api.cardProxy.claimRoute(ctx, new api.ClaimRouteRequest());
+          api.gameProxy.togglePlayerStats(ctx, new api.Empty());
           print('state change');
-
         },
         child: Text(
           'Change State',
