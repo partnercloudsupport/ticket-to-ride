@@ -461,6 +461,76 @@ class CreatePlayerResponse extends $pb.GeneratedMessage {
   void clearPlayerId() => clearField(1);
 }
 
+class StreamPlayerStatsRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('StreamPlayerStatsRequest', package: const $pb.PackageName('game'))
+    ..hasRequiredFields = false
+  ;
+
+  StreamPlayerStatsRequest() : super();
+  StreamPlayerStatsRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  StreamPlayerStatsRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  StreamPlayerStatsRequest clone() => new StreamPlayerStatsRequest()..mergeFromMessage(this);
+  StreamPlayerStatsRequest copyWith(void Function(StreamPlayerStatsRequest) updates) => super.copyWith((message) => updates(message as StreamPlayerStatsRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static StreamPlayerStatsRequest create() => new StreamPlayerStatsRequest();
+  static $pb.PbList<StreamPlayerStatsRequest> createRepeated() => new $pb.PbList<StreamPlayerStatsRequest>();
+  static StreamPlayerStatsRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static StreamPlayerStatsRequest _defaultInstance;
+  static void $checkItem(StreamPlayerStatsRequest v) {
+    if (v is! StreamPlayerStatsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+}
+
+class PlayerStats extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('PlayerStats', package: const $pb.PackageName('game'))
+    ..aOS(1, 'playerId')
+    ..a<int>(2, 'points', $pb.PbFieldType.O3)
+    ..a<int>(3, 'trainCount', $pb.PbFieldType.O3)
+    ..a<int>(4, 'trainCardCount', $pb.PbFieldType.O3)
+    ..a<int>(5, 'destinationCardCount', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  PlayerStats() : super();
+  PlayerStats.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  PlayerStats.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  PlayerStats clone() => new PlayerStats()..mergeFromMessage(this);
+  PlayerStats copyWith(void Function(PlayerStats) updates) => super.copyWith((message) => updates(message as PlayerStats));
+  $pb.BuilderInfo get info_ => _i;
+  static PlayerStats create() => new PlayerStats();
+  static $pb.PbList<PlayerStats> createRepeated() => new $pb.PbList<PlayerStats>();
+  static PlayerStats getDefault() => _defaultInstance ??= create()..freeze();
+  static PlayerStats _defaultInstance;
+  static void $checkItem(PlayerStats v) {
+    if (v is! PlayerStats) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get playerId => $_getS(0, '');
+  set playerId(String v) { $_setString(0, v); }
+  bool hasPlayerId() => $_has(0);
+  void clearPlayerId() => clearField(1);
+
+  int get points => $_get(1, 0);
+  set points(int v) { $_setSignedInt32(1, v); }
+  bool hasPoints() => $_has(1);
+  void clearPoints() => clearField(2);
+
+  int get trainCount => $_get(2, 0);
+  set trainCount(int v) { $_setSignedInt32(2, v); }
+  bool hasTrainCount() => $_has(2);
+  void clearTrainCount() => clearField(3);
+
+  int get trainCardCount => $_get(3, 0);
+  set trainCardCount(int v) { $_setSignedInt32(3, v); }
+  bool hasTrainCardCount() => $_has(3);
+  void clearTrainCardCount() => clearField(4);
+
+  int get destinationCardCount => $_get(4, 0);
+  set destinationCardCount(int v) { $_setSignedInt32(4, v); }
+  bool hasDestinationCardCount() => $_has(4);
+  void clearDestinationCardCount() => clearField(5);
+}
+
 class GameServiceApi {
   $pb.RpcClient _client;
   GameServiceApi(this._client);
@@ -496,6 +566,14 @@ class GameServiceApi {
   $async.Future<Player> getPlayer($pb.ClientContext ctx, GetPlayerRequest request) {
     var emptyResponse = new Player();
     return _client.invoke<Player>(ctx, 'GameService', 'GetPlayer', request, emptyResponse);
+  }
+  $async.Future<PlayerStats> streamPlayerStats($pb.ClientContext ctx, StreamPlayerStatsRequest request) {
+    var emptyResponse = new PlayerStats();
+    return _client.invoke<PlayerStats>(ctx, 'GameService', 'StreamPlayerStats', request, emptyResponse);
+  }
+  $async.Future<Empty> togglePlayerStats($pb.ClientContext ctx, Empty request) {
+    var emptyResponse = new Empty();
+    return _client.invoke<Empty>(ctx, 'GameService', 'TogglePlayerStats', request, emptyResponse);
   }
 }
 

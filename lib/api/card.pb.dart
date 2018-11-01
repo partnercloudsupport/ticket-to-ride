@@ -10,6 +10,10 @@ import 'dart:core' show int, bool, double, String, List, override;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'card.pbenum.dart';
+
+export 'card.pbenum.dart';
+
 class GetDestinationCardRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('GetDestinationCardRequest', package: const $pb.PackageName('card'))
     ..aOS(1, 'destinationCardId')
@@ -164,6 +168,32 @@ class ClaimDestinationCardsRequest extends $pb.GeneratedMessage {
   void clearPlayerId() => clearField(2);
 }
 
+class StreamDestinationCardsRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('StreamDestinationCardsRequest', package: const $pb.PackageName('card'))
+    ..aOS(1, 'playerId')
+    ..hasRequiredFields = false
+  ;
+
+  StreamDestinationCardsRequest() : super();
+  StreamDestinationCardsRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  StreamDestinationCardsRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  StreamDestinationCardsRequest clone() => new StreamDestinationCardsRequest()..mergeFromMessage(this);
+  StreamDestinationCardsRequest copyWith(void Function(StreamDestinationCardsRequest) updates) => super.copyWith((message) => updates(message as StreamDestinationCardsRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static StreamDestinationCardsRequest create() => new StreamDestinationCardsRequest();
+  static $pb.PbList<StreamDestinationCardsRequest> createRepeated() => new $pb.PbList<StreamDestinationCardsRequest>();
+  static StreamDestinationCardsRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static StreamDestinationCardsRequest _defaultInstance;
+  static void $checkItem(StreamDestinationCardsRequest v) {
+    if (v is! StreamDestinationCardsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get playerId => $_getS(0, '');
+  set playerId(String v) { $_setString(0, v); }
+  bool hasPlayerId() => $_has(0);
+  void clearPlayerId() => clearField(1);
+}
+
 class Empty extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Empty', package: const $pb.PackageName('card'))
     ..hasRequiredFields = false
@@ -184,6 +214,232 @@ class Empty extends $pb.GeneratedMessage {
   }
 }
 
+class TrainCard extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('TrainCard', package: const $pb.PackageName('card'))
+    ..aOS(1, 'id')
+    ..e<TrainColor>(2, 'color', $pb.PbFieldType.OE, TrainColor.UNSPECIFIED, TrainColor.valueOf, TrainColor.values)
+    ..e<TrainCard_Status>(4, 'status', $pb.PbFieldType.OE, TrainCard_Status.UNSPECIFIED, TrainCard_Status.valueOf, TrainCard_Status.values)
+    ..hasRequiredFields = false
+  ;
+
+  TrainCard() : super();
+  TrainCard.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  TrainCard.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  TrainCard clone() => new TrainCard()..mergeFromMessage(this);
+  TrainCard copyWith(void Function(TrainCard) updates) => super.copyWith((message) => updates(message as TrainCard));
+  $pb.BuilderInfo get info_ => _i;
+  static TrainCard create() => new TrainCard();
+  static $pb.PbList<TrainCard> createRepeated() => new $pb.PbList<TrainCard>();
+  static TrainCard getDefault() => _defaultInstance ??= create()..freeze();
+  static TrainCard _defaultInstance;
+  static void $checkItem(TrainCard v) {
+    if (v is! TrainCard) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get id => $_getS(0, '');
+  set id(String v) { $_setString(0, v); }
+  bool hasId() => $_has(0);
+  void clearId() => clearField(1);
+
+  TrainColor get color => $_getN(1);
+  set color(TrainColor v) { setField(2, v); }
+  bool hasColor() => $_has(1);
+  void clearColor() => clearField(2);
+
+  TrainCard_Status get status => $_getN(2);
+  set status(TrainCard_Status v) { setField(4, v); }
+  bool hasStatus() => $_has(2);
+  void clearStatus() => clearField(4);
+}
+
+class StreamTrainCardsRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('StreamTrainCardsRequest', package: const $pb.PackageName('card'))
+    ..aOS(1, 'playerId')
+    ..hasRequiredFields = false
+  ;
+
+  StreamTrainCardsRequest() : super();
+  StreamTrainCardsRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  StreamTrainCardsRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  StreamTrainCardsRequest clone() => new StreamTrainCardsRequest()..mergeFromMessage(this);
+  StreamTrainCardsRequest copyWith(void Function(StreamTrainCardsRequest) updates) => super.copyWith((message) => updates(message as StreamTrainCardsRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static StreamTrainCardsRequest create() => new StreamTrainCardsRequest();
+  static $pb.PbList<StreamTrainCardsRequest> createRepeated() => new $pb.PbList<StreamTrainCardsRequest>();
+  static StreamTrainCardsRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static StreamTrainCardsRequest _defaultInstance;
+  static void $checkItem(StreamTrainCardsRequest v) {
+    if (v is! StreamTrainCardsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get playerId => $_getS(0, '');
+  set playerId(String v) { $_setString(0, v); }
+  bool hasPlayerId() => $_has(0);
+  void clearPlayerId() => clearField(1);
+}
+
+class DeckStats extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('DeckStats', package: const $pb.PackageName('card'))
+    ..a<int>(1, 'hiddenTrainCardCount', $pb.PbFieldType.O3)
+    ..a<int>(3, 'hiddenDestinationCardCount', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  DeckStats() : super();
+  DeckStats.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  DeckStats.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  DeckStats clone() => new DeckStats()..mergeFromMessage(this);
+  DeckStats copyWith(void Function(DeckStats) updates) => super.copyWith((message) => updates(message as DeckStats));
+  $pb.BuilderInfo get info_ => _i;
+  static DeckStats create() => new DeckStats();
+  static $pb.PbList<DeckStats> createRepeated() => new $pb.PbList<DeckStats>();
+  static DeckStats getDefault() => _defaultInstance ??= create()..freeze();
+  static DeckStats _defaultInstance;
+  static void $checkItem(DeckStats v) {
+    if (v is! DeckStats) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  int get hiddenTrainCardCount => $_get(0, 0);
+  set hiddenTrainCardCount(int v) { $_setSignedInt32(0, v); }
+  bool hasHiddenTrainCardCount() => $_has(0);
+  void clearHiddenTrainCardCount() => clearField(1);
+
+  int get hiddenDestinationCardCount => $_get(1, 0);
+  set hiddenDestinationCardCount(int v) { $_setSignedInt32(1, v); }
+  bool hasHiddenDestinationCardCount() => $_has(1);
+  void clearHiddenDestinationCardCount() => clearField(3);
+}
+
+class StreamDeckStatsRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('StreamDeckStatsRequest', package: const $pb.PackageName('card'))
+    ..hasRequiredFields = false
+  ;
+
+  StreamDeckStatsRequest() : super();
+  StreamDeckStatsRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  StreamDeckStatsRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  StreamDeckStatsRequest clone() => new StreamDeckStatsRequest()..mergeFromMessage(this);
+  StreamDeckStatsRequest copyWith(void Function(StreamDeckStatsRequest) updates) => super.copyWith((message) => updates(message as StreamDeckStatsRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static StreamDeckStatsRequest create() => new StreamDeckStatsRequest();
+  static $pb.PbList<StreamDeckStatsRequest> createRepeated() => new $pb.PbList<StreamDeckStatsRequest>();
+  static StreamDeckStatsRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static StreamDeckStatsRequest _defaultInstance;
+  static void $checkItem(StreamDeckStatsRequest v) {
+    if (v is! StreamDeckStatsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+}
+
+class Route extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Route', package: const $pb.PackageName('card'))
+    ..aOS(1, 'id')
+    ..aOS(2, 'firstCityId')
+    ..aOS(3, 'secondCityId')
+    ..e<TrainColor>(4, 'color', $pb.PbFieldType.OE, TrainColor.UNSPECIFIED, TrainColor.valueOf, TrainColor.values)
+    ..aOS(5, 'playerId')
+    ..hasRequiredFields = false
+  ;
+
+  Route() : super();
+  Route.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  Route.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  Route clone() => new Route()..mergeFromMessage(this);
+  Route copyWith(void Function(Route) updates) => super.copyWith((message) => updates(message as Route));
+  $pb.BuilderInfo get info_ => _i;
+  static Route create() => new Route();
+  static $pb.PbList<Route> createRepeated() => new $pb.PbList<Route>();
+  static Route getDefault() => _defaultInstance ??= create()..freeze();
+  static Route _defaultInstance;
+  static void $checkItem(Route v) {
+    if (v is! Route) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get id => $_getS(0, '');
+  set id(String v) { $_setString(0, v); }
+  bool hasId() => $_has(0);
+  void clearId() => clearField(1);
+
+  String get firstCityId => $_getS(1, '');
+  set firstCityId(String v) { $_setString(1, v); }
+  bool hasFirstCityId() => $_has(1);
+  void clearFirstCityId() => clearField(2);
+
+  String get secondCityId => $_getS(2, '');
+  set secondCityId(String v) { $_setString(2, v); }
+  bool hasSecondCityId() => $_has(2);
+  void clearSecondCityId() => clearField(3);
+
+  TrainColor get color => $_getN(3);
+  set color(TrainColor v) { setField(4, v); }
+  bool hasColor() => $_has(3);
+  void clearColor() => clearField(4);
+
+  String get playerId => $_getS(4, '');
+  set playerId(String v) { $_setString(4, v); }
+  bool hasPlayerId() => $_has(4);
+  void clearPlayerId() => clearField(5);
+}
+
+class StreamRoutesRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('StreamRoutesRequest', package: const $pb.PackageName('card'))
+    ..hasRequiredFields = false
+  ;
+
+  StreamRoutesRequest() : super();
+  StreamRoutesRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  StreamRoutesRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  StreamRoutesRequest clone() => new StreamRoutesRequest()..mergeFromMessage(this);
+  StreamRoutesRequest copyWith(void Function(StreamRoutesRequest) updates) => super.copyWith((message) => updates(message as StreamRoutesRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static StreamRoutesRequest create() => new StreamRoutesRequest();
+  static $pb.PbList<StreamRoutesRequest> createRepeated() => new $pb.PbList<StreamRoutesRequest>();
+  static StreamRoutesRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static StreamRoutesRequest _defaultInstance;
+  static void $checkItem(StreamRoutesRequest v) {
+    if (v is! StreamRoutesRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+}
+
+class ClaimTrainCardRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('ClaimTrainCardRequest', package: const $pb.PackageName('card'))
+    ..hasRequiredFields = false
+  ;
+
+  ClaimTrainCardRequest() : super();
+  ClaimTrainCardRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  ClaimTrainCardRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  ClaimTrainCardRequest clone() => new ClaimTrainCardRequest()..mergeFromMessage(this);
+  ClaimTrainCardRequest copyWith(void Function(ClaimTrainCardRequest) updates) => super.copyWith((message) => updates(message as ClaimTrainCardRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static ClaimTrainCardRequest create() => new ClaimTrainCardRequest();
+  static $pb.PbList<ClaimTrainCardRequest> createRepeated() => new $pb.PbList<ClaimTrainCardRequest>();
+  static ClaimTrainCardRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static ClaimTrainCardRequest _defaultInstance;
+  static void $checkItem(ClaimTrainCardRequest v) {
+    if (v is! ClaimTrainCardRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+}
+
+class ClaimRouteRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('ClaimRouteRequest', package: const $pb.PackageName('card'))
+    ..hasRequiredFields = false
+  ;
+
+  ClaimRouteRequest() : super();
+  ClaimRouteRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  ClaimRouteRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  ClaimRouteRequest clone() => new ClaimRouteRequest()..mergeFromMessage(this);
+  ClaimRouteRequest copyWith(void Function(ClaimRouteRequest) updates) => super.copyWith((message) => updates(message as ClaimRouteRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static ClaimRouteRequest create() => new ClaimRouteRequest();
+  static $pb.PbList<ClaimRouteRequest> createRepeated() => new $pb.PbList<ClaimRouteRequest>();
+  static ClaimRouteRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static ClaimRouteRequest _defaultInstance;
+  static void $checkItem(ClaimRouteRequest v) {
+    if (v is! ClaimRouteRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+}
+
 class CardServiceApi {
   $pb.RpcClient _client;
   CardServiceApi(this._client);
@@ -199,6 +455,30 @@ class CardServiceApi {
   $async.Future<Empty> claimDestinationCards($pb.ClientContext ctx, ClaimDestinationCardsRequest request) {
     var emptyResponse = new Empty();
     return _client.invoke<Empty>(ctx, 'CardService', 'ClaimDestinationCards', request, emptyResponse);
+  }
+  $async.Future<DestinationCard> streamDestinationCards($pb.ClientContext ctx, StreamDestinationCardsRequest request) {
+    var emptyResponse = new DestinationCard();
+    return _client.invoke<DestinationCard>(ctx, 'CardService', 'StreamDestinationCards', request, emptyResponse);
+  }
+  $async.Future<Empty> claimTrainCard($pb.ClientContext ctx, ClaimTrainCardRequest request) {
+    var emptyResponse = new Empty();
+    return _client.invoke<Empty>(ctx, 'CardService', 'ClaimTrainCard', request, emptyResponse);
+  }
+  $async.Future<TrainCard> streamTrainCards($pb.ClientContext ctx, StreamTrainCardsRequest request) {
+    var emptyResponse = new TrainCard();
+    return _client.invoke<TrainCard>(ctx, 'CardService', 'StreamTrainCards', request, emptyResponse);
+  }
+  $async.Future<DeckStats> streamDeckStats($pb.ClientContext ctx, StreamDeckStatsRequest request) {
+    var emptyResponse = new DeckStats();
+    return _client.invoke<DeckStats>(ctx, 'CardService', 'StreamDeckStats', request, emptyResponse);
+  }
+  $async.Future<Empty> claimRoute($pb.ClientContext ctx, ClaimRouteRequest request) {
+    var emptyResponse = new Empty();
+    return _client.invoke<Empty>(ctx, 'CardService', 'ClaimRoute', request, emptyResponse);
+  }
+  $async.Future<Route> streamRoutes($pb.ClientContext ctx, StreamRoutesRequest request) {
+    var emptyResponse = new Route();
+    return _client.invoke<Route>(ctx, 'CardService', 'StreamRoutes', request, emptyResponse);
   }
 }
 
