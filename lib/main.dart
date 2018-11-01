@@ -25,14 +25,14 @@ class TicketToRideApp extends StatelessWidget {
     return MaterialApp(
       title: 'Ticket to Ride',
       theme: ticketToRideTheme,
-      initialRoute: '/game_view',
+      initialRoute: '/',
       navigatorKey: navigatorKey,
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => AccountLoginPresenter().build(),
         '/game_selection': (BuildContext context) => GameSelectionPresenter().build(),
         '/lobby_view': (BuildContext context) => LobbyViewPresenter().build(),
         '/game_view': (BuildContext context) => GameViewPresenter().build(),
-        // '/chat' : (BuildContext context) => ChatPresenter().build(),
+        '/chat' : (BuildContext context) => ChatPresenter().build(),
         // '/game_history' : (BuildContext context) => ChatPresenter().build(),
         '/dest_card_select' : (BuildContext context) => DestCardSelectPresenter().build(),
       },
