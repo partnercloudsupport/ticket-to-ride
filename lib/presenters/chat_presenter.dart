@@ -7,8 +7,6 @@ import 'package:protobuf/protobuf.dart';
 
 import 'package:ticket_to_ride/fragments/chat_fragment.dart';
 
-
-
 class ChatPresenter {
 
   final String title;
@@ -53,6 +51,4 @@ class ChatPresenter {
   Widget build() {
     return fragment;
   }
-
-
 }

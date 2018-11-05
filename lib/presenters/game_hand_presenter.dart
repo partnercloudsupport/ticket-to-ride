@@ -2,6 +2,7 @@ import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/global_context.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/fragments/game_hand_fragment.dart';
+import 'package:ticket_to_ride/presenters/presenter-data.dart';
 
 class GameHandApi {
   streamTrainCards(ctx, request) {
@@ -36,21 +37,7 @@ class GameHandPresenter implements GameHandObserver  {
 
     return _api.streamDestinationCards(ctx, request).map((response) {
 
-      print("here");
-      print(response);
-
       destCards.putIfAbsent(response.id, () => response);
-
-      // var groupedDestCards = Map();
-      //
-      // destCards.forEach((key, trainCard) {
-      //   if(groupedDestCards.containsKey(trainCard.color)) {
-      //     groupedDestCards[trainCard.color] += groupedDestCards[trainCard.color];
-      //   } else {
-      //     groupedDestCards[trainCard.color] = 1;
-      //   }
-      // });
-
       var finalDestCards = [];
 
       destCards.forEach((key, card) {
@@ -59,35 +46,9 @@ class GameHandPresenter implements GameHandObserver  {
 
       return finalDestCards;
     });
-
-    // return [
-    //   DestinationCard('Los Angeles', 'New York', 21),
-    //   DestinationCard('Duluth', 'Houston', 8)
-    // ];
   }
 
-  _getCardColor(color) {
-    switch(color) {
-    case api.TrainColor.ORANGE:
-      return 0xFFDB9759;
-    case api.TrainColor.PINK:
-      return 0xFFD950C6;
-    case api.TrainColor.GREEN:
-      return 0xFF84B72A;
-    case api.TrainColor.BLUE:
-      return 0xFF5FDCDA;
-    case api.TrainColor.BLACK:
-      return 0xFF212121;
-    case api.TrainColor.GREY:
-      return 0xFFC3C3C3;
-    case api.TrainColor.YELLOW:
-      return 0xFFD9B755;
-    case api.TrainColor.RED:
-      return 0xFFD74141;
-    case api.TrainColor.WHITE:
-      return 0xFFECECEC;
-    }
-  }
+
 
   @override
   getTrainCards() {
@@ -120,7 +81,7 @@ class GameHandPresenter implements GameHandObserver  {
       var finalTrainCards = [];
 
       groupedTrainCards.forEach((key, count) {
-        finalTrainCards.add(TrainCards(_getCardColor(key), count));
+        finalTrainCards.add(TrainCards(getTrainColor(key), count));
       });
 
       return finalTrainCards;

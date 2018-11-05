@@ -41,7 +41,6 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
       var games = [];
 
       response.games.forEach((game) {
-        print(game);
         if(game.status != api.Game_Status.STARTED) {
           games.add(game);
         }
@@ -57,40 +56,31 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
 
   @override
   createGame(request) async {
-    //if (request.validate()) {
-      //request.save();
 
-      var ctx = ClientContext();
+    var ctx = ClientContext();
 
-      print('Display name: ' + request.displayName);
-      print('Max players: ' + request.maxPlayers.toString());
+    // print('Display name: ' + request.displayName);
+    // print('Max players: ' + request.maxPlayers.toString());
 
-      try {
-        var response = await api.gameProxy.createGame(ctx,request);
+    try {
+      var response = await api.gameProxy.createGame(ctx,request);
 
-        GetPlayerRequest getPlayerRequest = GetPlayerRequest();
-        getPlayerRequest.playerId = response.playerId;
-        print(getPlayerRequest.playerId);
-        var playerResponse = await api.gameProxy.getPlayer(ctx, getPlayerRequest);
+      GetPlayerRequest getPlayerRequest = GetPlayerRequest();
+      getPlayerRequest.playerId = response.playerId;
+      var playerResponse = await api.gameProxy.getPlayer(ctx, getPlayerRequest);
 
+      GlobalContext().currentGameId = response.gameId;
+      GlobalContext().currentPlayerId = playerResponse.id;
 
-        //createGameFragment.onCurrentGameIdChange(response.gameId);
-        GlobalContext().currentGameId = response.gameId;
-        GlobalContext().currentPlayerId = playerResponse.id;
+      gameListKey.currentState.cancelPoll();
+      FragmentLibrary.navigatePush('/lobby_view');
 
-        //createGameFragment.pushNavigator('/lobby_view');
-        gameListKey.currentState.cancelPoll();
-        FragmentLibrary.navigatePush('/lobby_view');
+      // print('just created game ' + response.gameId);
 
-        print('just created game ' + response.gameId);
-
-
-      } catch(error) {
-        print(error.code);
-        print(error.message);
-      }
-
-    //}
+    } catch(error) {
+      print(error.code);
+      print(error.message);
+    }
   }
 
   @override
@@ -98,7 +88,7 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
       var ctx = ClientContext();
 
       try {
-        print('querying game ' + request.gameId);
+        // print('querying game ' + request.gameId);
         var response = await api.gameProxy.createPlayer(ctx, request);
 
         try {
@@ -107,7 +97,7 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
           print(getPlayerRequest.playerId);
           var playerResponse = await api.gameProxy.getPlayer(ctx, getPlayerRequest);
 
-          print(playerResponse.gameId);
+          // print(playerResponse.gameId);
 
           //gameListFragment.onCurrentGameIdChange(playerResponse.gameId);
           GlobalContext().currentGameId = playerResponse.gameId;

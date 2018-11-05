@@ -3,6 +3,7 @@ import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/fragments/game_player_fragment.dart';
+import 'package:ticket_to_ride/presenters/presenter-data.dart';
 
 class GamePlayerApi {
   streamPlayerStats(ctx, request) {
@@ -20,40 +21,6 @@ class GamePlayerPresenter implements GamePlayerObserver  {
   }
 
   GamePlayerPresenter.withApi(this._api);
-
-  _getColor(colorCode) {
-    switch(colorCode) {
-      case api.Player_Color.RED:
-        return 'red';
-      case api.Player_Color.BLUE:
-        return 'blue';
-      case api.Player_Color.GREEN:
-        return 'green';
-      case api.Player_Color.PURPLE:
-        return 'purple';
-      case api.Player_Color.ORANGE:
-        return 'orange';
-      case api.Player_Color.YELLOW:
-        return 'yellow';
-    }
-  }
-
-  _getColorInt(colorCode) {
-    switch(colorCode) {
-      case api.Player_Color.RED:
-        return 0XFF731616;
-      case api.Player_Color.BLUE:
-        return 0XFF00587C;
-      case api.Player_Color.GREEN:
-        return 0XFF527C00;
-      case api.Player_Color.PURPLE:
-        return 0XFF4D345A;
-      case api.Player_Color.ORANGE:
-        return 0XFF7C4000;
-      case api.Player_Color.YELLOW:
-        return 0XFFB59A00;
-    }
-  }
 
   @override
   getPlayers() {
@@ -75,8 +42,8 @@ class GamePlayerPresenter implements GamePlayerObserver  {
       playerList.forEach((playerId, player) {
         finalPlayerList.add(Player(
           GlobalContext().dummyPlayerMap[playerId].username,
-          _getColor(GlobalContext().dummyPlayerMap[playerId].color),
-          _getColorInt(GlobalContext().dummyPlayerMap[playerId].color),
+          getPlayerColor(GlobalContext().dummyPlayerMap[playerId].color),
+          getPlayerColorInt(GlobalContext().dummyPlayerMap[playerId].color),
           player.points,
           player.trainCount,
           player.trainCardCount,
