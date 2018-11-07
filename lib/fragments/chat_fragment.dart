@@ -28,6 +28,7 @@ class ChatMessage extends StatelessWidget {
     content = msg.content, timestamp = msg.timestamp, player = player;
 
 
+  // return lowercase color text for proper color asset access
   _getColor(colorCode) {
     switch(colorCode) {
       case api.Player_Color.RED:
@@ -120,6 +121,7 @@ class ChatFragmentState extends State<ChatFragment> {
     ),
   );
 
+  // send a message
   void handleSubmit(String content) {
     _chatController.clear();
     request.playerId = GlobalContext().currentPlayerId;
@@ -133,10 +135,8 @@ class ChatFragmentState extends State<ChatFragment> {
     }
   }
 
+  // receive a message
   void handleReceipt(Message msg, Player player) {
-    print('handling receipt of message');
-    print('message: ' + msg.content);
-    print('player: ' + player.playerId);
     setState(() {
       _messages.insert(0, ChatMessage(msg, player));
     });
@@ -214,13 +214,6 @@ class ChatFragmentState extends State<ChatFragment> {
       ),
     );
   }
-
-  /*@override
-  initState() {
-    super.initState();
-
-    _getMessages();
-  } */
 
   @override
   Widget build(BuildContext context) {
