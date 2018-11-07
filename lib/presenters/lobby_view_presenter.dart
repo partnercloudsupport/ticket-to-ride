@@ -5,6 +5,7 @@ import 'package:ticket_to_ride/fragments/lobby_view_fragment.dart';
 import 'package:ticket_to_ride/fragments/fragment_library.dart';
 import 'package:ticket_to_ride/api/game.pb.dart' as gameApi;
 import 'package:ticket_to_ride/api/player_wrapper.dart' as playerWrapper;
+import 'package:ticket_to_ride/presenters/presenter-data.dart';
 
 class LobbyViewApi {
   getGame(ctx, request) {
@@ -35,23 +36,6 @@ class LobbyViewPresenter implements LobbyViewObserver {
   }
 
   LobbyViewPresenter.withApi(this._api);
-
-  _getColor(colorCode) {
-    switch(colorCode) {
-      case api.Player_Color.RED:
-        return 'red';
-      case api.Player_Color.BLUE:
-        return 'blue';
-      case api.Player_Color.GREEN:
-        return 'green';
-      case api.Player_Color.PURPLE:
-        return 'purple';
-      case api.Player_Color.ORANGE:
-        return 'orange';
-      case api.Player_Color.YELLOW:
-        return 'yellow';
-    }
-  }
 
   @override
   getGame() async {
@@ -86,7 +70,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
           player.username = response3.username;
           playerObjects.add(player);
 
-          players.add(Player(response3.username, _getColor(response2.color)));
+          players.add(Player(response3.username, getTrainColor(response2.color)));
         } else {
           players.add(null);
         }

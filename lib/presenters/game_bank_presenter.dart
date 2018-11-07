@@ -3,6 +3,7 @@ import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/fragments/game_bank_fragment.dart';
 import 'package:ticket_to_ride/fragments/fragment_library.dart';
+import 'package:ticket_to_ride/presenters/presenter-data.dart';
 
 class GameBankApi {
   selectTrainCard(playerId, trainCardId) {
@@ -37,29 +38,6 @@ class GameBankPresenter implements GameBankObserver  {
 
   GameBankPresenter.withApi(this._api);
 
-  _getCardColor(color) {
-    switch(color) {
-    case api.TrainColor.ORANGE:
-      return 0xFFDB9759;
-    case api.TrainColor.PINK:
-      return 0xFFD950C6;
-    case api.TrainColor.GREEN:
-      return 0xFF84B72A;
-    case api.TrainColor.BLUE:
-      return 0xFF5FDCDA;
-    case api.TrainColor.BLACK:
-      return 0xFF212121;
-    case api.TrainColor.GREY:
-      return 0xFFC3C3C3;
-    case api.TrainColor.YELLOW:
-      return 0xFFD9B755;
-    case api.TrainColor.RED:
-      return 0xFFD74141;
-    case api.TrainColor.WHITE:
-      return 0xFFECECEC;
-    }
-  }
-
   @override
   getFaceUpTrainCards() {
 
@@ -76,7 +54,7 @@ class GameBankPresenter implements GameBankObserver  {
       var index = trainCards.indexWhere((train) => train.id == response.id);
 
       if(response.state == api.TrainCard_State.VISIBLE && index <= -1) {
-        trainCards.add(FaceUpTrainCard(response.id, true,_getCardColor(response.color)));
+        trainCards.add(FaceUpTrainCard(response.id, true,getTrainColor(response.color)));
       } else if(index > -1 && response.state != api.TrainCard_State.VISIBLE) {
         trainCards.removeAt(index);
       }

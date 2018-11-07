@@ -32,17 +32,6 @@ class DestCardSelectPresenter implements DestCardSelectObserver  {
       var request = new api.PeekDestinationCardsRequest();
       request.gameId = GlobalContext().currentGameId;
       var response = await _api.getDestinationCards(ctx, request);
-
-      // print(response);
-
-      // destinationCards: {
-      //   id: destCard-2124713
-      //   firstCityId: Duluth
-      //   secondCityId: Houston
-      //   pointValue: 8
-      //   playerId: sent
-      // }
-
       var cards = [];
 
       response.destinationCards.forEach((card) {
@@ -70,7 +59,6 @@ class DestCardSelectPresenter implements DestCardSelectObserver  {
       request.destinationCardIds.addAll(cardIds);
       await _api.claimDestinationCards(ctx, request);
 
-      // print(cardIds);
       FragmentLibrary.navigatePop();
     } catch(error) {
       print(error);

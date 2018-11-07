@@ -3,6 +3,7 @@ import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/fragments/game_map_fragment.dart';
 import 'package:ticket_to_ride/fragments/fragment_library.dart';
+import 'package:ticket_to_ride/presenters/presenter-data.dart';
 
 class GameMapApi {
   claimRoute(playerId, routeId) {
@@ -67,68 +68,18 @@ class GameMapPresenter implements GameMapObserver  {
     ];
   }
 
-  _getColorInt(colorCode) {
-    switch(colorCode) {
-      case api.Player_Color.RED:
-        return 0XFF731616;
-      case api.Player_Color.BLUE:
-        return 0XFF00587C;
-      case api.Player_Color.GREEN:
-        return 0XFF527C00;
-      case api.Player_Color.PURPLE:
-        return 0XFF4D345A;
-      case api.Player_Color.ORANGE:
-        return 0XFF7C4000;
-      case api.Player_Color.YELLOW:
-        return 0XFFB59A00;
-    }
-  }
-
-  _getCardColor(color) {
-    switch(color) {
-    case api.TrainColor.ORANGE:
-      return 0xFFDB9759;
-    case api.TrainColor.PINK:
-      return 0xFFD950C6;
-    case api.TrainColor.GREEN:
-      return 0xFF84B72A;
-    case api.TrainColor.BLUE:
-      return 0xFF5FDCDA;
-    case api.TrainColor.BLACK:
-      return 0xFF212121;
-    case api.TrainColor.GREY:
-      return 0xFFC3C3C3;
-    case api.TrainColor.YELLOW:
-      return 0xFFD9B755;
-    case api.TrainColor.RED:
-      return 0xFFD74141;
-    case api.TrainColor.WHITE:
-      return 0xFFECECEC;
-    }
-  }
-
   @override
   getRoutes() {
 
-    // StreamRoutes (StreamRoutesRequest)
-
     var ctx = ClientContext();
     var request = new api.StreamRoutesRequest();
-
     var routesList = Map();
 
-    // string id = 1;
-    // string first_city_id = 2;
-    // string second_city_id = 3;
-    // TrainColor color = 4;
-    // string player_id = 5;
     var city1 = City("Helena", "15", .3, .22);
     var city2 = City("Salt Lake City", "33", .22, .40);
     var city3 = City("Denver", "35", .33, .44);
 
     return _api.streamRoutes(ctx, request).map((response) {
-      // print(response);
-
       // update old route data
       if(routesList.containsKey(response.id)) {
         routesList.removeWhere((k,v) => k == response.id);
@@ -138,8 +89,6 @@ class GameMapPresenter implements GameMapObserver  {
       var finalRoutesList = [];
 
       routesList.forEach((routeId, route) {
-        // print(route.firstCityId);
-        // print(" ");
         var firstCity = route.firstCityId == "city1" ? city1 : route.firstCityId == "city2" ? city2 : city3;
         var secondCity = route.secondCityId == "city1" ? city1 : route.secondCityId == "city2" ? city2 : city3;
 
@@ -150,18 +99,15 @@ class GameMapPresenter implements GameMapObserver  {
           secondCity.coordinateY,
           3,
           route.id,
-          _getCardColor(route.color),
-          GlobalContext().dummyPlayerMap[route.playerId] != null ? _getColorInt(GlobalContext().dummyPlayerMap[route.playerId].color) : -1)
+          getTrainColor(route.color),
+          GlobalContext().dummyPlayerMap[route.playerId] != null ? getPlayerColorInt(GlobalContext().dummyPlayerMap[route.playerId].color) : -1)
         );
       });
 
       finalRoutesList.addAll(_getAllRoutes());
 
       return finalRoutesList;
-      // return [];
     });
-
-    // _getColorInt(GlobalContext().dummyPlayerMap["player1"].color);
   }
 
   @override
