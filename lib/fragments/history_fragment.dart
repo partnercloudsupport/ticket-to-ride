@@ -3,31 +3,35 @@ import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/api/chat.pb.dart';
 import 'package:ticket_to_ride/api/player_wrapper.dart';
-
 import 'package:ticket_to_ride/presenters/presenter-data.dart';
 
 import 'package:ticket_to_ride/theme/theme.dart';
 
-import 'package:ticket_to_ride/presenters/chat_presenter.dart';
+import 'package:ticket_to_ride/presenters/history_presenter.dart';
 
 import 'dart:async';
 
 final chatFragmentKey = GlobalKey<ChatFragmentState>();
 
-class ChatPresenterApi {
+class HistoryPresenterApi {
   sendMessage(request) async {}
   streamMessages(request) async {}
 }
 
-class ChatMessage extends StatelessWidget {
+// TODO get protobuf model class for "EventMessage"
+
+class EventMessage extends StatelessWidget {
   final String messageId;
   final String content;
   final int timestamp;
   final Player player;
 
+  final String playerId;
+
   // default constructor from Message and Player
-  ChatMessage(Message msg, Player player) : messageId = msg.messageId,
-    content = msg.content, timestamp = msg.timestamp, player = player;
+  EventMessage(EventMessage msg, Player player) : messageId = msg.messageId,
+    content = msg.content, timestamp = msg.timestamp, player = player, playerId = player.playerId;
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,19 +72,19 @@ class ChatMessage extends StatelessWidget {
 }
 
 
-class ChatFragment extends StatefulWidget {
-  ChatFragment(ChatPresenter presenter, {Key key, this.title, this.messages}) :
+class HistoryFragment extends StatefulWidget {
+  HistoryFragment(HistoryPresenter presenter, {Key key, this.title, this.messages}) :
     this.presenter = presenter;
 
   final String title;
-  final ChatPresenter presenter;
-  final Stream<Message> messages;
+  final HistoryPresenter presenter;
+  final Stream<EventMessage> messages;
 
   @override
   ChatFragmentState createState() => ChatFragmentState();
 }
 
-class ChatFragmentState extends State<ChatFragment> {
+class ChatFragmentState extends State<HistoryFragment> {
 
   @override
   initState() {
@@ -93,7 +97,7 @@ class ChatFragmentState extends State<ChatFragment> {
   CreateMessageRequest request = CreateMessageRequest();
 
   final TextEditingController _chatController =  TextEditingController();
-  List<ChatMessage> _messages = List<ChatMessage>();
+  List<EventMessage> _messages = List<EventMessage>();
 
   var _background = Container(
     decoration: new BoxDecoration(
@@ -111,37 +115,17 @@ class ChatFragmentState extends State<ChatFragment> {
     request.content = content;
 
     try {
-      this.widget.presenter.sendMessage(request);
+      this.widget.presenter.sendEventMessage(request);
     } catch(error) {
         print(error.code);
         print(error.message);
     }
   }
 
-  // receive a message
-  void handleReceipt(Message msg, Player player) {
+  // receive an eventmessage
+  void handleReceipt(EventMessage msg, Player player) {
     setState(() {
-      _messages.insert(0, ChatMessage(msg, player));
-    });
-  }
-
-  _getMessages() async {
-    List<dynamic> messages;
-
-    await for (Message msg in this.widget.presenter.getMessages()) {
-      if (msg != null) {
-        print('msg: ' + msg.content);
-        print('pre-map player id: ' + msg.playerId);
-        var player = GlobalContext().playerMap[msg.playerId];
-        if (player != null) {
-          print('stream finds player ' + player.playerId);
-          messages.insert(0, ChatMessage(msg, player));
-        } else print('player is null');
-      } else print('msg is null');
-    }
-
-    setState(() {
-          _messages = messages;
+      _messages.insert(0, EventMessage(msg, player));
     });
   }
 
@@ -150,7 +134,7 @@ class ChatFragmentState extends State<ChatFragment> {
 
     print('streaming messages');
 
-    await for (Message msg in widget.messages) {
+    await for (EventMessage msg in widget.messages) {
       if (!open) {
         break;
       }
@@ -168,27 +152,19 @@ class ChatFragmentState extends State<ChatFragment> {
   }
 
 
-  Widget _chatEnvironment (){
+  Widget _historyEnvironment (){
     return IconTheme(
       data:  IconThemeData(color: Colors.blue),
           child:  Container(
         margin: const EdgeInsets.symmetric(horizontal:8.0),
         child:  Row(
           children: <Widget>[
-             Flexible(
-              child:  TextField(
-                decoration:  InputDecoration.collapsed(hintText: "Type a message ..."),
-                controller: _chatController,
-                onSubmitted: handleSubmit,
-              ),
-            ),
              Container(
               margin: const EdgeInsets.symmetric(horizontal: 4.0),
               child:  IconButton(
                 icon:  Icon(Icons.send),
                 color: ticketToRideTheme.buttonColor,
                 onPressed: ()=> handleSubmit(_chatController.text),
-
               ),
             )
           ],
@@ -221,7 +197,7 @@ class ChatFragmentState extends State<ChatFragment> {
            Container(decoration:  BoxDecoration(
             color: Theme.of(context).cardColor,
           ),
-          child: _chatEnvironment(),)
+          child: _historyEnvironment(),)
         ],
       )
     );

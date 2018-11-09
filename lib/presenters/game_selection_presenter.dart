@@ -59,9 +59,6 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
 
     var ctx = ClientContext();
 
-    // print('Display name: ' + request.displayName);
-    // print('Max players: ' + request.maxPlayers.toString());
-
     try {
       var response = await api.gameProxy.createGame(ctx,request);
 
@@ -75,20 +72,10 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
       gameListKey.currentState.cancelPoll();
       FragmentLibrary.navigatePush('/lobby_view');
 
-      // print('just created game ' + response.gameId);
-
-<<<<<<< HEAD
-      } catch(error) {
-        print(error.toString());
-      }
-
-    //}
-=======
     } catch(error) {
       print(error.code);
       print(error.message);
     }
->>>>>>> 4ee38fd048541b0dbd1caf24fd0805b5a79d450c
   }
 
   @override
@@ -96,7 +83,6 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
       var ctx = ClientContext();
 
       try {
-        // print('querying game ' + request.gameId);
         var response = await api.gameProxy.createPlayer(ctx, request);
 
         try {
@@ -105,14 +91,9 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
           print(getPlayerRequest.playerId);
           var playerResponse = await api.gameProxy.getPlayer(ctx, getPlayerRequest);
 
-          // print(playerResponse.gameId);
-
-          //gameListFragment.onCurrentGameIdChange(playerResponse.gameId);
           GlobalContext().currentGameId = playerResponse.gameId;
           GlobalContext().currentPlayerId = playerResponse.id;
 
-          // TODO replace with wrapper Navigator implementation
-          //gameListFragment.pushNavigator('/lobby_view');
           FragmentLibrary.navigatePush('/lobby_view');
 
         } catch(error) {
@@ -123,15 +104,12 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
       } catch(error) {
           switch(error.code) {
             case api.Code.INVALID_ARGUMENT:
-              //gameListFragment.showErrorToast('This game is full');
               FragmentLibrary.showErrorToast('This game is full');
               break;
             case api.Code.NOT_FOUND:
-              //gameListFragment.showErrorToast('This game no longer exists');
               FragmentLibrary.showErrorToast('This game no longer exists');
               break;
             default:
-              //gameListFragment.showErrorToast('UNKNOWN ERROR');
               FragmentLibrary.showErrorToast('UNKNOWN ERROR');
           }
       }
