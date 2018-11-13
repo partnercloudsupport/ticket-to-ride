@@ -71,8 +71,8 @@ class _DestCardSelectFragmentState extends State<DestCardSelectFragment> {
           }
         },
         child: Container(
-          width: 290.0,
-          height: 200.0,
+          width: MediaQuery.of(context).size.width * .3,
+          height: MediaQuery.of(context).size.width * .3 * .7,
           margin: const EdgeInsets.symmetric(horizontal: 5.0),
           decoration: new BoxDecoration(
             image: new DecorationImage(

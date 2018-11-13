@@ -97,8 +97,8 @@ class _GameViewFragmentState extends State<GameViewFragment> {
               ),
             ),
           ),
-          new Container(
-            child: _buildGameView()
+          ListView (
+            children: [ _buildGameView()]
           ),
         ]
       ),

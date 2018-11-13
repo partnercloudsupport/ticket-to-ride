@@ -148,22 +148,33 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
                     fit: BoxFit.contain,
                   ),
                 ),
-                padding: Theme.of(context).platform == TargetPlatform.iOS ?
-                  EdgeInsets.only(top: 240.0, right: 220.0, bottom: 50.0, left: 210.0,) : null,
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      _username,
-                      _password,
-                      _buttons
-                    ],
-                  ),
+                padding: EdgeInsets.only(top: 240.0, right: MediaQuery.of(context).size.width * .2, bottom: 50.0, left: MediaQuery.of(context).size.width * .2),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * .70,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        _username,
+                        _password,
+                        _buttons
+                      ],
+                    ),
+                  )
                 ),
               )
             ]
-          )
+          ),
+          // Container(
+          //   decoration: new BoxDecoration(
+          //     image: new DecorationImage(
+          //       image: new AssetImage("images/ticket.png"),
+          //       fit: BoxFit.contain,
+          //     ),
+          //   ),
+          //   width: MediaQuery.of(context).size.width * .90,
+          // )
         ]
       )
     );

@@ -85,13 +85,13 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
     var color = player != null && player.color != '' ? player.color : "waiting";
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           new Container(
-            height: 92.0,
-            width: 92.0,
+            height: MediaQuery.of(context).size.width * .1,
+            width: MediaQuery.of(context).size.width * .1,
             decoration: new BoxDecoration(
               image: new DecorationImage(
                 image: new AssetImage("images/player-$color.jpg"),
