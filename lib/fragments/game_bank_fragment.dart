@@ -90,8 +90,8 @@ class _GameBankFragmentState extends State<GameBankFragment> {
         }
       },
       child: Container(
-        width: 140.0,
-        height: 90.0,
+        width: MediaQuery.of(context).size.width * .075 * 1.5,
+        height: MediaQuery.of(context).size.width * .075,
         margin: const EdgeInsets.symmetric(vertical: 5.0),
         decoration: new BoxDecoration(
           color: Colors.white,
@@ -116,8 +116,8 @@ class _GameBankFragmentState extends State<GameBankFragment> {
             }
           },
           child: Container(
-            width: 80.0,
-            height: 60.0,
+            width: MediaQuery.of(context).size.width * .05 * 1.5,
+            height: MediaQuery.of(context).size.width * .05,
             margin: const EdgeInsets.symmetric(vertical: 5.0),
             decoration: new BoxDecoration(
               color: Color(trainCard.color),
@@ -146,8 +146,8 @@ class _GameBankFragmentState extends State<GameBankFragment> {
         }
       },
       child: Container(
-        width: 140.0,
-        height: 90.0,
+        width: MediaQuery.of(context).size.width * .075 * 1.5,
+        height: MediaQuery.of(context).size.width * .075,
         margin: const EdgeInsets.symmetric(vertical: 5.0),
         decoration: new BoxDecoration(
           color: Colors.white,

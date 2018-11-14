@@ -30,7 +30,7 @@ class _GameMenuFragmentState extends State<GameMenuFragment> {
 
     _buildChatButton() {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: RaisedButton(
           key: Key('chatButton'),
           onPressed: () {
@@ -51,7 +51,7 @@ class _GameMenuFragmentState extends State<GameMenuFragment> {
 
     _buildHistoryButton() {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: RaisedButton(
           key: Key('historyButton'),
           onPressed: () {

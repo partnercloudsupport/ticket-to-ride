@@ -14,6 +14,7 @@ const Code$json = const {
     const {'1': 'UNAVAILABLE', '2': 4},
     const {'1': 'NOT_FOUND', '2': 5},
     const {'1': 'ACCESS_DENIED', '2': 6},
+    const {'1': 'PING', '2': 7},
   ],
 };
 

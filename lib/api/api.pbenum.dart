@@ -16,6 +16,7 @@ class Code extends $pb.ProtobufEnum {
   static const Code UNAVAILABLE = const Code._(4, 'UNAVAILABLE');
   static const Code NOT_FOUND = const Code._(5, 'NOT_FOUND');
   static const Code ACCESS_DENIED = const Code._(6, 'ACCESS_DENIED');
+  static const Code PING = const Code._(7, 'PING');
 
   static const List<Code> values = const <Code> [
     UNSPECIFIED,
@@ -25,6 +26,7 @@ class Code extends $pb.ProtobufEnum {
     UNAVAILABLE,
     NOT_FOUND,
     ACCESS_DENIED,
+    PING,
   ];
 
   static final Map<int, Code> _byValue = $pb.ProtobufEnum.initByValue(values);

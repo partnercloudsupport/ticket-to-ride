@@ -95,8 +95,8 @@ class _GameHandFragmentState extends State<GameHandFragment> {
       children: _trainCards.map((trainCard) {
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 5.0),
-          height: 80.0,
-          width: 60.0,
+          height: MediaQuery.of(context).size.width * .05 * 1.5,
+          width: MediaQuery.of(context).size.width * .05,
           decoration: new BoxDecoration(
             color: Color(trainCard.color),
           ),

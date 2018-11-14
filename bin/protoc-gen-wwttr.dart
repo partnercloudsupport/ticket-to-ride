@@ -88,6 +88,9 @@ import 'dart:typed_data';
           length--;
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
+            if (resp.code == Code.PING) {
+              return;
+            }
             if (resp.code != Code.OK) {
               sink.addError(ApiError(resp.code, resp.message));
               return;

@@ -149,16 +149,16 @@ class _GameMapFragmentState extends State<GameMapFragment> {
   _buildRouteSection(route) {
     if(route.playerColor == -1) {
       return Container(
-        width: 20.0,
-        height: 12.0,
+        width: MediaQuery.of(context).size.width * .008 * 1.5,
+        height: MediaQuery.of(context).size.width * .008,
         decoration: BoxDecoration(
           color: Color(route.color),
         ),
       );
     } else {
       return Container(
-        width: 20.0,
-        height: 12.0,
+        width: MediaQuery.of(context).size.width * .008 * 1.5,
+        height: MediaQuery.of(context).size.width * .008,
         decoration: BoxDecoration(
           color: Color(route.playerColor),
           borderRadius: new BorderRadius.circular(25.0),
