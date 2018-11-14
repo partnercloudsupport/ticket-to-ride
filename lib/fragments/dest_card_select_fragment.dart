@@ -14,10 +14,11 @@ abstract class DestCardSelectObserver {
 }
 
 class DestCardSelectFragment extends StatefulWidget {
-  DestCardSelectFragment({Key key,this.title,}) : super(key: key);
+  DestCardSelectFragment({Key key, this.title, this.minCard = 1}) : super(key: key);
 
   final observers = List<DestCardSelectObserver>();
   final String title;
+  final int minCard;
 
   void addObserver(DestCardSelectObserver o) {
     observers.add(o);
@@ -98,7 +99,7 @@ class _DestCardSelectFragmentState extends State<DestCardSelectFragment> {
   }
 
   _buildSelectButton() {
-    if(_selectedDestinationCards.length <= 1) {
+    if(_selectedDestinationCards.length < widget.minCard) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Text('')
