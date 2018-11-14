@@ -45,7 +45,8 @@ class ChatMessage extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("images/player-${getPlayerColor(player.color)}.jpg"),
-                  )
+                  ),
+                  shape: BoxShape.circle,
                 )
               )
             ),
@@ -110,6 +111,9 @@ class ChatFragmentState extends State<ChatFragment> {
     request.playerId = GlobalContext().currentPlayerId;
     request.content = content;
 
+    if (this.widget.presenter != null)
+      
+
     try {
       this.widget.presenter.sendMessage(request);
     } catch(error) {
@@ -122,26 +126,6 @@ class ChatFragmentState extends State<ChatFragment> {
   void handleReceipt(Message msg, Player player) {
     setState(() {
       _messages.insert(0, ChatMessage(msg, player));
-    });
-  }
-
-  _getMessages() async {
-    List<dynamic> messages;
-
-    await for (Message msg in this.widget.presenter.getMessages()) {
-      if (msg != null) {
-        print('msg: ' + msg.content);
-        print('pre-map player id: ' + msg.playerId);
-        var player = GlobalContext().playerMap[msg.playerId];
-        if (player != null) {
-          print('stream finds player ' + player.playerId);
-          messages.insert(0, ChatMessage(msg, player));
-        } else print('player is null');
-      } else print('msg is null');
-    }
-
-    setState(() {
-          _messages = messages;
     });
   }
 

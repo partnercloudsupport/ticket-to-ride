@@ -59,14 +59,8 @@ class ChatPresenter {
         print(error.message);
       }
 
-
-
-      
-
     } catch(error) {
-        print(error);
-        print(error.code);
-        print(error.message);
+        print(error.toString());
     }
 
   }
