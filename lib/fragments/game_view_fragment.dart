@@ -4,8 +4,8 @@ import 'package:ticket_to_ride/fragments/game_player_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_menu_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_bank_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_hand_fragment.dart';
-import 'package:ticket_to_ride/api/api.dart' as api;
-import 'package:protobuf/protobuf.dart';
+// import 'package:ticket_to_ride/api/api.dart' as api;
+// import 'package:protobuf/protobuf.dart';
 
 class GameViewFragment extends StatefulWidget {
   GameViewFragment(
@@ -53,34 +53,10 @@ class _GameViewFragmentState extends State<GameViewFragment> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            widget.handFragment,
-            _dummyButton()
+            widget.handFragment
           ]
         )
       ],
-    );
-  }
-
-  _dummyButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: RaisedButton(
-        key: Key('dummyButton'),
-        onPressed: () {
-          var ctx = ClientContext();
-          api.cardProxy.claimTrainCard(ctx, new api.ClaimTrainCardRequest());
-          api.cardProxy.claimRoute(ctx, new api.ClaimRouteRequest());
-          api.gameProxy.togglePlayerStats(ctx, new api.Empty());
-          print('state change');
-        },
-        child: Text(
-          'Change State',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 10.0
-          ),
-        ),
-      ),
     );
   }
 
