@@ -5,53 +5,50 @@ import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/api/chat.pb.dart';
 import 'package:protobuf/protobuf.dart';
 
-import 'package:ticket_to_ride/fragments/chat_fragment.dart';
+import 'package:ticket_to_ride/fragments/history_fragment.dart';
 
-class ChatPresenter {
+class HistoryPresenter {
 
   final String title;
-  ChatFragment fragment;
+  HistoryFragment fragment;
 
   // default constructor
-  ChatPresenter({this.title}) {
+  HistoryPresenter({this.title}) {
     var request = StreamMessagesRequest();
     var ctx = ClientContext();
     request.gameId = GlobalContext().currentGameId;
-    var stream = api.chatProxy.streamMessages(ctx, request);
+    
+    var stream; // TODO stream from historyProxy
 
-    fragment = ChatFragment(this, key: chatFragmentKey, messages: stream);
+    fragment = HistoryFragment(this, key: chatFragmentKey, messages: stream);
   }
 
   // another constructor with fragment passed in
-  ChatPresenter.fromFragment(ChatFragment fragment, {this.title}) {
+  HistoryPresenter.fromFragment(HistoryFragment fragment, {this.title}) {
     fragment = fragment;
   }
 
 
-  getMessages() {
+  getEventMessages() {
     var ctx = ClientContext();
 
     var request = new api.StreamMessagesRequest();
     request.gameId = GlobalContext().currentGameId;
 
-    return api.chatProxy.streamMessages(ctx, request);
+    // TODO stream EventMessages from historyProxy
   }
 
-  sendMessage(request) async {
+  sendEventMessage(request) async {
     try {
       if (request.content == null) {
         throw("empty message");
       }
 
       var ctx = ClientContext();
-      print('sending message with content: ' + request.content);
-      print('message is for playerId: ' + request.playerId);
 
       try{
-        var msg = await api.chatProxy.createMessage(ctx, request);
-        print('sendMessage return id is ' + msg.messageId);
-        print('sendMessage return content is ' + msg.content);
-        print('sendMessage return playerId is ' + msg.playerId);
+        var msg;  // TODO await historyProxy createEventMessage
+
         return msg;
 
       } catch(error) {

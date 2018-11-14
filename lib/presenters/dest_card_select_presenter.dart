@@ -67,8 +67,8 @@ class DestCardSelectPresenter implements DestCardSelectObserver  {
     }
   }
 
-  build() {
-    _fragment = new DestCardSelectFragment(title: 'Login');
+  build({minCard = 1}) {
+    _fragment = new DestCardSelectFragment(title: 'Login', minCard: minCard);
     _fragment.addObserver(this);
     return _fragment;
   }

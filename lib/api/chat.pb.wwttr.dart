@@ -100,6 +100,8 @@ class ChatServiceProxy {
         .transform(StreamTransformer.fromHandlers(
         handleData: (byte, sink) {
           if (length == 0) {
+            print("Got length");
+            print(byte);
             lengthBuffer.setInt8(lengthOffset, byte);
             lengthOffset++;
             if (lengthOffset == 4) {
@@ -110,6 +112,9 @@ class ChatServiceProxy {
           }
 
           dataBuffer.add(byte);
+          print("Got payload");
+          print(byte);
+          print(new String.fromCharCode(byte));
 
           length--;
           if (length == 0) {
@@ -121,7 +126,12 @@ class ChatServiceProxy {
               sink.addError(ApiError(resp.code, resp.message));
               return;
             }
+<<<<<<< HEAD
+            
+            sink.add(Message.fromBuffer(dataBuffer));
+=======
             sink.add(Message.fromBuffer(resp.payload));
+>>>>>>> 88581cb13e3bc0406d04cb6c296646e1e720d145
             dataBuffer.clear();
           }
         },
