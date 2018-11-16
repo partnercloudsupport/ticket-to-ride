@@ -13,16 +13,18 @@ service CardService {
   rpc StreamDestinationCards (StreamDestinationCardsRequest) returns (stream DestinationCard);
 
   // rpc GetTrainCard (GetTrainCardRequest) returns (TrainCard);
-  rpc ClaimTrainCard (ClaimTrainCardRequest) returns (ClaimTrainCardResponse);
+  //rpc ClaimTrainCard (ClaimTrainCardRequest) returns (ClaimTrainCardResponse);
   rpc StreamTrainCards (StreamTrainCardsRequest) returns (stream TrainCard);
   rpc StreamDeckStats (StreamDeckStatsRequest) returns (stream DeckStats);
 
-  // rpc GetRoute (GetRouteRequest) returns (Route);
-  rpc ClaimRoute (ClaimRouteRequest) returns (ClaimRouteResponse);
-  rpc StreamRoutes (StreamRoutesRequest) returns (stream Route);
+  rpc DrawTrainCardFromDeck (DrawTrainCardFromDeckRequest) returns (Empty);
+  rpc DrawFaceUpTrainCard(DrawFaceUpTrainCardRequest) returns(Empty);
+  rpc getTrainCardsInHand(GetTrainCardsInHandRequest) returns (GetTrainCardsInHandResponse);
 }
 
+message Empty {
 
+}
 
 message GetDestinationCardRequest {
   string destination_card_id = 1;
@@ -57,9 +59,34 @@ message StreamDestinationCardsRequest {
   string player_id = 1;
 }
 
+
+
+message DeckStats {
+  int32 hidden_train_card_count = 1;
+  int32 hidden_destination_card_count = 3;
+}
+
+message StreamDeckStatsRequest {
+  string game_id = 1;
+}
+
+message ClaimTrainCardRequest {
+
+}
+
+message ClaimTrainCardResponse {
+
+}
+
+message StreamTrainCardsRequest {
+  string player_id = 1;
+}
+
+//------------Train Card Data Structures--------------//
 message TrainCard {
   string id = 1;
-  TrainColor color = 2;
+  string player_id = 2;
+  TrainColor color = 3;
   State state = 4;
 
   enum State {
@@ -81,45 +108,28 @@ enum TrainColor {
   YELLOW = 7;
   RED = 8;
   WHITE = 9;
+  RAINBOW = 10;
 }
 
-message StreamTrainCardsRequest {
-  string player_id = 1;
-}
 
-message DeckStats {
-  int32 hidden_train_card_count = 1;
-  int32 hidden_destination_card_count = 3;
-}
-
-message StreamDeckStatsRequest {
-
-}
-
-message Route {
+/* Do these requests really need to be separate?
+ We could just have the database fill the spot (add to the
+ deck or add to the face up cards) where necessary
+*/
+message DrawTrainCardFromDeckRequest {
   string id = 1;
-  string first_city_id = 2;
-  string second_city_id = 3;
-  TrainColor color = 4;
-  string player_id = 5;
 }
 
-message StreamRoutesRequest {
-
+message DrawFaceUpTrainCardRequest {
+  string id = 1;
+  string card_drawn_id = 2;
 }
 
-message ClaimTrainCardRequest {
-
+message GetTrainCardsInHandRequest {
+  string id = 1;
 }
 
-message ClaimTrainCardResponse {
-
+message GetTrainCardsInHandResponse {
+  repeated TrainCard cards = 1;
 }
 
-message ClaimRouteRequest {
-
-}
-
-message ClaimRouteResponse {
-
-}
