@@ -9,6 +9,15 @@ class FragmentLibrary {
     _navKey = navKey;
   }
 
+  Widget background = Container(
+    decoration: new BoxDecoration(
+      image: new DecorationImage(
+        image: new AssetImage("images/background2.jpg"),
+        fit: BoxFit.cover,
+      ),
+    ),
+  );
+
   static void showErrorToast(String message) {
     Fluttertoast.showToast(
       msg: message,

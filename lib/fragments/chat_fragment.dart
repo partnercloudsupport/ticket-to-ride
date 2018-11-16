@@ -4,6 +4,7 @@ import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/api/chat.pb.dart';
 import 'package:ticket_to_ride/api/player_wrapper.dart';
 
+import 'package:ticket_to_ride/fragments/fragment_library.dart';
 import 'package:ticket_to_ride/presenters/presenter-data.dart';
 
 import 'package:ticket_to_ride/theme/theme.dart';
@@ -186,27 +187,32 @@ class ChatFragmentState extends State<ChatFragment> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Chat"),
+        title: Text("Chat", style: TextStyle(fontWeight: FontWeight.bold)),
       ),
-      body: Column(
-        children: <Widget>[
-          _background,
-           Flexible(
-            child: ListView.builder(
-              padding:  EdgeInsets.all(8.0),
-              reverse: true,
-              itemBuilder: (_, int index) =>_messages[index],
-              itemCount: _messages.length,
+      body: Stack(
+        children: <Widget> [
+          FragmentLibrary().background,
+          Column(
+            children: <Widget>[
+            _background,
+            Flexible(
+              child: ListView.builder(
+                padding:  EdgeInsets.all(8.0),
+                reverse: true,
+                itemBuilder: (_, int index) =>_messages[index],
+                itemCount: _messages.length,
+              ),
             ),
-          ),
-           Divider(
-            height: 1.0,
-          ),
-           Container(decoration:  BoxDecoration(
-            color: Theme.of(context).cardColor,
-          ),
-          child: _chatEnvironment(),)
-        ],
+            Divider(
+              height: 1.0,
+            ),
+            Container(decoration:  BoxDecoration(
+              color: Theme.of(context).cardColor,
+            ),
+            child: _chatEnvironment(),)
+          ],
+          )
+        ]
       )
     );
   }
