@@ -36,6 +36,7 @@ class HistoryPresenter {
     request.gameId = GlobalContext().currentGameId;
 
     // TODO stream EventMessages from historyProxy
+    //return api.gameProxy
   }
 
   sendEventMessage(request) async {
