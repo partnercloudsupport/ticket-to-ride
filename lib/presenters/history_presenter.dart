@@ -5,26 +5,26 @@ import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/api/chat.pb.dart';
 import 'package:protobuf/protobuf.dart';
 
-import 'package:ticket_to_ride/fragments/game_history_fragment.dart';
+import 'package:ticket_to_ride/fragments/history_fragment.dart';
 
-class GameHistoryPresenter {
+class HistoryPresenter {
 
   final String title;
-  GameHistoryFragment fragment;
+  HistoryFragment fragment;
 
   // default constructor
-  GameHistoryPresenter({this.title}) {
+  HistoryPresenter({this.title}) {
     var request = StreamMessagesRequest();
     var ctx = ClientContext();
     request.gameId = GlobalContext().currentGameId;
     
     var stream; // TODO stream from historyProxy
 
-    fragment = GameHistoryFragment(this, key: historyFragmentKey, messages: stream);
+    fragment = HistoryFragment(this, key: historyFragmentKey, messages: stream);
   }
 
   // another constructor with fragment passed in
-  GameHistoryPresenter.fromFragment(GameHistoryFragment fragment, {this.title}) {
+  HistoryPresenter.fromFragment(HistoryFragment fragment, {this.title}) {
     fragment = fragment;
   }
 

@@ -50,7 +50,8 @@ class EventMessage extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("images/player-${getPlayerColor(player.color)}.jpg"),
-                  )
+                  ),
+                  shape: BoxShape.circle,
                 )
               )
             ),
