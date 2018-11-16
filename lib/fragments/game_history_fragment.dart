@@ -7,13 +7,13 @@ import 'package:ticket_to_ride/presenters/presenter-data.dart';
 
 import 'package:ticket_to_ride/theme/theme.dart';
 
-import 'package:ticket_to_ride/presenters/history_presenter.dart';
+import 'package:ticket_to_ride/presenters/game_history_presenter.dart';
 
 import 'dart:async';
 
-final chatFragmentKey = GlobalKey<ChatFragmentState>();
+final historyFragmentKey = GlobalKey<GameHistoryFragmentState>();
 
-class HistoryPresenterApi {
+class GameHistoryPresenterApi {
   sendMessage(request) async {}
   streamMessages(request) async {}
 }
@@ -72,19 +72,19 @@ class EventMessage extends StatelessWidget {
 }
 
 
-class HistoryFragment extends StatefulWidget {
-  HistoryFragment(HistoryPresenter presenter, {Key key, this.title, this.messages}) :
+class GameHistoryFragment extends StatefulWidget {
+  GameHistoryFragment(GameHistoryPresenter presenter, {Key key, this.title, this.messages}) :
     this.presenter = presenter;
 
   final String title;
-  final HistoryPresenter presenter;
+  final GameHistoryPresenter presenter;
   final Stream<EventMessage> messages;
 
   @override
-  ChatFragmentState createState() => ChatFragmentState();
+  GameHistoryFragmentState createState() => GameHistoryFragmentState();
 }
 
-class ChatFragmentState extends State<HistoryFragment> {
+class GameHistoryFragmentState extends State<GameHistoryFragment> {
 
   @override
   initState() {
@@ -96,7 +96,6 @@ class ChatFragmentState extends State<HistoryFragment> {
 
   CreateMessageRequest request = CreateMessageRequest();
 
-  final TextEditingController _chatController =  TextEditingController();
   List<EventMessage> _messages = List<EventMessage>();
 
   var _background = Container(
@@ -107,20 +106,6 @@ class ChatFragmentState extends State<HistoryFragment> {
       ),
     ),
   );
-
-  // send a message
-  void handleSubmit(String content) {
-    _chatController.clear();
-    request.playerId = GlobalContext().currentPlayerId;
-    request.content = content;
-
-    try {
-      this.widget.presenter.sendEventMessage(request);
-    } catch(error) {
-        print(error.code);
-        print(error.message);
-    }
-  }
 
   // receive an eventmessage
   void handleReceipt(EventMessage msg, Player player) {
@@ -152,33 +137,11 @@ class ChatFragmentState extends State<HistoryFragment> {
   }
 
 
-  Widget _historyEnvironment (){
-    return IconTheme(
-      data:  IconThemeData(color: Colors.blue),
-          child:  Container(
-        margin: const EdgeInsets.symmetric(horizontal:8.0),
-        child:  Row(
-          children: <Widget>[
-             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4.0),
-              child:  IconButton(
-                icon:  Icon(Icons.send),
-                color: ticketToRideTheme.buttonColor,
-                onPressed: ()=> handleSubmit(_chatController.text),
-              ),
-            )
-          ],
-        ),
-
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Chat"),
+        title: Text("History"),
       ),
       body: Column(
         children: <Widget>[
@@ -194,10 +157,6 @@ class ChatFragmentState extends State<HistoryFragment> {
            Divider(
             height: 1.0,
           ),
-           Container(decoration:  BoxDecoration(
-            color: Theme.of(context).cardColor,
-          ),
-          child: _historyEnvironment(),)
         ],
       )
     );

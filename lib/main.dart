@@ -8,7 +8,7 @@ import 'package:ticket_to_ride/presenters/game_view_presenter.dart';
 import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
 import 'package:ticket_to_ride/presenters/dest_card_select_presenter.dart';
 import 'package:ticket_to_ride/presenters/chat_presenter.dart';
-import 'package:ticket_to_ride/presenters/history_presenter.dart';
+import 'package:ticket_to_ride/presenters/game_history_presenter.dart';
 
 void main() async {
   runApp(new TicketToRideApp());
@@ -33,7 +33,7 @@ class TicketToRideApp extends StatelessWidget {
         '/lobby_view': (BuildContext context) => LobbyViewPresenter().build(),
         '/game_view': (BuildContext context) => GameViewPresenter().build(),
         '/chat' : (BuildContext context) => ChatPresenter().build(),
-        '/game_history' : (BuildContext context) => HistoryPresenter().build(),
+        '/game_history' : (BuildContext context) => GameHistoryPresenter().build(),
         '/dest_card_select' : (BuildContext context) => DestCardSelectPresenter().build(),
         '/dest_card_select_init' : (BuildContext context) => DestCardSelectPresenter().build(minCard: 2),
       },
