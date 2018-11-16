@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'create_game_fragment.dart';
 import 'game_list_fragment.dart';
 
+import 'fragment_library.dart';
+
 class GameSelectionPresenterApi {
   createPlayer(request) async {}
   createGame(request) async {}
@@ -12,15 +14,6 @@ class GameSelectionView {
 
   static Widget build(CreateGameFragment createGameFragment, GameListFragment gameListFragment) {
 
-    var _background = Container(
-      decoration: new BoxDecoration(
-        image: new DecorationImage(
-          image: new AssetImage("images/background2.jpg"),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-
 
     return Scaffold(
       appBar: AppBar(
@@ -28,7 +21,7 @@ class GameSelectionView {
       ),
       body: Stack(
         children: <Widget> [
-            _background,
+            FragmentLibrary().background,
             Row(
               children: [
                  Flexible(

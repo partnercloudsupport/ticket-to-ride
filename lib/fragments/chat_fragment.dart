@@ -153,10 +153,8 @@ class ChatFragmentState extends State<ChatFragment> {
   }
 
 
-  Widget _chatEnvironment (){
-    return IconTheme(
-      data:  IconThemeData(color: Colors.blue),
-          child:  Container(
+  Widget _typingBar (){
+    return Container(
         margin: const EdgeInsets.symmetric(horizontal:8.0),
         child:  Row(
           children: <Widget>[
@@ -178,9 +176,7 @@ class ChatFragmentState extends State<ChatFragment> {
             )
           ],
         ),
-
-      ),
-    );
+      );
   }
 
   @override
@@ -209,7 +205,7 @@ class ChatFragmentState extends State<ChatFragment> {
             Container(decoration:  BoxDecoration(
               color: Theme.of(context).cardColor,
             ),
-            child: _chatEnvironment(),)
+            child: _typingBar(),)
           ],
           )
         ]

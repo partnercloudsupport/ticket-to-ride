@@ -4,16 +4,17 @@ import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/api/chat.pb.dart';
 import 'package:ticket_to_ride/api/player_wrapper.dart';
 import 'package:ticket_to_ride/presenters/presenter-data.dart';
+import 'fragment_library.dart';
 
 import 'package:ticket_to_ride/theme/theme.dart';
 
-import 'package:ticket_to_ride/presenters/game_history_presenter.dart';
+import 'package:ticket_to_ride/presenters/history_presenter.dart';
 
 import 'dart:async';
 
-final historyFragmentKey = GlobalKey<GameHistoryFragmentState>();
+final historyFragmentKey = GlobalKey<HistoryFragmentState>();
 
-class GameHistoryPresenterApi {
+class HistoryPresenterApi {
   sendMessage(request) async {}
   streamMessages(request) async {}
 }
@@ -72,19 +73,19 @@ class EventMessage extends StatelessWidget {
 }
 
 
-class GameHistoryFragment extends StatefulWidget {
-  GameHistoryFragment(GameHistoryPresenter presenter, {Key key, this.title, this.messages}) :
+class HistoryFragment extends StatefulWidget {
+  HistoryFragment(HistoryPresenter presenter, {Key key, this.title, this.messages}) :
     this.presenter = presenter;
 
   final String title;
-  final GameHistoryPresenter presenter;
+  final HistoryPresenter presenter;
   final Stream<EventMessage> messages;
 
   @override
-  GameHistoryFragmentState createState() => GameHistoryFragmentState();
+  HistoryFragmentState createState() => HistoryFragmentState();
 }
 
-class GameHistoryFragmentState extends State<GameHistoryFragment> {
+class HistoryFragmentState extends State<HistoryFragment> {
 
   @override
   initState() {
@@ -97,15 +98,6 @@ class GameHistoryFragmentState extends State<GameHistoryFragment> {
   CreateMessageRequest request = CreateMessageRequest();
 
   List<EventMessage> _messages = List<EventMessage>();
-
-  var _background = Container(
-    decoration: new BoxDecoration(
-      image: new DecorationImage(
-        image: new AssetImage("images/background2.jpg"),
-        fit: BoxFit.cover,
-      ),
-    ),
-  );
 
   // receive an eventmessage
   void handleReceipt(EventMessage msg, Player player) {
@@ -143,10 +135,10 @@ class GameHistoryFragmentState extends State<GameHistoryFragment> {
       appBar: AppBar(
         title: Text("History"),
       ),
-      body: Column(
+      body: Stack(
         children: <Widget>[
-          _background,
-           Flexible(
+          FragmentLibrary().background,
+          Flexible(
             child: ListView.builder(
               padding:  EdgeInsets.all(8.0),
               reverse: true,
@@ -154,9 +146,9 @@ class GameHistoryFragmentState extends State<GameHistoryFragment> {
               itemCount: _messages.length,
             ),
           ),
-           Divider(
-            height: 1.0,
-          ),
+          Divider(
+            height: 1.0
+          )
         ],
       )
     );
