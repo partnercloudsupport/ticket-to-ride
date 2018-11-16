@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: health.proto
+//  source: route.proto
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
@@ -9,25 +9,25 @@
 import 'dart:async';
 import 'package:protobuf/protobuf.dart';
 
-import 'health.pb.dart';
-import 'health.pbjson.dart';
+import 'route.pb.dart';
+import 'route.pbjson.dart';
 import 'api_error.dart';
 import 'api.pb.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
-class HealthServiceProxy {
+class RouteServiceProxy {
   String _url;
-  HealthServiceProxy(this._url);
+  RouteServiceProxy(this._url);
 
-    Future<Health> getHealth(ClientContext ctx, GetHealthRequest request) async {
+    Future<ClaimRouteResponse> claimRoute(ClientContext ctx, ClaimRouteRequest request) async {
 
     var req = Request();
     Response response;
     try {
-      req.method = 'GetHealth';
-      req.service = 'health.HealthService';
+      req.method = 'ClaimRoute';
+      req.service = 'route.RouteService';
       req.payload = request.writeToBuffer();
       var httpResponse = await http.post(_url, body: req.writeToBuffer());
       response = Response.fromBuffer(httpResponse.bodyBytes);
@@ -41,18 +41,18 @@ class HealthServiceProxy {
     }
 
     try {
-      return Health.fromBuffer(response.payload);
+      return ClaimRouteResponse.fromBuffer(response.payload);
     }
     catch (err) {
       throw ApiError(Code.UNAVAILABLE, err.toString());
     }
   }
 
-  Stream<Health> streamHealth(ClientContext ctx, GetHealthRequest request) {
+  Stream<Route> streamRoutes(ClientContext ctx, StreamRoutesRequest request) {
     var req = Request();
     try {
-      req.method = 'StreamHealth';
-      req.service = 'health.HealthService';
+      req.method = 'StreamRoutes';
+      req.service = 'route.RouteService';
       req.payload = request.writeToBuffer();
 
       var client = http.Client();
@@ -94,7 +94,7 @@ class HealthServiceProxy {
               sink.addError(ApiError(resp.code, resp.message));
               return;
             }
-            sink.add(Health.fromBuffer(resp.payload));
+            sink.add(Route.fromBuffer(resp.payload));
             dataBuffer.clear();
           }
         },

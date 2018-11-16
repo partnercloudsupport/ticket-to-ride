@@ -121,7 +121,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
     print(response.gameId);
 
     FragmentLibrary.navigatePush('/game_view');
-    FragmentLibrary.navigatePush('/dest_card_select_init');
+    // FragmentLibrary.navigatePush('/dest_card_select_init');
   }
 
   build() {

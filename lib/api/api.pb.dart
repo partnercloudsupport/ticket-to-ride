@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: api/api.proto
+//  source: api.proto
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
@@ -32,7 +32,7 @@ class Request extends $pb.GeneratedMessage {
   static Request getDefault() => _defaultInstance ??= create()..freeze();
   static Request _defaultInstance;
   static void $checkItem(Request v) {
-    if (v is! Request) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! Request) $pb.checkItemFailed(v, _i.messageName);
   }
 
   String get service => $_getS(0, '');
@@ -70,7 +70,7 @@ class Response extends $pb.GeneratedMessage {
   static Response getDefault() => _defaultInstance ??= create()..freeze();
   static Response _defaultInstance;
   static void $checkItem(Response v) {
-    if (v is! Response) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! Response) $pb.checkItemFailed(v, _i.messageName);
   }
 
   Code get code => $_getN(0);

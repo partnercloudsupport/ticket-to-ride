@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class Route {
+class ClientRoute {
   double city1x;
   double city1y;
   double city2x;
@@ -11,16 +11,15 @@ class Route {
   int color;
   int playerColor;
 
-  Route(this.city1x, this.city1y, this.city2x, this.city2y, this.length, this.id, this.color, this.playerColor);
+  ClientRoute(this.city1x, this.city1y, this.city2x, this.city2y, this.length, this.id, this.color, this.playerColor);
 }
 
 class City {
   String name;
-  String id;
   double coordinateX;
   double coordinateY;
 
-  City(this.name, this.id, this.coordinateX, this.coordinateY);
+  City(this.name, this.coordinateX, this.coordinateY);
 }
 
 abstract class GameMapObserver {
@@ -63,27 +62,20 @@ class _GameMapFragmentState extends State<GameMapFragment> {
 
   _getRoutesAndCities() async {
     var cities = [];
-    // var routes = [];
 
     for (var o in widget.observers) {
       cities = await o.getCities();
+      var response = await o.getRoutes();
 
-      await for(var response in o.getRoutes()) {
+      print(response);
+
+      // await for(var response in o.getRoutes()) {
         setState(() {
           _cities = cities;
           _routes = response;
         });
-      }
+      // }
     }
-    // for (var o in widget.observers) {
-    //   cities = await o.getCities();
-    //   routes = await o.getRoutes();
-    // }
-    //
-    // setState(() {
-    //   _cities = cities;
-    //   _routes = routes;
-    // });
   }
 
   _buildCities() {
@@ -171,6 +163,13 @@ class _GameMapFragmentState extends State<GameMapFragment> {
 
     return _routes.map((route) {
 
+      var secondaryTranslation = Matrix4.translationValues(0.0, 0.0, 0.0);
+      if(_isDoubleRoute(route, 1)) {
+        secondaryTranslation = Matrix4.translationValues(0.0, -8.0, 0.0);
+      } else if(_isDoubleRoute(route ,2)) {
+        secondaryTranslation =  Matrix4.translationValues(0.0, 8.0, 0.0);
+      }
+
       var distX = (route.city1x - route.city2x) * _width;
       var distY = (route.city1y - route.city2y) * _height;
       var length = sqrt(pow(distX, 2) + pow(distY, 2));
@@ -183,12 +182,38 @@ class _GameMapFragmentState extends State<GameMapFragment> {
         child: Container(
           child: Transform(
             alignment: Alignment.topLeft,
-            transform:  Matrix4.translationValues(7.5, 3.5 ,0.0) * Matrix4.rotationZ(rotation),
+            transform:  Matrix4.translationValues(7.5, 3.5 ,0.0) * Matrix4.rotationZ(rotation) * secondaryTranslation,
             child: _buildRoute(route, length)
           )
         )
       );
     }).toList();
+  }
+
+  _isDoubleRoute(checkRoute, checkInstance) {
+    var count = 0;
+    var isInstance = false;
+    _routes.forEach((route) {
+      if((
+        checkRoute.city1x == route.city1x &&
+        checkRoute.city1y == route.city1y &&
+        checkRoute.city2x == route.city2x &&
+        checkRoute.city2y == route.city2y
+      ) || (
+        checkRoute.city1x == route.city2x &&
+        checkRoute.city1y == route.city2y &&
+        checkRoute.city2x == route.city1x &&
+        checkRoute.city2y == route.city1y
+      )) {
+        count += 1;
+
+        if(count == checkInstance && checkRoute.id == route.id) {
+          isInstance = true;
+        }
+      }
+    });
+
+    return count > 1 && isInstance;
   }
 
   @override

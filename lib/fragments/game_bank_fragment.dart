@@ -52,33 +52,33 @@ class _GameBankFragmentState extends State<GameBankFragment> {
   }
 
   _getCards() async {
-    for (var o in widget.observers) {
-      await for(var response in o.getFaceUpTrainCards()) {
-        setState(() {
-          _trainCards = response;
-        });
-      }
-    }
+    // for (var o in widget.observers) {
+    //   await for(var response in o.getFaceUpTrainCards()) {
+    //     setState(() {
+    //       _trainCards = response;
+    //     });
+    //   }
+    // }
   }
 
   _getDestCardCount() async {
-    for (var o in widget.observers) {
-      await for(var response in o.getDestCardCount()) {
-        setState(() {
-          _destinationCount = response;
-        });
-      }
-    }
+    // for (var o in widget.observers) {
+    //   await for(var response in o.getDestCardCount()) {
+    //     setState(() {
+    //       _destinationCount = response;
+    //     });
+    //   }
+    // }
   }
 
   _getTrainCardCount() async {
-    for (var o in widget.observers) {
-      await for(var response in o.getTrainCardCount()) {
-        setState(() {
-          _trainCount = response;
-        });
-      }
-    }
+    // for (var o in widget.observers) {
+    //   await for(var response in o.getTrainCardCount()) {
+    //     setState(() {
+    //       _trainCount = response;
+    //     });
+    //   }
+    // }
   }
 
   _buildDestinationDeck() {

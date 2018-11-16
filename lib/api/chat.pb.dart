@@ -1,10 +1,10 @@
 ///
 //  Generated code. Do not modify.
-//  source: api/chat.proto
+//  source: chat.proto
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async' as $async;
+import 'dart:async';
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
@@ -30,7 +30,7 @@ class Message extends $pb.GeneratedMessage {
   static Message getDefault() => _defaultInstance ??= create()..freeze();
   static Message _defaultInstance;
   static void $checkItem(Message v) {
-    if (v is! Message) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! Message) $pb.checkItemFailed(v, _i.messageName);
   }
 
   String get messageId => $_getS(0, '');
@@ -72,7 +72,7 @@ class CreateMessageRequest extends $pb.GeneratedMessage {
   static CreateMessageRequest getDefault() => _defaultInstance ??= create()..freeze();
   static CreateMessageRequest _defaultInstance;
   static void $checkItem(CreateMessageRequest v) {
-    if (v is! CreateMessageRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! CreateMessageRequest) $pb.checkItemFailed(v, _i.messageName);
   }
 
   String get content => $_getS(0, '');
@@ -103,7 +103,7 @@ class GetMessageRequest extends $pb.GeneratedMessage {
   static GetMessageRequest getDefault() => _defaultInstance ??= create()..freeze();
   static GetMessageRequest _defaultInstance;
   static void $checkItem(GetMessageRequest v) {
-    if (v is! GetMessageRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! GetMessageRequest) $pb.checkItemFailed(v, _i.messageName);
   }
 
   String get messageId => $_getS(0, '');
@@ -129,7 +129,7 @@ class StreamMessagesRequest extends $pb.GeneratedMessage {
   static StreamMessagesRequest getDefault() => _defaultInstance ??= create()..freeze();
   static StreamMessagesRequest _defaultInstance;
   static void $checkItem(StreamMessagesRequest v) {
-    if (v is! StreamMessagesRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! StreamMessagesRequest) $pb.checkItemFailed(v, _i.messageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -142,15 +142,15 @@ class ChatServiceApi {
   $pb.RpcClient _client;
   ChatServiceApi(this._client);
 
-  $async.Future<Message> createMessage($pb.ClientContext ctx, CreateMessageRequest request) {
+  Future<Message> createMessage($pb.ClientContext ctx, CreateMessageRequest request) {
     var emptyResponse = new Message();
     return _client.invoke<Message>(ctx, 'ChatService', 'createMessage', request, emptyResponse);
   }
-  $async.Future<Message> getMessage($pb.ClientContext ctx, GetMessageRequest request) {
+  Future<Message> getMessage($pb.ClientContext ctx, GetMessageRequest request) {
     var emptyResponse = new Message();
     return _client.invoke<Message>(ctx, 'ChatService', 'getMessage', request, emptyResponse);
   }
-  $async.Future<Message> streamMessages($pb.ClientContext ctx, StreamMessagesRequest request) {
+  Future<Message> streamMessages($pb.ClientContext ctx, StreamMessagesRequest request) {
     var emptyResponse = new Message();
     return _client.invoke<Message>(ctx, 'ChatService', 'streamMessages', request, emptyResponse);
   }

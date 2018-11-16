@@ -17,12 +17,12 @@ service CardService {
   rpc StreamTrainCards (StreamTrainCardsRequest) returns (stream TrainCard);
   rpc StreamDeckStats (StreamDeckStatsRequest) returns (stream DeckStats);
 
-  rpc DrawTrainCardFromDeck (DrawTrainCardFromDeckRequest) returns (Empty);
-  rpc DrawFaceUpTrainCard(DrawFaceUpTrainCardRequest) returns(Empty);
+  rpc DrawTrainCardFromDeck (DrawTrainCardFromDeckRequest) returns (Empty2);
+  rpc DrawFaceUpTrainCard(DrawFaceUpTrainCardRequest) returns(Empty2);
   rpc getTrainCardsInHand(GetTrainCardsInHandRequest) returns (GetTrainCardsInHandResponse);
 }
 
-message Empty {
+message Empty2 {
 
 }
 
@@ -132,4 +132,3 @@ message GetTrainCardsInHandRequest {
 message GetTrainCardsInHandResponse {
   repeated TrainCard cards = 1;
 }
-

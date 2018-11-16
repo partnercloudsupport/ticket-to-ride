@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: api/card.proto
+//  source: card.proto
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
@@ -17,7 +17,12 @@ const TrainColor$json = const {
     const {'1': 'YELLOW', '2': 7},
     const {'1': 'RED', '2': 8},
     const {'1': 'WHITE', '2': 9},
+    const {'1': 'RAINBOW', '2': 10},
   ],
+};
+
+const Empty2$json = const {
+  '1': 'Empty2',
 };
 
 const GetDestinationCardRequest$json = const {
@@ -71,11 +76,42 @@ const StreamDestinationCardsRequest$json = const {
   ],
 };
 
+const DeckStats$json = const {
+  '1': 'DeckStats',
+  '2': const [
+    const {'1': 'hidden_train_card_count', '3': 1, '4': 1, '5': 5, '10': 'hiddenTrainCardCount'},
+    const {'1': 'hidden_destination_card_count', '3': 3, '4': 1, '5': 5, '10': 'hiddenDestinationCardCount'},
+  ],
+};
+
+const StreamDeckStatsRequest$json = const {
+  '1': 'StreamDeckStatsRequest',
+  '2': const [
+    const {'1': 'game_id', '3': 1, '4': 1, '5': 9, '10': 'gameId'},
+  ],
+};
+
+const ClaimTrainCardRequest$json = const {
+  '1': 'ClaimTrainCardRequest',
+};
+
+const ClaimTrainCardResponse$json = const {
+  '1': 'ClaimTrainCardResponse',
+};
+
+const StreamTrainCardsRequest$json = const {
+  '1': 'StreamTrainCardsRequest',
+  '2': const [
+    const {'1': 'player_id', '3': 1, '4': 1, '5': 9, '10': 'playerId'},
+  ],
+};
+
 const TrainCard$json = const {
   '1': 'TrainCard',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
-    const {'1': 'color', '3': 2, '4': 1, '5': 14, '6': '.card.TrainColor', '10': 'color'},
+    const {'1': 'player_id', '3': 2, '4': 1, '5': 9, '10': 'playerId'},
+    const {'1': 'color', '3': 3, '4': 1, '5': 14, '6': '.card.TrainColor', '10': 'color'},
     const {'1': 'state', '3': 4, '4': 1, '5': 14, '6': '.card.TrainCard.State', '10': 'state'},
   ],
   '4': const [TrainCard_State$json],
@@ -91,54 +127,33 @@ const TrainCard_State$json = const {
   ],
 };
 
-const StreamTrainCardsRequest$json = const {
-  '1': 'StreamTrainCardsRequest',
-  '2': const [
-    const {'1': 'player_id', '3': 1, '4': 1, '5': 9, '10': 'playerId'},
-  ],
-};
-
-const DeckStats$json = const {
-  '1': 'DeckStats',
-  '2': const [
-    const {'1': 'hidden_train_card_count', '3': 1, '4': 1, '5': 5, '10': 'hiddenTrainCardCount'},
-    const {'1': 'hidden_destination_card_count', '3': 3, '4': 1, '5': 5, '10': 'hiddenDestinationCardCount'},
-  ],
-};
-
-const StreamDeckStatsRequest$json = const {
-  '1': 'StreamDeckStatsRequest',
-};
-
-const Route$json = const {
-  '1': 'Route',
+const DrawTrainCardFromDeckRequest$json = const {
+  '1': 'DrawTrainCardFromDeckRequest',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
-    const {'1': 'first_city_id', '3': 2, '4': 1, '5': 9, '10': 'firstCityId'},
-    const {'1': 'second_city_id', '3': 3, '4': 1, '5': 9, '10': 'secondCityId'},
-    const {'1': 'color', '3': 4, '4': 1, '5': 14, '6': '.card.TrainColor', '10': 'color'},
-    const {'1': 'player_id', '3': 5, '4': 1, '5': 9, '10': 'playerId'},
   ],
 };
 
-const StreamRoutesRequest$json = const {
-  '1': 'StreamRoutesRequest',
+const DrawFaceUpTrainCardRequest$json = const {
+  '1': 'DrawFaceUpTrainCardRequest',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'card_drawn_id', '3': 2, '4': 1, '5': 9, '10': 'cardDrawnId'},
+  ],
 };
 
-const ClaimTrainCardRequest$json = const {
-  '1': 'ClaimTrainCardRequest',
+const GetTrainCardsInHandRequest$json = const {
+  '1': 'GetTrainCardsInHandRequest',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+  ],
 };
 
-const ClaimTrainCardResponse$json = const {
-  '1': 'ClaimTrainCardResponse',
-};
-
-const ClaimRouteRequest$json = const {
-  '1': 'ClaimRouteRequest',
-};
-
-const ClaimRouteResponse$json = const {
-  '1': 'ClaimRouteResponse',
+const GetTrainCardsInHandResponse$json = const {
+  '1': 'GetTrainCardsInHandResponse',
+  '2': const [
+    const {'1': 'cards', '3': 1, '4': 3, '5': 11, '6': '.card.TrainCard', '10': 'cards'},
+  ],
 };
 
 const CardService$json = const {
@@ -148,11 +163,11 @@ const CardService$json = const {
     const {'1': 'PeekDestinationCards', '2': '.card.PeekDestinationCardsRequest', '3': '.card.PeekDestinationCardsResponse'},
     const {'1': 'ClaimDestinationCards', '2': '.card.ClaimDestinationCardsRequest', '3': '.card.ClaimDestinationCardsResponse'},
     const {'1': 'StreamDestinationCards', '2': '.card.StreamDestinationCardsRequest', '3': '.card.DestinationCard', '6': true},
-    const {'1': 'ClaimTrainCard', '2': '.card.ClaimTrainCardRequest', '3': '.card.ClaimTrainCardResponse'},
     const {'1': 'StreamTrainCards', '2': '.card.StreamTrainCardsRequest', '3': '.card.TrainCard', '6': true},
     const {'1': 'StreamDeckStats', '2': '.card.StreamDeckStatsRequest', '3': '.card.DeckStats', '6': true},
-    const {'1': 'ClaimRoute', '2': '.card.ClaimRouteRequest', '3': '.card.ClaimRouteResponse'},
-    const {'1': 'StreamRoutes', '2': '.card.StreamRoutesRequest', '3': '.card.Route', '6': true},
+    const {'1': 'DrawTrainCardFromDeck', '2': '.card.DrawTrainCardFromDeckRequest', '3': '.card.Empty2'},
+    const {'1': 'DrawFaceUpTrainCard', '2': '.card.DrawFaceUpTrainCardRequest', '3': '.card.Empty2'},
+    const {'1': 'getTrainCardsInHand', '2': '.card.GetTrainCardsInHandRequest', '3': '.card.GetTrainCardsInHandResponse'},
   ],
 };
 
@@ -164,15 +179,14 @@ const CardService$messageJson = const {
   '.card.ClaimDestinationCardsRequest': ClaimDestinationCardsRequest$json,
   '.card.ClaimDestinationCardsResponse': ClaimDestinationCardsResponse$json,
   '.card.StreamDestinationCardsRequest': StreamDestinationCardsRequest$json,
-  '.card.ClaimTrainCardRequest': ClaimTrainCardRequest$json,
-  '.card.ClaimTrainCardResponse': ClaimTrainCardResponse$json,
   '.card.StreamTrainCardsRequest': StreamTrainCardsRequest$json,
   '.card.TrainCard': TrainCard$json,
   '.card.StreamDeckStatsRequest': StreamDeckStatsRequest$json,
   '.card.DeckStats': DeckStats$json,
-  '.card.ClaimRouteRequest': ClaimRouteRequest$json,
-  '.card.ClaimRouteResponse': ClaimRouteResponse$json,
-  '.card.StreamRoutesRequest': StreamRoutesRequest$json,
-  '.card.Route': Route$json,
+  '.card.DrawTrainCardFromDeckRequest': DrawTrainCardFromDeckRequest$json,
+  '.card.Empty2': Empty2$json,
+  '.card.DrawFaceUpTrainCardRequest': DrawFaceUpTrainCardRequest$json,
+  '.card.GetTrainCardsInHandRequest': GetTrainCardsInHandRequest$json,
+  '.card.GetTrainCardsInHandResponse': GetTrainCardsInHandResponse$json,
 };
 

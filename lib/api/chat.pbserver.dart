@@ -1,10 +1,10 @@
 ///
 //  Generated code. Do not modify.
-//  source: api/chat.proto
+//  source: chat.proto
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async' as $async;
+import 'dart:async';
 
 import 'package:protobuf/protobuf.dart';
 
@@ -14,9 +14,9 @@ import 'chat.pbjson.dart';
 export 'chat.pb.dart';
 
 abstract class ChatServiceBase extends GeneratedService {
-  $async.Future<Message> createMessage(ServerContext ctx, CreateMessageRequest request);
-  $async.Future<Message> getMessage(ServerContext ctx, GetMessageRequest request);
-  $async.Future<Message> streamMessages(ServerContext ctx, StreamMessagesRequest request);
+  Future<Message> createMessage(ServerContext ctx, CreateMessageRequest request);
+  Future<Message> getMessage(ServerContext ctx, GetMessageRequest request);
+  Future<Message> streamMessages(ServerContext ctx, StreamMessagesRequest request);
 
   GeneratedMessage createRequest(String method) {
     switch (method) {
@@ -27,7 +27,7 @@ abstract class ChatServiceBase extends GeneratedService {
     }
   }
 
-  $async.Future<GeneratedMessage> handleCall(ServerContext ctx, String method, GeneratedMessage request) {
+  Future<GeneratedMessage> handleCall(ServerContext ctx, String method, GeneratedMessage request) {
     switch (method) {
       case 'createMessage': return this.createMessage(ctx, request);
       case 'getMessage': return this.getMessage(ctx, request);

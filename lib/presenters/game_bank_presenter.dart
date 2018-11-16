@@ -15,15 +15,18 @@ class GameBankApi {
   }
 
   streamTrainCards(ctx, request) {
-    return api.cardProxy.streamTrainCards(ctx, request);
+    return [];
+    // return api.cardProxy.streamTrainCards(ctx, request);
   }
 
   streamDestinationCount(ctx, request) {
-    return api.cardProxy.streamDeckStats(ctx, request);
+    return [];
+    // return api.cardProxy.streamDeckStats(ctx, request);
   }
 
   streamTrainCount(ctx, request) {
-    return api.cardProxy.streamDeckStats(ctx, request);
+    return [];
+    // return api.cardProxy.streamDeckStats(ctx, request);
   }
 }
 

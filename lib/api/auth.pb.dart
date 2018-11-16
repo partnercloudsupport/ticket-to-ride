@@ -1,10 +1,10 @@
 ///
 //  Generated code. Do not modify.
-//  source: api/auth.proto
+//  source: auth.proto
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async' as $async;
+import 'dart:async';
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
@@ -29,7 +29,7 @@ class Account extends $pb.GeneratedMessage {
   static Account getDefault() => _defaultInstance ??= create()..freeze();
   static Account _defaultInstance;
   static void $checkItem(Account v) {
-    if (v is! Account) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! Account) $pb.checkItemFailed(v, _i.messageName);
   }
 
   String get id => $_getS(0, '');
@@ -66,7 +66,7 @@ class LoginAccountRequest extends $pb.GeneratedMessage {
   static LoginAccountRequest getDefault() => _defaultInstance ??= create()..freeze();
   static LoginAccountRequest _defaultInstance;
   static void $checkItem(LoginAccountRequest v) {
-    if (v is! LoginAccountRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! LoginAccountRequest) $pb.checkItemFailed(v, _i.messageName);
   }
 
   String get username => $_getS(0, '');
@@ -97,7 +97,7 @@ class LoginResponse extends $pb.GeneratedMessage {
   static LoginResponse getDefault() => _defaultInstance ??= create()..freeze();
   static LoginResponse _defaultInstance;
   static void $checkItem(LoginResponse v) {
-    if (v is! LoginResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! LoginResponse) $pb.checkItemFailed(v, _i.messageName);
   }
 
   String get userId => $_getS(0, '');
@@ -123,7 +123,7 @@ class GetUsernameRequest extends $pb.GeneratedMessage {
   static GetUsernameRequest getDefault() => _defaultInstance ??= create()..freeze();
   static GetUsernameRequest _defaultInstance;
   static void $checkItem(GetUsernameRequest v) {
-    if (v is! GetUsernameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! GetUsernameRequest) $pb.checkItemFailed(v, _i.messageName);
   }
 
   String get userId => $_getS(0, '');
@@ -149,7 +149,7 @@ class GetUsernameResponse extends $pb.GeneratedMessage {
   static GetUsernameResponse getDefault() => _defaultInstance ??= create()..freeze();
   static GetUsernameResponse _defaultInstance;
   static void $checkItem(GetUsernameResponse v) {
-    if (v is! GetUsernameResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+    if (v is! GetUsernameResponse) $pb.checkItemFailed(v, _i.messageName);
   }
 
   String get username => $_getS(0, '');
@@ -162,15 +162,15 @@ class AuthServiceApi {
   $pb.RpcClient _client;
   AuthServiceApi(this._client);
 
-  $async.Future<LoginResponse> login($pb.ClientContext ctx, LoginAccountRequest request) {
+  Future<LoginResponse> login($pb.ClientContext ctx, LoginAccountRequest request) {
     var emptyResponse = new LoginResponse();
     return _client.invoke<LoginResponse>(ctx, 'AuthService', 'Login', request, emptyResponse);
   }
-  $async.Future<LoginResponse> register($pb.ClientContext ctx, LoginAccountRequest request) {
+  Future<LoginResponse> register($pb.ClientContext ctx, LoginAccountRequest request) {
     var emptyResponse = new LoginResponse();
     return _client.invoke<LoginResponse>(ctx, 'AuthService', 'Register', request, emptyResponse);
   }
-  $async.Future<GetUsernameResponse> getUsername($pb.ClientContext ctx, GetUsernameRequest request) {
+  Future<GetUsernameResponse> getUsername($pb.ClientContext ctx, GetUsernameRequest request) {
     var emptyResponse = new GetUsernameResponse();
     return _client.invoke<GetUsernameResponse>(ctx, 'AuthService', 'GetUsername', request, emptyResponse);
   }
