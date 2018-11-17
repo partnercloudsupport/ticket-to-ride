@@ -70,7 +70,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
           player.username = response3.username;
           playerObjects.add(player);
 
-          players.add(Player(response3.username, getTrainColor(response2.color)));
+          players.add(Player(response3.username, getPlayerColor(response2.color)));
         } else {
           players.add(null);
         }
