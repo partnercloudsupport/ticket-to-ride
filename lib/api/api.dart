@@ -15,9 +15,12 @@ export 'card.pb.dart';
 export 'route.pb.dart';
 export 'api_error.dart';
 
-final authProxy = AuthServiceProxy("http://master.wwttr.umkhandi.com/");
-final gameProxy = GameServiceProxy("http://master.wwttr.umkhandi.com/");
-final healthProxy = HealthServiceProxy("http://master.wwttr.umkhandi.com/");
-final chatProxy = ChatServiceProxy("http://master.wwttr.umkhandi.com/");
-final cardProxy = CardServiceProxy("http://master.wwttr.umkhandi.com/");
-final routeProxy = RouteServiceProxy("http://master.wwttr.umkhandi.com/");
+final url = "http://merge.wwttr.umkhandi.com/";
+// final url = "http://localhost:8080/";
+
+final authProxy = AuthServiceProxy(url);
+final gameProxy = GameServiceProxy(url);
+final healthProxy = HealthServiceProxy(url);
+final chatProxy = ChatServiceProxy(url);
+final cardProxy = CardServiceProxy(url);
+final routeProxy = RouteServiceProxy(url);
