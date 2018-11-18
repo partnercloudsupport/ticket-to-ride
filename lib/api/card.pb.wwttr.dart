@@ -282,7 +282,7 @@ class CardServiceProxy {
     }
   }
 
-  Future<Empty2> drawTrainCardFromDeck(ClientContext ctx, DrawTrainCardFromDeckRequest request) async {
+  Future<Empty> drawTrainCardFromDeck(ClientContext ctx, DrawTrainCardFromDeckRequest request) async {
 
     var req = Request();
     Response response;
@@ -302,14 +302,14 @@ class CardServiceProxy {
     }
 
     try {
-      return Empty2.fromBuffer(response.payload);
+      return Empty.fromBuffer(response.payload);
     }
     catch (err) {
       throw ApiError(Code.UNAVAILABLE, err.toString());
     }
   }
 
-  Future<Empty2> drawFaceUpTrainCard(ClientContext ctx, DrawFaceUpTrainCardRequest request) async {
+  Future<Empty> drawFaceUpTrainCard(ClientContext ctx, DrawFaceUpTrainCardRequest request) async {
 
     var req = Request();
     Response response;
@@ -329,7 +329,7 @@ class CardServiceProxy {
     }
 
     try {
-      return Empty2.fromBuffer(response.payload);
+      return Empty.fromBuffer(response.payload);
     }
     catch (err) {
       throw ApiError(Code.UNAVAILABLE, err.toString());

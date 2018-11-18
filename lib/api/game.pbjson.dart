@@ -4,6 +4,16 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
+const PlayerTurnState$json = const {
+  '1': 'PlayerTurnState',
+  '2': const [
+    const {'1': 'UNSPECIFIED_PLAYER_TURN_STATE', '2': 0},
+    const {'1': 'PENDING', '2': 1},
+    const {'1': 'START', '2': 2},
+    const {'1': 'MID', '2': 3},
+  ],
+};
+
 const Game$json = const {
   '1': 'Game',
   '2': const [
@@ -24,6 +34,16 @@ const Game_Status$json = const {
     const {'1': 'PRE', '2': 1},
     const {'1': 'STARTED', '2': 2},
     const {'1': 'FINISHED', '2': 3},
+  ],
+};
+
+const GameAction$json = const {
+  '1': 'GameAction',
+  '2': const [
+    const {'1': 'action_id', '3': 1, '4': 1, '5': 9, '10': 'actionId'},
+    const {'1': 'action', '3': 2, '4': 1, '5': 9, '10': 'action'},
+    const {'1': 'timestamp', '3': 3, '4': 1, '5': 5, '10': 'timestamp'},
+    const {'1': 'player_id', '3': 4, '4': 1, '5': 9, '10': 'playerId'},
   ],
 };
 
@@ -69,6 +89,13 @@ const DeleteGameRequest$json = const {
   ],
 };
 
+const StreamHistoryRequest$json = const {
+  '1': 'StreamHistoryRequest',
+  '2': const [
+    const {'1': 'game_id', '3': 1, '4': 1, '5': 9, '10': 'gameId'},
+  ],
+};
+
 const CreatePlayerRequest$json = const {
   '1': 'CreatePlayerRequest',
   '2': const [
@@ -84,6 +111,7 @@ const Player$json = const {
     const {'1': 'account_id', '3': 2, '4': 1, '5': 9, '10': 'accountId'},
     const {'1': 'game_id', '3': 3, '4': 1, '5': 9, '10': 'gameId'},
     const {'1': 'color', '3': 4, '4': 1, '5': 14, '6': '.game.Player.Color', '10': 'color'},
+    const {'1': 'username', '3': 5, '4': 1, '5': 9, '10': 'username'},
   ],
   '4': const [Player_Color$json],
 };
@@ -150,10 +178,13 @@ const PlayerStats$json = const {
   '1': 'PlayerStats',
   '2': const [
     const {'1': 'player_id', '3': 1, '4': 1, '5': 9, '10': 'playerId'},
-    const {'1': 'points', '3': 2, '4': 1, '5': 5, '10': 'points'},
+    const {'1': 'train_card_points', '3': 2, '4': 1, '5': 5, '10': 'trainCardPoints'},
+    const {'1': 'longest_route_points', '3': 6, '4': 1, '5': 5, '10': 'longestRoutePoints'},
+    const {'1': 'destination_card_points', '3': 7, '4': 1, '5': 5, '10': 'destinationCardPoints'},
     const {'1': 'train_count', '3': 3, '4': 1, '5': 5, '10': 'trainCount'},
     const {'1': 'train_card_count', '3': 4, '4': 1, '5': 5, '10': 'trainCardCount'},
     const {'1': 'destination_card_count', '3': 5, '4': 1, '5': 5, '10': 'destinationCardCount'},
+    const {'1': 'turn_state', '3': 8, '4': 1, '5': 14, '6': '.game.PlayerTurnState', '10': 'turnState'},
   ],
 };
 
@@ -170,6 +201,7 @@ const GameService$json = const {
     const {'1': 'GetPlayer', '2': '.game.GetPlayerRequest', '3': '.game.Player'},
     const {'1': 'StreamPlayerStats', '2': '.game.StreamPlayerStatsRequest', '3': '.game.PlayerStats', '6': true},
     const {'1': 'TogglePlayerStats', '2': '.game.Empty', '3': '.game.Empty'},
+    const {'1': 'StreamHistory', '2': '.game.StreamHistoryRequest', '3': '.game.GameAction', '6': true},
   ],
 };
 
@@ -190,5 +222,7 @@ const GameService$messageJson = const {
   '.game.Player': Player$json,
   '.game.StreamPlayerStatsRequest': StreamPlayerStatsRequest$json,
   '.game.PlayerStats': PlayerStats$json,
+  '.game.StreamHistoryRequest': StreamHistoryRequest$json,
+  '.game.GameAction': GameAction$json,
 };
 

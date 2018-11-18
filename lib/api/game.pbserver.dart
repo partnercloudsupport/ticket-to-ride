@@ -4,7 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async';
+import 'dart:async' as $async;
 
 import 'package:protobuf/protobuf.dart';
 
@@ -14,16 +14,17 @@ import 'game.pbjson.dart';
 export 'game.pb.dart';
 
 abstract class GameServiceBase extends GeneratedService {
-  Future<CreateResponse> createGame(ServerContext ctx, CreateGameRequest request);
-  Future<Empty> leaveGame(ServerContext ctx, LeaveGameRequest request);
-  Future<Empty> deleteGame(ServerContext ctx, DeleteGameRequest request);
-  Future<Game> getGame(ServerContext ctx, GetGameRequest request);
-  Future<Game> startGame(ServerContext ctx, StartGameRequest request);
-  Future<ListGamesResponse> listGames(ServerContext ctx, ListGamesRequest request);
-  Future<CreatePlayerResponse> createPlayer(ServerContext ctx, CreatePlayerRequest request);
-  Future<Player> getPlayer(ServerContext ctx, GetPlayerRequest request);
-  Future<PlayerStats> streamPlayerStats(ServerContext ctx, StreamPlayerStatsRequest request);
-  Future<Empty> togglePlayerStats(ServerContext ctx, Empty request);
+  $async.Future<CreateResponse> createGame(ServerContext ctx, CreateGameRequest request);
+  $async.Future<Empty> leaveGame(ServerContext ctx, LeaveGameRequest request);
+  $async.Future<Empty> deleteGame(ServerContext ctx, DeleteGameRequest request);
+  $async.Future<Game> getGame(ServerContext ctx, GetGameRequest request);
+  $async.Future<Game> startGame(ServerContext ctx, StartGameRequest request);
+  $async.Future<ListGamesResponse> listGames(ServerContext ctx, ListGamesRequest request);
+  $async.Future<CreatePlayerResponse> createPlayer(ServerContext ctx, CreatePlayerRequest request);
+  $async.Future<Player> getPlayer(ServerContext ctx, GetPlayerRequest request);
+  $async.Future<PlayerStats> streamPlayerStats(ServerContext ctx, StreamPlayerStatsRequest request);
+  $async.Future<Empty> togglePlayerStats(ServerContext ctx, Empty request);
+  $async.Future<GameAction> streamHistory(ServerContext ctx, StreamHistoryRequest request);
 
   GeneratedMessage createRequest(String method) {
     switch (method) {
@@ -37,11 +38,12 @@ abstract class GameServiceBase extends GeneratedService {
       case 'GetPlayer': return new GetPlayerRequest();
       case 'StreamPlayerStats': return new StreamPlayerStatsRequest();
       case 'TogglePlayerStats': return new Empty();
+      case 'StreamHistory': return new StreamHistoryRequest();
       default: throw new ArgumentError('Unknown method: $method');
     }
   }
 
-  Future<GeneratedMessage> handleCall(ServerContext ctx, String method, GeneratedMessage request) {
+  $async.Future<GeneratedMessage> handleCall(ServerContext ctx, String method, GeneratedMessage request) {
     switch (method) {
       case 'CreateGame': return this.createGame(ctx, request);
       case 'LeaveGame': return this.leaveGame(ctx, request);
@@ -53,6 +55,7 @@ abstract class GameServiceBase extends GeneratedService {
       case 'GetPlayer': return this.getPlayer(ctx, request);
       case 'StreamPlayerStats': return this.streamPlayerStats(ctx, request);
       case 'TogglePlayerStats': return this.togglePlayerStats(ctx, request);
+      case 'StreamHistory': return this.streamHistory(ctx, request);
       default: throw new ArgumentError('Unknown method: $method');
     }
   }

@@ -17,6 +17,7 @@ service GameService {
   rpc GetPlayer (GetPlayerRequest) returns (Player);
   rpc StreamPlayerStats (StreamPlayerStatsRequest) returns (stream PlayerStats);
   rpc TogglePlayerStats (Empty) returns (Empty);
+  rpc StreamHistory (StreamHistoryRequest) returns (stream GameAction);
 }
 
 message Game {
@@ -39,7 +40,7 @@ message Game {
   //when created, it should be PRE
   //Required
   Status status = 6;
-  
+
   enum Status{
     UNKNOWN = 0;
     PRE = 1;
@@ -55,6 +56,22 @@ message Game {
   // Max number of players for the game allowed
   //int32 max_players = 6;
   //status....
+
+}
+
+message GameAction{
+  // The unique identifier of the message.
+  // Server assigned.
+  string action_id = 1;
+
+  //The contents of the message.  What different players see
+  string action = 2;
+
+  //Server assigned.  The time the action occured
+  int32 timestamp = 3;
+
+  //The player Id associated witht the player who took the action
+  string player_id = 4;
 
 }
 
@@ -95,6 +112,13 @@ message DeleteGameRequest {
   // Required.
   string game_id = 1;
 }
+
+message StreamHistoryRequest {
+  string game_id = 1;
+}
+
+
+
 message CreatePlayerRequest{
   //the id of the user who wants to join a game
   string user_id = 1;
@@ -112,6 +136,8 @@ message Player {
   string game_id = 3;
   // The color that the player will be inGame and lobby
   Color color = 4;
+  //The username of the player
+  string username = 5;
 
   enum Color{
     UNKNOWN = 0;
@@ -163,8 +189,18 @@ message StreamPlayerStatsRequest {
 
 message PlayerStats {
   string player_id = 1;
-  int32 points = 2;
+  int32 train_card_points = 2;
+  int32 longest_route_points = 6;
+  int32 destination_card_points = 7;
   int32 train_count = 3;
   int32 train_card_count = 4;
   int32 destination_card_count = 5;
+  PlayerTurnState turn_state = 8;
+}
+
+enum PlayerTurnState {
+  UNSPECIFIED_PLAYER_TURN_STATE = 0;
+  PENDING = 1;
+  START = 2;
+  MID = 3;
 }

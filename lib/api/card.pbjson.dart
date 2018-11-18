@@ -4,6 +4,8 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
+import 'game.pbjson.dart' as $0;
+
 const TrainColor$json = const {
   '1': 'TrainColor',
   '2': const [
@@ -19,10 +21,6 @@ const TrainColor$json = const {
     const {'1': 'WHITE', '2': 9},
     const {'1': 'RAINBOW', '2': 10},
   ],
-};
-
-const Empty2$json = const {
-  '1': 'Empty2',
 };
 
 const GetDestinationCardRequest$json = const {
@@ -165,8 +163,8 @@ const CardService$json = const {
     const {'1': 'StreamDestinationCards', '2': '.card.StreamDestinationCardsRequest', '3': '.card.DestinationCard', '6': true},
     const {'1': 'StreamTrainCards', '2': '.card.StreamTrainCardsRequest', '3': '.card.TrainCard', '6': true},
     const {'1': 'StreamDeckStats', '2': '.card.StreamDeckStatsRequest', '3': '.card.DeckStats', '6': true},
-    const {'1': 'DrawTrainCardFromDeck', '2': '.card.DrawTrainCardFromDeckRequest', '3': '.card.Empty2'},
-    const {'1': 'DrawFaceUpTrainCard', '2': '.card.DrawFaceUpTrainCardRequest', '3': '.card.Empty2'},
+    const {'1': 'DrawTrainCardFromDeck', '2': '.card.DrawTrainCardFromDeckRequest', '3': '.game.Empty'},
+    const {'1': 'DrawFaceUpTrainCard', '2': '.card.DrawFaceUpTrainCardRequest', '3': '.game.Empty'},
     const {'1': 'getTrainCardsInHand', '2': '.card.GetTrainCardsInHandRequest', '3': '.card.GetTrainCardsInHandResponse'},
   ],
 };
@@ -184,7 +182,7 @@ const CardService$messageJson = const {
   '.card.StreamDeckStatsRequest': StreamDeckStatsRequest$json,
   '.card.DeckStats': DeckStats$json,
   '.card.DrawTrainCardFromDeckRequest': DrawTrainCardFromDeckRequest$json,
-  '.card.Empty2': Empty2$json,
+  '.game.Empty': $0.Empty$json,
   '.card.DrawFaceUpTrainCardRequest': DrawFaceUpTrainCardRequest$json,
   '.card.GetTrainCardsInHandRequest': GetTrainCardsInHandRequest$json,
   '.card.GetTrainCardsInHandResponse': GetTrainCardsInHandResponse$json,

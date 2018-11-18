@@ -4,7 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async';
+import 'dart:async' as $async;
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
@@ -36,7 +36,7 @@ class Game extends $pb.GeneratedMessage {
   static Game getDefault() => _defaultInstance ??= create()..freeze();
   static Game _defaultInstance;
   static void $checkItem(Game v) {
-    if (v is! Game) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! Game) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -67,6 +67,50 @@ class Game extends $pb.GeneratedMessage {
   void clearStatus() => clearField(6);
 }
 
+class GameAction extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('GameAction', package: const $pb.PackageName('game'))
+    ..aOS(1, 'actionId')
+    ..aOS(2, 'action')
+    ..a<int>(3, 'timestamp', $pb.PbFieldType.O3)
+    ..aOS(4, 'playerId')
+    ..hasRequiredFields = false
+  ;
+
+  GameAction() : super();
+  GameAction.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  GameAction.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  GameAction clone() => new GameAction()..mergeFromMessage(this);
+  GameAction copyWith(void Function(GameAction) updates) => super.copyWith((message) => updates(message as GameAction));
+  $pb.BuilderInfo get info_ => _i;
+  static GameAction create() => new GameAction();
+  static $pb.PbList<GameAction> createRepeated() => new $pb.PbList<GameAction>();
+  static GameAction getDefault() => _defaultInstance ??= create()..freeze();
+  static GameAction _defaultInstance;
+  static void $checkItem(GameAction v) {
+    if (v is! GameAction) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get actionId => $_getS(0, '');
+  set actionId(String v) { $_setString(0, v); }
+  bool hasActionId() => $_has(0);
+  void clearActionId() => clearField(1);
+
+  String get action => $_getS(1, '');
+  set action(String v) { $_setString(1, v); }
+  bool hasAction() => $_has(1);
+  void clearAction() => clearField(2);
+
+  int get timestamp => $_get(2, 0);
+  set timestamp(int v) { $_setSignedInt32(2, v); }
+  bool hasTimestamp() => $_has(2);
+  void clearTimestamp() => clearField(3);
+
+  String get playerId => $_getS(3, '');
+  set playerId(String v) { $_setString(3, v); }
+  bool hasPlayerId() => $_has(3);
+  void clearPlayerId() => clearField(4);
+}
+
 class CreateGameRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('CreateGameRequest', package: const $pb.PackageName('game'))
     ..aOS(1, 'userId')
@@ -86,7 +130,7 @@ class CreateGameRequest extends $pb.GeneratedMessage {
   static CreateGameRequest getDefault() => _defaultInstance ??= create()..freeze();
   static CreateGameRequest _defaultInstance;
   static void $checkItem(CreateGameRequest v) {
-    if (v is! CreateGameRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CreateGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get userId => $_getS(0, '');
@@ -123,7 +167,7 @@ class LeaveGameRequest extends $pb.GeneratedMessage {
   static LeaveGameRequest getDefault() => _defaultInstance ??= create()..freeze();
   static LeaveGameRequest _defaultInstance;
   static void $checkItem(LeaveGameRequest v) {
-    if (v is! LeaveGameRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! LeaveGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get playerId => $_getS(0, '');
@@ -153,7 +197,7 @@ class ListGamesRequest extends $pb.GeneratedMessage {
   static ListGamesRequest getDefault() => _defaultInstance ??= create()..freeze();
   static ListGamesRequest _defaultInstance;
   static void $checkItem(ListGamesRequest v) {
-    if (v is! ListGamesRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! ListGamesRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 }
 
@@ -174,7 +218,7 @@ class GetGameRequest extends $pb.GeneratedMessage {
   static GetGameRequest getDefault() => _defaultInstance ??= create()..freeze();
   static GetGameRequest _defaultInstance;
   static void $checkItem(GetGameRequest v) {
-    if (v is! GetGameRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! GetGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -200,7 +244,7 @@ class StartGameRequest extends $pb.GeneratedMessage {
   static StartGameRequest getDefault() => _defaultInstance ??= create()..freeze();
   static StartGameRequest _defaultInstance;
   static void $checkItem(StartGameRequest v) {
-    if (v is! StartGameRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! StartGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -226,7 +270,33 @@ class DeleteGameRequest extends $pb.GeneratedMessage {
   static DeleteGameRequest getDefault() => _defaultInstance ??= create()..freeze();
   static DeleteGameRequest _defaultInstance;
   static void $checkItem(DeleteGameRequest v) {
-    if (v is! DeleteGameRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! DeleteGameRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+
+  String get gameId => $_getS(0, '');
+  set gameId(String v) { $_setString(0, v); }
+  bool hasGameId() => $_has(0);
+  void clearGameId() => clearField(1);
+}
+
+class StreamHistoryRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('StreamHistoryRequest', package: const $pb.PackageName('game'))
+    ..aOS(1, 'gameId')
+    ..hasRequiredFields = false
+  ;
+
+  StreamHistoryRequest() : super();
+  StreamHistoryRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  StreamHistoryRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  StreamHistoryRequest clone() => new StreamHistoryRequest()..mergeFromMessage(this);
+  StreamHistoryRequest copyWith(void Function(StreamHistoryRequest) updates) => super.copyWith((message) => updates(message as StreamHistoryRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static StreamHistoryRequest create() => new StreamHistoryRequest();
+  static $pb.PbList<StreamHistoryRequest> createRepeated() => new $pb.PbList<StreamHistoryRequest>();
+  static StreamHistoryRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static StreamHistoryRequest _defaultInstance;
+  static void $checkItem(StreamHistoryRequest v) {
+    if (v is! StreamHistoryRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -253,7 +323,7 @@ class CreatePlayerRequest extends $pb.GeneratedMessage {
   static CreatePlayerRequest getDefault() => _defaultInstance ??= create()..freeze();
   static CreatePlayerRequest _defaultInstance;
   static void $checkItem(CreatePlayerRequest v) {
-    if (v is! CreatePlayerRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CreatePlayerRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get userId => $_getS(0, '');
@@ -273,6 +343,7 @@ class Player extends $pb.GeneratedMessage {
     ..aOS(2, 'accountId')
     ..aOS(3, 'gameId')
     ..e<Player_Color>(4, 'color', $pb.PbFieldType.OE, Player_Color.UNKNOWN, Player_Color.valueOf, Player_Color.values)
+    ..aOS(5, 'username')
     ..hasRequiredFields = false
   ;
 
@@ -287,7 +358,7 @@ class Player extends $pb.GeneratedMessage {
   static Player getDefault() => _defaultInstance ??= create()..freeze();
   static Player _defaultInstance;
   static void $checkItem(Player v) {
-    if (v is! Player) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! Player) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get id => $_getS(0, '');
@@ -309,6 +380,11 @@ class Player extends $pb.GeneratedMessage {
   set color(Player_Color v) { setField(4, v); }
   bool hasColor() => $_has(3);
   void clearColor() => clearField(4);
+
+  String get username => $_getS(4, '');
+  set username(String v) { $_setString(4, v); }
+  bool hasUsername() => $_has(4);
+  void clearUsername() => clearField(5);
 }
 
 class GetPlayerRequest extends $pb.GeneratedMessage {
@@ -328,7 +404,7 @@ class GetPlayerRequest extends $pb.GeneratedMessage {
   static GetPlayerRequest getDefault() => _defaultInstance ??= create()..freeze();
   static GetPlayerRequest _defaultInstance;
   static void $checkItem(GetPlayerRequest v) {
-    if (v is! GetPlayerRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! GetPlayerRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get playerId => $_getS(0, '');
@@ -353,7 +429,7 @@ class Empty extends $pb.GeneratedMessage {
   static Empty getDefault() => _defaultInstance ??= create()..freeze();
   static Empty _defaultInstance;
   static void $checkItem(Empty v) {
-    if (v is! Empty) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! Empty) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 }
 
@@ -374,7 +450,7 @@ class ListGamesResponse extends $pb.GeneratedMessage {
   static ListGamesResponse getDefault() => _defaultInstance ??= create()..freeze();
   static ListGamesResponse _defaultInstance;
   static void $checkItem(ListGamesResponse v) {
-    if (v is! ListGamesResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! ListGamesResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   List<Game> get games => $_getList(0);
@@ -398,7 +474,7 @@ class CreateResponse extends $pb.GeneratedMessage {
   static CreateResponse getDefault() => _defaultInstance ??= create()..freeze();
   static CreateResponse _defaultInstance;
   static void $checkItem(CreateResponse v) {
-    if (v is! CreateResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CreateResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -430,7 +506,7 @@ class DeleteResponse extends $pb.GeneratedMessage {
   static DeleteResponse getDefault() => _defaultInstance ??= create()..freeze();
   static DeleteResponse _defaultInstance;
   static void $checkItem(DeleteResponse v) {
-    if (v is! DeleteResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! DeleteResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameName => $_getS(0, '');
@@ -458,7 +534,7 @@ class CreatePlayerResponse extends $pb.GeneratedMessage {
   static CreatePlayerResponse getDefault() => _defaultInstance ??= create()..freeze();
   static CreatePlayerResponse _defaultInstance;
   static void $checkItem(CreatePlayerResponse v) {
-    if (v is! CreatePlayerResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CreatePlayerResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get playerId => $_getS(0, '');
@@ -483,17 +559,20 @@ class StreamPlayerStatsRequest extends $pb.GeneratedMessage {
   static StreamPlayerStatsRequest getDefault() => _defaultInstance ??= create()..freeze();
   static StreamPlayerStatsRequest _defaultInstance;
   static void $checkItem(StreamPlayerStatsRequest v) {
-    if (v is! StreamPlayerStatsRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! StreamPlayerStatsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 }
 
 class PlayerStats extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('PlayerStats', package: const $pb.PackageName('game'))
     ..aOS(1, 'playerId')
-    ..a<int>(2, 'points', $pb.PbFieldType.O3)
+    ..a<int>(2, 'trainCardPoints', $pb.PbFieldType.O3)
     ..a<int>(3, 'trainCount', $pb.PbFieldType.O3)
     ..a<int>(4, 'trainCardCount', $pb.PbFieldType.O3)
     ..a<int>(5, 'destinationCardCount', $pb.PbFieldType.O3)
+    ..a<int>(6, 'longestRoutePoints', $pb.PbFieldType.O3)
+    ..a<int>(7, 'destinationCardPoints', $pb.PbFieldType.O3)
+    ..e<PlayerTurnState>(8, 'turnState', $pb.PbFieldType.OE, PlayerTurnState.UNSPECIFIED_PLAYER_TURN_STATE, PlayerTurnState.valueOf, PlayerTurnState.values)
     ..hasRequiredFields = false
   ;
 
@@ -508,7 +587,7 @@ class PlayerStats extends $pb.GeneratedMessage {
   static PlayerStats getDefault() => _defaultInstance ??= create()..freeze();
   static PlayerStats _defaultInstance;
   static void $checkItem(PlayerStats v) {
-    if (v is! PlayerStats) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! PlayerStats) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get playerId => $_getS(0, '');
@@ -516,10 +595,10 @@ class PlayerStats extends $pb.GeneratedMessage {
   bool hasPlayerId() => $_has(0);
   void clearPlayerId() => clearField(1);
 
-  int get points => $_get(1, 0);
-  set points(int v) { $_setSignedInt32(1, v); }
-  bool hasPoints() => $_has(1);
-  void clearPoints() => clearField(2);
+  int get trainCardPoints => $_get(1, 0);
+  set trainCardPoints(int v) { $_setSignedInt32(1, v); }
+  bool hasTrainCardPoints() => $_has(1);
+  void clearTrainCardPoints() => clearField(2);
 
   int get trainCount => $_get(2, 0);
   set trainCount(int v) { $_setSignedInt32(2, v); }
@@ -535,51 +614,70 @@ class PlayerStats extends $pb.GeneratedMessage {
   set destinationCardCount(int v) { $_setSignedInt32(4, v); }
   bool hasDestinationCardCount() => $_has(4);
   void clearDestinationCardCount() => clearField(5);
+
+  int get longestRoutePoints => $_get(5, 0);
+  set longestRoutePoints(int v) { $_setSignedInt32(5, v); }
+  bool hasLongestRoutePoints() => $_has(5);
+  void clearLongestRoutePoints() => clearField(6);
+
+  int get destinationCardPoints => $_get(6, 0);
+  set destinationCardPoints(int v) { $_setSignedInt32(6, v); }
+  bool hasDestinationCardPoints() => $_has(6);
+  void clearDestinationCardPoints() => clearField(7);
+
+  PlayerTurnState get turnState => $_getN(7);
+  set turnState(PlayerTurnState v) { setField(8, v); }
+  bool hasTurnState() => $_has(7);
+  void clearTurnState() => clearField(8);
 }
 
 class GameServiceApi {
   $pb.RpcClient _client;
   GameServiceApi(this._client);
 
-  Future<CreateResponse> createGame($pb.ClientContext ctx, CreateGameRequest request) {
+  $async.Future<CreateResponse> createGame($pb.ClientContext ctx, CreateGameRequest request) {
     var emptyResponse = new CreateResponse();
     return _client.invoke<CreateResponse>(ctx, 'GameService', 'CreateGame', request, emptyResponse);
   }
-  Future<Empty> leaveGame($pb.ClientContext ctx, LeaveGameRequest request) {
+  $async.Future<Empty> leaveGame($pb.ClientContext ctx, LeaveGameRequest request) {
     var emptyResponse = new Empty();
     return _client.invoke<Empty>(ctx, 'GameService', 'LeaveGame', request, emptyResponse);
   }
-  Future<Empty> deleteGame($pb.ClientContext ctx, DeleteGameRequest request) {
+  $async.Future<Empty> deleteGame($pb.ClientContext ctx, DeleteGameRequest request) {
     var emptyResponse = new Empty();
     return _client.invoke<Empty>(ctx, 'GameService', 'DeleteGame', request, emptyResponse);
   }
-  Future<Game> getGame($pb.ClientContext ctx, GetGameRequest request) {
+  $async.Future<Game> getGame($pb.ClientContext ctx, GetGameRequest request) {
     var emptyResponse = new Game();
     return _client.invoke<Game>(ctx, 'GameService', 'GetGame', request, emptyResponse);
   }
-  Future<Game> startGame($pb.ClientContext ctx, StartGameRequest request) {
+  $async.Future<Game> startGame($pb.ClientContext ctx, StartGameRequest request) {
     var emptyResponse = new Game();
     return _client.invoke<Game>(ctx, 'GameService', 'StartGame', request, emptyResponse);
   }
-  Future<ListGamesResponse> listGames($pb.ClientContext ctx, ListGamesRequest request) {
+  $async.Future<ListGamesResponse> listGames($pb.ClientContext ctx, ListGamesRequest request) {
     var emptyResponse = new ListGamesResponse();
     return _client.invoke<ListGamesResponse>(ctx, 'GameService', 'ListGames', request, emptyResponse);
   }
-  Future<CreatePlayerResponse> createPlayer($pb.ClientContext ctx, CreatePlayerRequest request) {
+  $async.Future<CreatePlayerResponse> createPlayer($pb.ClientContext ctx, CreatePlayerRequest request) {
     var emptyResponse = new CreatePlayerResponse();
     return _client.invoke<CreatePlayerResponse>(ctx, 'GameService', 'CreatePlayer', request, emptyResponse);
   }
-  Future<Player> getPlayer($pb.ClientContext ctx, GetPlayerRequest request) {
+  $async.Future<Player> getPlayer($pb.ClientContext ctx, GetPlayerRequest request) {
     var emptyResponse = new Player();
     return _client.invoke<Player>(ctx, 'GameService', 'GetPlayer', request, emptyResponse);
   }
-  Future<PlayerStats> streamPlayerStats($pb.ClientContext ctx, StreamPlayerStatsRequest request) {
+  $async.Future<PlayerStats> streamPlayerStats($pb.ClientContext ctx, StreamPlayerStatsRequest request) {
     var emptyResponse = new PlayerStats();
     return _client.invoke<PlayerStats>(ctx, 'GameService', 'StreamPlayerStats', request, emptyResponse);
   }
-  Future<Empty> togglePlayerStats($pb.ClientContext ctx, Empty request) {
+  $async.Future<Empty> togglePlayerStats($pb.ClientContext ctx, Empty request) {
     var emptyResponse = new Empty();
     return _client.invoke<Empty>(ctx, 'GameService', 'TogglePlayerStats', request, emptyResponse);
+  }
+  $async.Future<GameAction> streamHistory($pb.ClientContext ctx, StreamHistoryRequest request) {
+    var emptyResponse = new GameAction();
+    return _client.invoke<GameAction>(ctx, 'GameService', 'StreamHistory', request, emptyResponse);
   }
 }
 

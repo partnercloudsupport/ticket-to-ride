@@ -4,21 +4,23 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async';
+import 'dart:async' as $async;
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'card.pbenum.dart' as $1;
+import 'card.pbenum.dart' as $2;
 
 class Route extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Route', package: const $pb.PackageName('route'))
     ..aOS(1, 'id')
     ..aOS(2, 'firstCityId')
     ..aOS(3, 'secondCityId')
-    ..e<$1.TrainColor>(4, 'color', $pb.PbFieldType.OE, $1.TrainColor.UNSPECIFIED, $1.TrainColor.valueOf, $1.TrainColor.values)
+    ..e<$2.TrainColor>(4, 'color', $pb.PbFieldType.OE, $2.TrainColor.UNSPECIFIED, $2.TrainColor.valueOf, $2.TrainColor.values)
     ..aOS(5, 'playerId')
+    ..a<int>(6, 'length', $pb.PbFieldType.O3)
+    ..aOS(7, 'gameId')
     ..hasRequiredFields = false
   ;
 
@@ -33,7 +35,7 @@ class Route extends $pb.GeneratedMessage {
   static Route getDefault() => _defaultInstance ??= create()..freeze();
   static Route _defaultInstance;
   static void $checkItem(Route v) {
-    if (v is! Route) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! Route) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get id => $_getS(0, '');
@@ -51,8 +53,8 @@ class Route extends $pb.GeneratedMessage {
   bool hasSecondCityId() => $_has(2);
   void clearSecondCityId() => clearField(3);
 
-  $1.TrainColor get color => $_getN(3);
-  set color($1.TrainColor v) { setField(4, v); }
+  $2.TrainColor get color => $_getN(3);
+  set color($2.TrainColor v) { setField(4, v); }
   bool hasColor() => $_has(3);
   void clearColor() => clearField(4);
 
@@ -60,6 +62,16 @@ class Route extends $pb.GeneratedMessage {
   set playerId(String v) { $_setString(4, v); }
   bool hasPlayerId() => $_has(4);
   void clearPlayerId() => clearField(5);
+
+  int get length => $_get(5, 0);
+  set length(int v) { $_setSignedInt32(5, v); }
+  bool hasLength() => $_has(5);
+  void clearLength() => clearField(6);
+
+  String get gameId => $_getS(6, '');
+  set gameId(String v) { $_setString(6, v); }
+  bool hasGameId() => $_has(6);
+  void clearGameId() => clearField(7);
 }
 
 class StreamRoutesRequest extends $pb.GeneratedMessage {
@@ -79,7 +91,7 @@ class StreamRoutesRequest extends $pb.GeneratedMessage {
   static StreamRoutesRequest getDefault() => _defaultInstance ??= create()..freeze();
   static StreamRoutesRequest _defaultInstance;
   static void $checkItem(StreamRoutesRequest v) {
-    if (v is! StreamRoutesRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! StreamRoutesRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -106,7 +118,7 @@ class ClaimRouteRequest extends $pb.GeneratedMessage {
   static ClaimRouteRequest getDefault() => _defaultInstance ??= create()..freeze();
   static ClaimRouteRequest _defaultInstance;
   static void $checkItem(ClaimRouteRequest v) {
-    if (v is! ClaimRouteRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! ClaimRouteRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get routeId => $_getS(0, '');
@@ -136,7 +148,7 @@ class ClaimRouteResponse extends $pb.GeneratedMessage {
   static ClaimRouteResponse getDefault() => _defaultInstance ??= create()..freeze();
   static ClaimRouteResponse _defaultInstance;
   static void $checkItem(ClaimRouteResponse v) {
-    if (v is! ClaimRouteResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! ClaimRouteResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 }
 
@@ -144,11 +156,11 @@ class RouteServiceApi {
   $pb.RpcClient _client;
   RouteServiceApi(this._client);
 
-  Future<ClaimRouteResponse> claimRoute($pb.ClientContext ctx, ClaimRouteRequest request) {
+  $async.Future<ClaimRouteResponse> claimRoute($pb.ClientContext ctx, ClaimRouteRequest request) {
     var emptyResponse = new ClaimRouteResponse();
     return _client.invoke<ClaimRouteResponse>(ctx, 'RouteService', 'ClaimRoute', request, emptyResponse);
   }
-  Future<Route> streamRoutes($pb.ClientContext ctx, StreamRoutesRequest request) {
+  $async.Future<Route> streamRoutes($pb.ClientContext ctx, StreamRoutesRequest request) {
     var emptyResponse = new Route();
     return _client.invoke<Route>(ctx, 'RouteService', 'StreamRoutes', request, emptyResponse);
   }

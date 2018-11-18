@@ -4,35 +4,17 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async';
+import 'dart:async' as $async;
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'game.pb.dart' as $0;
+
 import 'card.pbenum.dart';
 
 export 'card.pbenum.dart';
-
-class Empty2 extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Empty2', package: const $pb.PackageName('card'))
-    ..hasRequiredFields = false
-  ;
-
-  Empty2() : super();
-  Empty2.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  Empty2.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  Empty2 clone() => new Empty2()..mergeFromMessage(this);
-  Empty2 copyWith(void Function(Empty2) updates) => super.copyWith((message) => updates(message as Empty2));
-  $pb.BuilderInfo get info_ => _i;
-  static Empty2 create() => new Empty2();
-  static $pb.PbList<Empty2> createRepeated() => new $pb.PbList<Empty2>();
-  static Empty2 getDefault() => _defaultInstance ??= create()..freeze();
-  static Empty2 _defaultInstance;
-  static void $checkItem(Empty2 v) {
-    if (v is! Empty2) $pb.checkItemFailed(v, _i.messageName);
-  }
-}
 
 class GetDestinationCardRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('GetDestinationCardRequest', package: const $pb.PackageName('card'))
@@ -51,7 +33,7 @@ class GetDestinationCardRequest extends $pb.GeneratedMessage {
   static GetDestinationCardRequest getDefault() => _defaultInstance ??= create()..freeze();
   static GetDestinationCardRequest _defaultInstance;
   static void $checkItem(GetDestinationCardRequest v) {
-    if (v is! GetDestinationCardRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! GetDestinationCardRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get destinationCardId => $_getS(0, '');
@@ -81,7 +63,7 @@ class DestinationCard extends $pb.GeneratedMessage {
   static DestinationCard getDefault() => _defaultInstance ??= create()..freeze();
   static DestinationCard _defaultInstance;
   static void $checkItem(DestinationCard v) {
-    if (v is! DestinationCard) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! DestinationCard) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get id => $_getS(0, '');
@@ -127,7 +109,7 @@ class PeekDestinationCardsRequest extends $pb.GeneratedMessage {
   static PeekDestinationCardsRequest getDefault() => _defaultInstance ??= create()..freeze();
   static PeekDestinationCardsRequest _defaultInstance;
   static void $checkItem(PeekDestinationCardsRequest v) {
-    if (v is! PeekDestinationCardsRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! PeekDestinationCardsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -153,7 +135,7 @@ class PeekDestinationCardsResponse extends $pb.GeneratedMessage {
   static PeekDestinationCardsResponse getDefault() => _defaultInstance ??= create()..freeze();
   static PeekDestinationCardsResponse _defaultInstance;
   static void $checkItem(PeekDestinationCardsResponse v) {
-    if (v is! PeekDestinationCardsResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! PeekDestinationCardsResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   List<DestinationCard> get destinationCards => $_getList(0);
@@ -177,7 +159,7 @@ class ClaimDestinationCardsRequest extends $pb.GeneratedMessage {
   static ClaimDestinationCardsRequest getDefault() => _defaultInstance ??= create()..freeze();
   static ClaimDestinationCardsRequest _defaultInstance;
   static void $checkItem(ClaimDestinationCardsRequest v) {
-    if (v is! ClaimDestinationCardsRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! ClaimDestinationCardsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   List<String> get destinationCardIds => $_getList(0);
@@ -204,7 +186,7 @@ class ClaimDestinationCardsResponse extends $pb.GeneratedMessage {
   static ClaimDestinationCardsResponse getDefault() => _defaultInstance ??= create()..freeze();
   static ClaimDestinationCardsResponse _defaultInstance;
   static void $checkItem(ClaimDestinationCardsResponse v) {
-    if (v is! ClaimDestinationCardsResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! ClaimDestinationCardsResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 }
 
@@ -225,7 +207,7 @@ class StreamDestinationCardsRequest extends $pb.GeneratedMessage {
   static StreamDestinationCardsRequest getDefault() => _defaultInstance ??= create()..freeze();
   static StreamDestinationCardsRequest _defaultInstance;
   static void $checkItem(StreamDestinationCardsRequest v) {
-    if (v is! StreamDestinationCardsRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! StreamDestinationCardsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get playerId => $_getS(0, '');
@@ -252,7 +234,7 @@ class DeckStats extends $pb.GeneratedMessage {
   static DeckStats getDefault() => _defaultInstance ??= create()..freeze();
   static DeckStats _defaultInstance;
   static void $checkItem(DeckStats v) {
-    if (v is! DeckStats) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! DeckStats) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   int get hiddenTrainCardCount => $_get(0, 0);
@@ -283,7 +265,7 @@ class StreamDeckStatsRequest extends $pb.GeneratedMessage {
   static StreamDeckStatsRequest getDefault() => _defaultInstance ??= create()..freeze();
   static StreamDeckStatsRequest _defaultInstance;
   static void $checkItem(StreamDeckStatsRequest v) {
-    if (v is! StreamDeckStatsRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! StreamDeckStatsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get gameId => $_getS(0, '');
@@ -308,7 +290,7 @@ class ClaimTrainCardRequest extends $pb.GeneratedMessage {
   static ClaimTrainCardRequest getDefault() => _defaultInstance ??= create()..freeze();
   static ClaimTrainCardRequest _defaultInstance;
   static void $checkItem(ClaimTrainCardRequest v) {
-    if (v is! ClaimTrainCardRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! ClaimTrainCardRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 }
 
@@ -328,7 +310,7 @@ class ClaimTrainCardResponse extends $pb.GeneratedMessage {
   static ClaimTrainCardResponse getDefault() => _defaultInstance ??= create()..freeze();
   static ClaimTrainCardResponse _defaultInstance;
   static void $checkItem(ClaimTrainCardResponse v) {
-    if (v is! ClaimTrainCardResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! ClaimTrainCardResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 }
 
@@ -349,7 +331,7 @@ class StreamTrainCardsRequest extends $pb.GeneratedMessage {
   static StreamTrainCardsRequest getDefault() => _defaultInstance ??= create()..freeze();
   static StreamTrainCardsRequest _defaultInstance;
   static void $checkItem(StreamTrainCardsRequest v) {
-    if (v is! StreamTrainCardsRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! StreamTrainCardsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get playerId => $_getS(0, '');
@@ -378,7 +360,7 @@ class TrainCard extends $pb.GeneratedMessage {
   static TrainCard getDefault() => _defaultInstance ??= create()..freeze();
   static TrainCard _defaultInstance;
   static void $checkItem(TrainCard v) {
-    if (v is! TrainCard) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! TrainCard) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get id => $_getS(0, '');
@@ -419,7 +401,7 @@ class DrawTrainCardFromDeckRequest extends $pb.GeneratedMessage {
   static DrawTrainCardFromDeckRequest getDefault() => _defaultInstance ??= create()..freeze();
   static DrawTrainCardFromDeckRequest _defaultInstance;
   static void $checkItem(DrawTrainCardFromDeckRequest v) {
-    if (v is! DrawTrainCardFromDeckRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! DrawTrainCardFromDeckRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get id => $_getS(0, '');
@@ -446,7 +428,7 @@ class DrawFaceUpTrainCardRequest extends $pb.GeneratedMessage {
   static DrawFaceUpTrainCardRequest getDefault() => _defaultInstance ??= create()..freeze();
   static DrawFaceUpTrainCardRequest _defaultInstance;
   static void $checkItem(DrawFaceUpTrainCardRequest v) {
-    if (v is! DrawFaceUpTrainCardRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! DrawFaceUpTrainCardRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get id => $_getS(0, '');
@@ -477,7 +459,7 @@ class GetTrainCardsInHandRequest extends $pb.GeneratedMessage {
   static GetTrainCardsInHandRequest getDefault() => _defaultInstance ??= create()..freeze();
   static GetTrainCardsInHandRequest _defaultInstance;
   static void $checkItem(GetTrainCardsInHandRequest v) {
-    if (v is! GetTrainCardsInHandRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! GetTrainCardsInHandRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get id => $_getS(0, '');
@@ -503,7 +485,7 @@ class GetTrainCardsInHandResponse extends $pb.GeneratedMessage {
   static GetTrainCardsInHandResponse getDefault() => _defaultInstance ??= create()..freeze();
   static GetTrainCardsInHandResponse _defaultInstance;
   static void $checkItem(GetTrainCardsInHandResponse v) {
-    if (v is! GetTrainCardsInHandResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! GetTrainCardsInHandResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   List<TrainCard> get cards => $_getList(0);
@@ -513,39 +495,39 @@ class CardServiceApi {
   $pb.RpcClient _client;
   CardServiceApi(this._client);
 
-  Future<DestinationCard> getDestinationCard($pb.ClientContext ctx, GetDestinationCardRequest request) {
+  $async.Future<DestinationCard> getDestinationCard($pb.ClientContext ctx, GetDestinationCardRequest request) {
     var emptyResponse = new DestinationCard();
     return _client.invoke<DestinationCard>(ctx, 'CardService', 'GetDestinationCard', request, emptyResponse);
   }
-  Future<PeekDestinationCardsResponse> peekDestinationCards($pb.ClientContext ctx, PeekDestinationCardsRequest request) {
+  $async.Future<PeekDestinationCardsResponse> peekDestinationCards($pb.ClientContext ctx, PeekDestinationCardsRequest request) {
     var emptyResponse = new PeekDestinationCardsResponse();
     return _client.invoke<PeekDestinationCardsResponse>(ctx, 'CardService', 'PeekDestinationCards', request, emptyResponse);
   }
-  Future<ClaimDestinationCardsResponse> claimDestinationCards($pb.ClientContext ctx, ClaimDestinationCardsRequest request) {
+  $async.Future<ClaimDestinationCardsResponse> claimDestinationCards($pb.ClientContext ctx, ClaimDestinationCardsRequest request) {
     var emptyResponse = new ClaimDestinationCardsResponse();
     return _client.invoke<ClaimDestinationCardsResponse>(ctx, 'CardService', 'ClaimDestinationCards', request, emptyResponse);
   }
-  Future<DestinationCard> streamDestinationCards($pb.ClientContext ctx, StreamDestinationCardsRequest request) {
+  $async.Future<DestinationCard> streamDestinationCards($pb.ClientContext ctx, StreamDestinationCardsRequest request) {
     var emptyResponse = new DestinationCard();
     return _client.invoke<DestinationCard>(ctx, 'CardService', 'StreamDestinationCards', request, emptyResponse);
   }
-  Future<TrainCard> streamTrainCards($pb.ClientContext ctx, StreamTrainCardsRequest request) {
+  $async.Future<TrainCard> streamTrainCards($pb.ClientContext ctx, StreamTrainCardsRequest request) {
     var emptyResponse = new TrainCard();
     return _client.invoke<TrainCard>(ctx, 'CardService', 'StreamTrainCards', request, emptyResponse);
   }
-  Future<DeckStats> streamDeckStats($pb.ClientContext ctx, StreamDeckStatsRequest request) {
+  $async.Future<DeckStats> streamDeckStats($pb.ClientContext ctx, StreamDeckStatsRequest request) {
     var emptyResponse = new DeckStats();
     return _client.invoke<DeckStats>(ctx, 'CardService', 'StreamDeckStats', request, emptyResponse);
   }
-  Future<Empty2> drawTrainCardFromDeck($pb.ClientContext ctx, DrawTrainCardFromDeckRequest request) {
-    var emptyResponse = new Empty2();
-    return _client.invoke<Empty2>(ctx, 'CardService', 'DrawTrainCardFromDeck', request, emptyResponse);
+  $async.Future<$0.Empty> drawTrainCardFromDeck($pb.ClientContext ctx, DrawTrainCardFromDeckRequest request) {
+    var emptyResponse = new $0.Empty();
+    return _client.invoke<$0.Empty>(ctx, 'CardService', 'DrawTrainCardFromDeck', request, emptyResponse);
   }
-  Future<Empty2> drawFaceUpTrainCard($pb.ClientContext ctx, DrawFaceUpTrainCardRequest request) {
-    var emptyResponse = new Empty2();
-    return _client.invoke<Empty2>(ctx, 'CardService', 'DrawFaceUpTrainCard', request, emptyResponse);
+  $async.Future<$0.Empty> drawFaceUpTrainCard($pb.ClientContext ctx, DrawFaceUpTrainCardRequest request) {
+    var emptyResponse = new $0.Empty();
+    return _client.invoke<$0.Empty>(ctx, 'CardService', 'DrawFaceUpTrainCard', request, emptyResponse);
   }
-  Future<GetTrainCardsInHandResponse> getTrainCardsInHand($pb.ClientContext ctx, GetTrainCardsInHandRequest request) {
+  $async.Future<GetTrainCardsInHandResponse> getTrainCardsInHand($pb.ClientContext ctx, GetTrainCardsInHandRequest request) {
     var emptyResponse = new GetTrainCardsInHandResponse();
     return _client.invoke<GetTrainCardsInHandResponse>(ctx, 'CardService', 'getTrainCardsInHand', request, emptyResponse);
   }

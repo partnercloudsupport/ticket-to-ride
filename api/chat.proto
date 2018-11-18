@@ -45,3 +45,7 @@ message GetMessageRequest {
 message StreamMessagesRequest {
   string game_id = 1;
 }
+
+
+
+message Empty {}

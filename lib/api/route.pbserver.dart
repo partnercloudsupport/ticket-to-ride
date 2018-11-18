@@ -4,7 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async';
+import 'dart:async' as $async;
 
 import 'package:protobuf/protobuf.dart';
 
@@ -14,8 +14,8 @@ import 'route.pbjson.dart';
 export 'route.pb.dart';
 
 abstract class RouteServiceBase extends GeneratedService {
-  Future<ClaimRouteResponse> claimRoute(ServerContext ctx, ClaimRouteRequest request);
-  Future<Route> streamRoutes(ServerContext ctx, StreamRoutesRequest request);
+  $async.Future<ClaimRouteResponse> claimRoute(ServerContext ctx, ClaimRouteRequest request);
+  $async.Future<Route> streamRoutes(ServerContext ctx, StreamRoutesRequest request);
 
   GeneratedMessage createRequest(String method) {
     switch (method) {
@@ -25,7 +25,7 @@ abstract class RouteServiceBase extends GeneratedService {
     }
   }
 
-  Future<GeneratedMessage> handleCall(ServerContext ctx, String method, GeneratedMessage request) {
+  $async.Future<GeneratedMessage> handleCall(ServerContext ctx, String method, GeneratedMessage request) {
     switch (method) {
       case 'ClaimRoute': return this.claimRoute(ctx, request);
       case 'StreamRoutes': return this.streamRoutes(ctx, request);

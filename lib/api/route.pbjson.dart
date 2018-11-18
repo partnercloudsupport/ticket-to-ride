@@ -12,6 +12,8 @@ const Route$json = const {
     const {'1': 'second_city_id', '3': 3, '4': 1, '5': 9, '10': 'secondCityId'},
     const {'1': 'color', '3': 4, '4': 1, '5': 14, '6': '.card.TrainColor', '10': 'color'},
     const {'1': 'player_id', '3': 5, '4': 1, '5': 9, '10': 'playerId'},
+    const {'1': 'length', '3': 6, '4': 1, '5': 5, '10': 'length'},
+    const {'1': 'game_id', '3': 7, '4': 1, '5': 9, '10': 'gameId'},
   ],
 };
 

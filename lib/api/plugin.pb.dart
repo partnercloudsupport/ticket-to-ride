@@ -9,7 +9,7 @@ import 'dart:core' show int, bool, double, String, List, override;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'descriptor.pb.dart' as $0;
+import 'descriptor.pb.dart' as $1;
 
 class Version extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Version', package: const $pb.PackageName('google.protobuf.compiler'))
@@ -31,7 +31,7 @@ class Version extends $pb.GeneratedMessage {
   static Version getDefault() => _defaultInstance ??= create()..freeze();
   static Version _defaultInstance;
   static void $checkItem(Version v) {
-    if (v is! Version) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! Version) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   int get major => $_get(0, 0);
@@ -60,7 +60,7 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
     ..pPS(1, 'fileToGenerate')
     ..aOS(2, 'parameter')
     ..a<Version>(3, 'compilerVersion', $pb.PbFieldType.OM, Version.getDefault, Version.create)
-    ..pp<$0.FileDescriptorProto>(15, 'protoFile', $pb.PbFieldType.PM, $0.FileDescriptorProto.$checkItem, $0.FileDescriptorProto.create)
+    ..pp<$1.FileDescriptorProto>(15, 'protoFile', $pb.PbFieldType.PM, $1.FileDescriptorProto.$checkItem, $1.FileDescriptorProto.create)
   ;
 
   CodeGeneratorRequest() : super();
@@ -74,7 +74,7 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
   static CodeGeneratorRequest getDefault() => _defaultInstance ??= create()..freeze();
   static CodeGeneratorRequest _defaultInstance;
   static void $checkItem(CodeGeneratorRequest v) {
-    if (v is! CodeGeneratorRequest) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CodeGeneratorRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   List<String> get fileToGenerate => $_getList(0);
@@ -89,7 +89,7 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
   bool hasCompilerVersion() => $_has(2);
   void clearCompilerVersion() => clearField(3);
 
-  List<$0.FileDescriptorProto> get protoFile => $_getList(3);
+  List<$1.FileDescriptorProto> get protoFile => $_getList(3);
 }
 
 class CodeGeneratorResponse_File extends $pb.GeneratedMessage {
@@ -111,7 +111,7 @@ class CodeGeneratorResponse_File extends $pb.GeneratedMessage {
   static CodeGeneratorResponse_File getDefault() => _defaultInstance ??= create()..freeze();
   static CodeGeneratorResponse_File _defaultInstance;
   static void $checkItem(CodeGeneratorResponse_File v) {
-    if (v is! CodeGeneratorResponse_File) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CodeGeneratorResponse_File) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get name => $_getS(0, '');
@@ -148,7 +148,7 @@ class CodeGeneratorResponse extends $pb.GeneratedMessage {
   static CodeGeneratorResponse getDefault() => _defaultInstance ??= create()..freeze();
   static CodeGeneratorResponse _defaultInstance;
   static void $checkItem(CodeGeneratorResponse v) {
-    if (v is! CodeGeneratorResponse) $pb.checkItemFailed(v, _i.messageName);
+    if (v is! CodeGeneratorResponse) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
   String get error => $_getS(0, '');
