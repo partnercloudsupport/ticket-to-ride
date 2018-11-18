@@ -24,7 +24,7 @@ class GameOverPresenter {
   final String title;
   GameOverFragment fragment;
 
-  List<PlayerStatsWrapper> players;
+  List<PlayerStatsWrapper> players = List<PlayerStatsWrapper>();
 
   // default constructor
   GameOverPresenter({this.title}) {
@@ -54,6 +54,7 @@ class GameOverPresenter {
 
       w.player = pw.Player('username','playerId','userId', 'gameId', c);
 
+      w.stats = PlayerStats();
       w.stats.playerId = 'playerId';
       w.stats.points = i*20;
       w.stats.trainCount = i+1;
@@ -66,7 +67,6 @@ class GameOverPresenter {
     // sorts the players list in descending points order
     // --> players[0] is the winner
     players.sort((PlayerStatsWrapper a, PlayerStatsWrapper b) => (b.getTotalPoints() - a.getTotalPoints()));
-
     for (int i = 0; i < players.length; i++) {
       players[i].rank = i+1;
     }
