@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: api/card.proto
+//  source: card.proto
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
@@ -19,6 +19,7 @@ class TrainColor extends $pb.ProtobufEnum {
   static const TrainColor YELLOW = const TrainColor._(7, 'YELLOW');
   static const TrainColor RED = const TrainColor._(8, 'RED');
   static const TrainColor WHITE = const TrainColor._(9, 'WHITE');
+  static const TrainColor RAINBOW = const TrainColor._(10, 'RAINBOW');
 
   static const List<TrainColor> values = const <TrainColor> [
     UNSPECIFIED,
@@ -31,6 +32,7 @@ class TrainColor extends $pb.ProtobufEnum {
     YELLOW,
     RED,
     WHITE,
+    RAINBOW,
   ];
 
   static final Map<int, TrainColor> _byValue = $pb.ProtobufEnum.initByValue(values);

@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: api/card.proto
+//  source: card.proto
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
@@ -16,6 +16,15 @@ import 'api.pb.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
+
+import './api.pb.dart';
+import './auth.pb.dart';
+import './game.pb.dart';
+import './chat.pb.dart';
+import './descriptor.pb.dart';
+import './health.pb.dart';
+import './plugin.pb.dart';
+import './route.pb.dart';
 
 class CardServiceProxy {
   String _url;
@@ -162,33 +171,6 @@ class CardServiceProxy {
     }
   }
 
-  Future<ClaimTrainCardResponse> claimTrainCard(ClientContext ctx, ClaimTrainCardRequest request) async {
-
-    var req = Request();
-    Response response;
-    try {
-      req.method = 'ClaimTrainCard';
-      req.service = 'card.CardService';
-      req.payload = request.writeToBuffer();
-      var httpResponse = await http.post(_url, body: req.writeToBuffer());
-      response = Response.fromBuffer(httpResponse.bodyBytes);
-    }
-    catch (err) {
-      throw ApiError(Code.UNAVAILABLE, err.toString());
-    }
-
-    if (response.code != Code.OK) {
-      throw ApiError(response.code, response.message);
-    }
-
-    try {
-      return ClaimTrainCardResponse.fromBuffer(response.payload);
-    }
-    catch (err) {
-      throw ApiError(Code.UNAVAILABLE, err.toString());
-    }
-  }
-
   Stream<TrainCard> streamTrainCards(ClientContext ctx, StreamTrainCardsRequest request) {
     var req = Request();
     try {
@@ -309,12 +291,12 @@ class CardServiceProxy {
     }
   }
 
-  Future<ClaimRouteResponse> claimRoute(ClientContext ctx, ClaimRouteRequest request) async {
+  Future<Empty> drawTrainCardFromDeck(ClientContext ctx, DrawTrainCardFromDeckRequest request) async {
 
     var req = Request();
     Response response;
     try {
-      req.method = 'ClaimRoute';
+      req.method = 'DrawTrainCardFromDeck';
       req.service = 'card.CardService';
       req.payload = request.writeToBuffer();
       var httpResponse = await http.post(_url, body: req.writeToBuffer());
@@ -329,67 +311,61 @@ class CardServiceProxy {
     }
 
     try {
-      return ClaimRouteResponse.fromBuffer(response.payload);
+      return Empty.fromBuffer(response.payload);
     }
     catch (err) {
       throw ApiError(Code.UNAVAILABLE, err.toString());
     }
   }
 
-  Stream<Route> streamRoutes(ClientContext ctx, StreamRoutesRequest request) {
+  Future<Empty> drawFaceUpTrainCard(ClientContext ctx, DrawFaceUpTrainCardRequest request) async {
+
     var req = Request();
+    Response response;
     try {
-      req.method = 'StreamRoutes';
+      req.method = 'DrawFaceUpTrainCard';
       req.service = 'card.CardService';
       req.payload = request.writeToBuffer();
+      var httpResponse = await http.post(_url, body: req.writeToBuffer());
+      response = Response.fromBuffer(httpResponse.bodyBytes);
+    }
+    catch (err) {
+      throw ApiError(Code.UNAVAILABLE, err.toString());
+    }
 
-      var client = http.Client();
-      var httpRequest = http.Request('POST', Uri.parse(_url));
-      httpRequest.bodyBytes = req.writeToBuffer();
+    if (response.code != Code.OK) {
+      throw ApiError(response.code, response.message);
+    }
 
-      var httpResponse = client.send(httpRequest);
+    try {
+      return Empty.fromBuffer(response.payload);
+    }
+    catch (err) {
+      throw ApiError(Code.UNAVAILABLE, err.toString());
+    }
+  }
 
-      int length = 0;
-      var dataBuffer = List<int>();
-      var lengthBuffer = ByteData(4);
-      var lengthOffset = 0;
+  Future<GetTrainCardsInHandResponse> getTrainCardsInHand(ClientContext ctx, GetTrainCardsInHandRequest request) async {
 
-      return httpResponse
-        .asStream()
-        .asyncExpand((el) => el.stream)
-        .expand((el) => el)
-        .transform(StreamTransformer.fromHandlers(
-        handleData: (byte, sink) {
-          if (length == 0) {
-            lengthBuffer.setInt8(lengthOffset, byte);
-            lengthOffset++;
-            if (lengthOffset == 4) {
-              lengthOffset = 0;
-              length = ByteData.view(lengthBuffer.buffer).getUint32(0, Endian.little);
-            }
-            return;
-          }
+    var req = Request();
+    Response response;
+    try {
+      req.method = 'getTrainCardsInHand';
+      req.service = 'card.CardService';
+      req.payload = request.writeToBuffer();
+      var httpResponse = await http.post(_url, body: req.writeToBuffer());
+      response = Response.fromBuffer(httpResponse.bodyBytes);
+    }
+    catch (err) {
+      throw ApiError(Code.UNAVAILABLE, err.toString());
+    }
 
-          dataBuffer.add(byte);
+    if (response.code != Code.OK) {
+      throw ApiError(response.code, response.message);
+    }
 
-          length--;
-          if (length == 0) {
-            var resp = Response.fromBuffer(dataBuffer);
-            if (resp.code == Code.PING) {
-              return;
-            }
-            if (resp.code != Code.OK) {
-              sink.addError(ApiError(resp.code, resp.message));
-              return;
-            }
-            sink.add(Route.fromBuffer(resp.payload));
-            dataBuffer.clear();
-          }
-        },
-        handleError: (err, stackTrace, sink) {
-          sink.addError(ApiError(Code.UNAVAILABLE, err.toString()));
-        }
-      ));
+    try {
+      return GetTrainCardsInHandResponse.fromBuffer(response.payload);
     }
     catch (err) {
       throw ApiError(Code.UNAVAILABLE, err.toString());

@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: api/game.proto
+//  source: game.proto
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
@@ -16,6 +16,15 @@ import 'api.pb.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
+
+import './api.pb.dart';
+import './auth.pb.dart';
+import './card.pb.dart';
+import './chat.pb.dart';
+import './descriptor.pb.dart';
+import './health.pb.dart';
+import './plugin.pb.dart';
+import './route.pb.dart';
 
 class GameServiceProxy {
   String _url;
@@ -318,6 +327,66 @@ class GameServiceProxy {
 
     try {
       return Empty.fromBuffer(response.payload);
+    }
+    catch (err) {
+      throw ApiError(Code.UNAVAILABLE, err.toString());
+    }
+  }
+
+  Stream<GameAction> streamHistory(ClientContext ctx, StreamHistoryRequest request) {
+    var req = Request();
+    try {
+      req.method = 'StreamHistory';
+      req.service = 'game.GameService';
+      req.payload = request.writeToBuffer();
+
+      var client = http.Client();
+      var httpRequest = http.Request('POST', Uri.parse(_url));
+      httpRequest.bodyBytes = req.writeToBuffer();
+
+      var httpResponse = client.send(httpRequest);
+
+      int length = 0;
+      var dataBuffer = List<int>();
+      var lengthBuffer = ByteData(4);
+      var lengthOffset = 0;
+
+      return httpResponse
+        .asStream()
+        .asyncExpand((el) => el.stream)
+        .expand((el) => el)
+        .transform(StreamTransformer.fromHandlers(
+        handleData: (byte, sink) {
+          if (length == 0) {
+            lengthBuffer.setInt8(lengthOffset, byte);
+            lengthOffset++;
+            if (lengthOffset == 4) {
+              lengthOffset = 0;
+              length = ByteData.view(lengthBuffer.buffer).getUint32(0, Endian.little);
+            }
+            return;
+          }
+
+          dataBuffer.add(byte);
+
+          length--;
+          if (length == 0) {
+            var resp = Response.fromBuffer(dataBuffer);
+            if (resp.code == Code.PING) {
+              return;
+            }
+            if (resp.code != Code.OK) {
+              sink.addError(ApiError(resp.code, resp.message));
+              return;
+            }
+            sink.add(GameAction.fromBuffer(resp.payload));
+            dataBuffer.clear();
+          }
+        },
+        handleError: (err, stackTrace, sink) {
+          sink.addError(ApiError(Code.UNAVAILABLE, err.toString()));
+        }
+      ));
     }
     catch (err) {
       throw ApiError(Code.UNAVAILABLE, err.toString());

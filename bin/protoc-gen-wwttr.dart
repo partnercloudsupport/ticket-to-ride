@@ -39,6 +39,16 @@ import 'dart:typed_data';
 
 """;
 
+  for (var d in input.protoFile) {
+    if (d == descriptor) {
+      continue;
+    }
+    var baseName = p.basenameWithoutExtension(d.name);
+    file.content += "import './$baseName.pb.dart';\n";
+  }
+
+  file.content += "\n";
+
     for (var service in descriptor.service) {
       var methods = "";
       for (var method in service.method) {

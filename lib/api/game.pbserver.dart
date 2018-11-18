@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: api/game.proto
+//  source: game.proto
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
@@ -24,6 +24,7 @@ abstract class GameServiceBase extends GeneratedService {
   $async.Future<Player> getPlayer(ServerContext ctx, GetPlayerRequest request);
   $async.Future<PlayerStats> streamPlayerStats(ServerContext ctx, StreamPlayerStatsRequest request);
   $async.Future<Empty> togglePlayerStats(ServerContext ctx, Empty request);
+  $async.Future<GameAction> streamHistory(ServerContext ctx, StreamHistoryRequest request);
 
   GeneratedMessage createRequest(String method) {
     switch (method) {
@@ -37,6 +38,7 @@ abstract class GameServiceBase extends GeneratedService {
       case 'GetPlayer': return new GetPlayerRequest();
       case 'StreamPlayerStats': return new StreamPlayerStatsRequest();
       case 'TogglePlayerStats': return new Empty();
+      case 'StreamHistory': return new StreamHistoryRequest();
       default: throw new ArgumentError('Unknown method: $method');
     }
   }
@@ -53,6 +55,7 @@ abstract class GameServiceBase extends GeneratedService {
       case 'GetPlayer': return this.getPlayer(ctx, request);
       case 'StreamPlayerStats': return this.streamPlayerStats(ctx, request);
       case 'TogglePlayerStats': return this.togglePlayerStats(ctx, request);
+      case 'StreamHistory': return this.streamHistory(ctx, request);
       default: throw new ArgumentError('Unknown method: $method');
     }
   }

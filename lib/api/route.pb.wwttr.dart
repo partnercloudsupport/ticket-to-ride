@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: chat.proto
+//  source: route.proto
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
@@ -9,8 +9,8 @@
 import 'dart:async';
 import 'package:protobuf/protobuf.dart';
 
-import 'chat.pb.dart';
-import 'chat.pbjson.dart';
+import 'route.pb.dart';
+import 'route.pbjson.dart';
 import 'api_error.dart';
 import 'api.pb.dart';
 
@@ -21,22 +21,22 @@ import './api.pb.dart';
 import './auth.pb.dart';
 import './game.pb.dart';
 import './card.pb.dart';
+import './chat.pb.dart';
 import './descriptor.pb.dart';
 import './health.pb.dart';
 import './plugin.pb.dart';
-import './route.pb.dart';
 
-class ChatServiceProxy {
+class RouteServiceProxy {
   String _url;
-  ChatServiceProxy(this._url);
+  RouteServiceProxy(this._url);
 
-    Future<Message> createMessage(ClientContext ctx, CreateMessageRequest request) async {
+    Future<ClaimRouteResponse> claimRoute(ClientContext ctx, ClaimRouteRequest request) async {
 
     var req = Request();
     Response response;
     try {
-      req.method = 'createMessage';
-      req.service = 'chat.ChatService';
+      req.method = 'ClaimRoute';
+      req.service = 'route.RouteService';
       req.payload = request.writeToBuffer();
       var httpResponse = await http.post(_url, body: req.writeToBuffer());
       response = Response.fromBuffer(httpResponse.bodyBytes);
@@ -50,45 +50,18 @@ class ChatServiceProxy {
     }
 
     try {
-      return Message.fromBuffer(response.payload);
+      return ClaimRouteResponse.fromBuffer(response.payload);
     }
     catch (err) {
       throw ApiError(Code.UNAVAILABLE, err.toString());
     }
   }
 
-  Future<Message> getMessage(ClientContext ctx, GetMessageRequest request) async {
-
-    var req = Request();
-    Response response;
-    try {
-      req.method = 'getMessage';
-      req.service = 'chat.ChatService';
-      req.payload = request.writeToBuffer();
-      var httpResponse = await http.post(_url, body: req.writeToBuffer());
-      response = Response.fromBuffer(httpResponse.bodyBytes);
-    }
-    catch (err) {
-      throw ApiError(Code.UNAVAILABLE, err.toString());
-    }
-
-    if (response.code != Code.OK) {
-      throw ApiError(response.code, response.message);
-    }
-
-    try {
-      return Message.fromBuffer(response.payload);
-    }
-    catch (err) {
-      throw ApiError(Code.UNAVAILABLE, err.toString());
-    }
-  }
-
-  Stream<Message> streamMessages(ClientContext ctx, StreamMessagesRequest request) {
+  Stream<Route> streamRoutes(ClientContext ctx, StreamRoutesRequest request) {
     var req = Request();
     try {
-      req.method = 'streamMessages';
-      req.service = 'chat.ChatService';
+      req.method = 'StreamRoutes';
+      req.service = 'route.RouteService';
       req.payload = request.writeToBuffer();
 
       var client = http.Client();
@@ -130,7 +103,7 @@ class ChatServiceProxy {
               sink.addError(ApiError(resp.code, resp.message));
               return;
             }
-            sink.add(Message.fromBuffer(resp.payload));
+            sink.add(Route.fromBuffer(resp.payload));
             dataBuffer.clear();
           }
         },

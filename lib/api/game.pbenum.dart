@@ -1,12 +1,34 @@
 ///
 //  Generated code. Do not modify.
-//  source: api/game.proto
+//  source: game.proto
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
 // ignore_for_file: UNDEFINED_SHOWN_NAME,UNUSED_SHOWN_NAME
 import 'dart:core' show int, dynamic, String, List, Map;
 import 'package:protobuf/protobuf.dart' as $pb;
+
+class PlayerTurnState extends $pb.ProtobufEnum {
+  static const PlayerTurnState UNSPECIFIED_PLAYER_TURN_STATE = const PlayerTurnState._(0, 'UNSPECIFIED_PLAYER_TURN_STATE');
+  static const PlayerTurnState PENDING = const PlayerTurnState._(1, 'PENDING');
+  static const PlayerTurnState START = const PlayerTurnState._(2, 'START');
+  static const PlayerTurnState MID = const PlayerTurnState._(3, 'MID');
+
+  static const List<PlayerTurnState> values = const <PlayerTurnState> [
+    UNSPECIFIED_PLAYER_TURN_STATE,
+    PENDING,
+    START,
+    MID,
+  ];
+
+  static final Map<int, PlayerTurnState> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static PlayerTurnState valueOf(int value) => _byValue[value];
+  static void $checkItem(PlayerTurnState v) {
+    if (v is! PlayerTurnState) $pb.checkItemFailed(v, 'PlayerTurnState');
+  }
+
+  const PlayerTurnState._(int v, String n) : super(v, n);
+}
 
 class Game_Status extends $pb.ProtobufEnum {
   static const Game_Status UNKNOWN = const Game_Status._(0, 'UNKNOWN');

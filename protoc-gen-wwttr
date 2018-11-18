@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
-dart bin/protoc-gen-wwttr.dart "$@"
+dart ../bin/protoc-gen-wwttr.dart "$@"
 exit $?

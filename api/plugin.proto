@@ -51,7 +51,7 @@ option java_outer_classname = "PluginProtos";
 
 option go_package = "github.com/golang/protobuf/protoc-gen-go/plugin;plugin_go";
 
-import "api/descriptor.proto";
+import "descriptor.proto";
 
 // The version number of protocol compiler.
 message Version {

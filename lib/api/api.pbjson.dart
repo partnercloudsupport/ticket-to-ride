@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: api/api.proto
+//  source: api.proto
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
@@ -15,6 +15,7 @@ const Code$json = const {
     const {'1': 'NOT_FOUND', '2': 5},
     const {'1': 'ACCESS_DENIED', '2': 6},
     const {'1': 'PING', '2': 7},
+    const {'1': 'FAILED_PRECONDITION', '2': 8},
   ],
 };
 

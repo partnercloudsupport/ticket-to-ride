@@ -70,7 +70,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
           player.username = response3.username;
           playerObjects.add(player);
 
-          players.add(Player(response3.username, getTrainColor(response2.color)));
+          players.add(Player(response3.username, getPlayerColor(response2.color)));
         } else {
           players.add(null);
         }
@@ -121,7 +121,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
     print(response.gameId);
 
     FragmentLibrary.navigatePush('/game_view');
-    FragmentLibrary.navigatePush('/dest_card_select_init');
+    // FragmentLibrary.navigatePush('/dest_card_select_init');
   }
 
   build() {
