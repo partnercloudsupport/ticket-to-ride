@@ -16,7 +16,7 @@ class PlayerStatsTile extends StatelessWidget {
   final bool detailed;
 
   // default constructor from Player, PlayerStats, and rank
-  PlayerStatsTile(PlayerStatsWrapper p, double h, double w, bool detailed) : 
+  PlayerStatsTile(PlayerStatsWrapper p, double h, double w, bool detailed) :
     playerInfo = p, height = h, width = w, detailed = detailed;
 
   @override
@@ -76,7 +76,7 @@ class GameOverFragment extends StatefulWidget {
   final List<PlayerStatsTile> tiles;
 
   static double _getHeightFromRank(int rank) {
-    if (rank == 1) 
+    if (rank == 1)
       return 30.0;
     else if (rank == 2)
       return 20.0;
@@ -88,9 +88,9 @@ class GameOverFragment extends StatefulWidget {
 
   static double _getWidthFromRank(int rank) {
     if (rank > 3)
-      return 10;
-    else 
-      return 15;
+      return 10.0;
+    else
+      return 15.0;
   }
 
   static List<PlayerStatsTile> _getTiles(List<PlayerStatsWrapper> playerInfo) {
@@ -106,8 +106,8 @@ class GameOverFragment extends StatefulWidget {
     return tiles;
   }
 
-  GameOverFragment(GameOverPresenter presenter, List<PlayerStatsWrapper> playerInfo, {Key key, this.title}) : 
-    presenter = presenter, 
+  GameOverFragment(GameOverPresenter presenter, List<PlayerStatsWrapper> playerInfo, {Key key, this.title}) :
+    presenter = presenter,
     tiles = _getTiles(playerInfo);
 
 
@@ -151,7 +151,7 @@ class GameOverFragmentState extends State<GameOverFragment> {
       body: Stack(
         children: <Widget> [
             FragmentLibrary().background,
-            tileContainer 
+            tileContainer
           ]
         ),
     );

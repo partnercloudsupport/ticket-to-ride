@@ -15,18 +15,18 @@ class GameBankApi {
   }
 
   streamTrainCards(ctx, request) {
-    return [];
-    // return api.cardProxy.streamTrainCards(ctx, request);
+    // return [];
+    return api.cardProxy.streamTrainCards(ctx, request);
   }
 
   streamDestinationCount(ctx, request) {
-    return [];
-    // return api.cardProxy.streamDeckStats(ctx, request);
+    // return [];
+    return api.cardProxy.streamDeckStats(ctx, request);
   }
 
   streamTrainCount(ctx, request) {
-    return [];
-    // return api.cardProxy.streamDeckStats(ctx, request);
+    // return [];
+    return api.cardProxy.streamDeckStats(ctx, request);
   }
 }
 
@@ -51,8 +51,10 @@ class GameBankPresenter implements GameBankObserver  {
 
     var trainCards = [];
 
+    print('here');
 
     return _api.streamTrainCards(ctx, request).map((response) {
+      print(response);
 
       var index = trainCards.indexWhere((train) => train.id == response.id);
 
@@ -81,6 +83,7 @@ class GameBankPresenter implements GameBankObserver  {
     var ctx = ClientContext();
     var request = new api.StreamDeckStatsRequest();
 
+    // print('here');
     return _api.streamTrainCount(ctx, request).map((response) {
       return response.hiddenTrainCardCount;
     });

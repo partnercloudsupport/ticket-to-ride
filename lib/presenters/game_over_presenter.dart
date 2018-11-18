@@ -15,7 +15,7 @@ class PlayerStatsWrapper {
 
   int getTotalPoints() {
     // TODO dummy points
-    return stats.points + stats.destinationCardCount + stats.trainCount;
+    return 20;//stats.points + stats.destinationCardCount + stats.trainCount;
   }
 }
 
@@ -31,10 +31,10 @@ class GameOverPresenter {
     var request = StreamPlayerStatsRequest();
     var ctx = ClientContext();
     // TODO fill request
-    
+
     var stream; // TODO stream playerstats from gameProxy
 
-    /*for (PlayerStats p in stream) { 
+    /*for (PlayerStats p in stream) {
       PlayerStatsWrapper w = PlayerStatsWrapper();
       w.player = GlobalContext().playerMap[p.playerId];
       w.stats = p;
@@ -55,7 +55,7 @@ class GameOverPresenter {
       w.player = pw.Player('username','playerId','userId', 'gameId', c);
 
       w.stats.playerId = 'playerId';
-      w.stats.points = i*20;
+      // w.stats.points = i*20;
       w.stats.trainCount = i+1;
       w.stats.trainCardCount = i+2;
       w.stats.destinationCardCount = i;
@@ -85,5 +85,5 @@ class GameOverPresenter {
   Widget build() {
     return fragment;
   }
-  
+
 }

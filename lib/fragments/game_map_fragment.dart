@@ -67,7 +67,7 @@ class _GameMapFragmentState extends State<GameMapFragment> {
       cities = await o.getCities();
       var response = await o.getRoutes();
 
-      print(response);
+      // print(response);
 
       // await for(var response in o.getRoutes()) {
         setState(() {
