@@ -1,7 +1,5 @@
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/fragments/game_map_fragment.dart';
-// import 'package:ticket_to_ride/api/route.pb.dart';
-// import 'package:ticket_to_ride/api/card.pb.dart';
 import 'package:ticket_to_ride/global_context.dart';
 
 getTrainColor(color) {
@@ -117,40 +115,25 @@ getCityById(cityId) {
   return returnCity;
 }
 
-getRoutes() {
-  var route1 = api.Route();
-  route1.id = "sanFrancisco-losAngeles";
-  route1.firstCityId = "San Francisco";
-  route1.secondCityId = "Los Angeles";
-  route1.color = api.TrainColor.PINK;
-  route1.playerId = GlobalContext().currentPlayerId;
-
-  var route2 = api.Route();
-  route2.id = "sanFrancisco-losAngeles-2";
-  route2.firstCityId = "San Francisco";
-  route2.secondCityId = "Los Angeles";
-  route2.color = api.TrainColor.YELLOW;
-  route2.playerId = '';
-
-  var routes = [route1, route2];
-
-  var newRoutes = routes.map((route) {
+getRoutes(routes) {
+  var newRoutes = [];
+  routes.forEach((index, route) {
     var city1 = getCityById(route.firstCityId);
     var city2 = getCityById(route.secondCityId);
 
     var color = route.playerId == '' ? -1 : getPlayerColorInt(GlobalContext().playerMap[route.playerId].color);
 
-    return ClientRoute(
+    newRoutes.add(ClientRoute(
       city1.coordinateX,
       city1.coordinateY,
       city2.coordinateX,
       city2.coordinateY,
-      3, // route.length,
+      route.length,
       route.id,
       getTrainColor(route.color),
       color
-    );
-  }).toList();
+    ));
+  });
 
   return newRoutes;
 }
