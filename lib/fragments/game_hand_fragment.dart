@@ -52,23 +52,23 @@ class _GameHandFragmentState extends State<GameHandFragment> {
   }
 
   _getDestinationCards() async {
-    // for (var o in widget.observers) {
-    //   await for(var response in o.getDestinationCards()) {
-    //     setState(() {
-    //       _destinationCards = response;
-    //     });
-    //   }
-    // }
+    for (var o in widget.observers) {
+      await for(var response in o.getDestinationCards()) {
+        setState(() {
+          _destinationCards = response;
+        });
+      }
+    }
   }
 
   _getTrainCards() async {
-    // for (var o in widget.observers) {
-    //   await for(var response in o.getTrainCards()) {
-    //     setState(() {
-    //       _trainCards = response;
-    //     });
-    //   }
-    // }
+    for (var o in widget.observers) {
+      await for(var response in o.getTrainCards()) {
+        setState(() {
+          _trainCards = response;
+        });
+      }
+    }
   }
 
   _buildDestinationHand() {

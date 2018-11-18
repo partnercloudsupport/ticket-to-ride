@@ -49,6 +49,7 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
       return games;
 
     } catch(error) {
+      print(error);
       print(error.code);
       print(error.message);
     }
@@ -69,10 +70,11 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
       GlobalContext().currentGameId = response.gameId;
       GlobalContext().currentPlayerId = playerResponse.id;
 
-      gameListKey.currentState.cancelPoll();
+      // gameListKey.currentState.cancelPoll();
       FragmentLibrary.navigatePush('/lobby_view');
 
     } catch(error) {
+      print(error);
       print(error.code);
       print(error.message);
     }
@@ -97,8 +99,9 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
           FragmentLibrary.navigatePush('/lobby_view');
 
         } catch(error) {
-            print(error.code);
-            print(error.message);
+          print(error);
+          print(error.code);
+          print(error.message);
         }
 
       } catch(error) {
