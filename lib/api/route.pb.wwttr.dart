@@ -17,6 +17,15 @@ import 'api.pb.dart';
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
+import './api.pb.dart';
+import './auth.pb.dart';
+import './game.pb.dart';
+import './card.pb.dart';
+import './chat.pb.dart';
+import './descriptor.pb.dart';
+import './health.pb.dart';
+import './plugin.pb.dart';
+
 class RouteServiceProxy {
   String _url;
   RouteServiceProxy(this._url);

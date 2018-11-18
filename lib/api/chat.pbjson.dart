@@ -36,10 +36,6 @@ const StreamMessagesRequest$json = const {
   ],
 };
 
-const Empty$json = const {
-  '1': 'Empty',
-};
-
 const ChatService$json = const {
   '1': 'ChatService',
   '2': const [
