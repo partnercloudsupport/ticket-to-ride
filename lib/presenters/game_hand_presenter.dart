@@ -81,6 +81,9 @@ class GameHandPresenter implements GameHandObserver  {
 
     return _api.streamTrainCards(ctx, request).map((response) {
 
+      // print("train card response");
+      // print(response);
+
       if(response.state == api.TrainCard_State.OWNED) {
         trainCards.putIfAbsent(response.id, () => response);
       } else if(trainCards.containsKey(response.id)) {

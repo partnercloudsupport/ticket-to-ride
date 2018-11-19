@@ -15,7 +15,7 @@ export 'card.pb.dart';
 export 'route.pb.dart';
 export 'api_error.dart';
 
-final url = "http://merge.wwttr.umkhandi.com/";
+final url = "http://dev.wwttr.umkhandi.com/";
 // final url = "http://localhost:8080/";
 
 final authProxy = AuthServiceProxy(url);

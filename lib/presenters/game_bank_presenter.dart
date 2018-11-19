@@ -6,12 +6,12 @@ import 'package:ticket_to_ride/fragments/fragment_library.dart';
 import 'package:ticket_to_ride/presenters/presenter-data.dart';
 
 class GameBankApi {
-  selectTrainCard(playerId, trainCardId) {
-    FragmentLibrary.showToast("$playerId is claiming $trainCardId");
+  selectTrainCard(ctx, request) {
+    return api.cardProxy.drawFaceUpTrainCard(ctx, request);
   }
 
-  selectTrainCardFromDeck(playerId) {
-    FragmentLibrary.showToast("$playerId is claiming a train card");
+  selectTrainCardFromDeck(ctx, request) {
+    return api.cardProxy.drawTrainCardFromDeck(ctx, request);
   }
 
   streamTrainCards(ctx, request) {
@@ -66,9 +66,9 @@ class GameBankPresenter implements GameBankObserver  {
   getDestCardCount(){
     var ctx = ClientContext();
     var request = new api.StreamDeckStatsRequest();
+    request.gameId = GlobalContext().currentGameId;
 
     return _api.streamDestinationCount(ctx, request).map((response) {
-      print(response.hiddenDestinationCardCount);
       return response.hiddenDestinationCardCount;
     });
   }
@@ -77,9 +77,9 @@ class GameBankPresenter implements GameBankObserver  {
   getTrainCardCount(){
     var ctx = ClientContext();
     var request = new api.StreamDeckStatsRequest();
+    request.gameId = GlobalContext().currentGameId;
 
     return _api.streamTrainCount(ctx, request).map((response) {
-      print(response.hiddenTrainCardCount);
       return response.hiddenTrainCardCount;
     });
   }
@@ -92,12 +92,22 @@ class GameBankPresenter implements GameBankObserver  {
 
   @override
   selectTrainCard(String trainCardId){
-    _api.selectTrainCard(GlobalContext().currentPlayerId, trainCardId);
+
+    var ctx = ClientContext();
+    var request = new api.DrawFaceUpTrainCardRequest();
+    request.id = GlobalContext().currentPlayerId;
+    request.cardDrawnId = trainCardId;
+
+    _api.selectTrainCard(ctx, request);
   }
 
   @override
   selectTrainCardFromDeck(){
-    _api.selectTrainCardFromDeck(GlobalContext().currentPlayerId);
+    var ctx = ClientContext();
+    var request = new api.DrawTrainCardFromDeckRequest();
+    request.id = GlobalContext().currentPlayerId;
+
+    _api.selectTrainCardFromDeck(ctx, request);
   }
 
 
