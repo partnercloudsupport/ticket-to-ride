@@ -104,6 +104,7 @@ class ClaimRouteRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('ClaimRouteRequest', package: const $pb.PackageName('route'))
     ..aOS(1, 'routeId')
     ..aOS(2, 'playerId')
+    ..pPS(3, 'cardIds')
     ..hasRequiredFields = false
   ;
 
@@ -130,6 +131,8 @@ class ClaimRouteRequest extends $pb.GeneratedMessage {
   set playerId(String v) { $_setString(1, v); }
   bool hasPlayerId() => $_has(1);
   void clearPlayerId() => clearField(2);
+
+  List<String> get cardIds => $_getList(2);
 }
 
 class ClaimRouteResponse extends $pb.GeneratedMessage {

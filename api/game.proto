@@ -13,6 +13,7 @@ service GameService {
   rpc GetGame (GetGameRequest) returns (Game);
   rpc StartGame (StartGameRequest) returns (Game);
   rpc ListGames (ListGamesRequest) returns (ListGamesResponse);
+  rpc StreamGames (StreamGamesRequest) returns (stream Game);
   rpc CreatePlayer (CreatePlayerRequest) returns (CreatePlayerResponse);
   rpc GetPlayer (GetPlayerRequest) returns (Player);
   rpc StreamPlayerStats (StreamPlayerStatsRequest) returns (stream PlayerStats);
@@ -46,6 +47,7 @@ message Game {
     PRE = 1;
     STARTED = 2;
     FINISHED = 3;
+    LAST_ROUND = 4;
   }
 
 
@@ -95,6 +97,10 @@ message LeaveGameRequest {
 
 message ListGamesRequest {
 
+}
+
+message StreamGamesRequest {
+  
 }
 
 message GetGameRequest {
@@ -203,4 +209,5 @@ enum PlayerTurnState {
   PENDING = 1;
   START = 2;
   MID = 3;
+  GAME_ENDED = 4;
 }
