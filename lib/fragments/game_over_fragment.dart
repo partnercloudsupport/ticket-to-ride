@@ -40,7 +40,7 @@ class PlayerStatsTile extends StatelessWidget {
     double width = (size == TileSize.LARGE) ? screenW * .2 * m :
       (size == TileSize.MEDIUM) ? screenW * .15 * m : screenW * .1;
     double titleFontSize = (size == TileSize.LARGE) ? 50 * m : (size == TileSize.MEDIUM) ? 40 * m : 30;
-    double topMargin = (size == TileSize.LARGE) ? 10 : 20;
+    double topMargin = (size == TileSize.LARGE) ? 10.0 : 20.0;
 
 
     return Container(
@@ -72,7 +72,7 @@ class PlayerStatsTile extends StatelessWidget {
           ),
           Text(
             "${playerInfo.player.username}",
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 18.0),
           ),
           // TODO route stat
           /*Text(
