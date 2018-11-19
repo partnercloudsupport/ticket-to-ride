@@ -54,7 +54,6 @@ class _GameBankFragmentState extends State<GameBankFragment> {
   _getCards() async {
     for (var o in widget.observers) {
       await for(var response in o.getFaceUpTrainCards()) {
-        print(response);
         setState(() {
           _trainCards = response;
         });

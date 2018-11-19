@@ -28,13 +28,6 @@ class DestCardSelectPresenter implements DestCardSelectObserver  {
   getDestinationCards() async {
     var ctx = ClientContext();
 
-    var request1 = new api.GetGameRequest();
-    request1.gameId = GlobalContext().currentGameId;
-    var response1 = await api.gameProxy.getGame(ctx, request1);
-
-    print(response1);
-    print(GlobalContext().currentGameId);
-
     try {
       var request = new api.PeekDestinationCardsRequest();
       request.gameId = GlobalContext().currentGameId;
