@@ -29,6 +29,7 @@ const ClaimRouteRequest$json = const {
   '2': const [
     const {'1': 'route_id', '3': 1, '4': 1, '5': 9, '10': 'routeId'},
     const {'1': 'player_id', '3': 2, '4': 1, '5': 9, '10': 'playerId'},
+    const {'1': 'card_ids', '3': 3, '4': 3, '5': 9, '10': 'cardIds'},
   ],
 };
 

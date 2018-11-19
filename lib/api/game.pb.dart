@@ -201,6 +201,26 @@ class ListGamesRequest extends $pb.GeneratedMessage {
   }
 }
 
+class StreamGamesRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('StreamGamesRequest', package: const $pb.PackageName('game'))
+    ..hasRequiredFields = false
+  ;
+
+  StreamGamesRequest() : super();
+  StreamGamesRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  StreamGamesRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  StreamGamesRequest clone() => new StreamGamesRequest()..mergeFromMessage(this);
+  StreamGamesRequest copyWith(void Function(StreamGamesRequest) updates) => super.copyWith((message) => updates(message as StreamGamesRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static StreamGamesRequest create() => new StreamGamesRequest();
+  static $pb.PbList<StreamGamesRequest> createRepeated() => new $pb.PbList<StreamGamesRequest>();
+  static StreamGamesRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static StreamGamesRequest _defaultInstance;
+  static void $checkItem(StreamGamesRequest v) {
+    if (v is! StreamGamesRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
+  }
+}
+
 class GetGameRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('GetGameRequest', package: const $pb.PackageName('game'))
     ..aOS(1, 'gameId')
@@ -658,6 +678,10 @@ class GameServiceApi {
   $async.Future<ListGamesResponse> listGames($pb.ClientContext ctx, ListGamesRequest request) {
     var emptyResponse = new ListGamesResponse();
     return _client.invoke<ListGamesResponse>(ctx, 'GameService', 'ListGames', request, emptyResponse);
+  }
+  $async.Future<Game> streamGames($pb.ClientContext ctx, StreamGamesRequest request) {
+    var emptyResponse = new Game();
+    return _client.invoke<Game>(ctx, 'GameService', 'StreamGames', request, emptyResponse);
   }
   $async.Future<CreatePlayerResponse> createPlayer($pb.ClientContext ctx, CreatePlayerRequest request) {
     var emptyResponse = new CreatePlayerResponse();

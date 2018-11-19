@@ -20,6 +20,7 @@ abstract class GameServiceBase extends GeneratedService {
   $async.Future<Game> getGame(ServerContext ctx, GetGameRequest request);
   $async.Future<Game> startGame(ServerContext ctx, StartGameRequest request);
   $async.Future<ListGamesResponse> listGames(ServerContext ctx, ListGamesRequest request);
+  $async.Future<Game> streamGames(ServerContext ctx, StreamGamesRequest request);
   $async.Future<CreatePlayerResponse> createPlayer(ServerContext ctx, CreatePlayerRequest request);
   $async.Future<Player> getPlayer(ServerContext ctx, GetPlayerRequest request);
   $async.Future<PlayerStats> streamPlayerStats(ServerContext ctx, StreamPlayerStatsRequest request);
@@ -34,6 +35,7 @@ abstract class GameServiceBase extends GeneratedService {
       case 'GetGame': return new GetGameRequest();
       case 'StartGame': return new StartGameRequest();
       case 'ListGames': return new ListGamesRequest();
+      case 'StreamGames': return new StreamGamesRequest();
       case 'CreatePlayer': return new CreatePlayerRequest();
       case 'GetPlayer': return new GetPlayerRequest();
       case 'StreamPlayerStats': return new StreamPlayerStatsRequest();
@@ -51,6 +53,7 @@ abstract class GameServiceBase extends GeneratedService {
       case 'GetGame': return this.getGame(ctx, request);
       case 'StartGame': return this.startGame(ctx, request);
       case 'ListGames': return this.listGames(ctx, request);
+      case 'StreamGames': return this.streamGames(ctx, request);
       case 'CreatePlayer': return this.createPlayer(ctx, request);
       case 'GetPlayer': return this.getPlayer(ctx, request);
       case 'StreamPlayerStats': return this.streamPlayerStats(ctx, request);

@@ -11,6 +11,7 @@ const PlayerTurnState$json = const {
     const {'1': 'PENDING', '2': 1},
     const {'1': 'START', '2': 2},
     const {'1': 'MID', '2': 3},
+    const {'1': 'GAME_ENDED', '2': 4},
   ],
 };
 
@@ -34,6 +35,7 @@ const Game_Status$json = const {
     const {'1': 'PRE', '2': 1},
     const {'1': 'STARTED', '2': 2},
     const {'1': 'FINISHED', '2': 3},
+    const {'1': 'LAST_ROUND', '2': 4},
   ],
 };
 
@@ -66,6 +68,10 @@ const LeaveGameRequest$json = const {
 
 const ListGamesRequest$json = const {
   '1': 'ListGamesRequest',
+};
+
+const StreamGamesRequest$json = const {
+  '1': 'StreamGamesRequest',
 };
 
 const GetGameRequest$json = const {
@@ -197,6 +203,7 @@ const GameService$json = const {
     const {'1': 'GetGame', '2': '.game.GetGameRequest', '3': '.game.Game'},
     const {'1': 'StartGame', '2': '.game.StartGameRequest', '3': '.game.Game'},
     const {'1': 'ListGames', '2': '.game.ListGamesRequest', '3': '.game.ListGamesResponse'},
+    const {'1': 'StreamGames', '2': '.game.StreamGamesRequest', '3': '.game.Game', '6': true},
     const {'1': 'CreatePlayer', '2': '.game.CreatePlayerRequest', '3': '.game.CreatePlayerResponse'},
     const {'1': 'GetPlayer', '2': '.game.GetPlayerRequest', '3': '.game.Player'},
     const {'1': 'StreamPlayerStats', '2': '.game.StreamPlayerStatsRequest', '3': '.game.PlayerStats', '6': true},
@@ -216,6 +223,7 @@ const GameService$messageJson = const {
   '.game.StartGameRequest': StartGameRequest$json,
   '.game.ListGamesRequest': ListGamesRequest$json,
   '.game.ListGamesResponse': ListGamesResponse$json,
+  '.game.StreamGamesRequest': StreamGamesRequest$json,
   '.game.CreatePlayerRequest': CreatePlayerRequest$json,
   '.game.CreatePlayerResponse': CreatePlayerResponse$json,
   '.game.GetPlayerRequest': GetPlayerRequest$json,
