@@ -22,7 +22,7 @@ class PlayerStatsTile extends StatelessWidget {
   final bool twoRows;
 
   // default constructor from Player, PlayerStats, and rank
-  PlayerStatsTile(PlayerStatsWrapper p, TileSize size, bool twoRows) : 
+  PlayerStatsTile(PlayerStatsWrapper p, TileSize size, bool twoRows) :
     playerInfo = p, size = size, twoRows = twoRows;
 
   @override
@@ -35,7 +35,7 @@ class PlayerStatsTile extends StatelessWidget {
     // tiles when there is another row to follow
     double m = twoRows ? .4 : 1;
 
-    double height = (size == TileSize.LARGE) ? screenH * .4 * m : 
+    double height = (size == TileSize.LARGE) ? screenH * .4 * m :
       (size == TileSize.MEDIUM) ? screenH * .3 * m : screenH * .2;
     double width = (size == TileSize.LARGE) ? screenW * .2 * m :
       (size == TileSize.MEDIUM) ? screenW * .15 * m : screenW * .1;
@@ -141,8 +141,8 @@ class GameOverFragment extends StatefulWidget {
     return tiles;
   }
 
-  GameOverFragment(GameOverPresenter presenter, List<PlayerStatsWrapper> players, {Key key, this.title}) : 
-    presenter = presenter, 
+  GameOverFragment(GameOverPresenter presenter, List<PlayerStatsWrapper> players, {Key key, this.title}) :
+    presenter = presenter,
     tiles = _getTiles(players);
 
 @override
@@ -187,7 +187,7 @@ class GameOverFragmentState extends State<GameOverFragment> {
       body: Stack(
         children: <Widget> [
             FragmentLibrary().background,
-            tileContainer 
+            tileContainer
           ]
         ),
     );

@@ -10,15 +10,13 @@ class GameHandApi {
   /// Accepts the client context [ctx] and the request body [request].
   /// Returns a stream of train cards.
   streamTrainCards(ctx, request) {
-    return [];
-    // return api.cardProxy.streamTrainCards(ctx, request);
+    return api.cardProxy.streamTrainCards(ctx, request);
   }
 
   /// Accepts the client context [ctx] and the request body [request].
   /// Returns a stream of destination cards.
   streamDestinationCards(ctx, request) {
-    return [];
-    // return api.cardProxy.streamDestinationCards(ctx, request);
+    return api.cardProxy.streamDestinationCards(ctx, request);
   }
 }
 
@@ -82,6 +80,9 @@ class GameHandPresenter implements GameHandObserver  {
     Map trainCards = Map();
 
     return _api.streamTrainCards(ctx, request).map((response) {
+
+      // print("train card response");
+      // print(response);
 
       if(response.state == api.TrainCard_State.OWNED) {
         trainCards.putIfAbsent(response.id, () => response);

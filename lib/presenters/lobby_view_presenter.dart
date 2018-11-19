@@ -27,6 +27,8 @@ class LobbyViewPresenter implements LobbyViewObserver {
   LobbyViewApi _api;
   LobbyViewFragment _fragment;
   LobbyGame _game;
+  /// Used to limit starting a single game.
+  bool _startingGame = false;
 
   List<playerWrapper.Player> playerObjects = [];
 
@@ -92,8 +94,8 @@ class LobbyViewPresenter implements LobbyViewObserver {
       return _game;
 
     } catch(error) {
-      // print(error.code);
-      // print(error.message);
+      print(error.code);
+      print(error.message);
       print(error);
 
       return _game;
@@ -107,8 +109,13 @@ class LobbyViewPresenter implements LobbyViewObserver {
 
   @override
   startGame() async {
+    if(_startingGame){
+      return;
+    } else {
+      _startingGame = true;
+    }
+
     for (playerWrapper.Player p in playerObjects) {
-      // print(p.username);
       GlobalContext().addPlayerToMap(p);
     }
 
@@ -121,7 +128,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
     print(response.gameId);
 
     FragmentLibrary.navigatePush('/game_view');
-    // FragmentLibrary.navigatePush('/dest_card_select_init');
+    FragmentLibrary.navigatePush('/dest_card_select_init');
   }
 
   build() {
