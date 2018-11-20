@@ -53,7 +53,7 @@ class GameHandPresenter implements GameHandObserver  {
 
     return _api.streamDestinationCards(ctx, request).map((response) {
 
-      destCards.putIfAbsent(response.id, () => response);
+      destCards[response.id] = response;
       var finalDestCards = [];
 
       destCards.forEach((key, card) {
@@ -81,20 +81,20 @@ class GameHandPresenter implements GameHandObserver  {
 
     return _api.streamTrainCards(ctx, request).map((response) {
 
-      // print("train card response");
-      // print(response);
+      print("train card response");
+      print(response);
 
-      if(response.state == api.TrainCard_State.OWNED) {
-        trainCards.putIfAbsent(response.id, () => response);
-      } else if(trainCards.containsKey(response.id)) {
-        trainCards.removeWhere((k,v) => k == response.id);
+      if(response.state == api.TrainCard_State.OWNED && response.playerId == GlobalContext().currentPlayerId) {
+        trainCards[response.id] = response;
+      } else {
+        trainCards.remove(response.id);
       }
 
       var groupedTrainCards = Map();
 
       trainCards.forEach((key, trainCard) {
         if(groupedTrainCards.containsKey(trainCard.color)) {
-          groupedTrainCards[trainCard.color] += groupedTrainCards[trainCard.color];
+          groupedTrainCards[trainCard.color]++;
         } else {
           groupedTrainCards[trainCard.color] = 1;
         }
