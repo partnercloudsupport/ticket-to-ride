@@ -154,10 +154,13 @@ class _ClaimRouteFragmentState extends State<ClaimRouteFragment> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: _buildTrainCardHand()
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: _buildTrainCardHand(),
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
