@@ -178,6 +178,9 @@ const CreatePlayerResponse$json = const {
 
 const StreamPlayerStatsRequest$json = const {
   '1': 'StreamPlayerStatsRequest',
+  '2': const [
+    const {'1': 'game_id', '3': 1, '4': 1, '5': 9, '10': 'gameId'},
+  ],
 };
 
 const PlayerStats$json = const {

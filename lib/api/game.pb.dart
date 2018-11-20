@@ -565,6 +565,7 @@ class CreatePlayerResponse extends $pb.GeneratedMessage {
 
 class StreamPlayerStatsRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('StreamPlayerStatsRequest', package: const $pb.PackageName('game'))
+    ..aOS(1, 'gameId')
     ..hasRequiredFields = false
   ;
 
@@ -581,6 +582,11 @@ class StreamPlayerStatsRequest extends $pb.GeneratedMessage {
   static void $checkItem(StreamPlayerStatsRequest v) {
     if (v is! StreamPlayerStatsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
+
+  String get gameId => $_getS(0, '');
+  set gameId(String v) { $_setString(0, v); }
+  bool hasGameId() => $_has(0);
+  void clearGameId() => clearField(1);
 }
 
 class PlayerStats extends $pb.GeneratedMessage {
