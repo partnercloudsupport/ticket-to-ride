@@ -12,6 +12,8 @@ const PlayerTurnState$json = const {
     const {'1': 'START', '2': 2},
     const {'1': 'MID', '2': 3},
     const {'1': 'GAME_ENDED', '2': 4},
+    const {'1': 'FIRST', '2': 5},
+    const {'1': 'LAST', '2': 6},
   ],
 };
 

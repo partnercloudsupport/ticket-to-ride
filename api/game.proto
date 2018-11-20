@@ -210,4 +210,6 @@ enum PlayerTurnState {
   START = 2;
   MID = 3;
   GAME_ENDED = 4;
+  FIRST = 5;
+  LAST = 6;
 }

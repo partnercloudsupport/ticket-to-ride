@@ -14,6 +14,8 @@ class PlayerTurnState extends $pb.ProtobufEnum {
   static const PlayerTurnState START = const PlayerTurnState._(2, 'START');
   static const PlayerTurnState MID = const PlayerTurnState._(3, 'MID');
   static const PlayerTurnState GAME_ENDED = const PlayerTurnState._(4, 'GAME_ENDED');
+  static const PlayerTurnState FIRST = const PlayerTurnState._(5, 'FIRST');
+  static const PlayerTurnState LAST = const PlayerTurnState._(6, 'LAST');
 
   static const List<PlayerTurnState> values = const <PlayerTurnState> [
     UNSPECIFIED_PLAYER_TURN_STATE,
@@ -21,6 +23,8 @@ class PlayerTurnState extends $pb.ProtobufEnum {
     START,
     MID,
     GAME_ENDED,
+    FIRST,
+    LAST,
   ];
 
   static final Map<int, PlayerTurnState> _byValue = $pb.ProtobufEnum.initByValue(values);
