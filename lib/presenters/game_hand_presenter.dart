@@ -80,10 +80,6 @@ class GameHandPresenter implements GameHandObserver  {
     Map trainCards = Map();
 
     return _api.streamTrainCards(ctx, request).map((response) {
-
-      print("train card response");
-      print(response);
-
       if(response.state == api.TrainCard_State.OWNED && response.playerId == GlobalContext().currentPlayerId) {
         trainCards[response.id] = response;
       } else {

@@ -47,5 +47,8 @@ class FragmentLibrary {
     _navKey.currentState.pop();
   }
 
+  static void navigateTo(builder) {
+    _navKey.currentState.push(new PageRouteBuilder( pageBuilder: (_, __, ___) => builder ));
+  }
 
 }

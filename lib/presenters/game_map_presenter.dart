@@ -4,12 +4,9 @@ import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/fragments/game_map_fragment.dart';
 import 'package:ticket_to_ride/fragments/fragment_library.dart';
 import 'package:ticket_to_ride/presenters/presenter-data.dart' as data;
+import 'package:ticket_to_ride/presenters/claim_route_presenter.dart';
 
 class GameMapApi {
-  claimRoute(playerId, routeId) {
-    FragmentLibrary.showToast("$playerId is claiming $routeId");
-  }
-
   streamRoutes(ctx, request) {
     return api.routeProxy.streamRoutes(ctx, request);
   }
@@ -40,19 +37,18 @@ class GameMapPresenter implements GameMapObserver  {
     var routesList = Map();
 
     return _api.streamRoutes(ctx, request).map((response) {
+      print("Stream routes");
+      print(response);
       // update old route data
-      if(routesList.containsKey(response.id)) {
-        routesList.removeWhere((k,v) => k == response.id);
-      }
-      routesList.putIfAbsent(response.id, () => response);
+      routesList[response.id] = response;
 
       return data.getRoutes(routesList);
     });
   }
 
   @override
-  claimRoute(routeId) {
-    _api.claimRoute(GlobalContext().currentPlayerId, routeId);
+  claimRoute(routeId, routeLength) {
+    FragmentLibrary.navigateTo(ClaimRoutePresenter().build(routeId: routeId, routeLength: routeLength));
   }
 
   build() {
