@@ -25,7 +25,7 @@ class City {
 abstract class GameMapObserver {
   getCities() {}
   getRoutes() {}
-  claimRoute(String id) {}
+  claimRoute(String id, int length) {}
 }
 
 class GameMapFragment extends StatefulWidget {
@@ -112,7 +112,7 @@ class _GameMapFragmentState extends State<GameMapFragment> {
         behavior: HitTestBehavior.opaque,
         onTap: () {
           for (var o in widget.observers) {
-            o.claimRoute(route.id);
+            o.claimRoute(route.id, route.length);
           }
         },
         child: Container(

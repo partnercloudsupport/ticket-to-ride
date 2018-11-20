@@ -15,8 +15,9 @@ getTrainColor(color) {
   case api.TrainColor.BLACK:
     return 0xFF212121;
   case api.TrainColor.GREY:
-  case api.TrainColor.RAINBOW:
     return 0xFFC3C3C3;
+  case api.TrainColor.RAINBOW:
+    return 0xFFA000FF;
   case api.TrainColor.YELLOW:
     return 0xFFD9B755;
   case api.TrainColor.RED:
