@@ -26,6 +26,8 @@ class GamePlayerPresenter implements GamePlayerObserver  {
   getPlayers() {
     var ctx = ClientContext();
     var request = new api.StreamPlayerStatsRequest();
+    print(GlobalContext().currentGameId);
+    request.gameId = GlobalContext().currentGameId;
 
     var playerList = Map();
 
@@ -41,14 +43,14 @@ class GamePlayerPresenter implements GamePlayerObserver  {
 
       playerList.forEach((playerId, player) {
         finalPlayerList.add(Player(
-          GlobalContext().dummyPlayerMap[playerId].username,
-          getPlayerColor(GlobalContext().dummyPlayerMap[playerId].color),
-          getPlayerColorInt(GlobalContext().dummyPlayerMap[playerId].color),
-          player.points,
+          GlobalContext().playerMap[playerId].username,
+          getPlayerColor(GlobalContext().playerMap[playerId].color),
+          getPlayerColorInt(GlobalContext().playerMap[playerId].color),
+          player.trainCardPoints,
           player.trainCount,
           player.trainCardCount,
           player.destinationCardCount,
-          playerId == "player1" && player.points == 11 ? true : playerId == "player2" && player.points == 30 ? true : false
+          player.turnState == api.PlayerTurnState.START || player.turnState == api.PlayerTurnState.MID ? true : false
         ));
       });
 

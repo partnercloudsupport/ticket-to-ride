@@ -50,7 +50,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
       var response1 = await _api.getGame(ctx, request1);
 
       if(response1.status == api.Game_Status.STARTED) {
-        startGame();
+        _setupGame();
         return _game;
       }
 
@@ -107,6 +107,15 @@ class LobbyViewPresenter implements LobbyViewObserver {
     FragmentLibrary.navigatePop();
   }
 
+  _setupGame() {
+    for (playerWrapper.Player p in playerObjects) {
+      GlobalContext().addPlayerToMap(p);
+    }
+
+    FragmentLibrary.navigatePush('/game_view');
+    FragmentLibrary.navigatePush('/dest_card_select_init');
+  }
+
   @override
   startGame() async {
     if(_startingGame){
@@ -115,20 +124,12 @@ class LobbyViewPresenter implements LobbyViewObserver {
       _startingGame = true;
     }
 
-    for (playerWrapper.Player p in playerObjects) {
-      GlobalContext().addPlayerToMap(p);
-    }
-
     var ctx = ClientContext();
     var request = api.StartGameRequest();
     request.gameId = GlobalContext().currentGameId;
+    await api.gameProxy.startGame(ctx, request);
 
-    var response = await api.gameProxy.startGame(ctx, request);
-
-    print(response.gameId);
-
-    FragmentLibrary.navigatePush('/game_view');
-    FragmentLibrary.navigatePush('/dest_card_select_init');
+    _setupGame();
   }
 
   build() {
