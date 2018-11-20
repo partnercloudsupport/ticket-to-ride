@@ -4,6 +4,7 @@ import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:protobuf/protobuf.dart';
 import 'package:ticket_to_ride/fragments/game_player_fragment.dart';
 import 'package:ticket_to_ride/presenters/presenter-data.dart';
+import 'package:ticket_to_ride/fragments/fragment_library.dart';
 
 class GamePlayerApi {
   streamPlayerStats(ctx, request) {
@@ -29,15 +30,23 @@ class GamePlayerPresenter implements GamePlayerObserver  {
     print(GlobalContext().currentGameId);
     request.gameId = GlobalContext().currentGameId;
 
-    var playerList = Map();
+    var playerList = Map<String, api.PlayerStats>();
 
-    return _api.streamPlayerStats(ctx, request).map((response) {
+    return _api.streamPlayerStats(ctx, request).map((api.PlayerStats response) {
+
+      if (response.playerId == GlobalContext().currentPlayerId && response.turnState != playerList[response.playerId]?.turnState) {
+        switch (response.turnState) {
+        case api.PlayerTurnState.LAST:
+          FragmentLibrary.showToast("It's your last turn!");
+          break;
+        case api.PlayerTurnState.GAME_ENDED:
+          FragmentLibrary.navigatePush('/game_over');
+          break;
+        }
+      }
 
       // update old player data
-      if(playerList.containsKey(response.playerId)) {
-        playerList.removeWhere((k,v) => k == response.playerId);
-      }
-      playerList.putIfAbsent(response.playerId, () => response);
+      playerList[response.playerId] = response;
 
       var finalPlayerList = [];
 
