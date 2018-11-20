@@ -52,6 +52,8 @@ class GameBankPresenter implements GameBankObserver  {
 
       var index = trainCards.indexWhere((train) => train.id == response.id);
 
+      print(index);
+
       if(response.state == api.TrainCard_State.VISIBLE && index <= -1) {
         trainCards.add(FaceUpTrainCard(response.id, true, getTrainColor(response.color)));
       } else if(index > -1 && response.state != api.TrainCard_State.VISIBLE) {
