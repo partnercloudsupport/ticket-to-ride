@@ -53,7 +53,11 @@ class GameHandPresenter implements GameHandObserver  {
 
     return _api.streamDestinationCards(ctx, request).map((response) {
 
-      destCards[response.id] = response;
+      destCards.remove(response.id);
+      if (response.playerId == GlobalContext().currentPlayerId) {
+        destCards[response.id] = response;
+      }
+      
       var finalDestCards = [];
 
       destCards.forEach((key, card) {

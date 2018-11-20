@@ -44,7 +44,7 @@ class GameMapPresenter implements GameMapObserver  {
       if(routesList.containsKey(response.id)) {
         routesList.removeWhere((k,v) => k == response.id);
       }
-      routesList.putIfAbsent(response.id, () => response);
+      routesList[response.id] = response;
 
       return data.getRoutes(routesList);
     });

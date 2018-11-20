@@ -21,7 +21,7 @@ class HistoryPresenterApi {
 
 // TODO get protobuf model class for "EventMessage"
 
-class EventMessage extends StatelessWidget {
+class ActionWidget extends StatelessWidget {
   final String messageId;
   final String content;
   final int timestamp;
@@ -30,12 +30,13 @@ class EventMessage extends StatelessWidget {
   final String playerId;
 
   // default constructor from Message and Player
-  EventMessage(EventMessage msg, Player player) : messageId = msg.messageId,
-    content = msg.content, timestamp = msg.timestamp, player = player, playerId = player.playerId;
+  ActionWidget(api.GameAction action, Player player) : messageId = action.actionId,
+    content = action.action, timestamp = action.timestamp, player = player, playerId = player.playerId;
 
 
   @override
   Widget build(BuildContext context) {
+    print("building ActionWidget: " + content);
     return  Container(
       margin: const EdgeInsets.symmetric(vertical: 10.0),
       child:  Row(
@@ -75,12 +76,12 @@ class EventMessage extends StatelessWidget {
 
 
 class HistoryFragment extends StatefulWidget {
-  HistoryFragment(HistoryPresenter presenter, {Key key, this.title, this.messages}) :
+  HistoryFragment(HistoryPresenter presenter, {Key key, this.title, this.actions}) :
     this.presenter = presenter;
 
   final String title;
   final HistoryPresenter presenter;
-  final Stream<EventMessage> messages;
+  final Stream<api.GameAction> actions;
 
   @override
   HistoryFragmentState createState() => HistoryFragmentState();
@@ -98,35 +99,26 @@ class HistoryFragmentState extends State<HistoryFragment> {
 
   CreateMessageRequest request = CreateMessageRequest();
 
-  List<EventMessage> _messages = List<EventMessage>();
+  List<ActionWidget> _actions = List<ActionWidget>();
 
   // receive an eventmessage
-  void handleReceipt(EventMessage msg, Player player) {
+  void handleReceipt(api.GameAction action, Player player) {
     setState(() {
-      _messages.insert(0, EventMessage(msg, player));
+      _actions.insert(0, ActionWidget(action, player));
     });
   }
 
   // Create a stream that collects received messages
   void streamMessages(bool open) async {
-
-    print('streaming messages');
-
-    await for (EventMessage msg in widget.messages) {
+    await for (var action in widget.actions) {
+      print(action);
       if (!open) {
         break;
       }
-      if (msg != null) {
-        print('msg: ' + msg.content);
-        print('pre-map player id: ' + msg.playerId);
-        var player = GlobalContext().playerMap[msg.playerId];
-        if (player != null) {
-          print('stream finds player ' + player.playerId);
-          handleReceipt(msg, player);
-        } else print('player is null');
-      } else print('msg is null');
-    }
 
+      var player = GlobalContext().playerMap[action.playerId];
+      handleReceipt(action, player);
+    }
   }
 
 
@@ -143,8 +135,8 @@ class HistoryFragmentState extends State<HistoryFragment> {
             child: ListView.builder(
               padding:  EdgeInsets.all(8.0),
               reverse: true,
-              itemBuilder: (_, int index) =>_messages[index],
-              itemCount: _messages.length,
+              itemBuilder: (_, int index) =>_actions[index],
+              itemCount: _actions.length,
             ),
           ),
           Divider(

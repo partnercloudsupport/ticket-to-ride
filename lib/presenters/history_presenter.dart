@@ -14,13 +14,13 @@ class HistoryPresenter {
 
   // default constructor
   HistoryPresenter({this.title}) {
-    var request = StreamMessagesRequest();
+    var request = api.StreamHistoryRequest();
     var ctx = ClientContext();
     request.gameId = GlobalContext().currentGameId;
     
-    var stream; // TODO stream from historyProxy
+    var stream = api.gameProxy.streamHistory(ctx, request);
 
-    fragment = HistoryFragment(this, key: historyFragmentKey, messages: stream);
+    fragment = HistoryFragment(this, key: historyFragmentKey, actions: stream);
   }
 
   // another constructor with fragment passed in
@@ -37,36 +37,6 @@ class HistoryPresenter {
 
     // TODO stream EventMessages from historyProxy
     //return api.gameProxy
-  }
-
-  sendEventMessage(request) async {
-    try {
-      if (request.content == null) {
-        throw("empty message");
-      }
-
-      var ctx = ClientContext();
-
-      try{
-        var msg;  // TODO await historyProxy createEventMessage
-
-        return msg;
-
-      } catch(error) {
-        print(error.code);
-        print(error.message);
-      }
-
-
-
-      
-
-    } catch(error) {
-        print(error);
-        print(error.code);
-        print(error.message);
-    }
-
   }
 
   Widget build() {
