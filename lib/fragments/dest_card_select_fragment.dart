@@ -127,7 +127,9 @@ class _DestCardSelectFragmentState extends State<DestCardSelectFragment> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return new WillPopScope(
+        onWillPop: () async => false,
+        child:  new Scaffold(
       body: new Stack(
         children: <Widget>[
           new Container(
@@ -152,6 +154,7 @@ class _DestCardSelectFragmentState extends State<DestCardSelectFragment> {
           ),
         ]
       ),
+    )
     );
   }
 }
