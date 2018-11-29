@@ -128,33 +128,33 @@ class _DestCardSelectFragmentState extends State<DestCardSelectFragment> {
   @override
   Widget build(BuildContext context) {
     return new WillPopScope(
-        onWillPop: () async => false,
-        child:  new Scaffold(
-      body: new Stack(
-        children: <Widget>[
-          new Container(
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: new AssetImage("images/background.jpg"),
-                fit: BoxFit.cover,
+      onWillPop: () async => false,
+      child: new Scaffold(
+        body: new Stack(
+          children: <Widget>[
+            new Container(
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  image: new AssetImage("images/background.jpg"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          new Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: _buildDestinationCards()
-              ),
-              _buildSelectButton()
-            ]
-          ),
-        ]
-      ),
-    )
+            new Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: _buildDestinationCards()
+                ),
+                _buildSelectButton()
+              ]
+            ),
+          ]
+        ),
+      )
     );
   }
 }

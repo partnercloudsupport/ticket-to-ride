@@ -62,22 +62,25 @@ class _GameViewFragmentState extends State<GameViewFragment> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new Stack(
-        children: <Widget>[
-          new Container(
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: new AssetImage("images/background.jpg"),
-                fit: BoxFit.cover,
+    return new WillPopScope(
+      onWillPop: () async => false,
+      child: new Scaffold(
+        body: new Stack(
+          children: <Widget>[
+            new Container(
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  image: new AssetImage("images/background.jpg"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          ListView (
-            children: [ _buildGameView()]
-          ),
-        ]
-      ),
+            ListView (
+              children: [ _buildGameView()]
+            ),
+          ]
+        ),
+      )
     );
   }
 }
