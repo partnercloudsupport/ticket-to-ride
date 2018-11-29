@@ -41,7 +41,7 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
       var games = [];
 
       response.games.forEach((game) {
-        if(game.status != api.Game_Status.STARTED) {
+        if(game.status == api.Game_Status.PRE) {
           games.add(game);
         }
       });
