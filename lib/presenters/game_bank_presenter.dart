@@ -91,23 +91,35 @@ class GameBankPresenter implements GameBankObserver  {
   }
 
   @override
-  selectTrainCard(String trainCardId){
+  selectTrainCard(String trainCardId) async {
 
     var ctx = ClientContext();
     var request = new api.DrawFaceUpTrainCardRequest();
     request.id = GlobalContext().currentPlayerId;
     request.cardDrawnId = trainCardId;
 
-    _api.selectTrainCard(ctx, request);
+    try {
+      await _api.selectTrainCard(ctx, request);
+    } catch(error) {
+      print(error);
+      print(error.code);
+      print(error.message);
+    }
   }
 
   @override
-  selectTrainCardFromDeck(){
+  selectTrainCardFromDeck() async {
     var ctx = ClientContext();
     var request = new api.DrawTrainCardFromDeckRequest();
     request.id = GlobalContext().currentPlayerId;
 
-    _api.selectTrainCardFromDeck(ctx, request);
+    try {
+      await _api.selectTrainCardFromDeck(ctx, request);
+    } catch(error) {
+      print(error);
+      print(error.code);
+      print(error.message);
+    }
   }
 
 

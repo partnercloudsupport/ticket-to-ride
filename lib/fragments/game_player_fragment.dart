@@ -49,8 +49,9 @@ class _GamePlayerFragmentState extends State<GamePlayerFragment> {
   _getPlayers() async {
     for (var o in widget.observers) {
       await for(var response in o.getPlayers()) {
+        var players = await response;
         setState(() {
-          _players = response;
+          _players = players;
         });
       }
     }
