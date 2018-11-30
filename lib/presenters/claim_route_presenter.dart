@@ -68,6 +68,7 @@ class ClaimRoutePresenter implements ClaimRouteObserver  {
     try {
 
       await _api.claimRoute(ctx, request);
+      FragmentLibrary.navigatePop();
 
     } catch(error) {
 
