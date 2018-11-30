@@ -61,13 +61,14 @@ class ClaimRoutePresenter implements ClaimRouteObserver  {
     request.playerId = GlobalContext().currentPlayerId;
     request.cardIds.addAll(cardIds);
 
-    print(routeId);
-    print(GlobalContext().currentPlayerId);
-    print(cardIds);
+    // print(routeId);
+    // print(GlobalContext().currentPlayerId);
+    // print(cardIds);
 
     try {
 
       await _api.claimRoute(ctx, request);
+      FragmentLibrary.navigatePop();
 
     } catch(error) {
 

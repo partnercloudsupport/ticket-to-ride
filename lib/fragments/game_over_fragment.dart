@@ -3,54 +3,113 @@ import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/theme/theme.dart';
 import 'package:ticket_to_ride/fragments/fragment_library.dart';
 
-import 'package:ticket_to_ride/presenters/game_over_presenter.dart';
+class PlayerStat {
+  int rank;
+  String color;
+  String username;
+  int routePoints;
+  int destinationCardPoints;
+  int longestRoutePoints;
+  int totalPoints;
 
-import 'package:ticket_to_ride/presenters/presenter-data.dart';
-
-final gameOverFragmentKey = GlobalKey<GameOverFragmentState>();
-
-enum TileSize {
-  LARGE,
-  MEDIUM,
-  SMALL
+  PlayerStat(this.rank, this.color, this.username, this.routePoints, this.destinationCardPoints, this.longestRoutePoints, this.totalPoints);
 }
 
-class PlayerStatsTile extends StatelessWidget {
+abstract class GameOverObserver {
+  getPlayerStats();
+}
 
-  final PlayerStatsWrapper playerInfo;
-  final TileSize size;
-  final bool twoRows;
+class GameOverFragment extends StatefulWidget {
 
-  // default constructor from Player, PlayerStats, and rank
-  PlayerStatsTile(PlayerStatsWrapper p, TileSize size, bool twoRows) :
-    playerInfo = p, size = size, twoRows = twoRows;
+  GameOverFragment({Key key});
+
+  final observers = List<GameOverObserver>();
+
+  void addObserver(GameOverObserver o) {
+    observers.add(o);
+  }
+
+  void removeObserver(GameOverObserver o) {
+    observers.remove(o);
+  }
 
   @override
-  Widget build(BuildContext context) {
+  GameOverFragmentState createState() => GameOverFragmentState();
+
+}
+
+class GameOverFragmentState extends State<GameOverFragment> {
+
+  var _playerStats = [];
+
+  @override
+  initState() {
+    super.initState();
+
+    _getPlayerStats();
+  }
+
+  _getPlayerStats() async {
+    for (var o in widget.observers) {
+      await for(var response in o.getPlayerStats()) {
+        setState(() {
+          _playerStats = response;
+        });
+      }
+    }
+  }
+
+  _buildLongestRoutePoints(playerStats) {
+    if(playerStats.longestRoutePoints > 0){
+      return Text(
+        "Longest Route Points: ${playerStats.longestRoutePoints}"
+      );
+    } else {
+      return null;
+    }
+  }
+
+  Widget _buildPlayerStatTile(index) {
+
+    if(index >= _playerStats.length) {
+      return null;
+    }
+
+    var playerStat = _playerStats[index];
 
     double screenH = MediaQuery.of(context).size.height;
     double screenW = MediaQuery.of(context).size.width;
 
-    // this is a multiplier that shrinks the size of MEDIUM and LARGE
-    // tiles when there is another row to follow
-    double m = twoRows ? .4 : 1;
-
-    double height = (size == TileSize.LARGE) ? screenH * .4 * m :
-      (size == TileSize.MEDIUM) ? screenH * .3 * m : screenH * .2;
-    double width = (size == TileSize.LARGE) ? screenW * .2 * m :
-      (size == TileSize.MEDIUM) ? screenW * .15 * m : screenW * .1;
-    double titleFontSize = (size == TileSize.LARGE) ? 50 * m : (size == TileSize.MEDIUM) ? 40 * m : 30;
-    double topMargin = (size == TileSize.LARGE) ? 10.0 : 20.0;
-
+    var tileHeight;
+    var tileWidth;
+    var titleFontSize;
+    var topMargin = 25.0;
+    switch(playerStat.rank) {
+      case 1: // Large
+        tileHeight = screenH * .5;
+        tileWidth = screenW * .2;
+        titleFontSize = 50.0;
+        topMargin = 10.0;
+        break;
+      case 2: // Medium
+      case 3:
+        tileHeight = screenH * .3;
+        tileWidth = screenW * .15;
+        titleFontSize = 40.0;
+        break;
+      default: // Small
+        tileHeight = screenH * .2;
+        tileWidth = screenW * .1;
+        titleFontSize = 15.0;
+    }
 
     return Container(
       margin: EdgeInsets.fromLTRB(20.0, topMargin, 20.0, 20.0),
-      height: height,
-      width: width,
+      height: tileHeight,
       child: Column(
         children: <Widget>[
           Text(
-            "${playerInfo.rank}",
+            "${playerStat.rank}",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: titleFontSize,
@@ -61,136 +120,95 @@ class PlayerStatsTile extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("images/player-${getPlayerColor(playerInfo.player.color)}.jpg"),
+                    image: AssetImage("images/player-${playerStat.color}.jpg"),
+                    fit: BoxFit.cover,
                   ),
                   shape: BoxShape.circle,
                 ),
-                height: height * .3,
-                width: width * .7,
+                height: tileWidth * .7,
+                width: tileWidth * .7,
               )
             ),
           ),
           Text(
-            "${playerInfo.player.username}",
+            "${playerStat.username}",
             style: TextStyle(fontSize: 18.0),
           ),
-          // TODO route stat
-          /*Text(
-            "${player.routes}"
-          )*/
           Text(
-            "Trains: ${playerInfo.stats.trainCount}"
+            "Route Points: ${playerStat.routePoints}"
           ),
           Text(
-            "Destination Cards: ${playerInfo.stats.destinationCardCount}"
+            "Destination Card Points: ${playerStat.destinationCardPoints}"
           ),
-          // TODO longest route
+          _buildLongestRoutePoints(playerStat),
           Container(
             height: 1.0,
-            width: width,
+            width: tileWidth,
             color: ticketToRideTheme.primaryColor,
             margin: EdgeInsets.only(top: 6.0, bottom: 5.0)
           ),
           Text(
-            "Total points: ${playerInfo.getTotalPoints()}",
+            "Total points: ${playerStat.totalPoints}",
             style: TextStyle(fontWeight: FontWeight.bold)
           ),
-        ],
+        ].where((child) => child != null).toList(),
       )
     );
   }
-}
 
-class GameOverFragment extends StatefulWidget {
-
-  final String title;
-  final GameOverPresenter presenter;
-
-  final List<PlayerStatsTile> tiles;
-
-
-  static List<PlayerStatsTile> _getTiles(List<PlayerStatsWrapper> players) {
-    List<PlayerStatsTile> tiles = List<PlayerStatsTile>();
-
-    for (PlayerStatsWrapper p in players) {
-      TileSize size;
-      switch(p.rank) {
-        case 1 :
-          size = TileSize.LARGE;
-          break;
-        case 2 :
-          size = TileSize.MEDIUM;
-          break;
-        case 3 :
-          size = TileSize.MEDIUM;
-          break;
-        default :
-          size = TileSize.SMALL;
-      }
-
-      tiles.add(PlayerStatsTile(p, size, players.length > 3));
-    }
-
-    // re-sort the tiles so that winner is centered (2 1 3)
-    // ASSUMPTION: tiles is in descending point order
-    // --> tiles[0] is the winner
-    PlayerStatsTile winnerTemp = tiles[0];
-    tiles[0] = tiles[1];
-    tiles[1] = winnerTemp;
-
-    return tiles;
-  }
-
-  GameOverFragment(GameOverPresenter presenter, List<PlayerStatsWrapper> players, {Key key, this.title}) :
-    presenter = presenter,
-    tiles = _getTiles(players);
-
-@override
-GameOverFragmentState createState() => GameOverFragmentState();
-
-}
-
-class GameOverFragmentState extends State<GameOverFragment> {
-
-  @override
-  Widget build(BuildContext context) {
-    Widget tileContainer;
-    if (this.widget.tiles.length > 3) {
-      tileContainer = Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Row(
-            children: this.widget.tiles.sublist(0,3)
-          ),
-          Row(
-            children: this.widget.tiles.sublist(3)
-          )
+  _buildStats() {
+    if (_playerStats.length > 3) {
+      return Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildPlayerStatTile(1),
+                _buildPlayerStatTile(0),
+                _buildPlayerStatTile(2)
+              ].where((child) => child != null).toList()
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildPlayerStatTile(4),
+                _buildPlayerStatTile(5),
+              ].where((child) => child != null).toList()
+            )
           ],
         )
       );
-    }
-    else {
-      tileContainer = Container(
+    } else {
+      return Container(
         child: Row (
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: this.widget.tiles,
+          children: [
+            _buildPlayerStatTile(1),
+            _buildPlayerStatTile(0),
+            _buildPlayerStatTile(2)
+          ].where((child) => child != null).toList()
         )
       );
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Game Over', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: Stack(
         children: <Widget> [
-            FragmentLibrary().background,
-            tileContainer
-          ]
-        ),
+          FragmentLibrary().background,
+          _buildStats()
+        ]
+      ),
     );
   }
-
 }
