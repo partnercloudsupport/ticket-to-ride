@@ -21,7 +21,7 @@ class CreateGameFragment extends StatefulWidget {
 class CreateGameFragmentState extends State<CreateGameFragment> {
 
   final _formKey = GlobalKey<FormState>();
-  int maxPlayersSelected;
+  int maxPlayersSelected = 2;
   var request = api.CreateGameRequest();
 
   @override
@@ -42,11 +42,12 @@ class CreateGameFragmentState extends State<CreateGameFragment> {
         request.displayName = value;
         print('building request with display name ' + request.displayName);
       }         
-    );          
+    );
+    request.maxPlayers = 2;
 
     var _maxPlayersInput = DropdownButton<int>(
       value: maxPlayersSelected,
-      hint: Text('Max # of Players'),
+      //hint: Text('Max # of Players'),
       items:<int>[2, 3, 4, 5].map((int value) {
         return DropdownMenuItem<int>(
           value:value,

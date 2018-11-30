@@ -42,7 +42,7 @@ packages:
       name: fixnum
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.8"
+    version: "0.10.9"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -59,14 +59,14 @@ packages:
       name: fluttertoast
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   http:
     dependency: "direct main"
     description:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.3+17"
+    version: "0.12.0"
   http_parser:
     dependency: transitive
     description:
