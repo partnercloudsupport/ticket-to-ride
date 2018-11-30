@@ -1,6 +1,6 @@
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/fragments/game_map_fragment.dart';
-import 'package:ticket_to_ride/global_context.dart';
+// import 'package:ticket_to_ride/global_context.dart';
 
 getTrainColor(color) {
   switch(color) {
@@ -116,13 +116,12 @@ getCityById(cityId) {
   return returnCity;
 }
 
-getRoutes(routes) {
+getRoutes(routes, playerMap) {
   var newRoutes = [];
   routes.forEach((index, route) {
     var city1 = getCityById(route.firstCityId);
     var city2 = getCityById(route.secondCityId);
-
-    var color = route.playerId == '' ? -1 : getPlayerColorInt(GlobalContext().playerMap[route.playerId].color);
+    var color = route.playerId == '' ? -1 : getPlayerColorInt(playerMap[route.playerId].color);
 
     newRoutes.add(ClientRoute(
       city1.coordinateX,
