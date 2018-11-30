@@ -44,6 +44,18 @@ class DestCardSelectPresenter implements DestCardSelectObserver  {
       print(error);
       print(error.code);
       print(error.message);
+
+      switch(error.code) {
+        case api.Code.INVALID_ARGUMENT:
+          FragmentLibrary.showErrorToast('Invalid cards');
+          break;
+        // case api.Code.ACCESS_DENIED:
+        //   FragmentLibrary.showErrorToast('Incorrect password');
+        //   break;
+        default:
+          FragmentLibrary.showErrorToast('UNKNOWN ERROR');
+      }
+
       return [];
     }
 

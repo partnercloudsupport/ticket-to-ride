@@ -6,7 +6,7 @@ import 'package:ticket_to_ride/api/api.dart' as api;
 
 class CreateGameFragment extends StatefulWidget {
 
-  CreateGameFragment(GameSelectionPresenter presenter, {Key key, this.title}) : 
+  CreateGameFragment(GameSelectionPresenter presenter, {Key key, this.title}) :
     this.presenter = presenter;
 
   final String title;
@@ -41,8 +41,8 @@ class CreateGameFragmentState extends State<CreateGameFragment> {
       onSaved: (String value) {
         request.displayName = value;
         print('building request with display name ' + request.displayName);
-      }         
-    );          
+      }
+    );
 
     var _maxPlayersInput = DropdownButton<int>(
       value: maxPlayersSelected,
@@ -53,7 +53,7 @@ class CreateGameFragmentState extends State<CreateGameFragment> {
           child: Text("$value"),
         );
       }).toList(),
-      onChanged: (int value) { 
+      onChanged: (int value) {
         maxPlayersSelected = value;
         request.maxPlayers = maxPlayersSelected;
         setState(() {});
@@ -96,4 +96,4 @@ class CreateGameFragmentState extends State<CreateGameFragment> {
     );
 
   }
-} 
+}
