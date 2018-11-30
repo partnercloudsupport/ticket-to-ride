@@ -44,15 +44,18 @@ class DestCardSelectPresenter implements DestCardSelectObserver  {
       print(error);
       print(error.code);
       print(error.message);
-      switch (error.code) {
+
+      switch(error.code) {
+        case api.Code.INVALID_ARGUMENT:
+          FragmentLibrary.showErrorToast("Invalid player");
+          break;
         case api.Code.NOT_FOUND:
-        FragmentLibrary.showErrorToast("Invalid player");
-        break;
+          FragmentLibrary.showErrorToast('Invalid cards');
+          break;
         default:
         FragmentLibrary.showErrorToast(error.message);
       }
-      
-      FragmentLibrary.navigatePop();
+
       return [];
     }
 

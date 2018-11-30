@@ -67,6 +67,8 @@ class ClaimRoutePresenter implements ClaimRouteObserver  {
 
       await _api.claimRoute(ctx, request);
       FragmentLibrary.showToast("${GlobalContext().currentPlayerId} is claiming $routeId");
+      FragmentLibrary.navigatePop();
+
     } catch(error) {
 
       print(error);
