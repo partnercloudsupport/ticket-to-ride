@@ -44,7 +44,7 @@ const DestinationCard$json = const {
 const PeekDestinationCardsRequest$json = const {
   '1': 'PeekDestinationCardsRequest',
   '2': const [
-    const {'1': 'game_id', '3': 1, '4': 1, '5': 9, '10': 'gameId'},
+    const {'1': 'player_id', '3': 1, '4': 1, '5': 9, '10': 'playerId'},
   ],
 };
 

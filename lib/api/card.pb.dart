@@ -94,7 +94,7 @@ class DestinationCard extends $pb.GeneratedMessage {
 
 class PeekDestinationCardsRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('PeekDestinationCardsRequest', package: const $pb.PackageName('card'))
-    ..aOS(1, 'gameId')
+    ..aOS(1, 'playerId')
     ..hasRequiredFields = false
   ;
 
@@ -112,10 +112,10 @@ class PeekDestinationCardsRequest extends $pb.GeneratedMessage {
     if (v is! PeekDestinationCardsRequest) $pb.checkItemFailed(v, _i.qualifiedMessageName);
   }
 
-  String get gameId => $_getS(0, '');
-  set gameId(String v) { $_setString(0, v); }
-  bool hasGameId() => $_has(0);
-  void clearGameId() => clearField(1);
+  String get playerId => $_getS(0, '');
+  set playerId(String v) { $_setString(0, v); }
+  bool hasPlayerId() => $_has(0);
+  void clearPlayerId() => clearField(1);
 }
 
 class PeekDestinationCardsResponse extends $pb.GeneratedMessage {
