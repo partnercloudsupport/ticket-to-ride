@@ -53,8 +53,6 @@ class ClaimRoutePresenter implements ClaimRouteObserver  {
   @override
   claimRoute(routeId, cardIds) async {
 
-    FragmentLibrary.showToast("${GlobalContext().currentPlayerId} is claiming $routeId");
-
     var ctx = ClientContext();
     var request = new api.ClaimRouteRequest();
     request.routeId = routeId;
@@ -68,6 +66,8 @@ class ClaimRoutePresenter implements ClaimRouteObserver  {
     try {
 
       await _api.claimRoute(ctx, request);
+      FragmentLibrary.showToast("${GlobalContext().currentPlayerId} is claiming $routeId");
+      FragmentLibrary.navigatePop();
 
     } catch(error) {
 
@@ -78,6 +78,9 @@ class ClaimRoutePresenter implements ClaimRouteObserver  {
       switch(error.code) {
         case api.Code.INVALID_ARGUMENT:
           FragmentLibrary.showErrorToast('Invalid cards');
+          break;
+        case api.Code.FAILED_PRECONDITION:
+          FragmentLibrary.showErrorToast(error.message);
           break;
         // case api.Code.ACCESS_DENIED:
         //   FragmentLibrary.showErrorToast('Incorrect password');

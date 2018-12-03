@@ -30,7 +30,7 @@ class DestCardSelectPresenter implements DestCardSelectObserver  {
 
     try {
       var request = new api.PeekDestinationCardsRequest();
-      request.gameId = GlobalContext().currentGameId;
+      request.playerId = GlobalContext().currentPlayerId;
       var response = await _api.getDestinationCards(ctx, request);
       var cards = [];
 
@@ -44,6 +44,18 @@ class DestCardSelectPresenter implements DestCardSelectObserver  {
       print(error);
       print(error.code);
       print(error.message);
+
+      switch(error.code) {
+        case api.Code.INVALID_ARGUMENT:
+          FragmentLibrary.showErrorToast("Invalid player");
+          break;
+        case api.Code.NOT_FOUND:
+          FragmentLibrary.showErrorToast('Invalid cards');
+          break;
+        default:
+        FragmentLibrary.showErrorToast(error.message);
+      }
+
       return [];
     }
 
