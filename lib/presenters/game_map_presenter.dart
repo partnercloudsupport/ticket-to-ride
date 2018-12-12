@@ -44,7 +44,7 @@ class GameMapPresenter implements GameMapObserver  {
       // update old route data
       routesList[response.id] = response;
 
-      return data.getRoutes(routesList);
+      return data.getRoutes(routesList, GlobalContext().playerMap);
     });
   }
 
