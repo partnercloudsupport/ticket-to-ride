@@ -28,6 +28,7 @@ void main() async {
 
 import 'dart:async';
 import 'package:protobuf/protobuf.dart';
+import 'dart:collection';
 
 import '$baseName.pb.dart';
 import '$baseName.pbjson.dart';
@@ -59,30 +60,28 @@ import 'dart:typed_data';
 
         if (method.serverStreaming) {
           methods += """
-  Stream<$returnType> $methodName(ClientContext ctx, $inputType request) {
-    var req = Request();
-    try {
-      req.method = '${method.name}';
-      req.service = '${descriptor.package}.${service.name}';
-      req.payload = request.writeToBuffer();
+  Stream<$returnType> $methodName(ClientContext ctx, $inputType request) async* {
 
-      var client = http.Client();
-      var httpRequest = http.Request('POST', Uri.parse(_url));
-      httpRequest.bodyBytes = req.writeToBuffer();
+    while (true) {
+      try {
+        var req = Request();
+        req.method = '${method.name}';
+        req.service = '${descriptor.package}.${service.name}';
+        req.payload = request.writeToBuffer();
 
-      var httpResponse = client.send(httpRequest);
+        var client = http.Client();
+        var httpRequest = http.Request('POST', Uri.parse(_url));
+        httpRequest.bodyBytes = req.writeToBuffer();
+        print("opening stream");
+        var httpResponse = await client.send(httpRequest);
+        print("stream open");
+        int length = 0;
+        var dataBuffer = List<int>();
+        var lengthBuffer = ByteData(4);
+        var lengthOffset = 0;
+        var recieved = HashSet<String>();
 
-      int length = 0;
-      var dataBuffer = List<int>();
-      var lengthBuffer = ByteData(4);
-      var lengthOffset = 0;
-
-      return httpResponse
-        .asStream()
-        .asyncExpand((el) => el.stream)
-        .expand((el) => el)
-        .transform(StreamTransformer.fromHandlers(
-        handleData: (byte, sink) {
+        await for (var byte in httpResponse.stream.expand((el) => el)) {
           if (length == 0) {
             lengthBuffer.setInt8(lengthOffset, byte);
             lengthOffset++;
@@ -90,7 +89,7 @@ import 'dart:typed_data';
               lengthOffset = 0;
               length = ByteData.view(lengthBuffer.buffer).getUint32(0, Endian.little);
             }
-            return;
+            continue;
           }
 
           dataBuffer.add(byte);
@@ -99,23 +98,22 @@ import 'dart:typed_data';
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
             if (resp.code == Code.PING) {
-              return;
+              continue;
+            }
+            if (!recieved.add(resp.id)) {
+              continue;
             }
             if (resp.code != Code.OK) {
-              sink.addError(ApiError(resp.code, resp.message));
-              return;
+              throw ApiError(resp.code, resp.message);
             }
-            sink.add($returnType.fromBuffer(resp.payload));
+            yield $returnType.fromBuffer(resp.payload);
             dataBuffer.clear();
           }
-        },
-        handleError: (err, stackTrace, sink) {
-          sink.addError(ApiError(Code.UNAVAILABLE, err.toString()));
         }
-      ));
-    }
-    catch (err) {
-      throw ApiError(Code.UNAVAILABLE, err.toString());
+      }
+      catch (err) {
+        await Future.delayed(Duration(seconds: 5));
+      }
     }
   }
 

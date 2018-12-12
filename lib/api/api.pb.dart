@@ -56,6 +56,7 @@ class Response extends $pb.GeneratedMessage {
     ..e<Code>(1, 'code', $pb.PbFieldType.OE, Code.UNSPECIFIED, Code.valueOf, Code.values)
     ..a<List<int>>(2, 'payload', $pb.PbFieldType.OY)
     ..aOS(3, 'message')
+    ..aOS(4, 'id')
     ..hasRequiredFields = false
   ;
 
@@ -87,5 +88,10 @@ class Response extends $pb.GeneratedMessage {
   set message(String v) { $_setString(2, v); }
   bool hasMessage() => $_has(2);
   void clearMessage() => clearField(3);
+
+  String get id => $_getS(3, '');
+  set id(String v) { $_setString(3, v); }
+  bool hasId() => $_has(3);
+  void clearId() => clearField(4);
 }
 

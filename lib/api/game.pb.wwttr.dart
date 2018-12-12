@@ -8,6 +8,7 @@
 
 import 'dart:async';
 import 'package:protobuf/protobuf.dart';
+import 'dart:collection';
 
 import 'game.pb.dart';
 import 'game.pbjson.dart';
@@ -192,30 +193,28 @@ class GameServiceProxy {
     }
   }
 
-  Stream<Game> streamGames(ClientContext ctx, StreamGamesRequest request) {
-    var req = Request();
-    try {
-      req.method = 'StreamGames';
-      req.service = 'game.GameService';
-      req.payload = request.writeToBuffer();
+  Stream<Game> streamGames(ClientContext ctx, StreamGamesRequest request) async* {
 
-      var client = http.Client();
-      var httpRequest = http.Request('POST', Uri.parse(_url));
-      httpRequest.bodyBytes = req.writeToBuffer();
+    while (true) {
+      try {
+        var req = Request();
+        req.method = 'StreamGames';
+        req.service = 'game.GameService';
+        req.payload = request.writeToBuffer();
 
-      var httpResponse = client.send(httpRequest);
+        var client = http.Client();
+        var httpRequest = http.Request('POST', Uri.parse(_url));
+        httpRequest.bodyBytes = req.writeToBuffer();
+        print("opening stream");
+        var httpResponse = await client.send(httpRequest);
+        print("stream open");
+        int length = 0;
+        var dataBuffer = List<int>();
+        var lengthBuffer = ByteData(4);
+        var lengthOffset = 0;
+        var recieved = HashSet<String>();
 
-      int length = 0;
-      var dataBuffer = List<int>();
-      var lengthBuffer = ByteData(4);
-      var lengthOffset = 0;
-
-      return httpResponse
-        .asStream()
-        .asyncExpand((el) => el.stream)
-        .expand((el) => el)
-        .transform(StreamTransformer.fromHandlers(
-        handleData: (byte, sink) {
+        await for (var byte in httpResponse.stream.expand((el) => el)) {
           if (length == 0) {
             lengthBuffer.setInt8(lengthOffset, byte);
             lengthOffset++;
@@ -223,7 +222,7 @@ class GameServiceProxy {
               lengthOffset = 0;
               length = ByteData.view(lengthBuffer.buffer).getUint32(0, Endian.little);
             }
-            return;
+            continue;
           }
 
           dataBuffer.add(byte);
@@ -232,23 +231,22 @@ class GameServiceProxy {
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
             if (resp.code == Code.PING) {
-              return;
+              continue;
+            }
+            if (!recieved.add(resp.id)) {
+              continue;
             }
             if (resp.code != Code.OK) {
-              sink.addError(ApiError(resp.code, resp.message));
-              return;
+              throw ApiError(resp.code, resp.message);
             }
-            sink.add(Game.fromBuffer(resp.payload));
+            yield Game.fromBuffer(resp.payload);
             dataBuffer.clear();
           }
-        },
-        handleError: (err, stackTrace, sink) {
-          sink.addError(ApiError(Code.UNAVAILABLE, err.toString()));
         }
-      ));
-    }
-    catch (err) {
-      throw ApiError(Code.UNAVAILABLE, err.toString());
+      }
+      catch (err) {
+        await Future.delayed(Duration(seconds: 5));
+      }
     }
   }
 
@@ -306,30 +304,28 @@ class GameServiceProxy {
     }
   }
 
-  Stream<PlayerStats> streamPlayerStats(ClientContext ctx, StreamPlayerStatsRequest request) {
-    var req = Request();
-    try {
-      req.method = 'StreamPlayerStats';
-      req.service = 'game.GameService';
-      req.payload = request.writeToBuffer();
+  Stream<PlayerStats> streamPlayerStats(ClientContext ctx, StreamPlayerStatsRequest request) async* {
 
-      var client = http.Client();
-      var httpRequest = http.Request('POST', Uri.parse(_url));
-      httpRequest.bodyBytes = req.writeToBuffer();
+    while (true) {
+      try {
+        var req = Request();
+        req.method = 'StreamPlayerStats';
+        req.service = 'game.GameService';
+        req.payload = request.writeToBuffer();
 
-      var httpResponse = client.send(httpRequest);
+        var client = http.Client();
+        var httpRequest = http.Request('POST', Uri.parse(_url));
+        httpRequest.bodyBytes = req.writeToBuffer();
+        print("opening stream");
+        var httpResponse = await client.send(httpRequest);
+        print("stream open");
+        int length = 0;
+        var dataBuffer = List<int>();
+        var lengthBuffer = ByteData(4);
+        var lengthOffset = 0;
+        var recieved = HashSet<String>();
 
-      int length = 0;
-      var dataBuffer = List<int>();
-      var lengthBuffer = ByteData(4);
-      var lengthOffset = 0;
-
-      return httpResponse
-        .asStream()
-        .asyncExpand((el) => el.stream)
-        .expand((el) => el)
-        .transform(StreamTransformer.fromHandlers(
-        handleData: (byte, sink) {
+        await for (var byte in httpResponse.stream.expand((el) => el)) {
           if (length == 0) {
             lengthBuffer.setInt8(lengthOffset, byte);
             lengthOffset++;
@@ -337,7 +333,7 @@ class GameServiceProxy {
               lengthOffset = 0;
               length = ByteData.view(lengthBuffer.buffer).getUint32(0, Endian.little);
             }
-            return;
+            continue;
           }
 
           dataBuffer.add(byte);
@@ -346,23 +342,22 @@ class GameServiceProxy {
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
             if (resp.code == Code.PING) {
-              return;
+              continue;
+            }
+            if (!recieved.add(resp.id)) {
+              continue;
             }
             if (resp.code != Code.OK) {
-              sink.addError(ApiError(resp.code, resp.message));
-              return;
+              throw ApiError(resp.code, resp.message);
             }
-            sink.add(PlayerStats.fromBuffer(resp.payload));
+            yield PlayerStats.fromBuffer(resp.payload);
             dataBuffer.clear();
           }
-        },
-        handleError: (err, stackTrace, sink) {
-          sink.addError(ApiError(Code.UNAVAILABLE, err.toString()));
         }
-      ));
-    }
-    catch (err) {
-      throw ApiError(Code.UNAVAILABLE, err.toString());
+      }
+      catch (err) {
+        await Future.delayed(Duration(seconds: 5));
+      }
     }
   }
 
@@ -393,30 +388,28 @@ class GameServiceProxy {
     }
   }
 
-  Stream<GameAction> streamHistory(ClientContext ctx, StreamHistoryRequest request) {
-    var req = Request();
-    try {
-      req.method = 'StreamHistory';
-      req.service = 'game.GameService';
-      req.payload = request.writeToBuffer();
+  Stream<GameAction> streamHistory(ClientContext ctx, StreamHistoryRequest request) async* {
 
-      var client = http.Client();
-      var httpRequest = http.Request('POST', Uri.parse(_url));
-      httpRequest.bodyBytes = req.writeToBuffer();
+    while (true) {
+      try {
+        var req = Request();
+        req.method = 'StreamHistory';
+        req.service = 'game.GameService';
+        req.payload = request.writeToBuffer();
 
-      var httpResponse = client.send(httpRequest);
+        var client = http.Client();
+        var httpRequest = http.Request('POST', Uri.parse(_url));
+        httpRequest.bodyBytes = req.writeToBuffer();
+        print("opening stream");
+        var httpResponse = await client.send(httpRequest);
+        print("stream open");
+        int length = 0;
+        var dataBuffer = List<int>();
+        var lengthBuffer = ByteData(4);
+        var lengthOffset = 0;
+        var recieved = HashSet<String>();
 
-      int length = 0;
-      var dataBuffer = List<int>();
-      var lengthBuffer = ByteData(4);
-      var lengthOffset = 0;
-
-      return httpResponse
-        .asStream()
-        .asyncExpand((el) => el.stream)
-        .expand((el) => el)
-        .transform(StreamTransformer.fromHandlers(
-        handleData: (byte, sink) {
+        await for (var byte in httpResponse.stream.expand((el) => el)) {
           if (length == 0) {
             lengthBuffer.setInt8(lengthOffset, byte);
             lengthOffset++;
@@ -424,7 +417,7 @@ class GameServiceProxy {
               lengthOffset = 0;
               length = ByteData.view(lengthBuffer.buffer).getUint32(0, Endian.little);
             }
-            return;
+            continue;
           }
 
           dataBuffer.add(byte);
@@ -433,23 +426,22 @@ class GameServiceProxy {
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
             if (resp.code == Code.PING) {
-              return;
+              continue;
+            }
+            if (!recieved.add(resp.id)) {
+              continue;
             }
             if (resp.code != Code.OK) {
-              sink.addError(ApiError(resp.code, resp.message));
-              return;
+              throw ApiError(resp.code, resp.message);
             }
-            sink.add(GameAction.fromBuffer(resp.payload));
+            yield GameAction.fromBuffer(resp.payload);
             dataBuffer.clear();
           }
-        },
-        handleError: (err, stackTrace, sink) {
-          sink.addError(ApiError(Code.UNAVAILABLE, err.toString()));
         }
-      ));
-    }
-    catch (err) {
-      throw ApiError(Code.UNAVAILABLE, err.toString());
+      }
+      catch (err) {
+        await Future.delayed(Duration(seconds: 5));
+      }
     }
   }
 

@@ -36,8 +36,10 @@ class GameMapPresenter implements GameMapObserver  {
     request.gameId = GlobalContext().currentGameId;
     var routesList = Map();
 
+    print("STARTING ROUTE STREAM");
+
     return _api.streamRoutes(ctx, request).map((response) {
-      // print("Stream routes");
+      print("Stream routes");
       // print(response);
       // update old route data
       routesList[response.id] = response;

@@ -121,7 +121,7 @@ getRoutes(routes) {
   routes.forEach((index, route) {
     var city1 = getCityById(route.firstCityId);
     var city2 = getCityById(route.secondCityId);
-
+    print(route);
     var color = route.playerId == '' ? -1 : getPlayerColorInt(GlobalContext().playerMap[route.playerId].color);
 
     newRoutes.add(ClientRoute(
