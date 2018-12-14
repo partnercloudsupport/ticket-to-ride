@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
-import 'create_game_fragment.dart';
-import 'game_list_fragment.dart';
-
-import 'fragment_library.dart';
-
-class GameSelectionPresenterApi {
-  createPlayer(request) async {}
-  createGame(request) async {}
-}
+import 'package:ticket_to_ride/fragments/create_game_fragment.dart';
+import 'package:ticket_to_ride/fragments/game_list_fragment.dart';
+import 'package:ticket_to_ride/fragments/fragment_library.dart';
 
 class GameSelectionView {
   GameSelectionView();
 
   static Widget build(CreateGameFragment createGameFragment, GameListFragment gameListFragment) {
-
 
     return Scaffold(
       appBar: AppBar(

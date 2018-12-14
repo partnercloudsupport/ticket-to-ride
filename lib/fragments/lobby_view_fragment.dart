@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/poll.dart';
+import 'package:ticket_to_ride/theme/theme.dart';
 
 class Player {
   String name;
@@ -185,6 +186,7 @@ class _LobbyViewFragmentState extends State<LobbyViewFragment> {
                       color: Colors.white,
                     ),
                   ),
+                  //color: ticketToRideTheme.buttonColor,
                 ),
               ),
               _startGameButton(_gameLobby.canStart)

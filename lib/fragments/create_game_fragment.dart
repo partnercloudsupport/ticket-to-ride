@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/presenters/game_selection_presenter.dart';
+import 'package:ticket_to_ride/theme/theme.dart';
 
 import 'package:ticket_to_ride/api/api.dart' as api;
 
@@ -44,11 +45,11 @@ class CreateGameFragmentState extends State<CreateGameFragment> {
       }
     );
 
-    request.maxPlayers = 2;
+    //request.maxPlayers = 2;
 
     var _maxPlayersInput = DropdownButton<int>(
       value: maxPlayersSelected,
-      //hint: Text('Max # of Players'),
+      hint: Text('Max # of Players'),
       items:<int>[2, 3, 4, 5].map((int value) {
         return DropdownMenuItem<int>(
           value:value,
@@ -78,6 +79,7 @@ class CreateGameFragmentState extends State<CreateGameFragment> {
             color: Colors.white,
           ),
         ),
+        //color: ticketToRideTheme.buttonColor,
       ),
     );
 

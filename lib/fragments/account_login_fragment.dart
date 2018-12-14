@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_to_ride/theme/theme.dart';
 
 class Login {
   String username;
@@ -116,6 +117,7 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
                 color: Colors.white,
               ),
             ),
+            //color: ticketToRideTheme.buttonColor,
           ),
         ),
         Padding(
@@ -129,6 +131,7 @@ class _AccountLoginFragmentState extends State<AccountLoginFragment> {
                 color: Colors.white,
               ),
             ),
+            //color: ticketToRideTheme.buttonColor,
           ),
         ),
       ]

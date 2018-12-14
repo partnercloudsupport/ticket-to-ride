@@ -4,14 +4,15 @@ import 'package:ticket_to_ride/global_context.dart';
 import 'package:ticket_to_ride/api/api.dart' as api;
 import 'package:ticket_to_ride/api/game.pb.dart';
 import 'package:protobuf/protobuf.dart';
-
+import 'package:ticket_to_ride/api/game_wrapper.dart';
 import 'package:ticket_to_ride/fragments/fragment_library.dart';
 import 'package:ticket_to_ride/fragments/game_list_fragment.dart';
 import 'package:ticket_to_ride/fragments/create_game_fragment.dart';
 import 'package:ticket_to_ride/fragments/game_selection_view.dart';
 
+final gameListKey = GlobalKey<GameListFragmentState>();
 
-class GameSelectionPresenter implements GameSelectionPresenterApi {
+class GameSelectionPresenter {
 
   final String title;
 
@@ -21,7 +22,12 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
   // default constructor
   GameSelectionPresenter({this.title}) {
     createGameFragment = CreateGameFragment(this);
-    gameListFragment = GameListFragment(this, key: gameListKey);
+
+    var request = StreamGamesRequest();
+    var ctx = ClientContext();
+    var stream = api.gameProxy.streamGames(ctx,request);
+    gameListFragment = GameListFragment(this, key: gameListKey, games: stream);
+    //gameListFragment = GameListFragment(this, games: stream);
   }
 
   // another constructor with fragments passed in
@@ -31,31 +37,50 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
     this.gameListFragment = gameListFragment;
   }
 
-
-  getGameList() async {
+  getGameHostName(var game) async {
     var ctx = ClientContext();
+    // similarly evil/disgusting code as in lobby presenter
+    var request2 = new api.GetPlayerRequest();
+    request2.playerId = game.hostPlayerId;
+    var response2 = await api.gameProxy.getPlayer(ctx, request2);
+
+    var request3 = new api.GetUsernameRequest();
+    request3.userId = response2.accountId;
+    var response3 = await api.authProxy.getUsername(ctx, request3);
+
+    return response3;
+  }
+
+  streamGames(bool open) async {
     try {
-      var request = api.ListGamesRequest();
-      var response = await api.gameProxy.listGames(ctx, request);
-
-      var games = [];
-
-      response.games.forEach((game) {
-        if(game.status == api.Game_Status.PRE) {
-          games.add(game);
+      await for (Game game in gameListFragment.games) {
+        if (!open) {
+          break;
         }
-      });
+        if (game != null) {
+          if (game.status == api.Game_Status.PRE) {
+            GameWrapper gameWrapper = GameWrapper();
+            gameWrapper.game = game;
 
-      return games;
+            try {
+              var hostNameResponse = await getGameHostName(game);
+              String username = hostNameResponse.username;
 
+              gameWrapper.hostUsername = username;
+
+              gameListKey.currentState.handleReceipt(gameWrapper);
+            } catch(error) {
+              print("error with getGameHostName");
+              print(error.toString());
+            }
+          }
+        }
+      }
     } catch(error) {
-      print(error);
-      print(error.code);
-      print(error.message);
+      print(error.toString());
     }
   }
 
-  @override
   createGame(request) async {
 
     var ctx = ClientContext();
@@ -80,7 +105,6 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
     }
   }
 
-  @override
   createPlayer(request) async {
       var ctx = ClientContext();
 
@@ -119,8 +143,6 @@ class GameSelectionPresenter implements GameSelectionPresenterApi {
   }
 
   Widget build() {
-
-    getGameList();
 
     return GameSelectionView.build(createGameFragment, gameListFragment);
 

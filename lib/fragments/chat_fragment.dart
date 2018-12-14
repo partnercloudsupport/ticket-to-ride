@@ -57,9 +57,16 @@ class ChatMessage extends StatelessWidget {
             children: <Widget>[
                Text(player.username, style: Theme.of(context).textTheme.subhead),
                Container(
+                 /*decoration: BoxDecoration(
+                   image: DecorationImage(
+                     image: AssetImage("images/msg_color.jpg"),
+                      centerSlice: new Rect.fromLTWH(50.0, 50.0, 220.0, 90.0),
+                      fit: BoxFit.fill,
+                   )
+                 ),
                 margin: const EdgeInsets.only(top: 5.0),
-                child:  Text(content),
-
+                child:  Text(content),*/
+            
               )
             ],
           )
@@ -87,7 +94,6 @@ class ChatFragmentState extends State<ChatFragment> {
   @override
   initState() {
     super.initState();
-
     streamMessages(true);
   }
 
@@ -136,6 +142,12 @@ class ChatFragmentState extends State<ChatFragment> {
     print('streaming messages');
 
     await for (Message msg in widget.messages) {
+
+      print("printing map contents");
+      print("length: ${GlobalContext().playerMap.length}");
+      
+      GlobalContext().playerMap.forEach((String playerId, Player player) => print("map playerid "+ playerId));
+
       if (!open) {
         break;
       }

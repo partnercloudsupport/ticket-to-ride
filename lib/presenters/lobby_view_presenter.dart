@@ -71,6 +71,7 @@ class LobbyViewPresenter implements LobbyViewObserver {
           playerWrapper.Player player = playerWrapper.Player(null, p.id, p.accountId, p.gameId, p.color);
           player.username = response3.username;
           playerObjects.add(player);
+          print("added ${player.username} to map");
 
           players.add(Player(response3.username, getPlayerColor(response2.color)));
         } else {
