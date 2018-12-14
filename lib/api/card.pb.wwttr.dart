@@ -113,7 +113,7 @@ class CardServiceProxy {
   }
 
   Stream<DestinationCard> streamDestinationCards(ClientContext ctx, StreamDestinationCardsRequest request) async* {
-
+    print("STREAMING REQ");
     while (true) {
       try {
         var req = Request();
@@ -124,9 +124,7 @@ class CardServiceProxy {
         var client = http.Client();
         var httpRequest = http.Request('POST', Uri.parse(_url));
         httpRequest.bodyBytes = req.writeToBuffer();
-        print("opening stream");
         var httpResponse = await client.send(httpRequest);
-        print("stream open");
         int length = 0;
         var dataBuffer = List<int>();
         var lengthBuffer = ByteData(4);
@@ -149,6 +147,9 @@ class CardServiceProxy {
           length--;
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
+            print("GOT PAYLOAD");
+            print(resp.id);
+            print(resp.code);
             if (resp.code == Code.PING) {
               continue;
             }
@@ -164,13 +165,15 @@ class CardServiceProxy {
         }
       }
       catch (err) {
+        print("ERROR FROM STREAM: RETRYING in 5 seconds");
+        print(err);
         await Future.delayed(Duration(seconds: 5));
       }
     }
   }
 
   Stream<TrainCard> streamTrainCards(ClientContext ctx, StreamTrainCardsRequest request) async* {
-
+    print("STREAMING REQ");
     while (true) {
       try {
         var req = Request();
@@ -181,9 +184,7 @@ class CardServiceProxy {
         var client = http.Client();
         var httpRequest = http.Request('POST', Uri.parse(_url));
         httpRequest.bodyBytes = req.writeToBuffer();
-        print("opening stream");
         var httpResponse = await client.send(httpRequest);
-        print("stream open");
         int length = 0;
         var dataBuffer = List<int>();
         var lengthBuffer = ByteData(4);
@@ -206,6 +207,9 @@ class CardServiceProxy {
           length--;
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
+            print("GOT PAYLOAD");
+            print(resp.id);
+            print(resp.code);
             if (resp.code == Code.PING) {
               continue;
             }
@@ -221,13 +225,15 @@ class CardServiceProxy {
         }
       }
       catch (err) {
+        print("ERROR FROM STREAM: RETRYING in 5 seconds");
+        print(err);
         await Future.delayed(Duration(seconds: 5));
       }
     }
   }
 
   Stream<DeckStats> streamDeckStats(ClientContext ctx, StreamDeckStatsRequest request) async* {
-
+    print("STREAMING REQ");
     while (true) {
       try {
         var req = Request();
@@ -238,9 +244,7 @@ class CardServiceProxy {
         var client = http.Client();
         var httpRequest = http.Request('POST', Uri.parse(_url));
         httpRequest.bodyBytes = req.writeToBuffer();
-        print("opening stream");
         var httpResponse = await client.send(httpRequest);
-        print("stream open");
         int length = 0;
         var dataBuffer = List<int>();
         var lengthBuffer = ByteData(4);
@@ -263,6 +267,9 @@ class CardServiceProxy {
           length--;
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
+            print("GOT PAYLOAD");
+            print(resp.id);
+            print(resp.code);
             if (resp.code == Code.PING) {
               continue;
             }
@@ -278,6 +285,8 @@ class CardServiceProxy {
         }
       }
       catch (err) {
+        print("ERROR FROM STREAM: RETRYING in 5 seconds");
+        print(err);
         await Future.delayed(Duration(seconds: 5));
       }
     }

@@ -59,7 +59,7 @@ class HealthServiceProxy {
   }
 
   Stream<Health> streamHealth(ClientContext ctx, GetHealthRequest request) async* {
-
+    print("STREAMING REQ");
     while (true) {
       try {
         var req = Request();
@@ -70,9 +70,7 @@ class HealthServiceProxy {
         var client = http.Client();
         var httpRequest = http.Request('POST', Uri.parse(_url));
         httpRequest.bodyBytes = req.writeToBuffer();
-        print("opening stream");
         var httpResponse = await client.send(httpRequest);
-        print("stream open");
         int length = 0;
         var dataBuffer = List<int>();
         var lengthBuffer = ByteData(4);
@@ -95,6 +93,9 @@ class HealthServiceProxy {
           length--;
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
+            print("GOT PAYLOAD");
+            print(resp.id);
+            print(resp.code);
             if (resp.code == Code.PING) {
               continue;
             }
@@ -110,6 +111,8 @@ class HealthServiceProxy {
         }
       }
       catch (err) {
+        print("ERROR FROM STREAM: RETRYING in 5 seconds");
+        print(err);
         await Future.delayed(Duration(seconds: 5));
       }
     }
