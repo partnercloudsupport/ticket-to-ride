@@ -8,6 +8,7 @@
 
 import 'dart:async';
 import 'package:protobuf/protobuf.dart';
+import 'dart:collection';
 
 import 'card.pb.dart';
 import 'card.pbjson.dart';
@@ -111,30 +112,28 @@ class CardServiceProxy {
     }
   }
 
-  Stream<DestinationCard> streamDestinationCards(ClientContext ctx, StreamDestinationCardsRequest request) {
-    var req = Request();
-    try {
-      req.method = 'StreamDestinationCards';
-      req.service = 'card.CardService';
-      req.payload = request.writeToBuffer();
+  Stream<DestinationCard> streamDestinationCards(ClientContext ctx, StreamDestinationCardsRequest request) async* {
 
-      var client = http.Client();
-      var httpRequest = http.Request('POST', Uri.parse(_url));
-      httpRequest.bodyBytes = req.writeToBuffer();
+    while (true) {
+      try {
+        var req = Request();
+        req.method = 'StreamDestinationCards';
+        req.service = 'card.CardService';
+        req.payload = request.writeToBuffer();
 
-      var httpResponse = client.send(httpRequest);
+        var client = http.Client();
+        var httpRequest = http.Request('POST', Uri.parse(_url));
+        httpRequest.bodyBytes = req.writeToBuffer();
+        print("opening stream");
+        var httpResponse = await client.send(httpRequest);
+        print("stream open");
+        int length = 0;
+        var dataBuffer = List<int>();
+        var lengthBuffer = ByteData(4);
+        var lengthOffset = 0;
+        var recieved = HashSet<String>();
 
-      int length = 0;
-      var dataBuffer = List<int>();
-      var lengthBuffer = ByteData(4);
-      var lengthOffset = 0;
-
-      return httpResponse
-        .asStream()
-        .asyncExpand((el) => el.stream)
-        .expand((el) => el)
-        .transform(StreamTransformer.fromHandlers(
-        handleData: (byte, sink) {
+        await for (var byte in httpResponse.stream.expand((el) => el)) {
           if (length == 0) {
             lengthBuffer.setInt8(lengthOffset, byte);
             lengthOffset++;
@@ -142,7 +141,7 @@ class CardServiceProxy {
               lengthOffset = 0;
               length = ByteData.view(lengthBuffer.buffer).getUint32(0, Endian.little);
             }
-            return;
+            continue;
           }
 
           dataBuffer.add(byte);
@@ -151,50 +150,47 @@ class CardServiceProxy {
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
             if (resp.code == Code.PING) {
-              return;
+              continue;
+            }
+            if (!recieved.add(resp.id)) {
+              continue;
             }
             if (resp.code != Code.OK) {
-              sink.addError(ApiError(resp.code, resp.message));
-              return;
+              throw ApiError(resp.code, resp.message);
             }
-            sink.add(DestinationCard.fromBuffer(resp.payload));
+            yield DestinationCard.fromBuffer(resp.payload);
             dataBuffer.clear();
           }
-        },
-        handleError: (err, stackTrace, sink) {
-          sink.addError(ApiError(Code.UNAVAILABLE, err.toString()));
         }
-      ));
-    }
-    catch (err) {
-      throw ApiError(Code.UNAVAILABLE, err.toString());
+      }
+      catch (err) {
+        await Future.delayed(Duration(seconds: 5));
+      }
     }
   }
 
-  Stream<TrainCard> streamTrainCards(ClientContext ctx, StreamTrainCardsRequest request) {
-    var req = Request();
-    try {
-      req.method = 'StreamTrainCards';
-      req.service = 'card.CardService';
-      req.payload = request.writeToBuffer();
+  Stream<TrainCard> streamTrainCards(ClientContext ctx, StreamTrainCardsRequest request) async* {
 
-      var client = http.Client();
-      var httpRequest = http.Request('POST', Uri.parse(_url));
-      httpRequest.bodyBytes = req.writeToBuffer();
+    while (true) {
+      try {
+        var req = Request();
+        req.method = 'StreamTrainCards';
+        req.service = 'card.CardService';
+        req.payload = request.writeToBuffer();
 
-      var httpResponse = client.send(httpRequest);
+        var client = http.Client();
+        var httpRequest = http.Request('POST', Uri.parse(_url));
+        httpRequest.bodyBytes = req.writeToBuffer();
+        print("opening stream");
+        var httpResponse = await client.send(httpRequest);
+        print("stream open");
+        int length = 0;
+        var dataBuffer = List<int>();
+        var lengthBuffer = ByteData(4);
+        var lengthOffset = 0;
+        var recieved = HashSet<String>();
 
-      int length = 0;
-      var dataBuffer = List<int>();
-      var lengthBuffer = ByteData(4);
-      var lengthOffset = 0;
-
-      return httpResponse
-        .asStream()
-        .asyncExpand((el) => el.stream)
-        .expand((el) => el)
-        .transform(StreamTransformer.fromHandlers(
-        handleData: (byte, sink) {
+        await for (var byte in httpResponse.stream.expand((el) => el)) {
           if (length == 0) {
             lengthBuffer.setInt8(lengthOffset, byte);
             lengthOffset++;
@@ -202,7 +198,7 @@ class CardServiceProxy {
               lengthOffset = 0;
               length = ByteData.view(lengthBuffer.buffer).getUint32(0, Endian.little);
             }
-            return;
+            continue;
           }
 
           dataBuffer.add(byte);
@@ -211,50 +207,47 @@ class CardServiceProxy {
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
             if (resp.code == Code.PING) {
-              return;
+              continue;
+            }
+            if (!recieved.add(resp.id)) {
+              continue;
             }
             if (resp.code != Code.OK) {
-              sink.addError(ApiError(resp.code, resp.message));
-              return;
+              throw ApiError(resp.code, resp.message);
             }
-            sink.add(TrainCard.fromBuffer(resp.payload));
+            yield TrainCard.fromBuffer(resp.payload);
             dataBuffer.clear();
           }
-        },
-        handleError: (err, stackTrace, sink) {
-          sink.addError(ApiError(Code.UNAVAILABLE, err.toString()));
         }
-      ));
-    }
-    catch (err) {
-      throw ApiError(Code.UNAVAILABLE, err.toString());
+      }
+      catch (err) {
+        await Future.delayed(Duration(seconds: 5));
+      }
     }
   }
 
-  Stream<DeckStats> streamDeckStats(ClientContext ctx, StreamDeckStatsRequest request) {
-    var req = Request();
-    try {
-      req.method = 'StreamDeckStats';
-      req.service = 'card.CardService';
-      req.payload = request.writeToBuffer();
+  Stream<DeckStats> streamDeckStats(ClientContext ctx, StreamDeckStatsRequest request) async* {
 
-      var client = http.Client();
-      var httpRequest = http.Request('POST', Uri.parse(_url));
-      httpRequest.bodyBytes = req.writeToBuffer();
+    while (true) {
+      try {
+        var req = Request();
+        req.method = 'StreamDeckStats';
+        req.service = 'card.CardService';
+        req.payload = request.writeToBuffer();
 
-      var httpResponse = client.send(httpRequest);
+        var client = http.Client();
+        var httpRequest = http.Request('POST', Uri.parse(_url));
+        httpRequest.bodyBytes = req.writeToBuffer();
+        print("opening stream");
+        var httpResponse = await client.send(httpRequest);
+        print("stream open");
+        int length = 0;
+        var dataBuffer = List<int>();
+        var lengthBuffer = ByteData(4);
+        var lengthOffset = 0;
+        var recieved = HashSet<String>();
 
-      int length = 0;
-      var dataBuffer = List<int>();
-      var lengthBuffer = ByteData(4);
-      var lengthOffset = 0;
-
-      return httpResponse
-        .asStream()
-        .asyncExpand((el) => el.stream)
-        .expand((el) => el)
-        .transform(StreamTransformer.fromHandlers(
-        handleData: (byte, sink) {
+        await for (var byte in httpResponse.stream.expand((el) => el)) {
           if (length == 0) {
             lengthBuffer.setInt8(lengthOffset, byte);
             lengthOffset++;
@@ -262,7 +255,7 @@ class CardServiceProxy {
               lengthOffset = 0;
               length = ByteData.view(lengthBuffer.buffer).getUint32(0, Endian.little);
             }
-            return;
+            continue;
           }
 
           dataBuffer.add(byte);
@@ -271,23 +264,22 @@ class CardServiceProxy {
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
             if (resp.code == Code.PING) {
-              return;
+              continue;
+            }
+            if (!recieved.add(resp.id)) {
+              continue;
             }
             if (resp.code != Code.OK) {
-              sink.addError(ApiError(resp.code, resp.message));
-              return;
+              throw ApiError(resp.code, resp.message);
             }
-            sink.add(DeckStats.fromBuffer(resp.payload));
+            yield DeckStats.fromBuffer(resp.payload);
             dataBuffer.clear();
           }
-        },
-        handleError: (err, stackTrace, sink) {
-          sink.addError(ApiError(Code.UNAVAILABLE, err.toString()));
         }
-      ));
-    }
-    catch (err) {
-      throw ApiError(Code.UNAVAILABLE, err.toString());
+      }
+      catch (err) {
+        await Future.delayed(Duration(seconds: 5));
+      }
     }
   }
 

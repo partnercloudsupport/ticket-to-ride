@@ -8,6 +8,7 @@
 
 import 'dart:async';
 import 'package:protobuf/protobuf.dart';
+import 'dart:collection';
 
 import 'plugin.pb.dart';
 import 'plugin.pbjson.dart';

@@ -34,6 +34,7 @@ const Response$json = const {
     const {'1': 'code', '3': 1, '4': 1, '5': 14, '6': '.api.Code', '10': 'code'},
     const {'1': 'payload', '3': 2, '4': 1, '5': 12, '10': 'payload'},
     const {'1': 'message', '3': 3, '4': 1, '5': 9, '10': 'message'},
+    const {'1': 'id', '3': 4, '4': 1, '5': 9, '10': 'id'},
   ],
 };
 

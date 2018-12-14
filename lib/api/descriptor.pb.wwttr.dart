@@ -8,6 +8,7 @@
 
 import 'dart:async';
 import 'package:protobuf/protobuf.dart';
+import 'dart:collection';
 
 import 'descriptor.pb.dart';
 import 'descriptor.pbjson.dart';
