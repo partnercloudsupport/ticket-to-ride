@@ -61,7 +61,7 @@ import 'dart:typed_data';
         if (method.serverStreaming) {
           methods += """
   Stream<$returnType> $methodName(ClientContext ctx, $inputType request) async* {
-
+    print("STREAMING REQ");
     while (true) {
       try {
         var req = Request();
@@ -72,9 +72,7 @@ import 'dart:typed_data';
         var client = http.Client();
         var httpRequest = http.Request('POST', Uri.parse(_url));
         httpRequest.bodyBytes = req.writeToBuffer();
-        print("opening stream");
         var httpResponse = await client.send(httpRequest);
-        print("stream open");
         int length = 0;
         var dataBuffer = List<int>();
         var lengthBuffer = ByteData(4);
@@ -97,6 +95,9 @@ import 'dart:typed_data';
           length--;
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
+            print("GOT PAYLOAD");
+            print(resp.id);
+            print(resp.code);
             if (resp.code == Code.PING) {
               continue;
             }
@@ -112,6 +113,8 @@ import 'dart:typed_data';
         }
       }
       catch (err) {
+        print("ERROR FROM STREAM: RETRYING in 5 seconds");
+        print(err);
         await Future.delayed(Duration(seconds: 5));
       }
     }

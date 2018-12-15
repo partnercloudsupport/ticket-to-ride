@@ -194,7 +194,7 @@ class GameServiceProxy {
   }
 
   Stream<Game> streamGames(ClientContext ctx, StreamGamesRequest request) async* {
-
+    print("STREAMING REQ");
     while (true) {
       try {
         var req = Request();
@@ -205,9 +205,7 @@ class GameServiceProxy {
         var client = http.Client();
         var httpRequest = http.Request('POST', Uri.parse(_url));
         httpRequest.bodyBytes = req.writeToBuffer();
-        print("opening stream");
         var httpResponse = await client.send(httpRequest);
-        print("stream open");
         int length = 0;
         var dataBuffer = List<int>();
         var lengthBuffer = ByteData(4);
@@ -230,6 +228,9 @@ class GameServiceProxy {
           length--;
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
+            print("GOT PAYLOAD");
+            print(resp.id);
+            print(resp.code);
             if (resp.code == Code.PING) {
               continue;
             }
@@ -245,6 +246,8 @@ class GameServiceProxy {
         }
       }
       catch (err) {
+        print("ERROR FROM STREAM: RETRYING in 5 seconds");
+        print(err);
         await Future.delayed(Duration(seconds: 5));
       }
     }
@@ -305,7 +308,7 @@ class GameServiceProxy {
   }
 
   Stream<PlayerStats> streamPlayerStats(ClientContext ctx, StreamPlayerStatsRequest request) async* {
-
+    print("STREAMING REQ");
     while (true) {
       try {
         var req = Request();
@@ -316,9 +319,7 @@ class GameServiceProxy {
         var client = http.Client();
         var httpRequest = http.Request('POST', Uri.parse(_url));
         httpRequest.bodyBytes = req.writeToBuffer();
-        print("opening stream");
         var httpResponse = await client.send(httpRequest);
-        print("stream open");
         int length = 0;
         var dataBuffer = List<int>();
         var lengthBuffer = ByteData(4);
@@ -341,6 +342,9 @@ class GameServiceProxy {
           length--;
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
+            print("GOT PAYLOAD");
+            print(resp.id);
+            print(resp.code);
             if (resp.code == Code.PING) {
               continue;
             }
@@ -356,6 +360,8 @@ class GameServiceProxy {
         }
       }
       catch (err) {
+        print("ERROR FROM STREAM: RETRYING in 5 seconds");
+        print(err);
         await Future.delayed(Duration(seconds: 5));
       }
     }
@@ -389,7 +395,7 @@ class GameServiceProxy {
   }
 
   Stream<GameAction> streamHistory(ClientContext ctx, StreamHistoryRequest request) async* {
-
+    print("STREAMING REQ");
     while (true) {
       try {
         var req = Request();
@@ -400,9 +406,7 @@ class GameServiceProxy {
         var client = http.Client();
         var httpRequest = http.Request('POST', Uri.parse(_url));
         httpRequest.bodyBytes = req.writeToBuffer();
-        print("opening stream");
         var httpResponse = await client.send(httpRequest);
-        print("stream open");
         int length = 0;
         var dataBuffer = List<int>();
         var lengthBuffer = ByteData(4);
@@ -425,6 +429,9 @@ class GameServiceProxy {
           length--;
           if (length == 0) {
             var resp = Response.fromBuffer(dataBuffer);
+            print("GOT PAYLOAD");
+            print(resp.id);
+            print(resp.code);
             if (resp.code == Code.PING) {
               continue;
             }
@@ -440,6 +447,8 @@ class GameServiceProxy {
         }
       }
       catch (err) {
+        print("ERROR FROM STREAM: RETRYING in 5 seconds");
+        print(err);
         await Future.delayed(Duration(seconds: 5));
       }
     }
