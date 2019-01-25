@@ -15,8 +15,8 @@ export 'card.pb.dart';
 export 'route.pb.dart';
 export 'api_error.dart';
 
-final url = "http://dev.wwttr.umkhandi.com/";
-// final url = "http://localhost:8080/";
+// final url = "http://dev.wwttr.umkhandi.com/";
+final url = "http://10.228.155.142:8080/";
 
 final authProxy = AuthServiceProxy(url);
 final gameProxy = GameServiceProxy(url);
